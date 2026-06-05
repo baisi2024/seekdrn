@@ -2,6 +2,10 @@
 
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { Badge } from '@/components/ui/badge'
+import { DataTable } from '@/components/admin/data-table'
+import Link from 'next/link'
+import { buttonVariants } from '@/components/ui/button'
+import { Plus } from 'lucide-react'
 
 interface CaseStudy {
   id: string
@@ -11,25 +15,14 @@ interface CaseStudy {
   published: boolean
 }
 
-export function CaseStudiesPageHeader() {
-  const t = useAdminTranslations()
-  return <h1 className="text-2xl font-bold">{t('case_studies_page.title')}</h1>
+interface CaseStudiesClientProps {
+  caseStudies: CaseStudy[]
 }
 
-export function CaseStudiesAddButton() {
+export function CaseStudiesClient({ caseStudies }: CaseStudiesClientProps) {
   const t = useAdminTranslations()
-  return <>{t('case_studies_page.add')}</>
-}
 
-export function CaseStudiesSearchPlaceholder() {
-  const t = useAdminTranslations()
-  return t('case_studies_page.searchPlaceholder')
-}
-
-export function CaseStudiesColumns() {
-  const t = useAdminTranslations()
-  
-  return [
+  const columns = [
     { key: 'created_at', label: t('date'), render: (item: CaseStudy) => new Date(item.created_at).toLocaleDateString() },
     { key: 'title', label: t('title_field') },
     { key: 'category', label: t('category') },
@@ -43,4 +36,21 @@ export function CaseStudiesColumns() {
       )
     },
   ]
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold">{t('case_studies_page.title')}</h1>
+        <Link href="/admin/case-studies/new" className={buttonVariants()}>
+          <Plus className="w-4 h-4 mr-2" />
+          {t('case_studies_page.add')}
+        </Link>
+      </div>
+      <DataTable
+        data={caseStudies}
+        columns={columns}
+        searchPlaceholder={t('case_studies_page.searchPlaceholder')}
+      />
+    </div>
+  )
 }
