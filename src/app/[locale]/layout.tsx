@@ -3,6 +3,8 @@ import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
+import { Navbar } from '@/components/public/navbar'
+import { Footer } from '@/components/public/footer'
 import '../globals.css'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' })
@@ -31,7 +33,9 @@ export default async function LocaleLayout({
     <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <body className={`${inter.variable} ${ibmPlexMono.variable} font-sans antialiased`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <Navbar />
+          <main className="min-h-screen">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
