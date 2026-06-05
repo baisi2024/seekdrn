@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -13,12 +13,24 @@ import { createClient } from '@/lib/supabase/client'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
 
+interface ProductData {
+  id?: string
+  model: string
+  slug: string
+  category: string
+  translations: Record<string, Record<string, string>>
+  images: string[]
+  published: boolean
+  featured: boolean
+  compliance_flag: boolean
+}
+
 export default function ProductEditPage() {
   const params = useParams()
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [product, setProduct] = useState<any>({
+  const [product, setProduct] = useState<ProductData>({
     model: '',
     slug: '',
     category: 'uav',
@@ -30,26 +42,26 @@ export default function ProductEditPage() {
   })
   const supabase = createClient()
 
+  const fetchProduct = useCallback(async () => {
+    const { data } = await supabase
+      .from('products')
+      .select('*')
+      .eq('id', params.id)
+      .single()
+
+    if (data) {
+      setProduct(data)
+    }
+    setLoading(false)
+  }, [params.id, supabase])
+
   useEffect(() => {
     if (params.id !== 'new') {
       fetchProduct()
     } else {
       setLoading(false)
     }
-  }, [params.id])
-
-  async function fetchProduct() {
-    const { data } = await supabase
-      .from('products')
-      .select('*')
-      .eq('id', params.id)
-      .single()
-    
-    if (data) {
-      setProduct(data)
-    }
-    setLoading(false)
-  }
+  }, [params.id, fetchProduct])
 
   async function handleSave() {
     setSaving(true)

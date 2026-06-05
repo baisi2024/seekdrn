@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { DataTable } from '@/components/admin/data-table'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
 export default async function ProductsPage() {
@@ -36,12 +36,10 @@ export default async function ProductsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Products</h1>
-        <Button asChild>
-          <Link href="/admin/products/new">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Product
-          </Link>
-        </Button>
+        <Link href="/admin/products/new" className={buttonVariants()}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add Product
+        </Link>
       </div>
       <DataTable
         data={products || []}

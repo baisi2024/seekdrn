@@ -3,10 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { routing } from './i18n/routing'
 import { createServerClient } from '@supabase/ssr'
 
-const intlMiddleware = createMiddleware(routing)
-
 // Cache for site settings (5 minutes)
-const siteSettingsCache: { data: any; timestamp: number } = { data: null, timestamp: 0 }
+const siteSettingsCache: { data: Record<string, unknown> | null; timestamp: number } = { data: null, timestamp: 0 }
 
 async function getSiteSettings() {
   const now = Date.now()

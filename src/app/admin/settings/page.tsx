@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -8,10 +8,20 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { createClient } from '@/lib/supabase/client'
 
+interface SettingsData {
+  site_name: Record<string, string>
+  seo_description: Record<string, string>
+  contact_email: string
+  contact_whatsapp: string
+  enabled_languages: string[]
+  enable_chinese: boolean
+  enable_chinese_by_ip: boolean
+}
+
 export default function SettingsPage() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [settings, setSettings] = useState<any>({
+  const [settings, setSettings] = useState<SettingsData>({
     site_name: { en: 'SeekDrone' },
     seo_description: { en: '' },
     contact_email: 'sales@seekdrn.com',
@@ -22,21 +32,21 @@ export default function SettingsPage() {
   })
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchSettings()
-  }, [])
-
-  async function fetchSettings() {
+  const fetchSettings = useCallback(async () => {
     const { data } = await supabase
       .from('site_settings')
       .select('*')
       .single()
-    
+
     if (data) {
       setSettings(data)
     }
     setLoading(false)
-  }
+  }, [supabase])
+
+  useEffect(() => {
+    fetchSettings()
+  }, [fetchSettings])
 
   async function handleSave() {
     setSaving(true)

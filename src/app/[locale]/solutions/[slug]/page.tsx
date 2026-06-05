@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 export default async function SolutionPage({
@@ -82,9 +82,9 @@ export default async function SolutionPage({
 
         {/* CTA */}
         <section className="text-center">
-          <Button asChild size="lg">
-            <Link href={`/${locale}#demo-form`}>Request a Demo</Link>
-          </Button>
+          <Link href={`/${locale}#demo-form`} className={buttonVariants({ size: 'lg' })}>
+            Request a Demo
+          </Link>
         </section>
       </div>
     </div>

@@ -1,16 +1,7 @@
 import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { ProductCard } from '@/components/public/product-card'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-
-const CATEGORIES = [
-  { key: 'all', labelKey: 'filter.all' },
-  { key: 'uav', labelKey: 'filter.uav' },
-  { key: 'payload', labelKey: 'filter.payload' },
-  { key: 'cuas', labelKey: 'filter.cuas' },
-  { key: 'ground_control', labelKey: 'filter.ground_control' },
-]
+import { ProductFilter } from '@/components/public/product-filter'
 
 export default async function ProductsPage({
   params,
@@ -36,22 +27,20 @@ export default async function ProductsPage({
     ? products
     : products?.filter((p) => p.category === category)
 
+  const filterLabels = {
+    all: t('filter.all'),
+    uav: t('filter.uav'),
+    payload: t('filter.payload'),
+    cuas: t('filter.cuas'),
+    ground_control: t('filter.ground_control'),
+  }
+
   return (
     <div className="py-16">
       <div className="container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-8">{t('title')}</h1>
 
-        <Tabs defaultValue={category} className="mb-8">
-          <TabsList>
-            {CATEGORIES.map((cat) => (
-              <TabsTrigger key={cat.key} value={cat.key} asChild>
-                <Link href={`?cat=${cat.key}`} replace>
-                  {t(cat.labelKey)}
-                </Link>
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+        <ProductFilter activeCategory={category} labels={filterLabels} />
 
         {filtered && filtered.length > 0 ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">

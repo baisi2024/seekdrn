@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { DatasheetDownloadButton } from '@/components/public/datasheet-download-button'
@@ -58,9 +58,9 @@ export default async function ProductDetailPage({
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{name}</h1>
             <p className="text-lg text-gray-600">{overview}</p>
             <div className="flex flex-wrap gap-4">
-              <Button asChild size="lg">
-                <Link href={`/${locale}#demo-form`}>Request Demo</Link>
-              </Button>
+              <Link href={`/${locale}#demo-form`} className={buttonVariants({ size: 'lg' })}>
+                Request Demo
+              </Link>
               {product.datasheet_url && (
                 <DatasheetDownloadButton productModel={product.model} datasheetUrl={product.datasheet_url} />
               )}
@@ -77,8 +77,8 @@ export default async function ProductDetailPage({
                 <table className="w-full">
                   <tbody>
                     {product.product_specs.map((spec: ProductSpec, i: number) => {
-                      const label = getTranslation(spec.label, locale, 'label') || spec.label?.en || ''
-                      const value = getTranslation(spec.value, locale, 'value') || spec.value?.en || ''
+                      const label = getTranslation(spec.label, locale, 'label') || (typeof spec.label?.en === 'string' ? spec.label.en : '') || ''
+                      const value = getTranslation(spec.value, locale, 'value') || (typeof spec.value?.en === 'string' ? spec.value.en : '') || ''
                       return (
                         <tr key={spec.id || i} className="border-b last:border-0">
                           <td className="px-4 py-3 font-medium text-gray-900 w-1/3">{label}</td>

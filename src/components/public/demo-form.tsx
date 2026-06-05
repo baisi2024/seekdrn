@@ -176,7 +176,7 @@ export function DemoForm() {
               <Label>{t('form.country')}</Label>
               <Select
                 value={formData.country}
-                onValueChange={(val) => handleChange('country', val)}
+                onValueChange={(val) => handleChange('country', val || '')}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={t('form.country')} />
@@ -199,7 +199,7 @@ export function DemoForm() {
               <Label>{t('form.applicationInterest')}</Label>
               <Select
                 value={formData.applicationInterest}
-                onValueChange={(val) => handleChange('applicationInterest', val)}
+                onValueChange={(val) => handleChange('applicationInterest', val || '')}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder={t('form.applicationInterest')} />

@@ -53,7 +53,7 @@ function TabsList({
   )
 }
 
-function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props) {
+function TabsTrigger({ className, ...props }: TabsPrimitive.Tab.Props & { render?: React.ElementType }) {
   return (
     <TabsPrimitive.Tab
       data-slot="tabs-trigger"

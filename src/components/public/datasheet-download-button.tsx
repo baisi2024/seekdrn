@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { trackDatasheetDownload } from '@/lib/gtm'
 
 interface DatasheetDownloadButtonProps {
@@ -14,10 +14,14 @@ export function DatasheetDownloadButton({ productModel, datasheetUrl }: Datashee
   }
 
   return (
-    <Button asChild variant="outline" size="lg">
-      <a href={datasheetUrl} target="_blank" rel="noopener noreferrer" onClick={handleClick}>
-        Download Spec
-      </a>
-    </Button>
+    <a 
+      href={datasheetUrl} 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      onClick={handleClick}
+      className={buttonVariants({ variant: 'outline', size: 'lg' })}
+    >
+      Download Spec
+    </a>
   )
 }

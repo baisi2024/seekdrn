@@ -1,7 +1,19 @@
 import { Resend } from 'resend'
 import { supabaseAdmin } from './supabase/admin'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+let resend: Resend | null = null
+
+function getResend() {
+  if (!resend) {
+    const apiKey = process.env.RESEND_API_KEY
+    if (!apiKey) {
+      console.warn('RESEND_API_KEY is not set. Email sending will be skipped.')
+      return null
+    }
+    resend = new Resend(apiKey)
+  }
+  return resend
+}
 
 export async function sendTemplateEmail(
   templateKey: string,
@@ -9,6 +21,12 @@ export async function sendTemplateEmail(
   language: string,
   variables: Record<string, string>
 ) {
+  const resendClient = getResend()
+  if (!resendClient) {
+    console.log('Email sending skipped: RESEND_API_KEY not configured')
+    return
+  }
+
   const { data: template } = await supabaseAdmin
     .from('email_templates')
     .select('translations, is_active')
@@ -33,7 +51,7 @@ export async function sendTemplateEmail(
     html = html.replace(regex, value)
   }
 
-  await resend.emails.send({
+  await resendClient.emails.send({
     from: 'SeekDrone <noreply@seekdrn.com>',
     to,
     subject,

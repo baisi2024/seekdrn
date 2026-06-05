@@ -26,7 +26,6 @@ export default async function CaseStudyDetailPage({
   const background = getTranslation(caseStudy.translations, locale, 'background')
   const challenge = getTranslation(caseStudy.translations, locale, 'challenge')
   const solution = getTranslation(caseStudy.translations, locale, 'solution')
-  const resultsDesc = getTranslation(caseStudy.translations, locale, 'results_desc')
   const clientQuote = getTranslation(caseStudy.client_quote || {}, locale, 'text')
 
   return (

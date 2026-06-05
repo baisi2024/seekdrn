@@ -2,7 +2,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { DataTable } from '@/components/admin/data-table'
 import { Badge } from '@/components/ui/badge'
 import Link from 'next/link'
-import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
 
 export default async function CaseStudiesPage() {
@@ -30,12 +30,10 @@ export default async function CaseStudiesPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Case Studies</h1>
-        <Button asChild>
-          <Link href="/admin/case-studies/new">
-            <Plus className="w-4 h-4 mr-2" />
-            Add Case Study
-          </Link>
-        </Button>
+        <Link href="/admin/case-studies/new" className={buttonVariants()}>
+          <Plus className="w-4 h-4 mr-2" />
+          Add Case Study
+        </Link>
       </div>
       <DataTable
         data={caseStudies || []}

@@ -19,12 +19,6 @@ interface Product {
   featured?: boolean
 }
 
-interface Solution {
-  id: string
-  slug: string
-  translations?: Record<string, Record<string, string>>
-}
-
 interface CaseStudy {
   id: string
   slug: string
@@ -64,7 +58,6 @@ export default async function HomePage({
 }) {
   const { locale } = await params
   const t = await getTranslations('home')
-  const tc = await getTranslations('common')
 
   // Fetch data with graceful error handling
   let products: Product[] = []
