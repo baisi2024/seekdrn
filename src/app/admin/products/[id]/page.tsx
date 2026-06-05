@@ -10,6 +10,7 @@ import { Switch } from '@/components/ui/switch'
 import { TranslationTabs } from '@/components/admin/translation-tabs'
 import { ImageUpload } from '@/components/admin/image-upload'
 import { createClient } from '@/lib/supabase/client'
+import { useAdminTranslations } from '@/hooks/useAdminTranslations'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
 
@@ -28,6 +29,7 @@ interface ProductData {
 export default function ProductEditPage() {
   const params = useParams()
   const router = useRouter()
+  const { t } = useAdminTranslations()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [product, setProduct] = useState<ProductData>({
@@ -100,18 +102,18 @@ export default function ProductEditPage() {
     })
   }
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <div>{t('loading')}</div>
 
   return (
     <div className="max-w-4xl">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">
-          {params.id === 'new' ? 'Add Product' : 'Edit Product'}
+          {params.id === 'new' ? t('products_page.add') : t('products_page.edit')}
         </h1>
         <div className="flex gap-2">
-          <Button variant="outline" onClick={() => router.back()}>Cancel</Button>
+          <Button variant="outline" onClick={() => router.back()}>{t('cancel')}</Button>
           <Button onClick={handleSave} disabled={saving}>
-            {saving ? 'Saving...' : 'Save'}
+            {saving ? t('saving') : t('save')}
           </Button>
         </div>
       </div>
@@ -119,12 +121,12 @@ export default function ProductEditPage() {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Basic Info</CardTitle>
+            <CardTitle>{t('basicInfo')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Model</Label>
+                <Label>{t('model')}</Label>
                 <Input
                   value={product.model}
                   onChange={(e) => setProduct({ ...product, model: e.target.value })}
@@ -144,21 +146,21 @@ export default function ProductEditPage() {
                   checked={product.published}
                   onCheckedChange={(v) => setProduct({ ...product, published: v })}
                 />
-                <Label>Published</Label>
+                <Label>{t('published')}</Label>
               </div>
               <div className="flex items-center gap-2">
                 <Switch
                   checked={product.featured}
                   onCheckedChange={(v) => setProduct({ ...product, featured: v })}
                 />
-                <Label>Featured</Label>
+                <Label>{t('featured')}</Label>
               </div>
               <div className="flex items-center gap-2">
                 <Switch
                   checked={product.compliance_flag}
                   onCheckedChange={(v) => setProduct({ ...product, compliance_flag: v })}
                 />
-                <Label>Compliance Required</Label>
+                <Label>{t('complianceRequired')}</Label>
               </div>
             </div>
           </CardContent>
@@ -166,7 +168,7 @@ export default function ProductEditPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Images</CardTitle>
+            <CardTitle>{t('images')}</CardTitle>
           </CardHeader>
           <CardContent>
             <ImageUpload
@@ -178,7 +180,7 @@ export default function ProductEditPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Translations</CardTitle>
+            <CardTitle>{t('translations')}</CardTitle>
           </CardHeader>
           <CardContent>
             <TranslationTabs

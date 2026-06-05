@@ -2,11 +2,11 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { 
-  LayoutDashboard, 
-  Mail, 
-  Package, 
-  FileText, 
+import {
+  LayoutDashboard,
+  Mail,
+  Package,
+  FileText,
   Lightbulb,
   Navigation,
   LayoutGrid,
@@ -18,23 +18,26 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
-
-const NAV_ITEMS = [
-  { href: '/admin', icon: LayoutDashboard, label: 'Dashboard' },
-  { href: '/admin/inquiries', icon: Mail, label: 'Inquiries' },
-  { href: '/admin/products', icon: Package, label: 'Products' },
-  { href: '/admin/case-studies', icon: FileText, label: 'Case Studies' },
-  { href: '/admin/solutions', icon: Lightbulb, label: 'Solutions' },
-  { href: '/admin/navigation', icon: Navigation, label: 'Navigation' },
-  { href: '/admin/footer', icon: LayoutGrid, label: 'Footer' },
-  { href: '/admin/compliance', icon: Shield, label: 'Compliance' },
-  { href: '/admin/email-templates', icon: MailOpen, label: 'Email Templates' },
-  { href: '/admin/settings', icon: Settings, label: 'Settings' },
-  { href: '/admin/media', icon: Image, label: 'Media Library' },
-]
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
+import { AdminLanguageSwitcher } from './language-switcher'
 
 export function Sidebar() {
   const pathname = usePathname()
+  const t = useAdminTranslations()
+
+  const NAV_ITEMS = [
+    { href: '/admin', icon: LayoutDashboard, label: t('dashboard') },
+    { href: '/admin/inquiries', icon: Mail, label: t('inquiries') },
+    { href: '/admin/products', icon: Package, label: t('products') },
+    { href: '/admin/case-studies', icon: FileText, label: t('caseStudies') },
+    { href: '/admin/solutions', icon: Lightbulb, label: t('solutions') },
+    { href: '/admin/navigation', icon: Navigation, label: t('navigation') },
+    { href: '/admin/footer', icon: LayoutGrid, label: t('footer') },
+    { href: '/admin/compliance', icon: Shield, label: t('compliance') },
+    { href: '/admin/email-templates', icon: MailOpen, label: t('emailTemplates') },
+    { href: '/admin/settings', icon: Settings, label: t('settings') },
+    { href: '/admin/media', icon: Image, label: t('media') },
+  ]
 
   async function handleLogout() {
     const supabase = createClient()
@@ -46,11 +49,11 @@ export function Sidebar() {
     <aside className="fixed inset-y-0 left-0 w-64 bg-gray-900 text-white hidden lg:block">
       <div className="flex flex-col h-full">
         <div className="p-6 border-b border-gray-800">
-          <h1 className="text-xl font-bold">SeekDrone Admin</h1>
+          <h1 className="text-xl font-bold">{t('title')}</h1>
         </div>
         <nav className="flex-1 p-4 space-y-1">
           {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href || 
+            const isActive = pathname === item.href ||
               (item.href !== '/admin' && pathname.startsWith(item.href))
             return (
               <Link
@@ -66,14 +69,15 @@ export function Sidebar() {
             )
           })}
         </nav>
+        <AdminLanguageSwitcher />
         <div className="p-4 border-t border-gray-800">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             className="w-full justify-start text-gray-400 hover:text-white"
             onClick={handleLogout}
           >
             <LogOut className="w-5 h-5 mr-3" />
-            Logout
+            {t('logout')}
           </Button>
         </div>
       </div>

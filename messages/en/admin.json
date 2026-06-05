@@ -19,5 +19,40 @@
   "edit": "Edit",
   "create": "Create",
   "published": "Published",
-  "draft": "Draft"
+  "draft": "Draft",
+  "loading": "Loading...",
+  "saving": "Saving...",
+  "add": "Add",
+  "search": "Search",
+  "status": "Status",
+  "actions": "Actions",
+  "model": "Model",
+  "category": "Category",
+  "featured": "Featured",
+  "complianceRequired": "Compliance Required",
+  "basicInfo": "Basic Info",
+  "images": "Images",
+  "translations": "Translations",
+  "date": "Date",
+  "title_field": "Title",
+  "products_page": {
+    "title": "Products",
+    "add": "Add Product",
+    "edit": "Edit Product",
+    "searchPlaceholder": "Search products..."
+  },
+  "case_studies_page": {
+    "title": "Case Studies",
+    "add": "Add Case Study",
+    "searchPlaceholder": "Search case studies..."
+  },
+  "solutions_page": {
+    "title": "Solutions",
+    "add": "Add Solution",
+    "searchPlaceholder": "Search solutions..."
+  },
+  "inquiries_page": {
+    "title": "Inquiries",
+    "searchPlaceholder": "Search inquiries..."
+  }
 }
