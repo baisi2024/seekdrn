@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { trackDemoFormSubmit, trackDemoRequestSuccess } from '@/lib/gtm'
 
 const demoSchema = z.object({
   fullName: z.string().min(1, 'This field is required'),
@@ -85,6 +86,8 @@ export function DemoForm() {
 
     setSubmitting(true)
     try {
+      trackDemoFormSubmit(formData.country, formData.applicationInterest)
+
       const res = await fetch('/api/demo-request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -94,6 +97,9 @@ export function DemoForm() {
       if (!res.ok) {
         throw new Error('Submission failed')
       }
+
+      const data = await res.json()
+      trackDemoRequestSuccess(data.compliance_status || 'standard')
 
       toast.success('Demo request submitted successfully!')
       setFormData({

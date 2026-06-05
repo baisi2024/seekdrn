@@ -6,6 +6,7 @@ import { getTranslation } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { DatasheetDownloadButton } from '@/components/public/datasheet-download-button'
 
 interface ProductSpec {
   id: string
@@ -61,11 +62,7 @@ export default async function ProductDetailPage({
                 <Link href={`/${locale}#demo-form`}>Request Demo</Link>
               </Button>
               {product.datasheet_url && (
-                <Button asChild variant="outline" size="lg">
-                  <a href={product.datasheet_url} target="_blank" rel="noopener noreferrer">
-                    Download Spec
-                  </a>
-                </Button>
+                <DatasheetDownloadButton productModel={product.model} datasheetUrl={product.datasheet_url} />
               )}
             </div>
           </div>
