@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - Tech Futuristic Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Orbitron', 'monospace'],
+            sans: ['Rajdhani', 'sans-serif'],
+          },
+          colors: {
+            cyber: {
+              DEFAULT: '#00f0ff',
+              dim: '#00a8b3',
+              glow: '#00f0ff',
+            },
+            matrix: {
+              DEFAULT: '#0d1117',
+              raised: '#161b22',
+              muted: '#21262d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Rajdhani', sans-serif; }
+    
+    /* Cyber grid */
+    .cyber-grid {
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+      background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+    }
+    
+    /* Neon glow */
+    .neon-glow {
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+    }
+    .neon-box {
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.2), inset 0 0 20px rgba(0, 240, 255, 0.05);
+    }
+    
+    /* Scan line */
+    .scanline::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.5), transparent);
+      animation: scan 3s linear infinite;
+    }
+    @keyframes scan {
+      0% { top: 0; opacity: 1; }
+      100% { top: 100%; opacity: 0; }
+    }
+    
+    /* Hexagon pattern */
+    .hex-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%2300f0ff' fill-opacity='0.03'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.9l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5L0 0v15zm15 0l12.98-7.5L15 0v15zm14 3l-13 7.5v15l13 7.5V18zm-15 0l-13 7.5v15l13 7.5V18z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    
+    /* Glitch effect */
+    .glitch {
+      position: relative;
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .glitch::before {
+      animation: glitch-1 2s infinite linear alternate-reverse;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      color: #ff00ff;
+    }
+    .glitch::after {
+      animation: glitch-2 3s infinite linear alternate-reverse;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      color: #00ffff;
+    }
+    @keyframes glitch-1 {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(2px); }
+    }
+    @keyframes glitch-2 {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-2px); }
+    }
+  </style>
+</head>
+<body class="bg-matrix text-gray-100 antialiased">
+  
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-matrix/90 backdrop-blur-xl border-b border-cyber/20">
+    <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 border-2 border-cyber rounded flex items-center justify-center neon-box">
+          <svg class="w-6 h-6 text-cyber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+          </svg>
+        </div>
+        <span class="text-xl font-display font-bold tracking-wider neon-glow">SEEKDRONE</span>
+      </a>
+      
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#" class="text-sm text-gray-400 hover:text-cyber transition-colors uppercase tracking-wider">Systems</a>
+        <a href="#" class="text-sm text-gray-400 hover:text-cyber transition-colors uppercase tracking-wider">Platforms</a>
+        <a href="#" class="text-sm text-gray-400 hover:text-cyber transition-colors uppercase tracking-wider">Defense</a>
+        <a href="#" class="text-sm text-gray-400 hover:text-cyber transition-colors uppercase tracking-wider">Intel</a>
+      </div>
+      
+      <button class="bg-cyber/10 border border-cyber/50 hover:bg-cyber/20 text-cyber text-sm font-display font-bold px-6 py-2 rounded transition-all uppercase tracking-wider">
+        Initialize
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Hero -->
+  <section class="min-h-[100dvh] relative flex items-center cyber-grid hex-pattern scanline overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyber/5 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyber/5 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-20 w-full">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <!-- Left Content -->
+        <div>
+          <div class="inline-flex items-center gap-2 border border-cyber/30 rounded px-4 py-1.5 mb-6">
+            <span class="w-2 h-2 bg-cyber rounded-full animate-pulse"></span>
+            <span class="text-xs font-display text-cyber uppercase tracking-widest">System Online</span>
+          </div>
+          
+          <h1 class="text-5xl md:text-7xl font-display font-black tracking-tight mb-6 leading-none">
+            <span class="text-gray-100">AUTONOMOUS</span><br/>
+            <span class="text-cyber neon-glow glitch" data-text="AERIAL">AERIAL</span><br/>
+            <span class="text-gray-100">SYSTEMS</span>
+          </h1>
+          
+          <p class="text-lg text-gray-400 leading-relaxed mb-8 max-w-md font-light">
+            Next-generation UAV platforms with AI-powered navigation and real-time threat detection capabilities.
+          </p>
+          
+          <div class="flex gap-4">
+            <button class="bg-cyber hover:bg-cyber-dim text-matrix font-display font-bold px-8 py-4 rounded transition-all uppercase tracking-wider neon-box">
+              Deploy Now
+            </button>
+            <button class="border border-cyber/30 hover:border-cyber/60 text-cyber font-display px-8 py-4 rounded transition-all uppercase tracking-wider">
+              Technical Specs
+            </button>
+          </div>
+        </div>
+        
+        <!-- Right Stats -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-matrix-raised border border-cyber/20 rounded-lg p-6 neon-box">
+            <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Max Altitude</div>
+            <div class="text-4xl font-display font-bold text-cyber neon-glow">10,000<span class="text-lg">m</span></div>
+          </div>
+          <div class="bg-matrix-raised border border-cyber/20 rounded-lg p-6 neon-box">
+            <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Range</div>
+            <div class="text-4xl font-display font-bold text-cyber neon-glow">200<span class="text-lg">km</span></div>
+          </div>
+          <div class="bg-matrix-raised border border-cyber/20 rounded-lg p-6 neon-box">
+            <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Endurance</div>
+            <div class="text-4xl font-display font-bold text-cyber neon-glow">8<span class="text-lg">hrs</span></div>
+          </div>
+          <div class="bg-matrix-raised border border-cyber/20 rounded-lg p-6 neon-box">
+            <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Payload</div>
+            <div class="text-4xl font-display font-bold text-cyber neon-glow">50<span class="text-lg">kg</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Products -->
+  <section class="py-24 bg-matrix-raised border-t border-cyber/10">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-4">Product Matrix</div>
+        <h2 class="text-3xl md:text-4xl font-display font-bold tracking-tight">SYSTEM CATALOG</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="group bg-matrix border border-cyber/10 hover:border-cyber/40 rounded-lg p-8 transition-all neon-box">
+          <div class="w-16 h-16 border border-cyber/30 rounded flex items-center justify-center mb-6 group-hover:border-cyber transition-colors">
+            <svg class="w-8 h-8 text-cyber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </div>
+          <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Series PT</div>
+          <h3 class="text-xl font-display font-bold mb-3">VTOL Platforms</h3>
+          <p class="text-sm text-gray-500 mb-6 font-light">Vertical takeoff and landing systems for tactical operations.</p>
+          <div class="flex justify-between text-xs font-display text-gray-600">
+            <span>RANGE: 100km</span>
+            <span>PAYLOAD: 20kg</span>
+          </div>
+        </div>
+        
+        <div class="group bg-matrix border border-cyber/10 hover:border-cyber/40 rounded-lg p-8 transition-all neon-box">
+          <div class="w-16 h-16 border border-cyber/30 rounded flex items-center justify-center mb-6 group-hover:border-cyber transition-colors">
+            <svg class="w-8 h-8 text-cyber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="3"/>
+              <circle cx="12" cy="12" r="8" stroke-dasharray="4 2"/>
+            </svg>
+          </div>
+          <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Series EO</div>
+          <h3 class="text-xl font-display font-bold mb-3">Optical Systems</h3>
+          <p class="text-sm text-gray-500 mb-6 font-light">Advanced imaging payloads with AI target recognition.</p>
+          <div class="flex justify-between text-xs font-display text-gray-600">
+            <span>4K/8K</span>
+            <span>THERMAL</span>
+          </div>
+        </div>
+        
+        <div class="group bg-matrix border border-cyber/10 hover:border-cyber/40 rounded-lg p-8 transition-all neon-box">
+          <div class="w-16 h-16 border border-cyber/30 rounded flex items-center justify-center mb-6 group-hover:border-cyber transition-colors">
+            <svg class="w-8 h-8 text-cyber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="text-xs font-display text-cyber/60 uppercase tracking-widest mb-2">Series CU</div>
+          <h3 class="text-xl font-display font-bold mb-3">Counter-UAS</h3>
+          <p class="text-sm text-gray-500 mb-6 font-light">Detection and neutralization systems for airspace security.</p>
+          <div class="flex justify-between text-xs font-display text-gray-600">
+            <span>360° DETECT</span>
+            <span>5km RANGE</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="bg-matrix border-t border-cyber/10 py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 border border-cyber/50 rounded flex items-center justify-center">
+            <svg class="w-4 h-4 text-cyber" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </div>
+          <span class="text-sm font-display text-cyber/60 tracking-wider">SEEKDRONE</span>
+        </div>
+        <div class="text-xs font-display text-gray-600 tracking-wider">
+          AUTONOMOUS AERIAL SYSTEMS · EST. 2024
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+</body>
+</html>

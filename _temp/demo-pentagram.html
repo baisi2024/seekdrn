@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - Pentagram Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'IBM Plex Sans', -apple-system, sans-serif; }
+    .display { font-family: 'Space Grotesk', sans-serif; }
+    
+    /* Pentagram signature: bold typography + grid */
+    .grid-lines {
+      background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+  </style>
+</head>
+<body class="bg-white text-black antialiased">
+  
+  <!-- Navigation: Minimal, type-driven -->
+  <nav class="border-b border-black/10">
+    <div class="max-w-[1400px] mx-auto px-8 h-20 flex items-center justify-between">
+      <div class="display text-2xl font-bold tracking-tight">SEEKDRONE</div>
+      <div class="flex items-center gap-12 text-sm font-medium">
+        <a href="#" class="hover:underline underline-offset-4">Products</a>
+        <a href="#" class="hover:underline underline-offset-4">Solutions</a>
+        <a href="#" class="hover:underline underline-offset-4">Cases</a>
+        <a href="#" class="hover:underline underline-offset-4">About</a>
+        <button class="bg-black text-white px-6 py-3">Request Demo</button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero: Big type, no decoration -->
+  <section class="grid-lines min-h-[80vh] flex items-center">
+    <div class="max-w-[1400px] mx-auto px-8 py-20">
+      <div class="grid grid-cols-12 gap-8 items-end">
+        <div class="col-span-7">
+          <h1 class="display text-[120px] leading-[0.9] font-bold tracking-tight mb-8">
+            INDUSTRIAL<br/>DRONES
+          </h1>
+          <p class="text-xl max-w-lg text-black/60 leading-relaxed">
+            Professional UAV platforms for organizations that demand reliability in critical operations.
+          </p>
+        </div>
+        <div class="col-span-5">
+          <!-- Stats: Data as hero -->
+          <div class="border-l-4 border-black pl-8 space-y-8">
+            <div>
+              <div class="display text-6xl font-bold">50,000+</div>
+              <div class="text-sm uppercase tracking-widest text-black/50 mt-2">Flight Hours</div>
+            </div>
+            <div>
+              <div class="display text-6xl font-bold">120</div>
+              <div class="text-sm uppercase tracking-widest text-black/50 mt-2">Countries</div>
+            </div>
+            <div>
+              <div class="display text-6xl font-bold">500+</div>
+              <div class="text-sm uppercase tracking-widest text-black/50 mt-2">Enterprise Clients</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Products: Grid system, modular -->
+  <section class="border-t border-black/10 py-24">
+    <div class="max-w-[1400px] mx-auto px-8">
+      <div class="grid grid-cols-12 gap-8 mb-16">
+        <div class="col-span-4">
+          <h2 class="display text-5xl font-bold">Products</h2>
+        </div>
+        <div class="col-span-8 text-lg text-black/60">
+          Vertical takeoff and long-endurance platforms for logistics, surveillance, and tactical operations.
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-3 gap-px bg-black/10">
+        <!-- Product 1 -->
+        <div class="bg-white p-12 min-h-[400px] flex flex-col justify-between">
+          <div>
+            <div class="text-xs uppercase tracking-widest text-black/40 mb-4">Series PT</div>
+            <h3 class="display text-3xl font-bold mb-4">UAV Platforms</h3>
+            <p class="text-black/60">VTOL and fixed-wing systems for professional applications.</p>
+          </div>
+          <div class="flex gap-8 text-sm">
+            <div><span class="font-bold">100km</span> Range</div>
+            <div><span class="font-bold">50kg</span> Payload</div>
+          </div>
+        </div>
+        <!-- Product 2 -->
+        <div class="bg-white p-12 min-h-[400px] flex flex-col justify-between">
+          <div>
+            <div class="text-xs uppercase tracking-widest text-black/40 mb-4">Series EO</div>
+            <h3 class="display text-3xl font-bold mb-4">Payloads</h3>
+            <p class="text-black/60">Advanced imaging with AI-powered target tracking.</p>
+          </div>
+          <div class="flex gap-8 text-sm">
+            <div><span class="font-bold">4K/8K</span> Resolution</div>
+            <div><span class="font-bold">AI</span> Tracking</div>
+          </div>
+        </div>
+        <!-- Product 3 -->
+        <div class="bg-white p-12 min-h-[400px] flex flex-col justify-between">
+          <div>
+            <div class="text-xs uppercase tracking-widest text-black/40 mb-4">Series CU</div>
+            <h3 class="display text-3xl font-bold mb-4">Counter-UAS</h3>
+            <p class="text-black/60">Detection and mitigation for airspace security.</p>
+          </div>
+          <div class="flex gap-8 text-sm">
+            <div><span class="font-bold">360°</span> Coverage</div>
+            <div><span class="font-bold">5km</span> Range</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Case Studies: Data-focused -->
+  <section class="bg-black text-white py-24">
+    <div class="max-w-[1400px] mx-auto px-8">
+      <div class="grid grid-cols-12 gap-8 mb-16">
+        <div class="col-span-12">
+          <h2 class="display text-5xl font-bold">Proven Results</h2>
+        </div>
+      </div>
+      
+      <div class="grid grid-cols-3 gap-px bg-white/10">
+        <div class="bg-black p-12 min-h-[300px] flex flex-col justify-between">
+          <div class="text-xs uppercase tracking-widest text-white/40">Energy · Middle East</div>
+          <div>
+            <h3 class="display text-2xl font-bold mb-4">Pipeline Inspection</h3>
+            <div class="display text-5xl font-bold">85%</div>
+            <div class="text-sm text-white/60 mt-2">Cost reduction vs manual</div>
+          </div>
+        </div>
+        <div class="bg-black p-12 min-h-[300px] flex flex-col justify-between">
+          <div class="text-xs uppercase tracking-widest text-white/40">Security · South America</div>
+          <div>
+            <h3 class="display text-2xl font-bold mb-4">Border Surveillance</h3>
+            <div class="display text-5xl font-bold">99.7%</div>
+            <div class="text-sm text-white/60 mt-2">Uptime over 18 months</div>
+          </div>
+        </div>
+        <div class="bg-black p-12 min-h-[300px] flex flex-col justify-between">
+          <div class="text-xs uppercase tracking-widest text-white/40">Public Safety · Africa</div>
+          <div>
+            <h3 class="display text-2xl font-bold mb-4">Search & Rescue</h3>
+            <div class="display text-5xl font-bold">3min</div>
+            <div class="text-sm text-white/60 mt-2">Deploy time from case</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA: Bold type -->
+  <section class="py-32 border-t border-black/10">
+    <div class="max-w-[1400px] mx-auto px-8 text-center">
+      <h2 class="display text-7xl font-bold mb-8">Ready to deploy?</h2>
+      <p class="text-xl text-black/60 mb-12 max-w-2xl mx-auto">
+        Request a demonstration. Our team will contact you within 24 hours.
+      </p>
+      <button class="bg-black text-white display text-xl px-12 py-6">
+        Request Demo
+      </button>
+    </div>
+  </section>
+  
+  <!-- Footer: Minimal -->
+  <footer class="border-t border-black/10 py-12">
+    <div class="max-w-[1400px] mx-auto px-8 flex justify-between items-center">
+      <div class="display text-lg font-bold">SEEKDRONE</div>
+      <div class="text-sm text-black/40">© 2024. All rights reserved.</div>
+    </div>
+  </footer>
+  
+</body>
+</html>

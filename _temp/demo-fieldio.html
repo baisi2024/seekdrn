@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - Field.io Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Outfit', sans-serif; }
+    .mono { font-family: 'Space Mono', monospace; }
+    
+    /* Field.io signature: motion, particles, tech aesthetic */
+    .hero-gradient {
+      background: radial-gradient(ellipse at 30% 20%, rgba(0, 200, 255, 0.15) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(255, 100, 0, 0.1) 0%, transparent 50%),
+                  linear-gradient(180deg, #0a0a0f 0%, #0f0f18 100%);
+    }
+    
+    /* Animated grid lines */
+    .tech-grid {
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 20s linear infinite;
+    }
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+    
+    /* Glow effect */
+    .glow {
+      box-shadow: 0 0 60px rgba(0, 200, 255, 0.3);
+    }
+    
+    /* Particle dots */
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(0, 200, 255, 0.6);
+      border-radius: 50%;
+      animation: float 8s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+      50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+    }
+  </style>
+</head>
+<body class="bg-[#0a0a0f] text-white antialiased overflow-x-hidden">
+  
+  <!-- Navigation: Sleek, tech -->
+  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-black/30 border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+          </svg>
+        </div>
+        <span class="text-xl font-semibold tracking-tight">SeekDrone</span>
+      </div>
+      <div class="flex items-center gap-8">
+        <a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Products</a>
+        <a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Solutions</a>
+        <a href="#" class="text-sm text-white/60 hover:text-white transition-colors">Cases</a>
+        <button class="bg-cyan-500 hover:bg-cyan-400 text-black font-semibold px-6 py-3 rounded-lg transition-colors">
+          Request Demo
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero: Motion, particles, immersive -->
+  <section class="hero-gradient tech-grid min-h-screen relative overflow-hidden pt-20">
+    <!-- Particle field -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="particle" style="top: 20%; left: 10%;"></div>
+      <div class="particle" style="top: 30%; left: 80%; animation-delay: -2s;"></div>
+      <div class="particle" style="top: 60%; left: 20%; animation-delay: -4s;"></div>
+      <div class="particle" style="top: 70%; left: 70%; animation-delay: -6s;"></div>
+      <div class="particle" style="top: 40%; left: 50%; animation-delay: -3s;"></div>
+      <div class="particle" style="top: 80%; left: 40%; animation-delay: -5s;"></div>
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-8 py-32 relative z-10">
+      <div class="grid lg:grid-cols-2 gap-20 items-center">
+        <!-- Left: Content -->
+        <div>
+          <div class="inline-flex items-center gap-3 rounded-full px-5 py-2 mb-8 border border-cyan-500/30 bg-cyan-500/10">
+            <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+            <span class="mono text-xs text-cyan-400 uppercase tracking-wider">Live Systems Online</span>
+          </div>
+          
+          <h1 class="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-[1.05]">
+            <span class="text-white">Industrial</span><br/>
+            <span class="bg-gradient-to-r from-cyan-400 to-cyan-200 bg-clip-text text-transparent">Drones</span>
+          </h1>
+          
+          <p class="text-xl text-white/50 max-w-lg mb-12 leading-relaxed">
+            Professional UAV platforms and counter-drone systems. 
+            <span class="text-white/80">50,000+ flight hours.</span> 
+            <span class="text-white/80">120+ countries.</span>
+          </p>
+          
+          <div class="flex gap-6">
+            <button class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-10 py-5 rounded-xl transition-colors glow">
+              Launch Demo
+            </button>
+            <button class="border border-white/20 hover:border-white/40 text-white font-medium px-10 py-5 rounded-xl transition-colors">
+              Watch Video
+            </button>
+          </div>
+        </div>
+        
+        <!-- Right: Data visualization -->
+        <div class="relative">
+          <!-- Main data panel -->
+          <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 glow">
+            <div class="mono text-xs text-cyan-400 uppercase tracking-wider mb-6">System Status</div>
+            
+            <!-- Animated bars -->
+            <div class="space-y-6">
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm text-white/60">Flight Hours</span>
+                  <span class="mono text-cyan-400">50,247</span>
+                </div>
+                <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width: 85%;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm text-white/60">Active Units</span>
+                  <span class="mono text-cyan-400">1,284</span>
+                </div>
+                <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width: 72%;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-2">
+                  <span class="text-sm text-white/60">Countries</span>
+                  <span class="mono text-cyan-400">120</span>
+                </div>
+                <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full" style="width: 60%;"></div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Live indicator -->
+            <div class="mt-8 pt-6 border-t border-white/10 flex items-center gap-3">
+              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="mono text-xs text-white/40">All systems operational</span>
+            </div>
+          </div>
+          
+          <!-- Floating elements -->
+          <div class="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-transparent rounded-full blur-2xl"></div>
+          <div class="absolute -bottom-8 -left-8 w-40 h-40 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-full blur-2xl"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Products: Tech aesthetic -->
+  <section class="py-32 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-20">
+        <div class="mono text-xs text-cyan-400 uppercase tracking-wider mb-4">Product Matrix</div>
+        <h2 class="text-5xl md:text-6xl font-bold">Systems</h2>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Product 1 -->
+        <div class="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 hover:border-cyan-500/50 transition-all duration-500">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </div>
+          <div class="mono text-xs text-cyan-400 uppercase tracking-wider mb-3">Series PT</div>
+          <h3 class="text-2xl font-bold mb-4">UAV Platforms</h3>
+          <p class="text-white/50 mb-8">VTOL and fixed-wing systems for professional applications.</p>
+          <div class="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+            <div>
+              <div class="mono text-2xl font-bold text-cyan-400">100km</div>
+              <div class="text-xs text-white/40">Range</div>
+            </div>
+            <div>
+              <div class="mono text-2xl font-bold text-cyan-400">50kg</div>
+              <div class="text-xs text-white/40">Payload</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 hover:border-cyan-500/50 transition-all duration-500">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-500/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="3"/>
+              <circle cx="12" cy="12" r="8" stroke-dasharray="4 2"/>
+            </svg>
+          </div>
+          <div class="mono text-xs text-cyan-400 uppercase tracking-wider mb-3">Series EO</div>
+          <h3 class="text-2xl font-bold mb-4">Payloads</h3>
+          <p class="text-white/50 mb-8">Advanced imaging with AI-powered target tracking.</p>
+          <div class="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+            <div>
+              <div class="mono text-2xl font-bold text-cyan-400">4K/8K</div>
+              <div class="text-xs text-white/40">Resolution</div>
+            </div>
+            <div>
+              <div class="mono text-2xl font-bold text-cyan-400">AI</div>
+              <div class="text-xs text-white/40">Tracking</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 p-8 hover:border-cyan-500/50 transition-all duration-500">
+          <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-500/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <svg class="w-7 h-7 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="mono text-xs text-orange-400 uppercase tracking-wider mb-3">Series CU</div>
+          <h3 class="text-2xl font-bold mb-4">Counter-UAS</h3>
+          <p class="text-white/50 mb-8">Detection and mitigation for airspace security.</p>
+          <div class="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+            <div>
+              <div class="mono text-2xl font-bold text-orange-400">360°</div>
+              <div class="text-xs text-white/40">Coverage</div>
+            </div>
+            <div>
+              <div class="mono text-2xl font-bold text-orange-400">5km</div>
+              <div class="text-xs text-white/40">Range</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-32 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-orange-500/10"></div>
+    <div class="max-w-4xl mx-auto px-8 text-center relative z-10">
+      <h2 class="text-5xl md:text-6xl font-bold mb-8">Deploy Now</h2>
+      <p class="text-xl text-white/50 mb-12">
+        Request a demonstration. Response within 24 hours.
+      </p>
+      <button class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold px-12 py-6 rounded-xl transition-colors glow text-lg">
+        Request Demo
+      </button>
+    </div>
+  </section>
+  
+</body>
+</html>

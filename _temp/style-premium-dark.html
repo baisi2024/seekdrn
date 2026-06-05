@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - Premium Dark</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Satoshi:wght@400;500;600;700;900&display=swap');
+    * { box-sizing: border-box; }
+    body { font-family: 'Satoshi', -apple-system, sans-serif; }
+    
+    /* Premium gradient */
+    .premium-gradient {
+      background: 
+        radial-gradient(ellipse 100% 100% at 0% 0%, rgba(251, 146, 60, 0.08), transparent 50%),
+        radial-gradient(ellipse 80% 80% at 100% 100%, rgba(168, 85, 247, 0.05), transparent 50%),
+        linear-gradient(180deg, #09090b 0%, #0c0c0f 100%);
+    }
+    
+    /* Glow border */
+    .glow-border {
+      position: relative;
+    }
+    .glow-border::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(135deg, rgba(251, 146, 60, 0.3), rgba(168, 85, 247, 0.1), rgba(251, 146, 60, 0.1));
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .glow-border:hover::before {
+      opacity: 1;
+    }
+    
+    /* Smooth reveal */
+    @keyframes reveal {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      animation: reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
+    /* Shimmer */
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease infinite;
+    }
+    
+    /* Elegant card */
+    .elegant-card {
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .elegant-card:hover {
+      border-color: rgba(255,255,255,0.1);
+      transform: translateY(-4px);
+    }
+  </style>
+</head>
+<body class="bg-zinc-950 text-white antialiased">
+  
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-zinc-950/80 backdrop-blur-xl">
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center shadow-lg shadow-orange-500/20">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+          </svg>
+        </div>
+        <span class="text-lg font-semibold tracking-tight">SeekDrone</span>
+      </a>
+      
+      <div class="hidden md:flex items-center gap-1">
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">Products</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">Solutions</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">Cases</a>
+        <a href="#" class="px-4 py-2 text-sm text-zinc-400 hover:text-white hover:bg-white/5 rounded-lg transition-all">About</a>
+      </div>
+      
+      <button class="bg-white text-zinc-900 text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-zinc-100 transition-colors">
+        Get Started
+      </button>
+    </div>
+  </nav>
+  
+  <!-- Hero -->
+  <section class="min-h-screen pt-32 pb-20 px-6 premium-gradient relative overflow-hidden">
+    <!-- Ambient glow -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-gradient-to-b from-orange-500/10 via-purple-500/5 to-transparent rounded-full blur-3xl pointer-events-none"></div>
+    
+    <div class="max-w-6xl mx-auto relative z-10">
+      <div class="text-center max-w-4xl mx-auto mb-24">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 rounded-full px-5 py-2 mb-8 border border-white/10 bg-white/5">
+          <span class="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+          <span class="text-sm text-zinc-300">Enterprise-grade UAV systems</span>
+        </div>
+        
+        <!-- Headline -->
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-[1.05] reveal">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-zinc-400">
+            Industrial drones
+          </span>
+          <br/>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-500">
+            for critical missions
+          </span>
+        </h1>
+        
+        <p class="text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto mb-12 leading-relaxed reveal" style="animation-delay: 0.1s;">
+          Professional UAV platforms and counter-drone systems. Engineered for organizations that demand absolute reliability.
+        </p>
+        
+        <!-- CTA -->
+        <div class="flex flex-wrap justify-center gap-4 reveal" style="animation-delay: 0.2s;">
+          <button class="group bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold px-8 py-4 rounded-xl hover:from-orange-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-500/25">
+            Request Demo
+            <span class="inline-block ml-2 group-hover:translate-x-1 transition-transform">→</span>
+          </button>
+          <button class="bg-white/5 border border-white/10 text-white font-medium px-8 py-4 rounded-xl hover:bg-white/10 hover:border-white/20 transition-all">
+            View Products
+          </button>
+        </div>
+      </div>
+      
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto reveal" style="animation-delay: 0.3s;">
+        <div class="elegant-card rounded-2xl p-6 text-center glow-border">
+          <div class="text-3xl md:text-4xl font-bold mb-1 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">50K+</div>
+          <div class="text-sm text-zinc-500">Flight hours</div>
+        </div>
+        <div class="elegant-card rounded-2xl p-6 text-center glow-border">
+          <div class="text-3xl md:text-4xl font-bold mb-1 bg-gradient-to-r from-white to-zinc-400 bg-clip-text text-transparent">120</div>
+          <div class="text-sm text-zinc-500">Countries</div>
+        </div>
+        <div class="elegant-card rounded-2xl p-6 text-center glow-border">
+          <div class="text-3xl md:text-4xl font-bold mb-1 bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">130kg</div>
+          <div class="text-sm text-zinc-500">Max payload</div>
+        </div>
+        <div class="elegant-card rounded-2xl p-6 text-center glow-border">
+          <div class="text-3xl md:text-4xl font-bold mb-1 bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">1000km</div>
+          <div class="text-sm text-zinc-500">Max range</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Products -->
+  <section class="py-24 px-6 border-t border-white/5">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex items-end justify-between mb-16">
+        <div>
+          <div class="text-sm text-zinc-500 mb-3 uppercase tracking-wider">Products</div>
+          <h2 class="text-3xl md:text-4xl font-bold">Built for professionals</h2>
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="elegant-card rounded-2xl overflow-hidden glow-border group">
+          <div class="h-56 bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 flex items-center justify-center shimmer">
+            <svg class="w-20 h-20 text-zinc-600 group-hover:text-orange-500/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-orange-500 uppercase tracking-wider mb-2">Series PT</div>
+            <h3 class="text-xl font-semibold mb-2">VTOL Platforms</h3>
+            <p class="text-sm text-zinc-500 mb-4">Vertical takeoff and landing systems.</p>
+            <div class="flex gap-4 text-xs text-zinc-600">
+              <span>100km range</span>
+              <span>50kg payload</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="elegant-card rounded-2xl overflow-hidden glow-border group">
+          <div class="h-56 bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 flex items-center justify-center shimmer">
+            <svg class="w-20 h-20 text-zinc-600 group-hover:text-orange-500/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <circle cx="12" cy="12" r="3"/>
+              <circle cx="12" cy="12" r="8" stroke-dasharray="4 2"/>
+            </svg>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-orange-500 uppercase tracking-wider mb-2">Series EO</div>
+            <h3 class="text-xl font-semibold mb-2">Optical Systems</h3>
+            <p class="text-sm text-zinc-500 mb-4">AI-powered imaging payloads.</p>
+            <div class="flex gap-4 text-xs text-zinc-600">
+              <span>4K/8K</span>
+              <span>Thermal</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="elegant-card rounded-2xl overflow-hidden glow-border group">
+          <div class="h-56 bg-gradient-to-br from-zinc-800/50 to-zinc-900/50 flex items-center justify-center shimmer">
+            <svg class="w-20 h-20 text-zinc-600 group-hover:text-orange-500/50 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+            </svg>
+          </div>
+          <div class="p-6">
+            <div class="text-xs text-orange-500 uppercase tracking-wider mb-2">Series CU</div>
+            <h3 class="text-xl font-semibold mb-2">Counter-UAS</h3>
+            <p class="text-sm text-zinc-500 mb-4">Airspace security solutions.</p>
+            <div class="flex gap-4 text-xs text-zinc-600">
+              <span>360° detect</span>
+              <span>5km range</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-24 px-6 border-t border-white/5">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to get started?</h2>
+      <p class="text-zinc-400 mb-10">Schedule a demonstration with our team.</p>
+      <button class="bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold px-10 py-5 rounded-xl hover:from-orange-400 hover:to-orange-500 transition-all shadow-lg shadow-orange-500/25">
+        Request a Demo
+      </button>
+    </div>
+  </section>
+  
+</body>
+</html>

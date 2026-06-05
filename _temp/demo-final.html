@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - Industrial UAV Systems</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    .mono { font-family: 'IBM Plex Mono', 'Consolas', monospace; }
+    
+    /* Tech gradient - subtle, not overwhelming */
+    .hero-gradient {
+      background: 
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(37, 99, 235, 0.08), transparent),
+        linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+    
+    /* Subtle grid pattern */
+    .tech-grid {
+      background-image: 
+        linear-gradient(rgba(37, 99, 235, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    
+    /* Product card hover */
+    .product-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
+    }
+    
+    /* Data bar animation */
+    @keyframes dataFlow {
+      0% { width: 0%; }
+      100% { width: var(--target-width); }
+    }
+    .data-bar {
+      animation: dataFlow 1.2s ease-out 0.3s forwards;
+      width: 0;
+    }
+    
+    /* Spec table */
+    .spec-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .spec-row:last-child {
+      border-bottom: none;
+    }
+    
+    /* Language selector fix */
+    .lang-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.5rem center;
+      background-size: 1.2em 1.2em;
+      padding-right: 2rem;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+  
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+          </svg>
+        </div>
+        <span class="text-lg font-semibold tracking-tight">SeekDrone</span>
+      </a>
+      
+      <!-- Nav Links -->
+      <div class="hidden lg:flex items-center gap-8 text-sm font-medium">
+        <a href="#products" class="text-gray-600 hover:text-gray-900 transition-colors">Products</a>
+        <a href="#solutions" class="text-gray-600 hover:text-gray-900 transition-colors">Solutions</a>
+        <a href="#cases" class="text-gray-600 hover:text-gray-900 transition-colors">Case Studies</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Support</a>
+        <a href="#" class="text-gray-600 hover:text-gray-900 transition-colors">Where to Buy</a>
+      </div>
+      
+      <!-- Right Actions -->
+      <div class="flex items-center gap-3">
+        <!-- Language Selector - Fixed -->
+        <div class="relative">
+          <select id="lang-select" class="lang-select text-sm text-gray-600 border border-gray-200 rounded-lg pl-3 py-2 bg-white cursor-pointer hover:border-gray-300 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            <option value="en">EN</option>
+            <option value="ar">العربية</option>
+            <option value="es">ES</option>
+            <option value="fr">FR</option>
+            <option value="pt">PT</option>
+            <option value="id">ID</option>
+          </select>
+        </div>
+        <button class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors shadow-sm">
+          Request Demo
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero: Product-focused (DJI-style) -->
+  <section class="hero-gradient tech-grid">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-24">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        
+        <!-- Left: Product Image -->
+        <div class="relative order-2 lg:order-1">
+          <div class="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 rounded-2xl overflow-hidden border border-gray-200 shadow-lg">
+            <!-- Product placeholder -->
+            <div class="w-full h-full flex items-center justify-center">
+              <svg class="w-40 h-40 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5">
+                <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+            </div>
+          </div>
+          <!-- Play button -->
+          <div class="absolute inset-0 flex items-center justify-center order-2 lg:order-1">
+            <button class="w-16 h-16 rounded-full bg-white/95 flex items-center justify-center shadow-xl hover:bg-white transition-colors group" aria-label="Play video">
+              <svg class="w-6 h-6 text-blue-600 ml-0.5 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+              </svg>
+            </button>
+          </div>
+          <!-- Badge -->
+          <div class="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1.5 rounded-full">
+            NEW
+          </div>
+        </div>
+        
+        <!-- Right: Content -->
+        <div class="order-1 lg:order-2">
+          <div class="inline-flex items-center gap-2 rounded-full px-4 py-2 mb-6 border border-blue-200 bg-blue-50">
+            <span class="mono text-xs text-blue-700 uppercase tracking-wider font-medium">Industrial UAV Platform</span>
+          </div>
+          
+          <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-6 text-gray-900">
+            PT500 Series
+          </h1>
+          <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+            Long-endurance VTOL platform for professional applications. 
+            <strong class="text-gray-700">100km range</strong>, 
+            <strong class="text-gray-700">50kg payload</strong>, 
+            all-weather operation.
+          </p>
+          
+          <!-- Key Specs with data visualization -->
+          <div class="bg-white rounded-xl border border-gray-200 p-5 mb-8 shadow-sm">
+            <div class="mono text-xs text-gray-500 uppercase tracking-wider mb-4 font-medium">Performance Metrics</div>
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between mb-1.5">
+                  <span class="text-sm text-gray-600">Range</span>
+                  <span class="mono text-sm font-semibold text-blue-600">100km</span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-blue-600 to-blue-500 rounded-full data-bar" style="--target-width: 85%;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1.5">
+                  <span class="text-sm text-gray-600">Payload</span>
+                  <span class="mono text-sm font-semibold text-blue-600">50kg</span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-blue-600 to-blue-500 rounded-full data-bar" style="--target-width: 70%;"></div>
+                </div>
+              </div>
+              <div>
+                <div class="flex justify-between mb-1.5">
+                  <span class="text-sm text-gray-600">Endurance</span>
+                  <span class="mono text-sm font-semibold text-blue-600">4hr</span>
+                </div>
+                <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                  <div class="h-full bg-gradient-to-r from-blue-600 to-blue-500 rounded-full data-bar" style="--target-width: 60%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- CTA -->
+          <div class="flex flex-wrap gap-4">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-xl transition-colors shadow-sm flex items-center gap-2">
+              Request Demo
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+            <button class="bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium px-8 py-4 rounded-xl transition-colors">
+              Download Specs
+            </button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+  <!-- Trust Bar: Social proof (critical for B2B) -->
+  <section class="bg-gray-900 text-white py-10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
+        <div>
+          <div class="mono text-3xl md:text-4xl font-bold mb-1 text-blue-400">50,000+</div>
+          <div class="text-sm text-gray-400">Flight Hours</div>
+        </div>
+        <div>
+          <div class="mono text-3xl md:text-4xl font-bold mb-1 text-blue-400">120</div>
+          <div class="text-sm text-gray-400">Countries</div>
+        </div>
+        <div>
+          <div class="mono text-3xl md:text-4xl font-bold mb-1 text-blue-400">500+</div>
+          <div class="text-sm text-gray-400">Enterprise Clients</div>
+        </div>
+        <div>
+          <div class="mono text-3xl md:text-4xl font-bold mb-1 text-blue-400">24/7</div>
+          <div class="text-sm text-gray-400">Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Products -->
+  <section id="products" class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 lg:mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Product Lineup</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Professional UAV platforms, payloads, and counter-UAS systems for industrial applications.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+        
+        <!-- Product 1 -->
+        <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div class="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center relative">
+            <svg class="w-28 h-28 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5">
+              <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+            <div class="absolute bottom-3 left-3 right-3 flex gap-2">
+              <span class="bg-gray-900/80 backdrop-blur text-white text-xs px-2 py-1 rounded font-medium">VTOL</span>
+              <span class="bg-gray-900/80 backdrop-blur text-white text-xs px-2 py-1 rounded font-medium">Fixed-Wing</span>
+            </div>
+          </div>
+          <div class="p-5 lg:p-6">
+            <div class="mono text-xs text-blue-600 font-medium mb-2 uppercase tracking-wider">Series PT</div>
+            <h3 class="text-xl font-semibold mb-3">UAV Platforms</h3>
+            <p class="text-sm text-gray-600 mb-5">
+              Vertical takeoff and long-endurance platforms for logistics, surveillance, and tactical operations.
+            </p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Range</span>
+                <span class="text-sm font-medium">Up to 100km</span>
+              </div>
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Payload</span>
+                <span class="text-sm font-medium">5-50kg</span>
+              </div>
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Endurance</span>
+                <span class="text-sm font-medium">1-4 hours</span>
+              </div>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-blue-600 font-medium mt-5 hover:underline">
+              Learn More
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Product 2 -->
+        <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div class="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center relative">
+            <svg class="w-28 h-28 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5">
+              <circle cx="12" cy="12" r="3"/>
+              <circle cx="12" cy="12" r="8" stroke-dasharray="4 2"/>
+            </svg>
+            <div class="absolute bottom-3 left-3 right-3 flex gap-2">
+              <span class="bg-gray-900/80 backdrop-blur text-white text-xs px-2 py-1 rounded font-medium">EO/IR</span>
+              <span class="bg-gray-900/80 backdrop-blur text-white text-xs px-2 py-1 rounded font-medium">Thermal</span>
+            </div>
+          </div>
+          <div class="p-5 lg:p-6">
+            <div class="mono text-xs text-blue-600 font-medium mb-2 uppercase tracking-wider">Series EO</div>
+            <h3 class="text-xl font-semibold mb-3">Mission Payloads</h3>
+            <p class="text-sm text-gray-600 mb-5">
+              Advanced imaging systems with AI-powered target tracking and real-time analytics.
+            </p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Resolution</span>
+                <span class="text-sm font-medium">4K / 8K</span>
+              </div>
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Zoom</span>
+                <span class="text-sm font-medium">Up to 30x</span>
+              </div>
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Features</span>
+                <span class="text-sm font-medium">AI Tracking</span>
+              </div>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-blue-600 font-medium mt-5 hover:underline">
+              Learn More
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Product 3 -->
+        <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div class="aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-50 flex items-center justify-center relative">
+            <svg class="w-28 h-28 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="0.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+            <div class="absolute bottom-3 left-3 right-3 flex gap-2">
+              <span class="bg-orange-500/90 backdrop-blur text-white text-xs px-2 py-1 rounded font-medium">Inquire for Details</span>
+            </div>
+          </div>
+          <div class="p-5 lg:p-6">
+            <div class="mono text-xs text-blue-600 font-medium mb-2 uppercase tracking-wider">Series CU</div>
+            <h3 class="text-xl font-semibold mb-3">Counter-UAS</h3>
+            <p class="text-sm text-gray-600 mb-5">
+              Detection, tracking, and mitigation systems for airspace security.
+            </p>
+            <div class="border-t border-gray-100 pt-4">
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Coverage</span>
+                <span class="text-sm font-medium">360°</span>
+              </div>
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Range</span>
+                <span class="text-sm font-medium">Up to 5km</span>
+              </div>
+              <div class="spec-row">
+                <span class="text-sm text-gray-500">Response</span>
+                <span class="text-sm font-medium">&lt; 3 seconds</span>
+              </div>
+            </div>
+            <a href="#" class="inline-flex items-center gap-2 text-blue-600 font-medium mt-5 hover:underline">
+              Contact Sales
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+  
+  <!-- Solutions -->
+  <section id="solutions" class="py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 lg:mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Industry Solutions</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Tailored solutions for your industry.
+        </p>
+      </div>
+      
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+        <a href="#" class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-5 lg:p-6 transition-all border border-gray-200 hover:border-blue-200">
+          <div class="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors group-hover:scale-105">
+            <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Public Safety</h3>
+          <p class="text-sm text-gray-600">Search & Rescue</p>
+        </a>
+        
+        <a href="#" class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-5 lg:p-6 transition-all border border-gray-200 hover:border-blue-200">
+          <div class="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors group-hover:scale-105">
+            <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Energy</h3>
+          <p class="text-sm text-gray-600">Inspection</p>
+        </a>
+        
+        <a href="#" class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-5 lg:p-6 transition-all border border-gray-200 hover:border-blue-200">
+          <div class="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors group-hover:scale-105">
+            <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <path d="M3 9h18M9 21V9"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Surveying</h3>
+          <p class="text-sm text-gray-600">Mapping & GIS</p>
+        </a>
+        
+        <a href="#" class="group bg-gray-50 hover:bg-gray-100 rounded-xl p-5 lg:p-6 transition-all border border-gray-200 hover:border-blue-200">
+          <div class="w-11 h-11 rounded-lg bg-blue-100 flex items-center justify-center mb-4 group-hover:bg-blue-200 transition-colors group-hover:scale-105">
+            <svg class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Security</h3>
+          <p class="text-sm text-gray-600">Defense</p>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Case Studies: Critical for trust -->
+  <section id="cases" class="py-16 lg:py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-12 lg:mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Case Studies</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Real deployments. Real outcomes.
+        </p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+        <!-- Case 1 -->
+        <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div class="aspect-video bg-gradient-to-br from-gray-200 to-gray-100 relative">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition-colors cursor-pointer">
+                <svg class="w-5 h-5 text-blue-600 ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="absolute top-3 left-3">
+              <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">Video</span>
+            </div>
+          </div>
+          <div class="p-5 lg:p-6">
+            <div class="text-xs text-gray-500 mb-2">Energy · Middle East</div>
+            <h3 class="font-semibold mb-2">Pipeline Inspection</h3>
+            <p class="text-sm text-gray-600 mb-4">
+              500km pipeline surveyed in 3 days.
+            </p>
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100/50 rounded-lg p-4 text-center border border-blue-100">
+              <div class="mono text-2xl font-bold text-blue-600 mb-0.5">85%</div>
+              <div class="text-xs text-gray-600">Cost reduction</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Case 2 -->
+        <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div class="aspect-video bg-gradient-to-br from-gray-200 to-gray-100 relative">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition-colors cursor-pointer">
+                <svg class="w-5 h-5 text-blue-600 ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="absolute top-3 left-3">
+              <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">Video</span>
+            </div>
+          </div>
+          <div class="p-5 lg:p-6">
+            <div class="text-xs text-gray-500 mb-2">Security · South America</div>
+            <h3 class="font-semibold mb-2">Border Surveillance</h3>
+            <p class="text-sm text-gray-600 mb-4">
+              24/7 perimeter monitoring.
+            </p>
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100/50 rounded-lg p-4 text-center border border-blue-100">
+              <div class="mono text-2xl font-bold text-blue-600 mb-0.5">99.7%</div>
+              <div class="text-xs text-gray-600">Uptime</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Case 3 -->
+        <div class="product-card bg-white rounded-2xl overflow-hidden border border-gray-200">
+          <div class="aspect-video bg-gradient-to-br from-gray-200 to-gray-100 relative">
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-12 h-12 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition-colors cursor-pointer">
+                <svg class="w-5 h-5 text-blue-600 ml-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6.3 2.841A1.5 1.5 0 004 4.11V15.89a1.5 1.5 0 002.3 1.269l9.344-5.89a1.5 1.5 0 000-2.538L6.3 2.84z"/>
+                </svg>
+              </div>
+            </div>
+            <div class="absolute top-3 left-3">
+              <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded font-medium">Video</span>
+            </div>
+          </div>
+          <div class="p-5 lg:p-6">
+            <div class="text-xs text-gray-500 mb-2">Public Safety · Africa</div>
+            <h3 class="font-semibold mb-2">Search & Rescue</h3>
+            <p class="text-sm text-gray-600 mb-4">
+              Rapid emergency deployment.
+            </p>
+            <div class="bg-gradient-to-r from-blue-50 to-blue-100/50 rounded-lg p-4 text-center border border-blue-100">
+              <div class="mono text-2xl font-bold text-blue-600 mb-0.5">3min</div>
+              <div class="text-xs text-gray-600">Deploy time</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA: Single conversion goal -->
+  <section class="py-16 lg:py-24 bg-gray-900 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to deploy?</h2>
+      <p class="text-gray-400 mb-10 max-w-xl mx-auto text-lg">
+        Request a demonstration. Our team will contact you within 24 hours.
+      </p>
+      
+      <form class="max-w-2xl mx-auto text-left" id="demo-form">
+        <div class="grid md:grid-cols-2 gap-5 mb-5">
+          <div>
+            <label for="name" class="block text-sm text-gray-400 mb-2">Full Name *</label>
+            <input type="text" id="name" name="name" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-500" placeholder="John Smith">
+          </div>
+          <div>
+            <label for="company" class="block text-sm text-gray-400 mb-2">Company *</label>
+            <input type="text" id="company" name="company" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-500" placeholder="Company Name">
+          </div>
+          <div>
+            <label for="email" class="block text-sm text-gray-400 mb-2">Email *</label>
+            <input type="email" id="email" name="email" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-500" placeholder="john@company.com">
+          </div>
+          <div>
+            <label for="country" class="block text-sm text-gray-400 mb-2">Country *</label>
+            <select id="country" name="country" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors">
+              <option value="">Select country</option>
+              <option value="SA">Saudi Arabia</option>
+              <option value="AE">United Arab Emirates</option>
+              <option value="BR">Brazil</option>
+              <option value="NG">Nigeria</option>
+              <option value="ID">Indonesia</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 rounded-xl transition-colors shadow-sm flex items-center justify-center gap-2">
+          Submit Request
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <p class="text-xs text-gray-500 mt-4 text-center">
+          By submitting, you agree to our privacy policy.
+        </p>
+      </form>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer class="bg-gray-900 border-t border-gray-800 py-12 lg:py-16 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-10">
+        <div class="col-span-2">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center">
+              <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+            </div>
+            <span class="font-semibold">SeekDrone</span>
+          </div>
+          <p class="text-sm text-gray-400 mb-4">Industrial UAV systems for critical operations.</p>
+          <p class="text-sm text-gray-500">© 2024 SeekDrone. All rights reserved.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-sm">Products</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">UAV Platforms</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Payloads</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Ground Stations</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Counter-UAS</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-sm">Solutions</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Public Safety</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Energy</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Surveying</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold mb-4 text-sm">Support</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Documentation</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Training</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Where to Buy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <script>
+    // Language selector handler
+    document.getElementById('lang-select').addEventListener('change', function(e) {
+      const lang = e.target.value;
+      console.log('Language changed to:', lang);
+      // In production, this would redirect or update the page
+    });
+    
+    // Form handler
+    document.getElementById('demo-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      console.log('Form submitted:', Object.fromEntries(formData));
+      alert('Thank you! We will contact you within 24 hours.');
+    });
+  </script>
+  
+</body>
+</html>

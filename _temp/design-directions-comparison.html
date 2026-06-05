@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - 3 Design Directions Comparison</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-zinc-900 text-white p-8">
+  
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-4xl font-bold mb-4">SeekDrone 设计方向对比</h1>
+    <p class="text-zinc-400 mb-12">3 种差异化设计哲学，请选择你偏好的方向</p>
+    
+    <div class="grid lg:grid-cols-3 gap-8">
+      
+      <!-- Pentagram -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-zinc-700">
+          <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">方向 A</div>
+          <h2 class="text-2xl font-bold mb-2">Pentagram 信息建筑</h2>
+          <p class="text-sm text-zinc-400">Paula Scher / Michael Bierut</p>
+        </div>
+        <div class="aspect-[4/3]">
+          <iframe src="demo-pentagram.html" class="w-full h-full pointer-events-none"></iframe>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">气质：</strong>理性、权威、清晰、专业
+          </div>
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">特征：</strong>大字号标题、网格系统、数据可视化、双色配色
+          </div>
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">适合：</strong>技术决策者、政府客户、需要快速建立信任
+          </div>
+          <button onclick="window.open('demo-pentagram.html', '_blank')" class="w-full bg-white text-zinc-900 py-3 rounded-lg font-medium hover:bg-zinc-100 transition-colors">
+            查看完整版
+          </button>
+        </div>
+      </div>
+      
+      <!-- Field.io -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-zinc-700">
+          <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">方向 B</div>
+          <h2 class="text-2xl font-bold mb-2">Field.io 运动诗学</h2>
+          <p class="text-sm text-zinc-400">伦敦数字艺术工作室</p>
+        </div>
+        <div class="aspect-[4/3]">
+          <iframe src="demo-fieldio.html" class="w-full h-full pointer-events-none"></iframe>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">气质：</strong>动感、沉浸、技术美学、先锋
+          </div>
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">特征：</strong>粒子动画、深色背景、数据可视化、技术感
+          </div>
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">适合：</strong>品牌建设、差异化、年轻决策者
+          </div>
+          <button onclick="window.open('demo-fieldio.html', '_blank')" class="w-full bg-cyan-500 text-white py-3 rounded-lg font-medium hover:bg-cyan-400 transition-colors">
+            查看完整版
+          </button>
+        </div>
+      </div>
+      
+      <!-- Kenya Hara -->
+      <div class="bg-zinc-800 rounded-2xl overflow-hidden">
+        <div class="p-6 border-b border-zinc-700">
+          <div class="text-xs uppercase tracking-wider text-zinc-500 mb-2">方向 C</div>
+          <h2 class="text-2xl font-bold mb-2">Kenya Hara 东方极简</h2>
+          <p class="text-sm text-zinc-400">原研哉（无印良品艺术总监）</p>
+        </div>
+        <div class="aspect-[4/3]">
+          <iframe src="demo-kenyahara.html" class="w-full h-full pointer-events-none"></iframe>
+        </div>
+        <div class="p-6 space-y-4">
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">气质：</strong>温润、克制、精致、品质
+          </div>
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">特征：</strong>大量留白、自然材质感、低饱和配色、衬线字体
+          </div>
+          <div class="text-sm text-zinc-300">
+            <strong class="text-white">适合：</strong>高单价产品、东方市场、品质感优先
+          </div>
+          <button onclick="window.open('demo-kenyahara.html', '_blank')" class="w-full bg-stone-600 text-white py-3 rounded-lg font-medium hover:bg-stone-500 transition-colors">
+            查看完整版
+          </button>
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="mt-16 text-center">
+      <p class="text-zinc-400 mb-8">选择一个方向，或告诉我你想混合哪些特点</p>
+      <div class="flex justify-center gap-4">
+        <button class="bg-white text-zinc-900 px-8 py-4 rounded-lg font-medium">选择方向 A</button>
+        <button class="bg-cyan-500 text-white px-8 py-4 rounded-lg font-medium">选择方向 B</button>
+        <button class="bg-stone-600 text-white px-8 py-4 rounded-lg font-medium">选择方向 C</button>
+      </div>
+    </div>
+  </div>
+  
+</body>
+</html>

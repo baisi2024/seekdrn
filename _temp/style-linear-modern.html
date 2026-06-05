@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SeekDrone - Linear Style</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+    * { box-sizing: border-box; }
+    body { font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif; }
+    
+    /* Smooth gradient mesh */
+    .gradient-mesh {
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(120, 119, 198, 0.15), transparent),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(74, 222, 128, 0.1), transparent),
+        radial-gradient(ellipse 50% 80% at 50% 100%, rgba(56, 189, 248, 0.08), transparent);
+    }
+    
+    /* Glass card */
+    .glass {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+    }
+    
+    /* Subtle noise */
+    .noise::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+    
+    /* Smooth animation */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float { animation: float 6s ease-in-out infinite; }
+    
+    /* Gradient text */
+    .gradient-text {
+      background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Hover lift */
+    .hover-lift {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-neutral-50 text-neutral-900 antialiased">
+  
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2.5">
+        <div class="w-8 h-8 bg-neutral-900 rounded-[7px] flex items-center justify-center">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+          </svg>
+        </div>
+        <span class="text-base font-semibold">SeekDrone</span>
+      </a>
+      
+      <div class="hidden md:flex items-center gap-1">
+        <a href="#" class="px-4 py-2 text-sm text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-all">Products</a>
+        <a href="#" class="px-4 py-2 text-sm text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-all">Solutions</a>
+        <a href="#" class="px-4 py-2 text-sm text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-all">Cases</a>
+        <a href="#" class="px-4 py-2 text-sm text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100 rounded-lg transition-all">About</a>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <button class="text-sm font-medium text-neutral-600 hover:text-neutral-900 transition-colors">Sign in</button>
+        <button class="bg-neutral-900 hover:bg-neutral-800 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+          Get Started
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero -->
+  <section class="min-h-screen pt-32 pb-20 px-6 gradient-mesh noise relative overflow-hidden">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center max-w-4xl mx-auto mb-20">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 bg-white border border-neutral-200 rounded-full px-4 py-1.5 mb-8 shadow-sm">
+          <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
+          <span class="text-xs font-medium text-neutral-600">Now available in 120+ countries</span>
+        </div>
+        
+        <!-- Headline -->
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6 gradient-text leading-[1.1]">
+          Industrial drones<br/>that actually work
+        </h1>
+        
+        <p class="text-lg md:text-xl text-neutral-500 max-w-2xl mx-auto mb-10 leading-relaxed">
+          Professional UAV platforms and counter-drone systems for organizations that can't afford to fail.
+        </p>
+        
+        <!-- CTA -->
+        <div class="flex flex-wrap justify-center gap-4">
+          <button class="bg-neutral-900 hover:bg-neutral-800 text-white font-medium px-8 py-4 rounded-xl transition-colors shadow-lg shadow-neutral-900/10">
+            Start free trial
+          </button>
+          <button class="bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-900 font-medium px-8 py-4 rounded-xl transition-colors">
+            Watch demo
+          </button>
+        </div>
+      </div>
+      
+      <!-- Feature Grid -->
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <div class="glass rounded-2xl p-6 hover-lift">
+          <div class="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-2">VTOL Platforms</h3>
+          <p class="text-sm text-neutral-500">Vertical takeoff and landing for any terrain.</p>
+        </div>
+        
+        <div class="glass rounded-2xl p-6 hover-lift">
+          <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <circle cx="12" cy="12" r="8" stroke-dasharray="4 2"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-2">Smart Payloads</h3>
+          <p class="text-sm text-neutral-500">AI-powered imaging and detection systems.</p>
+        </div>
+        
+        <div class="glass rounded-2xl p-6 hover-lift">
+          <div class="w-10 h-10 bg-sky-100 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-sky-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-2">Counter-UAS</h3>
+          <p class="text-sm text-neutral-500">Complete airspace security solutions.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Floating elements -->
+    <div class="absolute top-1/4 left-10 w-64 h-64 bg-gradient-to-br from-violet-200/30 to-transparent rounded-full blur-3xl float"></div>
+    <div class="absolute bottom-1/4 right-10 w-80 h-80 bg-gradient-to-br from-emerald-200/20 to-transparent rounded-full blur-3xl float" style="animation-delay: -3s;"></div>
+  </section>
+  
+  <!-- Stats -->
+  <section class="py-20 border-t border-neutral-200 bg-white">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">50K+</div>
+          <div class="text-sm text-neutral-500">Flight hours</div>
+        </div>
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">120</div>
+          <div class="text-sm text-neutral-500">Countries</div>
+        </div>
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">99.9%</div>
+          <div class="text-sm text-neutral-500">Reliability</div>
+        </div>
+        <div>
+          <div class="text-4xl md:text-5xl font-bold mb-2">24/7</div>
+          <div class="text-sm text-neutral-500">Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="py-20 bg-neutral-900 text-white">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to elevate your operations?</h2>
+      <p class="text-neutral-400 mb-8">Join hundreds of organizations using SeekDrone.</p>
+      <button class="bg-white hover:bg-neutral-100 text-neutral-900 font-medium px-8 py-4 rounded-xl transition-colors">
+        Get started for free
+      </button>
+    </div>
+  </section>
+  
+</body>
+</html>
