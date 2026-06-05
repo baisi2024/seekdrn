@@ -1,5 +1,6 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useLocale } from 'next-intl'
 import { useRouter, usePathname } from 'next/navigation'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
@@ -20,6 +21,20 @@ export function LanguageSwitcher() {
   const locale = useLocale()
   const router = useRouter()
   const pathname = usePathname()
+  const [enabledLocales, setEnabledLocales] = useState(Object.keys(LOCALE_NAMES))
+
+  useEffect(() => {
+    async function fetchSettings() {
+      try {
+        const res = await fetch('/api/site-settings')
+        const data = await res.json()
+        if (data.enabled_languages) {
+          setEnabledLocales(data.enabled_languages)
+        }
+      } catch {}
+    }
+    fetchSettings()
+  }, [])
 
   const switchLocale = (newLocale: string) => {
     const segments = pathname.split('/')
@@ -27,13 +42,18 @@ export function LanguageSwitcher() {
     router.push(segments.join('/'))
   }
 
+  // Filter locales based on enabled languages
+  const availableLocales = Object.entries(LOCALE_NAMES).filter(([code]) =>
+    enabledLocales.includes(code)
+  )
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="h-8 w-8" />}>
         <Globe className="h-4 w-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {Object.entries(LOCALE_NAMES).map(([code, name]) => (
+        {availableLocales.map(([code, name]) => (
           <DropdownMenuItem
             key={code}
             onClick={() => switchLocale(code)}
