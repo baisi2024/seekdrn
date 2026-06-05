@@ -1,30 +1,30 @@
 {
   "nav": {
-    "products": "Products",
-    "solutions": "Solutions",
-    "caseStudies": "Case Studies",
-    "support": "Support",
-    "requestDemo": "Request Demo"
+    "products": "المنتجات",
+    "solutions": "الحلول",
+    "caseStudies": "دراسات الحالة",
+    "support": "الدعم",
+    "requestDemo": "طلب عرض توضيحي"
   },
   "form": {
-    "fullName": "Full Name",
-    "company": "Company",
-    "email": "Email",
-    "country": "Country",
-    "applicationInterest": "Application Interest",
-    "submit": "Submit",
-    "submitting": "Submitting..."
+    "fullName": "الاسم الكامل",
+    "company": "الشركة",
+    "email": "البريد الإلكتروني",
+    "country": "الدولة",
+    "applicationInterest": "مجال التطبيق",
+    "submit": "إرسال",
+    "submitting": "جارٍ الإرسال..."
   },
   "cta": {
-    "requestDemo": "Request a Demo",
-    "downloadSpec": "Download Spec",
-    "learnMore": "Learn More",
-    "inquireAssessment": "Inquire for Assessment"
+    "requestDemo": "طلب عرض توضيحي",
+    "downloadSpec": "تحميل المواصفات",
+    "learnMore": "معرفة المزيد",
+    "inquireAssessment": "استفسار للتقييم"
   },
   "error": {
-    "required": "This field is required",
-    "invalidEmail": "Please enter a valid email",
-    "submitFailed": "Submission failed. Please try again."
+    "required": "هذا الحقل مطلوب",
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صالح",
+    "submitFailed": "فشل الإرسال. يرجى المحاولة مرة أخرى."
   },
   "language": {
     "en": "English",
@@ -34,5 +34,8 @@
     "pt": "Português",
     "id": "Bahasa Indonesia",
     "zh": "中文"
+  },
+  "footer": {
+    "rights": "جميع الحقوق محفوظة."
   }
 }

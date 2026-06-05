@@ -1,29 +1,29 @@
 {
   "hero": {
-    "title": "Industrial UAVs, Tested Where It Matters Most",
-    "subtitle": "Battle-proven drone platforms and counter-UAS solutions for defense, security, and critical infrastructure.",
-    "cta": "Request a Demo"
+    "title": "工业级无人机，在最关键的环境中经过实战验证",
+    "subtitle": "经实战验证的无人机平台和反无人机解决方案，服务于国防、安全和关键基础设施领域。",
+    "cta": "申请演示"
   },
   "trustBar": {
-    "flightHours": "Flight Hours",
-    "countries": "Countries",
-    "enterpriseClients": "Enterprise Clients",
-    "support": "Support"
+    "flightHours": "飞行小时",
+    "countries": "国家",
+    "enterpriseClients": "企业客户",
+    "support": "支持"
   },
   "products": {
-    "title": "Our Products",
-    "viewAll": "View All Products"
+    "title": "我们的产品",
+    "viewAll": "查看所有产品"
   },
   "solutions": {
-    "title": "Industry Solutions"
+    "title": "行业解决方案"
   },
   "cases": {
-    "title": "Case Studies",
-    "viewAll": "View All Cases"
+    "title": "案例研究",
+    "viewAll": "查看所有案例"
   },
   "ctaSection": {
-    "title": "Ready to See Our Solutions in Action?",
-    "subtitle": "Schedule a live demonstration with our team.",
-    "button": "Request a Demo"
+    "title": "准备好见证我们的解决方案了吗？",
+    "subtitle": "与我们的团队预约现场演示。",
+    "button": "申请演示"
   }
 }

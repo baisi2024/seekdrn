@@ -1,18 +1,18 @@
 {
-  "title": "Case Studies",
+  "title": "دراسات الحالة",
   "filter": {
-    "all": "All Industries",
-    "publicSafety": "Public Safety",
-    "energy": "Energy",
-    "surveying": "Surveying",
-    "environmental": "Environmental",
-    "cuas": "Counter-UAS"
+    "all": "جميع الصناعات",
+    "publicSafety": "السلامة العامة",
+    "energy": "الطاقة",
+    "surveying": "المسح",
+    "environmental": "البيئة",
+    "cuas": "مكافحة الطائرات بدون طيار"
   },
-  "background": "Background",
-  "challenge": "Challenge",
-  "solution": "Solution",
-  "results": "Results",
-  "clientQuote": "Client Testimonial",
-  "fieldFootage": "Field Footage",
-  "relatedProducts": "Related Products"
+  "background": "الخلفية",
+  "challenge": "التحدي",
+  "solution": "الحل",
+  "results": "النتائج",
+  "clientQuote": "شهادة العميل",
+  "fieldFootage": "لقطات ميدانية",
+  "relatedProducts": "المنتجات ذات الصلة"
 }

@@ -1,18 +1,18 @@
 {
-  "title": "Case Studies",
+  "title": "案例研究",
   "filter": {
-    "all": "All Industries",
-    "publicSafety": "Public Safety",
-    "energy": "Energy",
-    "surveying": "Surveying",
-    "environmental": "Environmental",
-    "cuas": "Counter-UAS"
+    "all": "所有行业",
+    "publicSafety": "公共安全",
+    "energy": "能源",
+    "surveying": "测绘",
+    "environmental": "环境",
+    "cuas": "反无人机系统"
   },
-  "background": "Background",
-  "challenge": "Challenge",
-  "solution": "Solution",
-  "results": "Results",
-  "clientQuote": "Client Testimonial",
-  "fieldFootage": "Field Footage",
-  "relatedProducts": "Related Products"
+  "background": "背景",
+  "challenge": "挑战",
+  "solution": "解决方案",
+  "results": "成果",
+  "clientQuote": "客户评价",
+  "fieldFootage": "现场影像",
+  "relatedProducts": "相关产品"
 }

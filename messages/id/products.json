@@ -1,16 +1,16 @@
 {
-  "title": "Products",
+  "title": "Produk",
   "filter": {
-    "all": "All",
-    "uav": "UAV Platforms",
-    "payload": "Payloads",
-    "cuas": "Counter-UAS",
-    "ground_control": "Ground Control"
+    "all": "Semua",
+    "uav": "Platform UAV",
+    "payload": "Muatan",
+    "cuas": "Contra-UAS",
+    "ground_control": "Kontrol Darat"
   },
-  "specs": "Specifications",
-  "advantages": "Core Advantages",
-  "capabilities": "Core Capabilities",
-  "applications": "Applications",
-  "relatedCases": "Related Cases",
-  "relatedProducts": "Related Products"
+  "specs": "Spesifikasi",
+  "advantages": "Keunggulan Utama",
+  "capabilities": "Kemampuan Utama",
+  "applications": "Aplikasi",
+  "relatedCases": "Kasus Terkait",
+  "relatedProducts": "Produk Terkait"
 }

@@ -1,29 +1,29 @@
 {
   "hero": {
-    "title": "Industrial UAVs, Tested Where It Matters Most",
-    "subtitle": "Battle-proven drone platforms and counter-UAS solutions for defense, security, and critical infrastructure.",
-    "cta": "Request a Demo"
+    "title": "UAV Industri, Teruji Di Mana Paling Penting",
+    "subtitle": "Platform drone yang terbukti dalam pertempuran dan solusi anti-UAS untuk pertahanan, keamanan, dan infrastruktur kritis.",
+    "cta": "Minta Demo"
   },
   "trustBar": {
-    "flightHours": "Flight Hours",
-    "countries": "Countries",
-    "enterpriseClients": "Enterprise Clients",
-    "support": "Support"
+    "flightHours": "Jam Terbang",
+    "countries": "Negara",
+    "enterpriseClients": "Klien Perusahaan",
+    "support": "Dukungan"
   },
   "products": {
-    "title": "Our Products",
-    "viewAll": "View All Products"
+    "title": "Produk Kami",
+    "viewAll": "Lihat Semua Produk"
   },
   "solutions": {
-    "title": "Industry Solutions"
+    "title": "Solusi Industri"
   },
   "cases": {
-    "title": "Case Studies",
-    "viewAll": "View All Cases"
+    "title": "Studi Kasus",
+    "viewAll": "Lihat Semua Kasus"
   },
   "ctaSection": {
-    "title": "Ready to See Our Solutions in Action?",
-    "subtitle": "Schedule a live demonstration with our team.",
-    "button": "Request a Demo"
+    "title": "Siap Melihat Solusi Kami Beraksi?",
+    "subtitle": "Jadwalkan demonstrasi langsung dengan tim kami.",
+    "button": "Minta Demo"
   }
 }

@@ -1,7 +1,7 @@
 {
-  "challenge": "Challenge",
-  "solution": "Solution",
-  "workflow": "Workflow",
-  "keyMetrics": "Key Metrics",
-  "relatedCases": "Related Cases"
+  "challenge": "Tantangan",
+  "solution": "Solusi",
+  "workflow": "Alur Kerja",
+  "keyMetrics": "Metrik Utama",
+  "relatedCases": "Kasus Terkait"
 }

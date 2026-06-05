@@ -1,29 +1,29 @@
 {
   "hero": {
-    "title": "Industrial UAVs, Tested Where It Matters Most",
-    "subtitle": "Battle-proven drone platforms and counter-UAS solutions for defense, security, and critical infrastructure.",
-    "cta": "Request a Demo"
+    "title": "الطائرات بدون طيار الصناعية، تم اختبارها حيث يكون الأمر الأكثر أهمية",
+    "subtitle": "منصات طائرات بدون طيار مثبتة في المعارك وحلول مكافحة الطائرات بدون طيار للدفاع والأمن والبنية التحتية الحيوية.",
+    "cta": "طلب عرض توضيحي"
   },
   "trustBar": {
-    "flightHours": "Flight Hours",
-    "countries": "Countries",
-    "enterpriseClients": "Enterprise Clients",
-    "support": "Support"
+    "flightHours": "ساعات الطيران",
+    "countries": "الدول",
+    "enterpriseClients": "عملاء المؤسسات",
+    "support": "الدعم"
   },
   "products": {
-    "title": "Our Products",
-    "viewAll": "View All Products"
+    "title": "منتجاتنا",
+    "viewAll": "عرض جميع المنتجات"
   },
   "solutions": {
-    "title": "Industry Solutions"
+    "title": "حلول الصناعة"
   },
   "cases": {
-    "title": "Case Studies",
-    "viewAll": "View All Cases"
+    "title": "دراسات الحالة",
+    "viewAll": "عرض جميع الحالات"
   },
   "ctaSection": {
-    "title": "Ready to See Our Solutions in Action?",
-    "subtitle": "Schedule a live demonstration with our team.",
-    "button": "Request a Demo"
+    "title": "هل أنت مستعد لرؤية حلولنا في العمل؟",
+    "subtitle": "جدولة عرض توضيحي مباشر مع فريقنا.",
+    "button": "طلب عرض توضيحي"
   }
 }

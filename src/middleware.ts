@@ -43,12 +43,16 @@ export async function middleware(request: NextRequest) {
     if (!user) {
       return NextResponse.redirect(new URL('/admin/login', request.url))
     }
-    return NextResponse.next()
+    const response = NextResponse.next()
+    response.headers.set('x-pathname', pathname)
+    return response
   }
 
   // /admin and /api paths don't go through intl
   if (pathname.startsWith('/admin') || pathname.startsWith('/api')) {
-    return NextResponse.next()
+    const response = NextResponse.next()
+    response.headers.set('x-pathname', pathname)
+    return response
   }
 
   // Chinese language conditional logic

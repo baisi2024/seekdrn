@@ -216,6 +216,7 @@ export default async function HomePage({
           </p>
           <Button
             render={<Link href="#demo-form" />}
+            nativeButton={false}
             size="lg"
             className="bg-white text-blue-700 hover:bg-blue-50"
           >

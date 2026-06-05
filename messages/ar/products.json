@@ -1,16 +1,16 @@
 {
-  "title": "Products",
+  "title": "المنتجات",
   "filter": {
-    "all": "All",
-    "uav": "UAV Platforms",
-    "payload": "Payloads",
-    "cuas": "Counter-UAS",
-    "ground_control": "Ground Control"
+    "all": "الكل",
+    "uav": "منصات الطائرات بدون طيار",
+    "payload": "الحمولات",
+    "cuas": "مكافحة الطائرات بدون طيار",
+    "ground_control": "التحكم الأرضي"
   },
-  "specs": "Specifications",
-  "advantages": "Core Advantages",
-  "capabilities": "Core Capabilities",
-  "applications": "Applications",
-  "relatedCases": "Related Cases",
-  "relatedProducts": "Related Products"
+  "specs": "المواصفات",
+  "advantages": "المزايا الأساسية",
+  "capabilities": "القدرات الأساسية",
+  "applications": "التطبيقات",
+  "relatedCases": "الحالات ذات الصلة",
+  "relatedProducts": "المنتجات ذات الصلة"
 }

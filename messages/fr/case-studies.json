@@ -1,18 +1,18 @@
 {
-  "title": "Case Studies",
+  "title": "Études de Cas",
   "filter": {
-    "all": "All Industries",
-    "publicSafety": "Public Safety",
-    "energy": "Energy",
-    "surveying": "Surveying",
-    "environmental": "Environmental",
-    "cuas": "Counter-UAS"
+    "all": "Toutes les Industries",
+    "publicSafety": "Sécurité Publique",
+    "energy": "Énergie",
+    "surveying": "Arpentage",
+    "environmental": "Environnement",
+    "cuas": "Anti-UAS"
   },
-  "background": "Background",
-  "challenge": "Challenge",
+  "background": "Contexte",
+  "challenge": "Défi",
   "solution": "Solution",
-  "results": "Results",
-  "clientQuote": "Client Testimonial",
-  "fieldFootage": "Field Footage",
-  "relatedProducts": "Related Products"
+  "results": "Résultats",
+  "clientQuote": "Témoignage Client",
+  "fieldFootage": "Images Terrain",
+  "relatedProducts": "Produits Connexes"
 }

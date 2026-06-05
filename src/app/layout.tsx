@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { GoogleTagManager } from '@next/third-parties/google'
+import './globals.css'
 
 export const metadata: Metadata = {
   title: 'SeekDrone - Industrial UAV Solutions',
@@ -12,9 +13,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <>
-      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
-      {children}
-    </>
+    <html lang="en" dir="ltr">
+      <body className="font-sans antialiased">
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
+        {children}
+      </body>
+    </html>
   )
 }

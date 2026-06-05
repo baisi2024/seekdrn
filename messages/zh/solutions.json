@@ -1,7 +1,7 @@
 {
-  "challenge": "Challenge",
-  "solution": "Solution",
-  "workflow": "Workflow",
-  "keyMetrics": "Key Metrics",
-  "relatedCases": "Related Cases"
+  "challenge": "挑战",
+  "solution": "解决方案",
+  "workflow": "工作流程",
+  "keyMetrics": "关键指标",
+  "relatedCases": "相关案例"
 }

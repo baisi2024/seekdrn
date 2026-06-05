@@ -1,30 +1,30 @@
 {
   "nav": {
-    "products": "Products",
-    "solutions": "Solutions",
-    "caseStudies": "Case Studies",
-    "support": "Support",
-    "requestDemo": "Request Demo"
+    "products": "Produk",
+    "solutions": "Solusi",
+    "caseStudies": "Studi Kasus",
+    "support": "Dukungan",
+    "requestDemo": "Minta Demo"
   },
   "form": {
-    "fullName": "Full Name",
-    "company": "Company",
+    "fullName": "Nama Lengkap",
+    "company": "Perusahaan",
     "email": "Email",
-    "country": "Country",
-    "applicationInterest": "Application Interest",
-    "submit": "Submit",
-    "submitting": "Submitting..."
+    "country": "Negara",
+    "applicationInterest": "Minat Aplikasi",
+    "submit": "Kirim",
+    "submitting": "Mengirim..."
   },
   "cta": {
-    "requestDemo": "Request a Demo",
-    "downloadSpec": "Download Spec",
-    "learnMore": "Learn More",
-    "inquireAssessment": "Inquire for Assessment"
+    "requestDemo": "Minta Demo",
+    "downloadSpec": "Unduh Spesifikasi",
+    "learnMore": "Pelajari Lebih Lanjut",
+    "inquireAssessment": "Tanyakan Penilaian"
   },
   "error": {
-    "required": "This field is required",
-    "invalidEmail": "Please enter a valid email",
-    "submitFailed": "Submission failed. Please try again."
+    "required": "Bidang ini wajib diisi",
+    "invalidEmail": "Silakan masukkan email yang valid",
+    "submitFailed": "Pengiriman gagal. Silakan coba lagi."
   },
   "language": {
     "en": "English",
@@ -34,5 +34,8 @@
     "pt": "Português",
     "id": "Bahasa Indonesia",
     "zh": "中文"
+  },
+  "footer": {
+    "rights": "Hak cipta dilindungi."
   }
 }

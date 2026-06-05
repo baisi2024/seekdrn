@@ -1,7 +1,7 @@
 {
-  "challenge": "Challenge",
-  "solution": "Solution",
-  "workflow": "Workflow",
-  "keyMetrics": "Key Metrics",
-  "relatedCases": "Related Cases"
+  "challenge": "التحدي",
+  "solution": "الحل",
+  "workflow": "سير العمل",
+  "keyMetrics": "المقاييس الرئيسية",
+  "relatedCases": "الحالات ذات الصلة"
 }

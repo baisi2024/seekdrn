@@ -96,7 +96,7 @@ export function Hero({ heroConfig }: HeroProps) {
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 pt-2">
-              <Button render={<Link href="#demo-form" />} size="lg">
+              <Button render={<Link href="#demo-form" />} nativeButton={false} size="lg">
                 {tc('cta.requestDemo')}
               </Button>
               <Button variant="outline" size="lg">

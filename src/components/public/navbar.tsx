@@ -40,7 +40,7 @@ export function Navbar() {
 
         <div className="flex items-center gap-3">
           <LanguageSwitcher />
-          <Button render={<Link href={`/${locale}#demo-form`} />} size="sm" className="hidden md:inline-flex">
+          <Button render={<Link href={`/${locale}#demo-form`} />} nativeButton={false} size="sm" className="hidden md:inline-flex">
             {t('nav.requestDemo')}
           </Button>
 
@@ -55,7 +55,7 @@ export function Navbar() {
                     {link.label}
                   </Link>
                 ))}
-                <Button render={<Link href={`/${locale}#demo-form`} onClick={() => setOpen(false)} />} className="mt-4">
+                <Button render={<Link href={`/${locale}#demo-form`} onClick={() => setOpen(false)} />} nativeButton={false} className="mt-4">
                   {t('nav.requestDemo')}
                 </Button>
               </nav>

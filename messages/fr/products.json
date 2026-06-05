@@ -1,16 +1,16 @@
 {
-  "title": "Products",
+  "title": "Produits",
   "filter": {
-    "all": "All",
-    "uav": "UAV Platforms",
-    "payload": "Payloads",
-    "cuas": "Counter-UAS",
-    "ground_control": "Ground Control"
+    "all": "Tous",
+    "uav": "Plateformes UAV",
+    "payload": "Charges Utiles",
+    "cuas": "Anti-UAS",
+    "ground_control": "Contrôle au Sol"
   },
-  "specs": "Specifications",
-  "advantages": "Core Advantages",
-  "capabilities": "Core Capabilities",
+  "specs": "Spécifications",
+  "advantages": "Avantages Principaux",
+  "capabilities": "Capacités Principales",
   "applications": "Applications",
-  "relatedCases": "Related Cases",
-  "relatedProducts": "Related Products"
+  "relatedCases": "Cas Connexes",
+  "relatedProducts": "Produits Connexes"
 }

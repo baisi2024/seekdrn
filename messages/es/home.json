@@ -1,29 +1,29 @@
 {
   "hero": {
-    "title": "Industrial UAVs, Tested Where It Matters Most",
-    "subtitle": "Battle-proven drone platforms and counter-UAS solutions for defense, security, and critical infrastructure.",
-    "cta": "Request a Demo"
+    "title": "UAVs Industriales, Probados Donde Más Importa",
+    "subtitle": "Plataformas de drones probadas en combate y soluciones contra-UAS para defensa, seguridad e infraestructura crítica.",
+    "cta": "Solicitar una Demostración"
   },
   "trustBar": {
-    "flightHours": "Flight Hours",
-    "countries": "Countries",
-    "enterpriseClients": "Enterprise Clients",
-    "support": "Support"
+    "flightHours": "Horas de Vuelo",
+    "countries": "Países",
+    "enterpriseClients": "Clientes Empresariales",
+    "support": "Soporte"
   },
   "products": {
-    "title": "Our Products",
-    "viewAll": "View All Products"
+    "title": "Nuestros Productos",
+    "viewAll": "Ver Todos los Productos"
   },
   "solutions": {
-    "title": "Industry Solutions"
+    "title": "Soluciones Industriales"
   },
   "cases": {
-    "title": "Case Studies",
-    "viewAll": "View All Cases"
+    "title": "Casos de Estudio",
+    "viewAll": "Ver Todos los Casos"
   },
   "ctaSection": {
-    "title": "Ready to See Our Solutions in Action?",
-    "subtitle": "Schedule a live demonstration with our team.",
-    "button": "Request a Demo"
+    "title": "¿Listo para Ver Nuestras Soluciones en Acción?",
+    "subtitle": "Programe una demostración en vivo con nuestro equipo.",
+    "button": "Solicitar una Demostración"
   }
 }

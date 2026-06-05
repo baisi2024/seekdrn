@@ -1,16 +1,16 @@
 {
-  "title": "Products",
+  "title": "产品",
   "filter": {
-    "all": "All",
-    "uav": "UAV Platforms",
-    "payload": "Payloads",
-    "cuas": "Counter-UAS",
-    "ground_control": "Ground Control"
+    "all": "全部",
+    "uav": "无人机平台",
+    "payload": "载荷",
+    "cuas": "反无人机系统",
+    "ground_control": "地面控制"
   },
-  "specs": "Specifications",
-  "advantages": "Core Advantages",
-  "capabilities": "Core Capabilities",
-  "applications": "Applications",
-  "relatedCases": "Related Cases",
-  "relatedProducts": "Related Products"
+  "specs": "规格参数",
+  "advantages": "核心优势",
+  "capabilities": "核心能力",
+  "applications": "应用场景",
+  "relatedCases": "相关案例",
+  "relatedProducts": "相关产品"
 }

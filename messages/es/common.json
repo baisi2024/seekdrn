@@ -1,30 +1,30 @@
 {
   "nav": {
-    "products": "Products",
-    "solutions": "Solutions",
-    "caseStudies": "Case Studies",
-    "support": "Support",
-    "requestDemo": "Request Demo"
+    "products": "Productos",
+    "solutions": "Soluciones",
+    "caseStudies": "Casos de Estudio",
+    "support": "Soporte",
+    "requestDemo": "Solicitar Demostración"
   },
   "form": {
-    "fullName": "Full Name",
-    "company": "Company",
-    "email": "Email",
-    "country": "Country",
-    "applicationInterest": "Application Interest",
-    "submit": "Submit",
-    "submitting": "Submitting..."
+    "fullName": "Nombre Completo",
+    "company": "Empresa",
+    "email": "Correo Electrónico",
+    "country": "País",
+    "applicationInterest": "Interés de Aplicación",
+    "submit": "Enviar",
+    "submitting": "Enviando..."
   },
   "cta": {
-    "requestDemo": "Request a Demo",
-    "downloadSpec": "Download Spec",
-    "learnMore": "Learn More",
-    "inquireAssessment": "Inquire for Assessment"
+    "requestDemo": "Solicitar una Demostración",
+    "downloadSpec": "Descargar Especificaciones",
+    "learnMore": "Más Información",
+    "inquireAssessment": "Consultar Evaluación"
   },
   "error": {
-    "required": "This field is required",
-    "invalidEmail": "Please enter a valid email",
-    "submitFailed": "Submission failed. Please try again."
+    "required": "Este campo es obligatorio",
+    "invalidEmail": "Por favor ingrese un correo electrónico válido",
+    "submitFailed": "Error al enviar. Por favor intente nuevamente."
   },
   "language": {
     "en": "English",
@@ -34,5 +34,8 @@
     "pt": "Português",
     "id": "Bahasa Indonesia",
     "zh": "中文"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados."
   }
 }

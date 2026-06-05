@@ -4,7 +4,7 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { Navbar } from '@/components/public/navbar'
 import { Footer } from '@/components/public/footer'
-import '../globals.css'
+import LocaleHtmlUpdater from './locale-html-updater'
 
 export default async function LocaleLayout({
   children,
@@ -22,14 +22,13 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      <body className="font-sans antialiased">
-        <NextIntlClientProvider messages={messages}>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <>
+      <LocaleHtmlUpdater locale={locale} />
+      <NextIntlClientProvider messages={messages}>
+        <Navbar />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+      </NextIntlClientProvider>
+    </>
   )
 }

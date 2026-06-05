@@ -1,18 +1,18 @@
 {
-  "title": "Case Studies",
+  "title": "Studi Kasus",
   "filter": {
-    "all": "All Industries",
-    "publicSafety": "Public Safety",
-    "energy": "Energy",
-    "surveying": "Surveying",
-    "environmental": "Environmental",
-    "cuas": "Counter-UAS"
+    "all": "Semua Industri",
+    "publicSafety": "Keselamatan Publik",
+    "energy": "Energi",
+    "surveying": "Pemetaan",
+    "environmental": "Lingkungan",
+    "cuas": "Contra-UAS"
   },
-  "background": "Background",
-  "challenge": "Challenge",
-  "solution": "Solution",
-  "results": "Results",
-  "clientQuote": "Client Testimonial",
-  "fieldFootage": "Field Footage",
-  "relatedProducts": "Related Products"
+  "background": "Latar Belakang",
+  "challenge": "Tantangan",
+  "solution": "Solusi",
+  "results": "Hasil",
+  "clientQuote": "Testimoni Klien",
+  "fieldFootage": "Rekaman Lapangan",
+  "relatedProducts": "Produk Terkait"
 }
