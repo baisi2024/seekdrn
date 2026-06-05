@@ -1,0 +1,29 @@
+{
+  "hero": {
+    "title": "Industrial UAVs, Tested Where It Matters Most",
+    "subtitle": "Battle-proven drone platforms and counter-UAS solutions for defense, security, and critical infrastructure.",
+    "cta": "Request a Demo"
+  },
+  "trustBar": {
+    "flightHours": "Flight Hours",
+    "countries": "Countries",
+    "enterpriseClients": "Enterprise Clients",
+    "support": "Support"
+  },
+  "products": {
+    "title": "Our Products",
+    "viewAll": "View All Products"
+  },
+  "solutions": {
+    "title": "Industry Solutions"
+  },
+  "cases": {
+    "title": "Case Studies",
+    "viewAll": "View All Cases"
+  },
+  "ctaSection": {
+    "title": "Ready to See Our Solutions in Action?",
+    "subtitle": "Schedule a live demonstration with our team.",
+    "button": "Request a Demo"
+  }
+}

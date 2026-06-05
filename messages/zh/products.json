@@ -1,0 +1,16 @@
+{
+  "title": "Products",
+  "filter": {
+    "all": "All",
+    "uav": "UAV Platforms",
+    "payload": "Payloads",
+    "cuas": "Counter-UAS",
+    "ground_control": "Ground Control"
+  },
+  "specs": "Specifications",
+  "advantages": "Core Advantages",
+  "capabilities": "Core Capabilities",
+  "applications": "Applications",
+  "relatedCases": "Related Cases",
+  "relatedProducts": "Related Products"
+}

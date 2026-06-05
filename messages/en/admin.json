@@ -1,0 +1,23 @@
+{
+  "title": "SeekDrone Admin",
+  "dashboard": "Dashboard",
+  "inquiries": "Inquiries",
+  "products": "Products",
+  "caseStudies": "Case Studies",
+  "solutions": "Solutions",
+  "navigation": "Navigation",
+  "footer": "Footer",
+  "compliance": "Compliance",
+  "emailTemplates": "Email Templates",
+  "settings": "Settings",
+  "media": "Media Library",
+  "login": "Login",
+  "logout": "Logout",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "create": "Create",
+  "published": "Published",
+  "draft": "Draft"
+}

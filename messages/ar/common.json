@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "products": "Products",
+    "solutions": "Solutions",
+    "caseStudies": "Case Studies",
+    "support": "Support",
+    "requestDemo": "Request Demo"
+  },
+  "form": {
+    "fullName": "Full Name",
+    "company": "Company",
+    "email": "Email",
+    "country": "Country",
+    "applicationInterest": "Application Interest",
+    "submit": "Submit",
+    "submitting": "Submitting..."
+  },
+  "cta": {
+    "requestDemo": "Request a Demo",
+    "downloadSpec": "Download Spec",
+    "learnMore": "Learn More",
+    "inquireAssessment": "Inquire for Assessment"
+  },
+  "error": {
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email",
+    "submitFailed": "Submission failed. Please try again."
+  },
+  "language": {
+    "en": "English",
+    "ar": "العربية",
+    "es": "Español",
+    "fr": "Français",
+    "pt": "Português",
+    "id": "Bahasa Indonesia",
+    "zh": "中文"
+  }
+}

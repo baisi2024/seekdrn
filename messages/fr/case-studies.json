@@ -1,0 +1,18 @@
+{
+  "title": "Case Studies",
+  "filter": {
+    "all": "All Industries",
+    "publicSafety": "Public Safety",
+    "energy": "Energy",
+    "surveying": "Surveying",
+    "environmental": "Environmental",
+    "cuas": "Counter-UAS"
+  },
+  "background": "Background",
+  "challenge": "Challenge",
+  "solution": "Solution",
+  "results": "Results",
+  "clientQuote": "Client Testimonial",
+  "fieldFootage": "Field Footage",
+  "relatedProducts": "Related Products"
+}
