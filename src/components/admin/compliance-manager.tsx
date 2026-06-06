@@ -9,10 +9,14 @@ import { PolicyItem, PolicyUpdate } from '@/lib/compliance/types'
 import { POLICIES } from '@/lib/compliance/constants'
 import { toast } from 'sonner'
 
-export function ComplianceManager() {
+interface ComplianceManagerProps {
+  initialPolicies?: PolicyItem[]
+}
+
+export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
   // 状态管理
-  const [policies, setPolicies] = useState<PolicyItem[]>([])
-  const [loading, setLoading] = useState(true)
+  const [policies, setPolicies] = useState<PolicyItem[]>(initialPolicies || [])
+  const [loading, setLoading] = useState(!initialPolicies)
   const [editingPolicy, setEditingPolicy] = useState<PolicyItem | null>(null)
   const [updating, setUpdating] = useState<string | null>(null) // 正在更新的政策 section
 
@@ -34,10 +38,12 @@ export function ComplianceManager() {
     }
   }, [])
 
-  // 初始化加载
+  // 初始化加载（仅在没有 initialPolicies 时）
   useEffect(() => {
-    fetchPolicies()
-  }, [fetchPolicies])
+    if (!initialPolicies) {
+      fetchPolicies()
+    }
+  }, [fetchPolicies, initialPolicies])
 
   // 编辑政策
   const handleEdit = (policy: PolicyItem) => {
