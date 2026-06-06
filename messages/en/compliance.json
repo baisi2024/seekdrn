@@ -1,3 +1,15 @@
 {
-  "title": "Compliance Policy"
+  "title": "Compliance",
+  "export": {
+    "title": "Export Compliance"
+  },
+  "privacy": {
+    "title": "Privacy Policy"
+  },
+  "terms": {
+    "title": "Terms of Use"
+  },
+  "cookie": {
+    "title": "Cookie Policy"
+  }
 }

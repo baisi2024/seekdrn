@@ -1,3 +1,15 @@
 {
-  "title": "Kebijakan Kepatuhan"
+  "title": "Kepatuhan",
+  "export": {
+    "title": "Kepatuhan Ekspor"
+  },
+  "privacy": {
+    "title": "Kebijakan Privasi"
+  },
+  "terms": {
+    "title": "Ketentuan Penggunaan"
+  },
+  "cookie": {
+    "title": "Kebijakan Cookie"
+  }
 }

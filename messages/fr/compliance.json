@@ -1,3 +1,15 @@
 {
-  "title": "Politique de Conformité"
+  "title": "Conformité",
+  "export": {
+    "title": "Conformité à l'Exportation"
+  },
+  "privacy": {
+    "title": "Politique de Confidentialité"
+  },
+  "terms": {
+    "title": "Conditions d'Utilisation"
+  },
+  "cookie": {
+    "title": "Politique des Cookies"
+  }
 }

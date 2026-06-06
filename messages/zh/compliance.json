@@ -1,3 +1,15 @@
 {
-  "title": "合规政策"
+  "title": "合规",
+  "export": {
+    "title": "出口合规"
+  },
+  "privacy": {
+    "title": "隐私政策"
+  },
+  "terms": {
+    "title": "使用条款"
+  },
+  "cookie": {
+    "title": "Cookie 政策"
+  }
 }
