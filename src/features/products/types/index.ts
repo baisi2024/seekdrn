@@ -1,3 +1,7 @@
 export * from './product'
 export * from './category'
 export * from './media'
+export * from './seo'
+export * from './faq'
+export * from './document'
+export * from './tag'
