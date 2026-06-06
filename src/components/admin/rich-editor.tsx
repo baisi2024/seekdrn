@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import Image from '@tiptap/extension-image'
+import TiptapImage from '@tiptap/extension-image'
 import Link from '@tiptap/extension-link'
 import { Table } from '@tiptap/extension-table'
 import { TableRow } from '@tiptap/extension-table'
@@ -56,7 +57,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Image.configure({ HTMLAttributes: { class: 'max-w-full h-auto' } }),
+      TiptapImage.configure({ HTMLAttributes: { class: 'max-w-full h-auto' } }),
       Link.configure({ openOnClick: false }),
       Table.configure({
         resizable: true,
@@ -209,7 +210,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
           <DialogHeader>
             <div className="flex items-center justify-between">
               <DialogTitle>Insert Media</DialogTitle>
-              <button onClick={() => setShowMediaDialog(false)} className="p-1 hover:bg-gray-100 rounded">
+              <button onClick={() => setShowMediaDialog(false)} className="p-1 hover:bg-muted rounded">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -234,14 +235,15 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
                   <div
                     key={item.id}
                     onClick={() => handleInsertMedia(item)}
-                    className="cursor-pointer border rounded-lg overflow-hidden hover:border-blue-400 transition-colors"
+                    className="cursor-pointer border rounded-lg overflow-hidden hover:border-primary transition-colors"
                   >
-                    <div className="aspect-video bg-gray-100 flex items-center justify-center">
+                    <div className="aspect-video bg-muted flex items-center justify-center relative">
                       {item.mime_type.startsWith('image/') ? (
-                        <img
+                        <Image
                           src={getPublicUrl(item.r2_key)}
                           alt={item.filename}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       ) : (
                         <div className="flex flex-col items-center text-gray-400">
@@ -250,7 +252,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
                         </div>
                       )}
                     </div>
-                    <div className="p-2 bg-gray-50">
+                    <div className="p-2 bg-muted/50">
                       <p className="text-xs truncate">{item.filename}</p>
                     </div>
                   </div>
