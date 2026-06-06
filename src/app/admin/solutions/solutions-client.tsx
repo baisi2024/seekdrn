@@ -3,6 +3,7 @@
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/admin/data-table'
+import { AdminPage } from '@/components/admin/core/admin-page'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
@@ -36,19 +37,20 @@ export function SolutionsClient({ solutions }: SolutionsClientProps) {
   ]
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t('solutions_page.title')}</h1>
+    <AdminPage
+      title="solutions_page.title"
+      actions={
         <Link href="/admin/solutions/new" className={buttonVariants()}>
           <Plus className="w-4 h-4 mr-2" />
           {t('solutions_page.add')}
         </Link>
-      </div>
+      }
+    >
       <DataTable
         data={solutions}
         columns={columns}
         searchPlaceholder={t('solutions_page.searchPlaceholder')}
       />
-    </div>
+    </AdminPage>
   )
 }
