@@ -197,12 +197,10 @@ export function DownloadsManager({ productId, initialDownloads = [], onSave, onU
                   <Button
                     variant="outline"
                     disabled={uploading === String(index)}
-                    asChild
+                    render={<span />}
                   >
-                    <span>
-                      <Upload className="w-4 h-4 mr-2" />
-                      {uploading === String(index) ? 'Uploading...' : 'Upload'}
-                    </span>
+                    <Upload className="w-4 h-4 mr-2" />
+                    {uploading === String(index) ? 'Uploading...' : 'Upload'}
                   </Button>
                 </label>
               </div>
