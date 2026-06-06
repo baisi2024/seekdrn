@@ -4,12 +4,17 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
 
+interface CaseStudyTranslation {
+  title?: string
+  summary?: string
+}
+
 interface CaseStudy {
   id: string
   slug: string
   industry: string
   country: string
-  translations: Record<string, any>
+  translations: Record<string, CaseStudyTranslation>
   video_url: string
   images: string[]
 }

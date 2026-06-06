@@ -1,20 +1,27 @@
 import { supabaseAdmin } from './supabase/admin'
 
+interface CaseStudyTranslation {
+  title?: string
+  summary?: string
+  challenge?: string
+  solution?: string
+}
+
+interface CaseStudyResult {
+  metric?: string
+  value?: string
+  description?: string
+}
+
 interface CaseStudy {
   id: string
   slug: string
   industry: string
   country: string
-  translations: Record<string, any>
-  results: Record<string, any>
+  translations: Record<string, CaseStudyTranslation>
+  results: Record<string, CaseStudyResult>
   video_url: string
   images: string[]
-}
-
-interface ProductCaseRelation {
-  case_study_id: string
-  is_manual: boolean
-  relevance_score: number
 }
 
 export async function matchRelatedCases(productId: string): Promise<CaseStudy[]> {
