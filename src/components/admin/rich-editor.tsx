@@ -130,12 +130,12 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
 
   return (
     <div>
-      <div className="flex flex-wrap gap-1 p-2 border border-b-0 rounded-t-lg bg-gray-50">
+      <div className="flex flex-wrap gap-1 p-2 border border-b-0 rounded-t-lg bg-muted/50">
         <Button
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleBold().run()}
-          className={editor.isActive('bold') ? 'bg-gray-200' : ''}
+          className={editor.isActive('bold') ? 'bg-muted' : ''}
         >
           <Bold className="w-4 h-4" />
         </Button>
@@ -143,7 +143,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleItalic().run()}
-          className={editor.isActive('italic') ? 'bg-gray-200' : ''}
+          className={editor.isActive('italic') ? 'bg-muted' : ''}
         >
           <Italic className="w-4 h-4" />
         </Button>
@@ -151,16 +151,16 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleUnderline().run()}
-          className={editor.isActive('underline') ? 'bg-gray-200' : ''}
+          className={editor.isActive('underline') ? 'bg-muted' : ''}
         >
           <UnderlineIcon className="w-4 h-4" />
         </Button>
-        <div className="w-px h-6 bg-gray-300 mx-1" />
+        <div className="w-px h-6 bg-border mx-1" />
         <Button
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
-          className={editor.isActive('bulletList') ? 'bg-gray-200' : ''}
+          className={editor.isActive('bulletList') ? 'bg-muted' : ''}
         >
           <List className="w-4 h-4" />
         </Button>
@@ -168,7 +168,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          className={editor.isActive('orderedList') ? 'bg-gray-200' : ''}
+          className={editor.isActive('orderedList') ? 'bg-muted' : ''}
         >
           <ListOrdered className="w-4 h-4" />
         </Button>
@@ -176,16 +176,16 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          className={editor.isActive('blockquote') ? 'bg-gray-200' : ''}
+          className={editor.isActive('blockquote') ? 'bg-muted' : ''}
         >
           <Quote className="w-4 h-4" />
         </Button>
-        <div className="w-px h-6 bg-gray-300 mx-1" />
+        <div className="w-px h-6 bg-border mx-1" />
         <Button
           variant="ghost"
           size="sm"
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          className={editor.isActive('codeBlock') ? 'bg-gray-200' : ''}
+          className={editor.isActive('codeBlock') ? 'bg-muted' : ''}
         >
           <Code className="w-4 h-4" />
         </Button>
@@ -195,7 +195,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
         <Button variant="ghost" size="sm" onClick={handleInsertHorizontalRule}>
           <Minus className="w-4 h-4" />
         </Button>
-        <div className="w-px h-6 bg-gray-300 mx-1" />
+        <div className="w-px h-6 bg-border mx-1" />
         <Button variant="ghost" size="sm" onClick={() => setShowLinkDialog(true)}>
           <LinkIcon className="w-4 h-4" />
         </Button>
@@ -217,7 +217,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
           </DialogHeader>
           <div className="mt-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="Search media..."
                 value={mediaSearch}
@@ -228,7 +228,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
             {loadingMedia ? (
               <div className="mt-4 p-8 text-center">Loading...</div>
             ) : filteredMedia.length === 0 ? (
-              <div className="mt-4 p-8 text-center text-gray-500">No media found</div>
+              <div className="mt-4 p-8 text-center text-muted-foreground">No media found</div>
             ) : (
               <div className="mt-4 grid grid-cols-4 gap-3">
                 {filteredMedia.map((item) => (
@@ -246,7 +246,7 @@ export function RichEditor({ content, onChange, placeholder }: RichEditorProps) 
                           className="object-cover"
                         />
                       ) : (
-                        <div className="flex flex-col items-center text-gray-400">
+                        <div className="flex flex-col items-center text-muted-foreground">
                           <ImageIcon className="w-8 h-8" />
                           <span className="text-xs mt-2 truncate max-w-full px-2">{item.filename}</span>
                         </div>
