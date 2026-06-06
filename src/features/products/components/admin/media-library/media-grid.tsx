@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
+import NextImage from 'next/image'
 import { MediaPreview } from './media-preview'
 import { getPublicUrl } from '@/features/products/api'
-import { Image, FileVideo, FileText, Check } from 'lucide-react'
+import { Image as ImageIcon, FileVideo, FileText, Check } from 'lucide-react'
 import type { MediaItem } from '@/features/products/types'
 
 interface MediaGridProps {
@@ -19,9 +20,9 @@ export function MediaGrid({ items, selected, viewMode, loading, onSelect }: Medi
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'image': return <Image className="w-8 h-8 text-blue-500" />
+      case 'image': return <ImageIcon className="w-8 h-8 text-blue-500" />
       case 'video': return <FileVideo className="w-8 h-8 text-red-500" />
-      default: return <FileText className="w-8 h-8 text-gray-500" />
+      default: return <FileText className="w-8 h-8 text-muted-foreground" />
     }
   }
 
@@ -30,7 +31,7 @@ export function MediaGrid({ items, selected, viewMode, loading, onSelect }: Medi
   }
 
   if (items.length === 0) {
-    return <div className="p-8 text-center text-gray-500">No media found</div>
+    return <div className="p-8 text-center text-muted-foreground">No media found</div>
   }
 
   return (
@@ -47,13 +48,14 @@ export function MediaGrid({ items, selected, viewMode, loading, onSelect }: Medi
               }`}
             >
               {item.type === 'image' ? (
-                <img
+                <NextImage
                   src={getPublicUrl(item.r2_key)}
                   alt={item.filename}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                <div className="w-full h-full bg-muted flex items-center justify-center">
                   {getIcon(item.type)}
                 </div>
               )}
@@ -76,19 +78,19 @@ export function MediaGrid({ items, selected, viewMode, loading, onSelect }: Medi
               onClick={() => onSelect(item)}
               onDoubleClick={() => setPreviewItem(item)}
               className={`flex items-center gap-4 p-4 cursor-pointer ${
-                selected.includes(item.id) ? 'bg-blue-50' : 'hover:bg-gray-50'
+                selected.includes(item.id) ? 'bg-primary/10' : 'hover:bg-muted/50'
               }`}
             >
-              <div className="w-12 h-12 rounded overflow-hidden bg-gray-100 flex items-center justify-center">
+              <div className="w-12 h-12 rounded overflow-hidden bg-muted flex items-center justify-center relative">
                 {item.type === 'image' ? (
-                  <img src={getPublicUrl(item.r2_key)} alt={item.filename} className="w-full h-full object-cover" />
+                  <NextImage src={getPublicUrl(item.r2_key)} alt={item.filename} fill className="object-cover" />
                 ) : (
                   getIcon(item.type)
                 )}
               </div>
               <div className="flex-1">
                 <p className="font-medium">{item.filename}</p>
-                <p className="text-sm text-gray-500">{item.mime_type} • {formatSize(item.size)}</p>
+                <p className="text-sm text-muted-foreground">{item.mime_type} • {formatSize(item.size)}</p>
               </div>
               {selected.includes(item.id) && (
                 <Check className="w-5 h-5 text-blue-500" />

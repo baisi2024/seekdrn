@@ -31,10 +31,10 @@ export function MediaUploader({ accept, uploading, onUpload }: MediaUploaderProp
     <div
       onDrop={handleDrop}
       onDragOver={(e) => e.preventDefault()}
-      className="border-2 border-dashed rounded-lg p-8 text-center hover:border-gray-400 transition-colors"
+      className="border-2 border-dashed rounded-lg p-8 text-center hover:border-border transition-colors"
     >
-      <Upload className="w-8 h-8 mx-auto text-gray-400 mb-2" />
-      <p className="text-gray-600 mb-2">
+      <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+      <p className="text-foreground mb-2">
         {uploading ? 'Uploading...' : 'Drag and drop files here, or click to select'}
       </p>
       <label className="cursor-pointer">

@@ -36,7 +36,7 @@ export function MediaLibrary({ mode, accept = 'all', multiple = false, maxSelect
     <div className="space-y-4">
       <div className="flex items-center gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder="Search files..."
             className="pl-9"
@@ -47,13 +47,13 @@ export function MediaLibrary({ mode, accept = 'all', multiple = false, maxSelect
         <div className="flex items-center gap-2 border rounded-md p-1">
           <button
             onClick={() => setViewMode('grid')}
-            className={`p-2 rounded ${viewMode === 'grid' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+            className={`p-2 rounded ${viewMode === 'grid' ? 'bg-muted' : 'hover:bg-muted/50'}`}
           >
             <Grid3X3 className="w-4 h-4" />
           </button>
           <button
             onClick={() => setViewMode('list')}
-            className={`p-2 rounded ${viewMode === 'list' ? 'bg-gray-100' : 'hover:bg-gray-50'}`}
+            className={`p-2 rounded ${viewMode === 'list' ? 'bg-muted' : 'hover:bg-muted/50'}`}
           >
             <List className="w-4 h-4" />
           </button>
