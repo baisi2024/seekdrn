@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import type { Product, FilterState } from '../types'
-import { getProducts, getRelatedProducts, compareProducts } from '../api'
+import { getProducts, compareProducts } from '../api'
 
 interface ProductStore {
   products: Product[]

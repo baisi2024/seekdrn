@@ -2,15 +2,16 @@
 
 import { useState, useCallback } from 'react'
 import { Button } from '@/components/ui/button'
-import { X, Upload } from 'lucide-react'
+import { X, Upload, Play } from 'lucide-react'
 
-interface ImageUploadProps {
+interface MediaUploadProps {
   images: string[]
   onChange: (images: string[]) => void
   max?: number
+  accept?: string
 }
 
-export function ImageUpload({ images, onChange, max = 10 }: ImageUploadProps) {
+export function MediaUpload({ images, onChange, max = 10, accept = 'image/*' }: MediaUploadProps) {
   const [uploading, setUploading] = useState(false)
 
   const handleUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +36,7 @@ export function ImageUpload({ images, onChange, max = 10 }: ImageUploadProps) {
       onChange([...images, ...urls])
     } catch (error) {
       console.error('Upload error:', error)
-      alert('Failed to upload images')
+      alert('Failed to upload files')
     } finally {
       setUploading(false)
     }
@@ -45,12 +46,26 @@ export function ImageUpload({ images, onChange, max = 10 }: ImageUploadProps) {
     onChange(images.filter((_, i) => i !== index))
   }
 
+  const isVideo = (url: string) => {
+    const ext = url.split('.').pop()?.toLowerCase()
+    return ['mp4', 'mov', 'webm', 'avi', 'mkv'].includes(ext || '')
+  }
+
   return (
     <div className="space-y-4">
       <div className="grid grid-cols-4 gap-4">
         {images.map((img, i) => (
           <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
-            <img src={img} alt={`Image ${i + 1}`} className="w-full h-full object-cover" />
+            {isVideo(img) ? (
+              <div className="relative w-full h-full bg-black">
+                <video src={img} className="w-full h-full object-cover opacity-70" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Play className="w-12 h-12 text-white" />
+                </div>
+              </div>
+            ) : (
+              <img src={img} alt={`Media ${i + 1}`} className="w-full h-full object-cover" />
+            )}
             <button
               type="button"
               onClick={() => removeImage(i)}
@@ -68,7 +83,7 @@ export function ImageUpload({ images, onChange, max = 10 }: ImageUploadProps) {
             </span>
             <input
               type="file"
-              accept="image/*"
+              accept={accept}
               multiple
               onChange={handleUpload}
               disabled={uploading}
@@ -80,3 +95,5 @@ export function ImageUpload({ images, onChange, max = 10 }: ImageUploadProps) {
     </div>
   )
 }
+
+export { MediaUpload as ImageUpload }

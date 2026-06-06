@@ -9,11 +9,12 @@ import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { TranslationTabs } from '@/components/admin/translation-tabs'
-import { ImageUpload } from '@/components/admin/image-upload'
+import { MediaUpload } from '@/components/admin/image-upload'
 import { createClient } from '@/lib/supabase/client'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
+const RICH_TEXT_FIELDS = ['overview', 'advantages', 'capabilities', 'applications']
 
 interface ProductData {
   id?: string
@@ -22,6 +23,7 @@ interface ProductData {
   category: string
   translations: Record<string, Record<string, string>>
   images: string[]
+  videos: string[]
   published: boolean
   featured: boolean
   compliance_flag: boolean
@@ -39,6 +41,7 @@ export default function ProductEditPage() {
     category: 'uav',
     translations: {},
     images: [],
+    videos: [],
     published: true,
     featured: false,
     compliance_flag: false,
@@ -119,7 +122,6 @@ export default function ProductEditPage() {
         </div>
       </div>
 
-      {/* Navigation tabs for product management */}
       {params.id !== 'new' && (
         <div className="flex gap-2 mb-6 border-b pb-2">
           <Link
@@ -202,9 +204,24 @@ export default function ProductEditPage() {
             <CardTitle>{t('images')}</CardTitle>
           </CardHeader>
           <CardContent>
-            <ImageUpload
+            <MediaUpload
               images={product.images || []}
               onChange={(images) => setProduct({ ...product, images })}
+              accept="image/*"
+            />
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Videos</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <MediaUpload
+              images={product.videos || []}
+              onChange={(videos) => setProduct({ ...product, videos })}
+              accept="video/*"
+              max={5}
             />
           </CardContent>
         </Card>
@@ -218,6 +235,7 @@ export default function ProductEditPage() {
               translations={product.translations || {}}
               fields={TRANSLATION_FIELDS}
               onChange={updateTranslation}
+              richTextFields={RICH_TEXT_FIELDS}
             />
           </CardContent>
         </Card>

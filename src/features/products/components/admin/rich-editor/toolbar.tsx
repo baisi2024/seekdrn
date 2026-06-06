@@ -9,7 +9,6 @@ import {
   Bold, Italic, Underline, Strikethrough, Code,
   List, ListOrdered, CheckSquare,
   Quote, Minus, Link, Image, Table,
-  AlignLeft, AlignCenter, AlignRight,
   RotateCcw, RotateClockwise,
   Heading1, Heading2, Heading3,
 } from 'lucide-react'

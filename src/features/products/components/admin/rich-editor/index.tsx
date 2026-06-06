@@ -27,7 +27,7 @@ interface RichEditorProps {
   maxLength?: number
 }
 
-export function RichEditor({ content, onChange, placeholder, toolbar, maxLength }: RichEditorProps) {
+export function RichEditor({ content, onChange, toolbar, maxLength }: RichEditorProps) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({

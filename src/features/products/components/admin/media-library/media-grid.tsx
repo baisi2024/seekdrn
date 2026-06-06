@@ -81,7 +81,7 @@ export function MediaGrid({ items, selected, viewMode, loading, onSelect }: Medi
             >
               <div className="w-12 h-12 rounded overflow-hidden bg-gray-100 flex items-center justify-center">
                 {item.type === 'image' ? (
-                  <img src={getPublicUrl(item.r2_key)} alt="" className="w-full h-full object-cover" />
+                  <img src={getPublicUrl(item.r2_key)} alt={item.filename} className="w-full h-full object-cover" />
                 ) : (
                   getIcon(item.type)
                 )}
