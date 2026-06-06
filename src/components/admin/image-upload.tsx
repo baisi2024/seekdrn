@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { X, Upload, Play } from 'lucide-react'
 
@@ -55,7 +56,7 @@ export function MediaUpload({ images, onChange, max = 10, accept = 'image/*' }: 
     <div className="space-y-4">
       <div className="grid grid-cols-4 gap-4">
         {images.map((img, i) => (
-          <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-gray-100">
+          <div key={i} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
             {isVideo(img) ? (
               <div className="relative w-full h-full bg-black">
                 <video src={img} className="w-full h-full object-cover opacity-70" />
@@ -64,7 +65,7 @@ export function MediaUpload({ images, onChange, max = 10, accept = 'image/*' }: 
                 </div>
               </div>
             ) : (
-              <img src={img} alt={`Media ${i + 1}`} className="w-full h-full object-cover" />
+              <Image src={img} alt={`Media ${i + 1}`} fill className="object-cover" />
             )}
             <button
               type="button"
@@ -76,9 +77,9 @@ export function MediaUpload({ images, onChange, max = 10, accept = 'image/*' }: 
           </div>
         ))}
         {images.length < max && (
-          <label className="aspect-square rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:border-gray-400 transition-colors">
-            <Upload className="w-8 h-8 text-gray-400 mb-2" />
-            <span className="text-sm text-gray-500">
+          <label className="aspect-square rounded-lg border-2 border-dashed border-border flex flex-col items-center justify-center cursor-pointer hover:border-muted-foreground transition-colors">
+            <Upload className="w-8 h-8 text-muted-foreground mb-2" />
+            <span className="text-sm text-muted-foreground">
               {uploading ? 'Uploading...' : 'Upload'}
             </span>
             <input
