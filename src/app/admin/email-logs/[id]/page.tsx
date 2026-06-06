@@ -58,7 +58,7 @@ export default async function EmailLogDetailPage({
 
         <div className="border-t pt-4">
           <h2 className="font-bold mb-2">Variables</h2>
-          <pre className="bg-gray-100 p-4 rounded">
+          <pre className="bg-muted p-4 rounded">
             {JSON.stringify(log.variables, null, 2)}
           </pre>
         </div>
