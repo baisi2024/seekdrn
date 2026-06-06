@@ -9,12 +9,14 @@ import Link from 'next/link'
 import { EmailTemplate } from '@/components/admin/email-templates-table'
 import { TemplateCard } from './template-card'
 import { TemplatesStats } from './templates-stats'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface EmailTemplatesClientPageProps {
   templates: EmailTemplate[]
 }
 
 export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPageProps) {
+  const t = useAdminTranslations()
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive'>('all')
 
@@ -42,9 +44,9 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
   }
 
   const filterButtons = [
-    { key: 'all' as const, label: '全部', count: templates.length },
-    { key: 'active' as const, label: '活跃', count: templates.filter(t => t.is_active).length },
-    { key: 'inactive' as const, label: '未激活', count: templates.filter(t => !t.is_active).length },
+    { key: 'all' as const, label: t('email_templates_page.filterAll'), count: templates.length },
+    { key: 'active' as const, label: t('email_templates_page.filterActive'), count: templates.filter(t => t.is_active).length },
+    { key: 'inactive' as const, label: t('email_templates_page.filterInactive'), count: templates.filter(t => !t.is_active).length },
   ]
 
   return (
@@ -53,12 +55,12 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-3">
           <Mail className="h-6 w-6 text-primary" />
-          <h1 className="text-2xl font-bold">邮件模板</h1>
+          <h1 className="text-2xl font-bold">{t('email_templates_page.title')}</h1>
         </div>
         <Link href="/admin/email-templates/new">
           <Button size="sm">
             <Plus className="h-4 w-4 mr-1" />
-            新建模板
+            {t('email_templates_page.newTemplate')}
           </Button>
         </Link>
       </div>
@@ -71,7 +73,7 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="搜索模板标识或描述..."
+            placeholder={t('email_templates_page.searchPlaceholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-9"
@@ -98,8 +100,8 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
           <Mail className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           <p className="text-muted-foreground">
             {searchQuery || statusFilter !== 'all' 
-              ? '没有找到匹配的模板' 
-              : '暂无邮件模板'}
+              ? t('email_templates_page.noTemplatesFound')
+              : t('email_templates_page.noTemplates')}
           </p>
           {searchQuery || statusFilter !== 'all' ? (
             <Button 
@@ -109,11 +111,11 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
                 setStatusFilter('all')
               }}
             >
-              清除筛选
+              {t('email_templates_page.clearFilters')}
             </Button>
           ) : (
             <Link href="/admin/email-templates/new">
-              <Button variant="link">创建第一个模板</Button>
+              <Button variant="link">{t('email_templates_page.createFirst')}</Button>
             </Link>
           )}
         </div>

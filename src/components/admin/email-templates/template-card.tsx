@@ -16,6 +16,7 @@ import { Edit, Trash2, Eye, Mail } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { EmailTemplate } from '../email-templates-table'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface TemplateCardProps {
   template: EmailTemplate
@@ -23,6 +24,7 @@ interface TemplateCardProps {
 }
 
 export function TemplateCard({ template, onDelete }: TemplateCardProps) {
+  const t = useAdminTranslations()
   const [isDeleting, setIsDeleting] = useState(false)
 
   const formatDate = (dateString: string) => {
@@ -51,18 +53,18 @@ export function TemplateCard({ template, onDelete }: TemplateCardProps) {
           <h3 className="font-semibold text-base">{template.template_key}</h3>
         </div>
         <Badge variant={template.is_active ? 'default' : 'secondary'}>
-          {template.is_active ? '活跃' : '未激活'}
+          {template.is_active ? t('email_templates_page.statusActive') : t('email_templates_page.statusInactive')}
         </Badge>
       </CardHeader>
       
       <CardContent className="pb-4">
         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-          {template.description || '暂无描述'}
+          {template.description || t('email_templates_page.noDescription')}
         </p>
         
         {/* 可用变量列表 */}
         <div className="space-y-1">
-          <p className="text-xs font-medium text-muted-foreground">可用变量:</p>
+          <p className="text-xs font-medium text-muted-foreground">{t('email_templates_page.availableVariables')}</p>
           <div className="flex flex-wrap gap-1">
             <code className="text-xs bg-muted px-2 py-1 rounded">{'{{name}}'}</code>
             <code className="text-xs bg-muted px-2 py-1 rounded">{'{{email}}'}</code>
@@ -73,43 +75,43 @@ export function TemplateCard({ template, onDelete }: TemplateCardProps) {
       
       <CardFooter className="flex items-center justify-between border-t pt-3">
         <p className="text-xs text-muted-foreground">
-          更新于 {formatDate(template.updated_at)}
+          {t('email_templates_page.updatedAt')} {formatDate(template.updated_at)}
         </p>
         
         <div className="flex items-center gap-2">
           <Link href={`/admin/email-templates/${template.template_key}`}>
-            <Button size="icon-sm" variant="ghost" title="编辑">
+            <Button size="icon-sm" variant="ghost" title={t('edit')}>
               <Edit className="h-3.5 w-3.5" />
             </Button>
           </Link>
           
-          <Button size="icon-sm" variant="ghost" title="预览">
+          <Button size="icon-sm" variant="ghost" title={t('email_templates_page.preview')}>
             <Eye className="h-3.5 w-3.5" />
           </Button>
           
           <Dialog>
             <DialogTrigger asChild>
-              <Button size="icon-sm" variant="ghost" title="删除">
+              <Button size="icon-sm" variant="ghost" title={t('delete')}>
                 <Trash2 className="h-3.5 w-3.5 text-destructive" />
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>确认删除</DialogTitle>
+                <DialogTitle>{t('email_templates_page.confirmDelete')}</DialogTitle>
                 <DialogDescription>
-                  确定要删除模板 &ldquo;{template.template_key}&rdquo; 吗？此操作无法撤销。
+                  {t('email_templates_page.deleteConfirmMessage').replace('{key}', template.template_key)}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
                 <Button variant="outline" disabled={isDeleting}>
-                  取消
+                  {t('cancel')}
                 </Button>
                 <Button 
                   variant="destructive" 
                   onClick={handleDelete}
                   disabled={isDeleting}
                 >
-                  {isDeleting ? '删除中...' : '删除'}
+                  {isDeleting ? t('email_templates_page.deleting') : t('delete')}
                 </Button>
               </DialogFooter>
             </DialogContent>
