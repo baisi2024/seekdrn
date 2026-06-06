@@ -1,3 +1,5 @@
+import type { Category } from './category'
+
 export interface Product {
   id: string
   model: string

@@ -9,7 +9,7 @@ import {
   Bold, Italic, Underline, Strikethrough, Code,
   List, ListOrdered, CheckSquare,
   Quote, Minus, Link, Image, Table,
-  RotateCcw, RotateClockwise,
+  Undo2, Redo2,
   Heading1, Heading2, Heading3,
 } from 'lucide-react'
 import type { ToolbarConfig } from '@/features/products/types'
@@ -51,10 +51,10 @@ export function Toolbar({ editor, config }: ToolbarProps) {
         {groups.includes('history') && (
           <>
             <Button variant="ghost" size="sm" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()}>
-              <RotateCcw className="w-4 h-4" />
+              <Undo2 className="w-4 h-4" />
             </Button>
             <Button variant="ghost" size="sm" onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()}>
-              <RotateClockwise className="w-4 h-4" />
+              <Redo2 className="w-4 h-4" />
             </Button>
             <div className="w-px h-6 bg-gray-300 mx-1" />
           </>
