@@ -19,7 +19,8 @@ interface Template {
   translations?: Record<string, { subject: string; body_html: string }>
 }
 
-type TemplateFormData = z.infer<typeof z.object({
+// 定义表单验证 schema
+const templateFormSchema = z.object({
   template_key: z.string(),
   description: z.string().optional(),
   available_variables: z.array(z.string()),
@@ -28,7 +29,9 @@ type TemplateFormData = z.infer<typeof z.object({
     subject: z.string(),
     body_html: z.string(),
   })),
-})>
+})
+
+type TemplateFormData = z.infer<typeof templateFormSchema>
 
 export default function EmailTemplateEditPage() {
   const params = useParams()
@@ -105,7 +108,7 @@ export default function EmailTemplateEditPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
       </div>
     )
   }
