@@ -10,7 +10,7 @@ import { Switch } from '@/components/ui/switch'
 import { TranslationTabs } from '@/components/admin/translation-tabs'
 import { ImageUpload } from '@/components/admin/image-upload'
 import { createClient } from '@/lib/supabase/client'
-import { useAdminTranslations } from '@/hooks/useAdminTranslations'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
 
