@@ -205,7 +205,7 @@ export function DownloadsManager({ productId, initialDownloads = [], onSave, onU
                 </label>
               </div>
               {download.file_size && (
-                <p className="text-sm text-gray-500 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   Size: {formatFileSize(download.file_size)}
                 </p>
               )}
