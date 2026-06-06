@@ -54,5 +54,20 @@
   "inquiries_page": {
     "title": "咨询",
     "searchPlaceholder": "搜索咨询..."
+  },
+  "navigation_page": {
+    "title": "导航管理",
+    "header": "头部导航",
+    "footer": "底部导航",
+    "addItem": "添加导航项",
+    "editItem": "编辑导航项",
+    "deleteConfirm": "确定要删除此导航项吗？",
+    "label": "标签",
+    "linkType": "链接类型",
+    "internal": "内部链接",
+    "external": "外部链接",
+    "url": "链接地址",
+    "published": "已发布",
+    "searchPlaceholder": "搜索导航项..."
   }
 }

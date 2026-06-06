@@ -19,5 +19,20 @@
   "edit": "تحرير",
   "create": "إنشاء",
   "published": "منشور",
-  "draft": "مسودة"
+  "draft": "مسودة",
+  "navigation_page": {
+    "title": "إدارة التنقل",
+    "header": "تنقل الرأس",
+    "footer": "تنقل التذييل",
+    "addItem": "إضافة عنصر",
+    "editItem": "تحرير عنصر",
+    "deleteConfirm": "هل أنت متأكد من حذف عنصر التنقل هذا؟",
+    "label": "التسمية",
+    "linkType": "نوع الرابط",
+    "internal": "داخلي",
+    "external": "خارجي",
+    "url": "الرابط",
+    "published": "منشور",
+    "searchPlaceholder": "البحث في عناصر التنقل..."
+  }
 }

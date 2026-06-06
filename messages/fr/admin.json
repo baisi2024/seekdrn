@@ -19,5 +19,20 @@
   "edit": "Modifier",
   "create": "Créer",
   "published": "Publié",
-  "draft": "Brouillon"
+  "draft": "Brouillon",
+  "navigation_page": {
+    "title": "Gestion de la Navigation",
+    "header": "Navigation d'En-tête",
+    "footer": "Navigation de Pied de Page",
+    "addItem": "Ajouter un Élément",
+    "editItem": "Modifier un Élément",
+    "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cet élément de navigation ?",
+    "label": "Étiquette",
+    "linkType": "Type de Lien",
+    "internal": "Interne",
+    "external": "Externe",
+    "url": "URL",
+    "published": "Publié",
+    "searchPlaceholder": "Rechercher des éléments de navigation..."
+  }
 }

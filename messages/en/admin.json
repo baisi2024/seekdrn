@@ -54,5 +54,20 @@
   "inquiries_page": {
     "title": "Inquiries",
     "searchPlaceholder": "Search inquiries..."
+  },
+  "navigation_page": {
+    "title": "Navigation Management",
+    "header": "Header Navigation",
+    "footer": "Footer Navigation",
+    "addItem": "Add Item",
+    "editItem": "Edit Item",
+    "deleteConfirm": "Are you sure you want to delete this navigation item?",
+    "label": "Label",
+    "linkType": "Link Type",
+    "internal": "Internal",
+    "external": "External",
+    "url": "URL",
+    "published": "Published",
+    "searchPlaceholder": "Search navigation items..."
   }
 }

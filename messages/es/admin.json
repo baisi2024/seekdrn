@@ -19,5 +19,20 @@
   "edit": "Editar",
   "create": "Crear",
   "published": "Publicado",
-  "draft": "Borrador"
+  "draft": "Borrador",
+  "navigation_page": {
+    "title": "Gestión de Navegación",
+    "header": "Navegación del Encabezado",
+    "footer": "Navegación del Pie de Página",
+    "addItem": "Agregar Elemento",
+    "editItem": "Editar Elemento",
+    "deleteConfirm": "¿Está seguro de que desea eliminar este elemento de navegación?",
+    "label": "Etiqueta",
+    "linkType": "Tipo de Enlace",
+    "internal": "Interno",
+    "external": "Externo",
+    "url": "URL",
+    "published": "Publicado",
+    "searchPlaceholder": "Buscar elementos de navegación..."
+  }
 }

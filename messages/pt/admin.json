@@ -19,5 +19,20 @@
   "edit": "Editar",
   "create": "Criar",
   "published": "Publicado",
-  "draft": "Rascunho"
+  "draft": "Rascunho",
+  "navigation_page": {
+    "title": "Gerenciamento de Navegação",
+    "header": "Navegação do Cabeçalho",
+    "footer": "Navegação do Rodapé",
+    "addItem": "Adicionar Item",
+    "editItem": "Editar Item",
+    "deleteConfirm": "Tem certeza de que deseja excluir este item de navegação?",
+    "label": "Rótulo",
+    "linkType": "Tipo de Link",
+    "internal": "Interno",
+    "external": "Externo",
+    "url": "URL",
+    "published": "Publicado",
+    "searchPlaceholder": "Pesquisar itens de navegação..."
+  }
 }

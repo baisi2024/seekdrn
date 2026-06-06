@@ -19,5 +19,20 @@
   "edit": "Edit",
   "create": "Buat",
   "published": "Diterbitkan",
-  "draft": "Draf"
+  "draft": "Draf",
+  "navigation_page": {
+    "title": "Manajemen Navigasi",
+    "header": "Navigasi Header",
+    "footer": "Navigasi Footer",
+    "addItem": "Tambah Item",
+    "editItem": "Edit Item",
+    "deleteConfirm": "Apakah Anda yakin ingin menghapus item navigasi ini?",
+    "label": "Label",
+    "linkType": "Tipe Tautan",
+    "internal": "Internal",
+    "external": "Eksternal",
+    "url": "URL",
+    "published": "Diterbitkan",
+    "searchPlaceholder": "Cari item navigasi..."
+  }
 }
