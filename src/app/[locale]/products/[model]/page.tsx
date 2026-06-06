@@ -9,6 +9,8 @@ import { DatasheetDownloadButton } from '@/components/public/datasheet-download-
 import { SpecsSection } from '@/components/public/specs-section'
 import { DownloadsSection } from '@/components/public/downloads-section'
 import { RelatedCasesSection } from '@/components/public/related-cases-section'
+import { ProductGallery } from '@/features/products/components/public/product-gallery'
+import { RelatedProducts } from '@/features/products/components/public/related-products'
 import { getProductWithEnhancements } from '@/lib/supabase/admin'
 
 export default async function ProductDetailPage({
@@ -34,17 +36,10 @@ export default async function ProductDetailPage({
       <div className="container mx-auto px-4">
         {/* Hero */}
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          <div className="space-y-4">
-            {product.images && product.images.length > 0 ? (
-              <div className="aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
-                <img src={product.images[0]} alt={name} className="w-full h-full object-cover" />
-              </div>
-            ) : (
-              <div className="aspect-[4/3] rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
-                Product Image
-              </div>
-            )}
-          </div>
+          <ProductGallery
+            images={product.images || []}
+            videos={product.videos || []}
+          />
           <div className="space-y-6">
             <Badge variant="outline" className="font-mono">{product.model}</Badge>
             <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{name}</h1>
@@ -111,6 +106,9 @@ export default async function ProductDetailPage({
             <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: applications }} />
           </section>
         )}
+
+        {/* Related Products */}
+        <RelatedProducts productId={product.id} locale={locale} />
       </div>
     </div>
   )
