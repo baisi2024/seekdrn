@@ -15,7 +15,7 @@ ALTER TABLE product_specs ADD COLUMN IF NOT EXISTS unit jsonb DEFAULT '{}';
 -- ============================================
 -- 新增 product_downloads 表
 -- ============================================
-CREATE TABLE product_downloads (
+CREATE TABLE IF NOT EXISTS product_downloads (
   id          uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   product_id  uuid NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   type        text NOT NULL CHECK (type IN ('manual', 'datasheet', 'certificate', 'media')),
@@ -31,12 +31,12 @@ CREATE TABLE product_downloads (
 );
 
 -- 索引
-CREATE INDEX idx_product_downloads_product ON product_downloads(product_id, type);
+CREATE INDEX IF NOT EXISTS idx_product_downloads_product ON product_downloads(product_id, type);
 
 -- ============================================
 -- 新增 product_case_relations 表
 -- ============================================
-CREATE TABLE product_case_relations (
+CREATE TABLE IF NOT EXISTS product_case_relations (
   id           uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   product_id   uuid NOT NULL REFERENCES products(id) ON DELETE CASCADE,
   case_study_id uuid NOT NULL REFERENCES case_studies(id) ON DELETE CASCADE,
@@ -47,7 +47,7 @@ CREATE TABLE product_case_relations (
 );
 
 -- 索引
-CREATE INDEX idx_product_case_relations ON product_case_relations(product_id, is_manual);
+CREATE INDEX IF NOT EXISTS idx_product_case_relations ON product_case_relations(product_id, is_manual);
 
 -- ============================================
 -- RLS 策略
@@ -56,6 +56,7 @@ ALTER TABLE product_downloads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE product_case_relations ENABLE ROW LEVEL SECURITY;
 
 -- 公开读取策略
+DROP POLICY IF EXISTS "Public can view published product downloads" ON product_downloads;
 CREATE POLICY "Public can view published product downloads"
   ON product_downloads FOR SELECT
   USING (EXISTS (
@@ -64,6 +65,7 @@ CREATE POLICY "Public can view published product downloads"
     AND products.published = true
   ));
 
+DROP POLICY IF EXISTS "Public can view published product case relations" ON product_case_relations;
 CREATE POLICY "Public can view published product case relations"
   ON product_case_relations FOR SELECT
   USING (EXISTS (
@@ -73,11 +75,13 @@ CREATE POLICY "Public can view published product case relations"
   ));
 
 -- Admin 完全访问策略
+DROP POLICY IF EXISTS "Admins have full access to product downloads" ON product_downloads;
 CREATE POLICY "Admins have full access to product downloads"
   ON product_downloads FOR ALL
   TO authenticated
   USING (auth.jwt() ->> 'role' = 'admin');
 
+DROP POLICY IF EXISTS "Admins have full access to product case relations" ON product_case_relations;
 CREATE POLICY "Admins have full access to product case relations"
   ON product_case_relations FOR ALL
   TO authenticated
