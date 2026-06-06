@@ -13,6 +13,7 @@ import { BasicInfoTab } from '@/features/products/components/admin/product-tabs/
 import { SEOTab } from '@/features/products/components/admin/product-tabs/seo-tab'
 import { FAQTab } from '@/features/products/components/admin/product-tabs/faq-tab'
 import { DocumentsTab } from '@/features/products/components/admin/product-tabs/documents-tab'
+import type { Category, ProductTag } from '@/features/products/types'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
 const RICH_TEXT_FIELDS = ['overview', 'advantages', 'capabilities', 'applications']
@@ -39,6 +40,8 @@ export default function ProductEditPage() {
   const currentTab = useCurrentTab()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [categories, setCategories] = useState<Category[]>([])
+  const [tags, setTags] = useState<ProductTag[]>([])
   const [product, setProduct] = useState<ProductData>({
     model: '',
     slug: '',
@@ -53,6 +56,19 @@ export default function ProductEditPage() {
     sort_order: 0,
   })
   const supabase = createClient()
+
+  // Fetch categories and tags on mount
+  useEffect(() => {
+    async function fetchInitialData() {
+      const [catRes, tagRes] = await Promise.all([
+        supabase.from('product_categories').select('*').order('sort_order'),
+        supabase.from('product_tags').select('*').order('created_at', { ascending: false }),
+      ])
+      if (catRes.data) setCategories(catRes.data)
+      if (tagRes.data) setTags(tagRes.data)
+    }
+    fetchInitialData()
+  }, [supabase])
 
   const fetchProduct = useCallback(async () => {
     const { data } = await supabase
@@ -155,6 +171,8 @@ export default function ProductEditPage() {
         <div className="space-y-6">
           <BasicInfoTab
             productId="new"
+            categories={categories}
+            tags={tags}
             initialData={{
               model: product.model,
               slug: product.slug,
@@ -215,6 +233,8 @@ export default function ProductEditPage() {
             <div className="space-y-6">
               <BasicInfoTab
                 productId={params.id as string}
+                categories={categories}
+                tags={tags}
                 initialData={{
                   model: product.model,
                   slug: product.slug,

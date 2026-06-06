@@ -21,7 +21,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog'
-import { getDocuments, createDocument, deleteDocument } from '@/features/products/api/documents'
+import { createClient } from '@/lib/supabase/client'
 import type { ProductDocument, DocumentType, DocumentFormData } from '@/features/products/types'
 import { DOCUMENT_TYPE_LABELS } from '@/features/products/types'
 
@@ -57,12 +57,19 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
       zh: { title: '', description: '' },
     },
   })
+  const supabase = createClient()
 
   useEffect(() => {
     async function loadDocuments() {
       try {
-        const data = await getDocuments(productId)
-        setDocuments(data)
+        const { data, error } = await supabase
+          .from('product_documents')
+          .select('*')
+          .eq('product_id', productId)
+          .order('sort_order')
+
+        if (error) throw error
+        setDocuments(data as ProductDocument[])
       } catch (error) {
         console.error('Failed to load documents:', error)
       } finally {
@@ -70,7 +77,7 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
       }
     }
     loadDocuments()
-  }, [productId])
+  }, [productId, supabase])
 
   const openAddDialog = () => {
     setFormData({
@@ -87,14 +94,21 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
 
   const handleSave = async () => {
     try {
-      const docData: DocumentFormData = {
-        type: formData.type,
-        file_url: formData.file_url,
-        language: formData.language,
-        translations: formData.translations,
-      }
-      const created = await createDocument(productId, docData)
-      setDocuments((prev) => [...prev, created])
+      const { data, error } = await supabase
+        .from('product_documents')
+        .insert([{
+          product_id: productId,
+          type: formData.type,
+          file_url: formData.file_url,
+          language: formData.language,
+          translations: formData.translations,
+          sort_order: documents.length,
+        }])
+        .select()
+        .single()
+
+      if (error) throw error
+      setDocuments((prev) => [...prev, data as ProductDocument])
       setIsDialogOpen(false)
     } catch (error) {
       console.error('Failed to create document:', error)
@@ -106,7 +120,12 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
     if (!confirm('Are you sure you want to delete this document?')) return
 
     try {
-      await deleteDocument(docId)
+      const { error } = await supabase
+        .from('product_documents')
+        .delete()
+        .eq('id', docId)
+
+      if (error) throw error
       setDocuments((prev) => prev.filter((d) => d.id !== docId))
     } catch (error) {
       console.error('Failed to delete document:', error)

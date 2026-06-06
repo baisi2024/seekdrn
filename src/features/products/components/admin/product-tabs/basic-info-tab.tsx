@@ -1,11 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import {
   Select,
@@ -14,12 +12,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { getCategories } from '@/features/products/api/categories'
-import { getTags } from '@/features/products/api/tags'
 import type { Category, ProductTag } from '@/features/products/types'
 
 interface BasicInfoTabProps {
   productId: string
+  categories: Category[]
+  tags: ProductTag[]
   initialData: {
     model: string
     slug: string
@@ -33,38 +31,13 @@ interface BasicInfoTabProps {
   onChange: (data: Partial<BasicInfoTabProps['initialData']>) => void
 }
 
-export function BasicInfoTab({ initialData, onChange }: BasicInfoTabProps) {
-  const [categories, setCategories] = useState<Category[]>([])
-  const [allTags, setAllTags] = useState<ProductTag[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const [categoriesData, tagsData] = await Promise.all([
-          getCategories(),
-          getTags(),
-        ])
-        setCategories(categoriesData)
-        setAllTags(tagsData)
-      } catch (error) {
-        console.error('Failed to load data:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadData()
-  }, [])
+export function BasicInfoTab({ categories, tags: allTags, initialData, onChange }: BasicInfoTabProps) {
 
   const toggleTag = (tagSlug: string) => {
     const newTags = initialData.tags.includes(tagSlug)
       ? initialData.tags.filter((t) => t !== tagSlug)
       : [...initialData.tags, tagSlug]
     onChange({ tags: newTags })
-  }
-
-  if (loading) {
-    return <div>Loading...</div>
   }
 
   return (

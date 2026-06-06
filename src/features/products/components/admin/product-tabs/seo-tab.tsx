@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { getAllSEO, upsertSEO } from '@/features/products/api/seo'
+import { createClient } from '@/lib/supabase/client'
 import type { ProductSEO, SEOFormData } from '@/features/products/types'
 import { SEO_LIMITS } from '@/features/products/types'
 
@@ -23,14 +23,21 @@ export function SEOTab({ productId }: SEOTabProps) {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [currentLocale, setCurrentLocale] = useState<string>('en')
+  const supabase = createClient()
 
   useEffect(() => {
     async function loadSEO() {
       try {
-        const data = await getAllSEO(productId)
+        const { data, error } = await supabase
+          .from('product_seo')
+          .select('*')
+          .eq('product_id', productId)
+
+        if (error) throw error
+
         const seoMap: Record<string, ProductSEO | null> = {}
         LOCALES.forEach((locale) => {
-          seoMap[locale] = data.find((d) => d.locale === locale) || null
+          seoMap[locale] = (data as ProductSEO[])?.find((d) => d.locale === locale) || null
         })
         setSeoData(seoMap)
       } catch (error) {
@@ -40,7 +47,7 @@ export function SEOTab({ productId }: SEOTabProps) {
       }
     }
     loadSEO()
-  }, [productId])
+  }, [productId, supabase])
 
   const updateField = (locale: string, field: keyof SEOFormData, value: string | string[]) => {
     setSeoData((prev) => ({
@@ -61,15 +68,19 @@ export function SEOTab({ productId }: SEOTabProps) {
         LOCALES.map(async (locale) => {
           const seo = seoData[locale]
           if (seo) {
-            const formData: SEOFormData = {
-              meta_title: seo.meta_title || '',
-              meta_description: seo.meta_description || '',
-              meta_keywords: seo.meta_keywords || [],
-              og_title: seo.og_title || '',
-              og_description: seo.og_description || '',
-              og_image: seo.og_image || '',
-            }
-            await upsertSEO(productId, locale, formData)
+            const { error } = await supabase
+              .from('product_seo')
+              .upsert({
+                product_id: productId,
+                locale,
+                meta_title: seo.meta_title || null,
+                meta_description: seo.meta_description || null,
+                meta_keywords: seo.meta_keywords || [],
+                og_title: seo.og_title || null,
+                og_description: seo.og_description || null,
+                og_image: seo.og_image || null,
+              })
+            if (error) throw error
           }
         })
       )
@@ -83,8 +94,6 @@ export function SEOTab({ productId }: SEOTabProps) {
   }
 
   const autoGenerate = async () => {
-    // This would call an API to auto-generate SEO from product data
-    // For now, we'll just show a placeholder
     alert('Auto-generate functionality will be implemented with AI integration')
   }
 

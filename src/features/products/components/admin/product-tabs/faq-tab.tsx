@@ -20,7 +20,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog'
-import { getFAQs, createFAQ, updateFAQ, deleteFAQ } from '@/features/products/api/faqs'
+import { createClient } from '@/lib/supabase/client'
 import type { ProductFAQ, FAQFormData } from '@/features/products/types'
 
 const LOCALES = ['en', 'zh'] as const
@@ -36,19 +36,22 @@ export function FAQTab({ productId }: FAQTabProps) {
   const [editingFAQ, setEditingFAQ] = useState<ProductFAQ | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [formData, setFormData] = useState<FAQFormData>({ question: '', answer: '' })
+  const supabase = createClient()
 
   useEffect(() => {
     async function loadFAQs() {
       try {
-        const data = await Promise.all(
-          LOCALES.map(async (locale) => {
-            const faqs = await getFAQs(productId, locale)
-            return { locale, faqs }
-          })
-        )
+        const { data, error } = await supabase
+          .from('product_faqs')
+          .select('*')
+          .eq('product_id', productId)
+          .order('sort_order')
+
+        if (error) throw error
+
         const faqMap: Record<string, ProductFAQ[]> = {}
-        data.forEach((d) => {
-          faqMap[d.locale] = d.faqs
+        LOCALES.forEach((locale) => {
+          faqMap[locale] = (data as ProductFAQ[])?.filter((f) => f.locale === locale) || []
         })
         setFaqs(faqMap)
       } catch (error) {
@@ -58,7 +61,7 @@ export function FAQTab({ productId }: FAQTabProps) {
       }
     }
     loadFAQs()
-  }, [productId])
+  }, [productId, supabase])
 
   const openAddDialog = () => {
     setEditingFAQ(null)
@@ -75,18 +78,40 @@ export function FAQTab({ productId }: FAQTabProps) {
   const handleSave = async () => {
     try {
       if (editingFAQ) {
-        const updated = await updateFAQ(editingFAQ.id, formData)
+        const { data, error } = await supabase
+          .from('product_faqs')
+          .update({ question: formData.question, answer: formData.answer })
+          .eq('id', editingFAQ.id)
+          .select()
+          .single()
+
+        if (error) throw error
+
         setFaqs((prev) => ({
           ...prev,
           [currentLocale]: prev[currentLocale].map((f) =>
-            f.id === updated.id ? updated : f
+            f.id === editingFAQ.id ? (data as ProductFAQ) : f
           ),
         }))
       } else {
-        const created = await createFAQ(productId, currentLocale, formData)
+        const currentFaqs = faqs[currentLocale] || []
+        const { data, error } = await supabase
+          .from('product_faqs')
+          .insert([{
+            product_id: productId,
+            locale: currentLocale,
+            question: formData.question,
+            answer: formData.answer,
+            sort_order: currentFaqs.length,
+          }])
+          .select()
+          .single()
+
+        if (error) throw error
+
         setFaqs((prev) => ({
           ...prev,
-          [currentLocale]: [...(prev[currentLocale] || []), created],
+          [currentLocale]: [...(prev[currentLocale] || []), data as ProductFAQ],
         }))
       }
       setIsDialogOpen(false)
@@ -100,7 +125,13 @@ export function FAQTab({ productId }: FAQTabProps) {
     if (!confirm('Are you sure you want to delete this FAQ?')) return
 
     try {
-      await deleteFAQ(faqId)
+      const { error } = await supabase
+        .from('product_faqs')
+        .delete()
+        .eq('id', faqId)
+
+      if (error) throw error
+
       setFaqs((prev) => ({
         ...prev,
         [currentLocale]: prev[currentLocale].filter((f) => f.id !== faqId),
