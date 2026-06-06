@@ -3,12 +3,15 @@
   "dashboard": "Dashboard",
   "inquiries": "Inquiries",
   "products": "Products",
+  "categories": "Categories",
+  "tags": "Tags",
   "caseStudies": "Case Studies",
   "solutions": "Solutions",
   "navigation": "Navigation",
   "footer": "Footer",
   "compliance": "Compliance",
   "emailTemplates": "Email Templates",
+  "emailLogs": "Email Logs",
   "settings": "Settings",
   "media": "Media Library",
   "login": "Login",
@@ -32,14 +35,49 @@
   "complianceRequired": "Compliance Required",
   "basicInfo": "Basic Info",
   "images": "Images",
+  "videos": "Videos",
   "translations": "Translations",
   "date": "Date",
   "title_field": "Title",
+  "name": "Name",
+  "company": "Company",
+  "country": "Country",
+  "application": "Application",
+  "compliance_field": "Compliance",
+  "noResults": "No results found",
+  "tryAdjusting": "Try adjusting your search terms",
+  "showing": "Showing",
+  "to": "to",
+  "of": "of",
+  "results": "results",
+  "productSaved": "Product saved successfully",
+  "saveFailed": "Failed to save",
+  "settingsSaved": "Settings saved",
+  "specifications": "Specifications",
+  "relatedProductsCases": "Related Products & Cases",
+  "requestDemo": "Request Demo",
+  "learnMore": "Learn More",
+  "noProductsFound": "No products found",
+  "untitledProduct": "Untitled Product",
+  "noDescription": "No description available",
+  "complianceNotice": "This product requires compliance assessment. Contact us for detailed specifications.",
   "products_page": {
     "title": "Products",
     "add": "Add Product",
     "edit": "Edit Product",
     "searchPlaceholder": "Search products..."
+  },
+  "categories_page": {
+    "title": "Category Management",
+    "add": "Add Category",
+    "edit": "Edit Category",
+    "searchPlaceholder": "Search categories..."
+  },
+  "tags_page": {
+    "title": "Tag Management",
+    "add": "Add Tag",
+    "edit": "Edit Tag",
+    "searchPlaceholder": "Search tags..."
   },
   "case_studies_page": {
     "title": "Case Studies",
@@ -54,6 +92,16 @@
   "inquiries_page": {
     "title": "Inquiries",
     "searchPlaceholder": "Search inquiries..."
+  },
+  "settings_page": {
+    "title": "Site Settings",
+    "basicInfo": "Basic Info",
+    "siteName": "Site Name",
+    "contactEmail": "Contact Email",
+    "whatsapp": "WhatsApp",
+    "languageSettings": "Language Settings",
+    "enableChinese": "Enable Chinese",
+    "autoDetectChinese": "Auto-detect Chinese by IP"
   },
   "navigation_page": {
     "title": "Navigation Management",
@@ -124,5 +172,59 @@
     "statsSuccessRate": "Success Rate",
     "comparedToYesterday": "compared to yesterday",
     "unchanged": "Unchanged"
+  },
+  "media_page": {
+    "title": "Media Library",
+    "upload": "Upload",
+    "searchPlaceholder": "Search media..."
+  },
+  "compliance_page": {
+    "title": "Compliance Management",
+    "add": "Add Section",
+    "searchPlaceholder": "Search compliance..."
+  },
+  "footer_page": {
+    "title": "Footer Management",
+    "add": "Add Footer Item"
+  },
+  "login_page": {
+    "title": "Admin Login",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign In",
+    "error": "Invalid credentials"
+  },
+  "rich_editor": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "link": "Link",
+    "heading": "Heading",
+    "list": "List",
+    "quote": "Quote",
+    "code": "Code"
+  },
+  "image_upload": {
+    "upload": "Upload Image",
+    "dragDrop": "Drag and drop or click to upload",
+    "remove": "Remove",
+    "error": "Upload failed"
+  },
+  "downloads": {
+    "title": "Downloads",
+    "add": "Add Download",
+    "fileName": "File Name",
+    "fileSize": "File Size",
+    "uploadedAt": "Uploaded At"
+  },
+  "specs": {
+    "title": "Specifications",
+    "addGroup": "Add Group",
+    "addItem": "Add Item"
+  },
+  "cases": {
+    "title": "Related Cases",
+    "add": "Add Case",
+    "remove": "Remove"
   }
 }

@@ -3,12 +3,15 @@
   "dashboard": "仪表盘",
   "inquiries": "咨询",
   "products": "产品",
+  "categories": "分类",
+  "tags": "标签",
   "caseStudies": "案例研究",
   "solutions": "解决方案",
   "navigation": "导航",
   "footer": "页脚",
   "compliance": "合规",
   "emailTemplates": "邮件模板",
+  "emailLogs": "邮件日志",
   "settings": "设置",
   "media": "媒体库",
   "login": "登录",
@@ -32,14 +35,49 @@
   "complianceRequired": "需要合规",
   "basicInfo": "基本信息",
   "images": "图片",
+  "videos": "视频",
   "translations": "翻译",
   "date": "日期",
   "title_field": "标题",
+  "name": "姓名",
+  "company": "公司",
+  "country": "国家",
+  "application": "应用",
+  "compliance_field": "合规",
+  "noResults": "未找到结果",
+  "tryAdjusting": "尝试调整搜索条件",
+  "showing": "显示",
+  "to": "至",
+  "of": "共",
+  "results": "条结果",
+  "productSaved": "产品保存成功",
+  "saveFailed": "保存失败",
+  "settingsSaved": "设置已保存",
+  "specifications": "规格",
+  "relatedProductsCases": "相关产品和案例",
+  "requestDemo": "请求演示",
+  "learnMore": "了解更多",
+  "noProductsFound": "未找到产品",
+  "untitledProduct": "未命名产品",
+  "noDescription": "暂无描述",
+  "complianceNotice": "此产品需要合规评估。联系我们获取详细规格。",
   "products_page": {
     "title": "产品",
     "add": "添加产品",
     "edit": "编辑产品",
     "searchPlaceholder": "搜索产品..."
+  },
+  "categories_page": {
+    "title": "分类管理",
+    "add": "添加分类",
+    "edit": "编辑分类",
+    "searchPlaceholder": "搜索分类..."
+  },
+  "tags_page": {
+    "title": "标签管理",
+    "add": "添加标签",
+    "edit": "编辑标签",
+    "searchPlaceholder": "搜索标签..."
   },
   "case_studies_page": {
     "title": "案例研究",
@@ -54,6 +92,16 @@
   "inquiries_page": {
     "title": "咨询",
     "searchPlaceholder": "搜索咨询..."
+  },
+  "settings_page": {
+    "title": "网站设置",
+    "basicInfo": "基本信息",
+    "siteName": "网站名称",
+    "contactEmail": "联系邮箱",
+    "whatsapp": "WhatsApp",
+    "languageSettings": "语言设置",
+    "enableChinese": "启用中文",
+    "autoDetectChinese": "根据IP自动检测中文"
   },
   "navigation_page": {
     "title": "导航管理",
@@ -124,5 +172,59 @@
     "statsSuccessRate": "成功率",
     "comparedToYesterday": "相比昨日",
     "unchanged": "持平"
+  },
+  "media_page": {
+    "title": "媒体库",
+    "upload": "上传",
+    "searchPlaceholder": "搜索媒体..."
+  },
+  "compliance_page": {
+    "title": "合规管理",
+    "add": "添加章节",
+    "searchPlaceholder": "搜索合规..."
+  },
+  "footer_page": {
+    "title": "页脚管理",
+    "add": "添加页脚项"
+  },
+  "login_page": {
+    "title": "管理后台登录",
+    "email": "邮箱",
+    "password": "密码",
+    "submit": "登录",
+    "error": "凭证无效"
+  },
+  "rich_editor": {
+    "bold": "粗体",
+    "italic": "斜体",
+    "underline": "下划线",
+    "link": "链接",
+    "heading": "标题",
+    "list": "列表",
+    "quote": "引用",
+    "code": "代码"
+  },
+  "image_upload": {
+    "upload": "上传图片",
+    "dragDrop": "拖放或点击上传",
+    "remove": "删除",
+    "error": "上传失败"
+  },
+  "downloads": {
+    "title": "下载",
+    "add": "添加下载",
+    "fileName": "文件名",
+    "fileSize": "文件大小",
+    "uploadedAt": "上传时间"
+  },
+  "specs": {
+    "title": "规格",
+    "addGroup": "添加组",
+    "addItem": "添加项"
+  },
+  "cases": {
+    "title": "相关案例",
+    "add": "添加案例",
+    "remove": "移除"
   }
 }
