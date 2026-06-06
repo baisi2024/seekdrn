@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { supabaseAdmin } from './supabase/admin'
+import { replaceVariables } from './email-helpers'
 
 let resend: Resend | null = null
 
@@ -27,6 +28,7 @@ export async function sendTemplateEmail(
     return
   }
 
+  // 获取模板
   const { data: template } = await supabaseAdmin
     .from('email_templates')
     .select('translations, is_active')
@@ -45,16 +47,46 @@ export async function sendTemplateEmail(
     }
   }
 
-  for (const [key, value] of Object.entries(variables)) {
-    const regex = new RegExp(`{{${key}}}`, 'g')
-    subject = subject.replace(regex, value)
-    html = html.replace(regex, value)
+  // 替换变量
+  subject = replaceVariables(subject, variables)
+  html = replaceVariables(html, variables)
+
+  // 准备日志记录
+  const logEntry = {
+    template_key: templateKey,
+    recipient_email: to,
+    language,
+    subject,
+    body_html: html,
+    variables,
+    status: 'pending' as const,
   }
 
-  await resendClient.emails.send({
-    from: 'SeekDrone <noreply@seekdrn.com>',
-    to,
-    subject,
-    html,
-  })
+  try {
+    // 发送邮件
+    const result = await resendClient.emails.send({
+      from: 'SeekDrone <noreply@seekdrn.com>',
+      to,
+      subject,
+      html,
+    })
+
+    // 记录成功
+    await supabaseAdmin.from('email_logs').insert({
+      ...logEntry,
+      status: 'sent',
+      sent_at: new Date().toISOString(),
+    })
+
+    return result
+  } catch (error: any) {
+    // 记录失败
+    await supabaseAdmin.from('email_logs').insert({
+      ...logEntry,
+      status: 'failed',
+      error_message: error.message || 'Unknown error',
+    })
+
+    throw error
+  }
 }
