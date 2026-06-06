@@ -49,12 +49,10 @@ export function DownloadsSection({ downloads, locale }: Props) {
                   <Button
                     size="sm"
                     variant="outline"
-                    asChild
+                    render={<a href={item.file_url} download />}
                     data-testid="download-button"
                   >
-                    <a href={item.file_url} download>
-                      <Download className="w-4 h-4" />
-                    </a>
+                    <Download className="w-4 h-4" />
                   </Button>
                 </div>
               </CardContent>
