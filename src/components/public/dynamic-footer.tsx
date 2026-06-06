@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { getNavigation } from '@/lib/navigation/api'
+import type { NavigationItem } from '@/lib/navigation/types'
 
 interface DynamicFooterProps {
   locale: string
@@ -35,7 +36,7 @@ function processUrl(url: string, linkType: 'internal' | 'external', locale: stri
 
 export async function DynamicFooter({ locale }: DynamicFooterProps) {
   // 获取页脚导航数据
-  let navItems = []
+  let navItems: NavigationItem[] = []
   try {
     navItems = await getNavigation('footer')
   } catch (error) {

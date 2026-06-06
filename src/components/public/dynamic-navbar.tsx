@@ -1,6 +1,7 @@
 import { getTranslations } from 'next-intl/server'
 import { DynamicNavbarClient } from './dynamic-navbar-client'
 import { getNavigation } from '@/lib/navigation/api'
+import type { NavigationItem } from '@/lib/navigation/types'
 
 interface DynamicNavbarProps {
   locale: string
@@ -8,7 +9,7 @@ interface DynamicNavbarProps {
 
 export async function DynamicNavbar({ locale }: DynamicNavbarProps) {
   // 获取导航数据
-  let navItems = []
+  let navItems: NavigationItem[] = []
   try {
     navItems = await getNavigation('header')
   } catch (error) {

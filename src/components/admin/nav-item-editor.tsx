@@ -191,7 +191,11 @@ export function NavItemEditor({ open, onOpenChange, item, position, onSave }: Na
             </label>
             <Select
               value={linkType}
-              onValueChange={(value: 'internal' | 'external') => setLinkType(value)}
+              onValueChange={(value) => {
+                if (value === 'internal' || value === 'external') {
+                  setLinkType(value)
+                }
+              }}
             >
               <SelectTrigger>
                 <SelectValue />

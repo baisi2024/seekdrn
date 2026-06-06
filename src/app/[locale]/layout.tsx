@@ -2,8 +2,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
-import { DynamicNavbar } from '@/components/navigation/dynamic-navbar'
-import { DynamicFooter } from '@/components/navigation/dynamic-footer'
+import { DynamicNavbar } from '@/components/public/dynamic-navbar'
+import { DynamicFooter } from '@/components/public/dynamic-footer'
 import LocaleHtmlUpdater from './locale-html-updater'
 
 export default async function LocaleLayout({
