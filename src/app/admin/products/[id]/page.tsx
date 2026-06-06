@@ -29,7 +29,7 @@ interface ProductData {
 export default function ProductEditPage() {
   const params = useParams()
   const router = useRouter()
-  const { t } = useAdminTranslations()
+  const t = useAdminTranslations()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [product, setProduct] = useState<ProductData>({
