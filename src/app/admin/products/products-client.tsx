@@ -6,6 +6,7 @@ import { DataTable } from '@/components/admin/data-table'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { Plus } from 'lucide-react'
+import { AdminPage } from '@/components/admin/core'
 
 interface Product {
   id: string
@@ -44,20 +45,21 @@ export function ProductsClient({ products }: ProductsClientProps) {
   ]
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">{t('products_page.title')}</h1>
+    <AdminPage
+      title="products_page.title"
+      actions={
         <Link href="/admin/products/new" className={buttonVariants()}>
           <Plus className="w-4 h-4 mr-2" />
           {t('products_page.add')}
         </Link>
-      </div>
+      }
+    >
       <DataTable
         data={products}
         columns={columns}
         searchPlaceholder={t('products_page.searchPlaceholder')}
         onRowClick={(item) => window.location.href = `/admin/products/${item.id}`}
       />
-    </div>
+    </AdminPage>
   )
 }
