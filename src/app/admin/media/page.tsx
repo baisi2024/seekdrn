@@ -1,8 +1,10 @@
+import { MediaLibrary } from '@/features/products/components/admin/media-library'
+
 export default function MediaPage() {
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Media</h1>
-      <p className="text-gray-600">This section is under construction.</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6">Media Library</h1>
+      <MediaLibrary mode="manage" />
     </div>
   )
 }
