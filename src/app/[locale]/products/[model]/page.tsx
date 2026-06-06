@@ -7,12 +7,10 @@ import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { DatasheetDownloadButton } from '@/components/public/datasheet-download-button'
-
-interface ProductSpec {
-  id: string
-  label: Record<string, { label: string }> | { en?: string }
-  value: Record<string, { value: string }> | { en?: string }
-}
+import { SpecsSection } from '@/components/public/specs-section'
+import { DownloadsSection } from '@/components/public/downloads-section'
+import { RelatedCasesSection } from '@/components/public/related-cases-section'
+import { getProductWithEnhancements } from '@/lib/supabase/admin'
 
 export default async function ProductDetailPage({
   params,
@@ -22,12 +20,7 @@ export default async function ProductDetailPage({
   const { model, locale } = await params
   const t = await getTranslations('products')
 
-  const { data: product } = await supabaseAdmin
-    .from('products')
-    .select('*, product_specs(*)')
-    .eq('slug', model)
-    .eq('published', true)
-    .maybeSingle()
+  const product = await getProductWithEnhancements(model, locale)
 
   if (!product) notFound()
 
@@ -68,29 +61,9 @@ export default async function ProductDetailPage({
           </div>
         </div>
 
-        {/* Specs */}
-        {product.product_specs && product.product_specs.length > 0 && !product.compliance_flag && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-6">{t('specs')}</h2>
-            <Card>
-              <CardContent className="p-0">
-                <table className="w-full">
-                  <tbody>
-                    {product.product_specs.map((spec: ProductSpec, i: number) => {
-                      const label = getTranslation(spec.label, locale, 'label') || (typeof spec.label?.en === 'string' ? spec.label.en : '') || ''
-                      const value = getTranslation(spec.value, locale, 'value') || (typeof spec.value?.en === 'string' ? spec.value.en : '') || ''
-                      return (
-                        <tr key={spec.id || i} className="border-b last:border-0">
-                          <td className="px-4 py-3 font-medium text-gray-900 w-1/3">{label}</td>
-                          <td className="px-4 py-3 font-mono text-gray-600">{value}</td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </CardContent>
-            </Card>
-          </section>
+        {/* Specs - 使用新组件 */}
+        {product.spec_groups && product.spec_groups.length > 0 && !product.compliance_flag && (
+          <SpecsSection groups={product.spec_groups} locale={locale} />
         )}
 
         {/* Compliance notice for C-UAS products */}
@@ -104,6 +77,16 @@ export default async function ProductDetailPage({
               </CardContent>
             </Card>
           </section>
+        )}
+
+        {/* Downloads - 新增 */}
+        {product.product_downloads && product.product_downloads.length > 0 && (
+          <DownloadsSection downloads={product.product_downloads} locale={locale} />
+        )}
+
+        {/* Related Cases - 新增 */}
+        {product.related_cases && product.related_cases.length > 0 && (
+          <RelatedCasesSection cases={product.related_cases} locale={locale} />
         )}
 
         {/* Advantages */}
