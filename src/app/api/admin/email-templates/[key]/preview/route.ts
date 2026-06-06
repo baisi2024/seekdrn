@@ -4,9 +4,10 @@ import { replaceVariables } from '@/lib/email-helpers'
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: { params: Promise<{ key: string }> }
 ) {
   try {
+    const { key } = await params
     const body = await request.json()
     const { language, variables } = body
 
@@ -14,7 +15,7 @@ export async function POST(
     const { data: template, error } = await supabaseAdmin
       .from('email_templates')
       .select('translations')
-      .eq('template_key', params.key)
+      .eq('template_key', key)
       .single()
 
     if (error || !template) {

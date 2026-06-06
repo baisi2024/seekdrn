@@ -3,12 +3,13 @@ import { Resend } from 'resend'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { replaceVariables } from '@/lib/email-helpers'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 export async function POST(
   request: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: { params: Promise<{ key: string }> }
 ) {
+  const { key } = await params
+  const resend = new Resend(process.env.RESEND_API_KEY)
+  
   try {
     const body = await request.json()
     const { test_email, language, variables } = body
@@ -26,7 +27,7 @@ export async function POST(
     const { data: template, error } = await supabaseAdmin
       .from('email_templates')
       .select('translations')
-      .eq('template_key', params.key)
+      .eq('template_key', key)
       .single()
 
     if (error || !template) {
@@ -59,7 +60,7 @@ export async function POST(
 
     // 记录到日志
     await supabaseAdmin.from('email_logs').insert({
-      template_key: params.key,
+      template_key: key,
       recipient_email: test_email,
       language,
       subject: `[TEST] ${subject}`,
@@ -78,7 +79,7 @@ export async function POST(
     try {
       const body = await request.json()
       await supabaseAdmin.from('email_logs').insert({
-        template_key: params.key,
+        template_key: key,
         recipient_email: body.test_email,
         language: body.language,
         subject: '',

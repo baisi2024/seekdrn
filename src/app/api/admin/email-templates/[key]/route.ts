@@ -4,13 +4,14 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 // GET - 获取单个模板详情
 export async function GET(
   request: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: { params: Promise<{ key: string }> }
 ) {
   try {
+    const { key } = await params
     const { data, error } = await supabaseAdmin
       .from('email_templates')
       .select('*')
-      .eq('template_key', params.key)
+      .eq('template_key', key)
       .single()
 
     if (error) throw error
@@ -34,9 +35,10 @@ export async function GET(
 // PUT - 更新模板
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: { params: Promise<{ key: string }> }
 ) {
   try {
+    const { key } = await params
     const body = await request.json()
     const { description, translations, available_variables, is_active } = body
 
@@ -48,7 +50,7 @@ export async function PUT(
         available_variables,
         is_active,
       })
-      .eq('template_key', params.key)
+      .eq('template_key', key)
       .select()
       .single()
 
@@ -66,13 +68,14 @@ export async function PUT(
 // DELETE - 删除模板
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { key: string } }
+  { params }: { params: Promise<{ key: string }> }
 ) {
   try {
+    const { key } = await params
     const { error } = await supabaseAdmin
       .from('email_templates')
       .delete()
-      .eq('template_key', params.key)
+      .eq('template_key', key)
 
     if (error) throw error
 
