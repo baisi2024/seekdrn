@@ -7,10 +7,15 @@
     "cuas": "Anti-UAS",
     "ground_control": "Contrôle au Sol"
   },
-  "specs": "Spécifications",
+  "specs": "Spécifications Techniques",
   "advantages": "Avantages Principaux",
   "capabilities": "Capacités Principales",
   "applications": "Applications",
-  "relatedCases": "Cas Connexes",
-  "relatedProducts": "Produits Connexes"
+  "relatedCases": "Études de Cas Connexes",
+  "relatedProducts": "Produits Connexes",
+  "downloads": "Téléchargements",
+  "viewAll": "Voir Tout",
+  "downloadFile": "Télécharger",
+  "fileSize": "Taille du Fichier",
+  "language": "Langue"
 }

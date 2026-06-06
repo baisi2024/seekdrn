@@ -7,10 +7,15 @@
     "cuas": "Counter-UAS",
     "ground_control": "Ground Control"
   },
-  "specs": "Specifications",
+  "specs": "Technical Specifications",
   "advantages": "Core Advantages",
   "capabilities": "Core Capabilities",
   "applications": "Applications",
-  "relatedCases": "Related Cases",
-  "relatedProducts": "Related Products"
+  "relatedCases": "Related Case Studies",
+  "relatedProducts": "Related Products",
+  "downloads": "Downloads",
+  "viewAll": "View All",
+  "downloadFile": "Download",
+  "fileSize": "File Size",
+  "language": "Language"
 }

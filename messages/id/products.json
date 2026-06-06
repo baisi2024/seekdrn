@@ -7,10 +7,15 @@
     "cuas": "Contra-UAS",
     "ground_control": "Kontrol Darat"
   },
-  "specs": "Spesifikasi",
+  "specs": "Spesifikasi Teknis",
   "advantages": "Keunggulan Utama",
   "capabilities": "Kemampuan Utama",
   "applications": "Aplikasi",
-  "relatedCases": "Kasus Terkait",
-  "relatedProducts": "Produk Terkait"
+  "relatedCases": "Studi Kasus Terkait",
+  "relatedProducts": "Produk Terkait",
+  "downloads": "Unduhan",
+  "viewAll": "Lihat Semua",
+  "downloadFile": "Unduh",
+  "fileSize": "Ukuran File",
+  "language": "Bahasa"
 }

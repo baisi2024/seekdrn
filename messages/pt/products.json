@@ -7,10 +7,15 @@
     "cuas": "Contra-UAS",
     "ground_control": "Controle Terrestre"
   },
-  "specs": "Especificações",
+  "specs": "Especificações Técnicas",
   "advantages": "Vantagens Principais",
   "capabilities": "Capacidades Principais",
   "applications": "Aplicações",
-  "relatedCases": "Casos Relacionados",
-  "relatedProducts": "Produtos Relacionados"
+  "relatedCases": "Estudos de Caso Relacionados",
+  "relatedProducts": "Produtos Relacionados",
+  "downloads": "Downloads",
+  "viewAll": "Ver Tudo",
+  "downloadFile": "Baixar",
+  "fileSize": "Tamanho do Arquivo",
+  "language": "Idioma"
 }

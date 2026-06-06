@@ -7,10 +7,15 @@
     "cuas": "مكافحة الطائرات بدون طيار",
     "ground_control": "التحكم الأرضي"
   },
-  "specs": "المواصفات",
+  "specs": "المواصفات الفنية",
   "advantages": "المزايا الأساسية",
   "capabilities": "القدرات الأساسية",
   "applications": "التطبيقات",
-  "relatedCases": "الحالات ذات الصلة",
-  "relatedProducts": "المنتجات ذات الصلة"
+  "relatedCases": "دراسات الحالة ذات الصلة",
+  "relatedProducts": "المنتجات ذات الصلة",
+  "downloads": "مركز التحميل",
+  "viewAll": "عرض الكل",
+  "downloadFile": "تحميل",
+  "fileSize": "حجم الملف",
+  "language": "اللغة"
 }
