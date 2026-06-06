@@ -36,8 +36,8 @@ export function NavTreeItem({ item, onEdit, onDelete, depth = 0 }: NavTreeItemPr
     <div ref={setNodeRef} style={style} className="group">
       <div
         className={`
-          flex items-center gap-2 p-3 bg-white border rounded-lg mb-2
-          ${isDragging ? 'shadow-lg z-50' : 'hover:bg-gray-50'}
+          flex items-center gap-2 p-3 bg-background border border-border rounded-lg mb-2
+          ${isDragging ? 'shadow-lg z-50' : 'hover:bg-muted/50'}
         `}
         style={{ marginLeft: `${depth * 24}px` }}
       >
@@ -45,14 +45,14 @@ export function NavTreeItem({ item, onEdit, onDelete, depth = 0 }: NavTreeItemPr
         <button
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing text-gray-400 hover:text-gray-600"
+          className="cursor-grab active:cursor-grabbing text-muted-foreground hover:text-foreground"
         >
           <GripVertical className="h-5 w-5" />
         </button>
 
         {/* 展开指示器（如果有子项） */}
         {item.children && item.children.length > 0 ? (
-          <ChevronRight className="h-4 w-4 text-gray-400" />
+          <ChevronRight className="h-4 w-4 text-muted-foreground" />
         ) : (
           <div className="w-4" />
         )}
@@ -60,14 +60,14 @@ export function NavTreeItem({ item, onEdit, onDelete, depth = 0 }: NavTreeItemPr
         {/* 导航项信息 */}
         <div className="flex-1 min-w-0">
           <div className="font-medium truncate">{label}</div>
-          <div className="text-sm text-gray-500 truncate">{item.url}</div>
+          <div className="text-sm text-muted-foreground truncate">{item.url}</div>
         </div>
 
         {/* 状态标签 */}
         <div
           className={`
             px-2 py-1 rounded text-xs font-medium
-            ${item.published ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}
+            ${item.published ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' : 'bg-muted text-foreground'}
           `}
         >
           {item.published ? 'Published' : 'Draft'}
@@ -121,7 +121,7 @@ interface NavTreeProps {
 export function NavTree({ items, onEdit, onDelete }: NavTreeProps) {
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 text-gray-500">
+      <div className="text-center py-12 text-muted-foreground">
         No navigation items yet. Click "Add Item" to create one.
       </div>
     )
