@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -117,6 +118,36 @@ export default function ProductEditPage() {
           </Button>
         </div>
       </div>
+
+      {/* Navigation tabs for product management */}
+      {params.id !== 'new' && (
+        <div className="flex gap-2 mb-6 border-b pb-2">
+          <Link
+            href={`/admin/products/${params.id}`}
+            className="px-4 py-2 rounded-t-lg bg-blue-500 text-white"
+          >
+            Basic Info
+          </Link>
+          <Link
+            href={`/admin/products/${params.id}/specs`}
+            className="px-4 py-2 rounded-t-lg hover:bg-gray-100"
+          >
+            Specifications
+          </Link>
+          <Link
+            href={`/admin/products/${params.id}/downloads`}
+            className="px-4 py-2 rounded-t-lg hover:bg-gray-100"
+          >
+            Downloads
+          </Link>
+          <Link
+            href={`/admin/products/${params.id}/cases`}
+            className="px-4 py-2 rounded-t-lg hover:bg-gray-100"
+          >
+            Related Cases
+          </Link>
+        </div>
+      )}
 
       <div className="space-y-6">
         <Card>
