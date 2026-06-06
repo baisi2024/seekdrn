@@ -40,9 +40,10 @@ export function DataTable<T extends { id: string }>({
 
   return (
     <div className="space-y-4">
+      {/* 搜索栏 - 改进样式 */}
       <div className="flex items-center gap-4">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <Input
             placeholder={searchPlaceholder}
             value={search}
@@ -50,26 +51,30 @@ export function DataTable<T extends { id: string }>({
               setSearch(e.target.value)
               setPage(0)
             }}
-            className="pl-9"
+            className="pl-9 bg-background border-2 focus:border-primary transition-colors"
           />
         </div>
       </div>
-      <div className="border rounded-lg overflow-hidden">
+      
+      {/* 表格容器 - 添加阴影和圆角 */}
+      <div className="border rounded-xl overflow-hidden shadow-sm bg-card">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b">
+          {/* 表头 - 改进背景和样式 */}
+          <thead className="bg-muted/50 border-b">
             <tr>
               {columns.map((col) => (
-                <th key={String(col.key)} className="px-4 py-3 text-left text-sm font-medium text-gray-700">
+                <th key={String(col.key)} className="px-4 py-3.5 text-left text-sm font-semibold text-foreground">
                   {col.label}
                 </th>
               ))}
             </tr>
           </thead>
+          {/* 表体 - 改进悬停效果 */}
           <tbody className="divide-y">
-            {paged.map((item) => (
+            {paged.map((item, index) => (
               <tr
                 key={item.id}
-                className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
+                className={`${onRowClick ? 'cursor-pointer hover:bg-muted/30 transition-colors duration-150' : ''} ${index % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}
                 onClick={() => onRowClick?.(item)}
               >
                 {columns.map((col) => (
@@ -83,14 +88,26 @@ export function DataTable<T extends { id: string }>({
             ))}
           </tbody>
         </table>
+        
+        {/* 空状态 - 改进设计 */}
         {paged.length === 0 && (
-          <div className="p-8 text-center text-gray-500">No results</div>
+          <div className="p-12 text-center">
+            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
+              <Search className="w-6 h-6 text-muted-foreground" />
+            </div>
+            <p className="text-sm font-medium text-foreground mb-1">No results found</p>
+            <p className="text-xs text-muted-foreground">Try adjusting your search terms</p>
+          </div>
         )}
       </div>
+      
+      {/* 分页 - 改进样式 */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between">
-          <div className="text-sm text-gray-600">
-            Showing {page * pageSize + 1}-{Math.min((page + 1) * pageSize, filtered.length)} of {filtered.length}
+        <div className="flex items-center justify-between px-2">
+          <div className="text-sm text-muted-foreground">
+            Showing <span className="font-medium text-foreground">{page * pageSize + 1}</span> to{' '}
+            <span className="font-medium text-foreground">{Math.min((page + 1) * pageSize, filtered.length)}</span> of{' '}
+            <span className="font-medium text-foreground">{filtered.length}</span> results
           </div>
           <div className="flex gap-2">
             <Button
@@ -98,6 +115,7 @@ export function DataTable<T extends { id: string }>({
               size="sm"
               disabled={page === 0}
               onClick={() => setPage(page - 1)}
+              className="transition-all duration-150"
             >
               <ChevronLeft className="w-4 h-4" />
             </Button>
@@ -106,6 +124,7 @@ export function DataTable<T extends { id: string }>({
               size="sm"
               disabled={page >= totalPages - 1}
               onClick={() => setPage(page + 1)}
+              className="transition-all duration-150"
             >
               <ChevronRight className="w-4 h-4" />
             </Button>

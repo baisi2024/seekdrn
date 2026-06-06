@@ -1,10 +1,24 @@
 import { createClient } from '@supabase/supabase-js'
 import { matchRelatedCases } from '../match-related-cases'
 
-export const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+// 验证环境变量
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+if (!supabaseUrl) {
+  throw new Error(
+    'NEXT_PUBLIC_SUPABASE_URL is required. Please check your .env file.'
+  )
+}
+
+if (!supabaseServiceKey) {
+  throw new Error(
+    'SUPABASE_SERVICE_ROLE_KEY is required. Please check your .env file. ' +
+    'This key is needed for admin operations.'
+  )
+}
+
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function getProductWithEnhancements(slug: string, locale: string) {
   // 获取产品基本信息

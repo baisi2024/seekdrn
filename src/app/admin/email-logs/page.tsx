@@ -1,5 +1,5 @@
 import { supabaseAdmin } from '@/lib/supabase/admin'
-import { EmailLogsTable } from '@/components/admin/email-logs-table'
+import { EmailLogsClient } from '@/components/admin/email-logs/email-logs-client'
 
 export default async function EmailLogsPage() {
   const { data: logs } = await supabaseAdmin
@@ -8,10 +8,16 @@ export default async function EmailLogsPage() {
     .order('created_at', { ascending: false })
     .limit(100)
 
+  const { data: templates } = await supabaseAdmin
+    .from('email_templates')
+    .select('key')
+
+  const uniqueTemplates = templates?.map((t) => t.key) || []
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6">Email Logs</h1>
-      <EmailLogsTable data={logs || []} />
-    </div>
+    <EmailLogsClient
+      initialLogs={logs || []}
+      templates={uniqueTemplates}
+    />
   )
 }

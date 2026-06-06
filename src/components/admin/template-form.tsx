@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -14,7 +14,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { VariableValidator } from './variable-validator'
 import { RichEditor } from './rich-editor'
-import { Save, Eye, X, Plus } from 'lucide-react'
+import { Save, Eye, X, Plus, Check, Loader2 } from 'lucide-react'
+import { useAutoSave } from '@/hooks/use-auto-save'
+import { useDebounce } from '@/hooks/use-debounce'
 
 const templateSchema = z.object({
   template_key: z.string().min(1, '模板标识不能为空').regex(/^[a-z0-9_]+$/, '只能包含小写字母、数字和下划线'),
@@ -75,6 +77,20 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
   })
 
   const watchedValues = watch()
+  
+  // 防抖表单数据
+  const debouncedValues = useDebounce(watchedValues, 500)
+  
+  // 自动保存
+  const { isSaving: isAutoSaving, lastSaved, hasUnsavedChanges } = useAutoSave({
+    data: debouncedValues,
+    onSave: async (data) => {
+      // 这里可以调用实际的保存 API
+      console.log('Auto saving:', data)
+    },
+    delay: 3000,
+    enabled: isDirty,
+  })
 
   // 监听表单变化
   useEffect(() => {
@@ -82,21 +98,21 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
   }, [isDirty, onUnsavedChange])
 
   // 添加变量
-  const handleAddVariable = () => {
+  const handleAddVariable = useCallback(() => {
     const trimmed = variableInput.trim()
     if (trimmed && !watchedValues.available_variables.includes(trimmed)) {
       setValue('available_variables', [...watchedValues.available_variables, trimmed])
       setVariableInput('')
     }
-  }
+  }, [variableInput, watchedValues.available_variables, setValue])
 
   // 移除变量
-  const handleRemoveVariable = (variable: string) => {
+  const handleRemoveVariable = useCallback((variable: string) => {
     setValue(
       'available_variables',
       watchedValues.available_variables.filter((v) => v !== variable)
     )
-  }
+  }, [watchedValues.available_variables, setValue])
 
   const onSubmit = (data: TemplateFormData) => {
     onSave(data)
@@ -106,13 +122,56 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
     handleSubmit(onSubmit)()
   }
 
+  // 格式化最后保存时间
+  const formatLastSaved = (date: Date) => {
+    const now = new Date()
+    const diff = now.getTime() - date.getTime()
+    const seconds = Math.floor(diff / 1000)
+    
+    if (seconds < 60) return '刚刚'
+    if (seconds < 3600) return `${Math.floor(seconds / 60)} 分钟前`
+    return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+  }
+
+  // 变量列表
+  const variablesList = useMemo(() => watchedValues.available_variables, [watchedValues.available_variables])
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* 自动保存提示 */}
+      {(isAutoSaving || lastSaved) && (
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-2 rounded-lg bg-background border shadow-lg animate-fade-in">
+          {isAutoSaving ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
+              <span className="text-sm">自动保存中...</span>
+            </>
+          ) : lastSaved ? (
+            <>
+              <Check className="h-4 w-4 text-green-500" />
+              <span className="text-sm text-muted-foreground">
+                已保存 · {formatLastSaved(lastSaved)}
+              </span>
+            </>
+          ) : null}
+        </div>
+      )}
+      
       {/* 基本信息 */}
-      <Card>
+      <Card className="overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
         <CardHeader>
-          <CardTitle>基本信息</CardTitle>
-          <CardDescription>模板的基本配置和标识</CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>基本信息</CardTitle>
+              <CardDescription>模板的基本配置和标识</CardDescription>
+            </div>
+            {hasUnsavedChanges && (
+              <Badge variant="outline" className="text-yellow-500 border-yellow-500">
+                未保存更改
+              </Badge>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -126,9 +185,10 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                 placeholder="welcome_email"
                 disabled={!!template}
                 className={errors.template_key ? 'border-red-500' : ''}
+                aria-invalid={errors.template_key ? 'true' : 'false'}
               />
               {errors.template_key && (
-                <p className="text-sm text-red-500">{errors.template_key.message}</p>
+                <p className="text-sm text-red-500" role="alert">{errors.template_key.message}</p>
               )}
               <p className="text-xs text-muted-foreground">
                 唯一标识符，只能包含小写字母、数字和下划线
@@ -142,7 +202,11 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                   name="is_active"
                   control={control}
                   render={({ field }) => (
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                    <Switch 
+                      checked={field.value} 
+                      onCheckedChange={field.onChange}
+                      aria-label="激活状态"
+                    />
                   )}
                 />
                 <span className="text-sm text-muted-foreground">
@@ -210,8 +274,9 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
         </CardContent>
       </Card>
 
-      {/* 多语言内容 */}
-      <Card>
+      {/* 邮件内容 */}
+      <Card className="overflow-hidden">
+        <div className="h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500" />
         <CardHeader>
           <CardTitle>邮件内容</CardTitle>
           <CardDescription>配置不同语言的邮件主题和内容</CardDescription>
@@ -291,14 +356,32 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
       </Card>
 
       {/* 操作按钮 */}
-      <div className="flex gap-4 justify-end">
-        <Button type="button" variant="outline" onClick={handleSaveAndPreview}>
+      <div className="flex gap-4 justify-end sticky bottom-4 bg-background/80 backdrop-blur-sm p-4 rounded-lg border">
+        <Button 
+          type="button" 
+          variant="outline" 
+          onClick={handleSaveAndPreview}
+          className="hover:bg-purple-100 hover:text-purple-600"
+        >
           <Eye className="w-4 h-4 mr-2" />
           保存并预览
         </Button>
-        <Button type="submit" disabled={saving}>
-          <Save className="w-4 h-4 mr-2" />
-          {saving ? '保存中...' : '保存模板'}
+        <Button 
+          type="submit" 
+          disabled={saving}
+          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
+        >
+          {saving ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              保存中...
+            </>
+          ) : (
+            <>
+              <Save className="w-4 h-4 mr-2" />
+              保存模板
+            </>
+          )}
         </Button>
       </div>
     </form>

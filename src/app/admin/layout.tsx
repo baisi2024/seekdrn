@@ -26,10 +26,10 @@ export default async function AdminLayout({
 
   return (
     <AdminLanguageProvider>
-      <div className="min-h-screen bg-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
         <Sidebar />
         <main className="lg:pl-64">
-          <div className="p-6">{children}</div>
+          <div className="p-6 lg:p-8">{children}</div>
         </main>
       </div>
     </AdminLanguageProvider>

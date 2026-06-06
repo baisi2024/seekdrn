@@ -46,12 +46,17 @@ export function Sidebar() {
   }
 
   return (
-    <aside className="fixed inset-y-0 left-0 w-64 bg-gray-900 text-white hidden lg:block">
+    <aside className="fixed inset-y-0 left-0 w-64 bg-gradient-to-b from-slate-900 via-slate-900 to-slate-800 text-white hidden lg:block shadow-xl">
       <div className="flex flex-col h-full">
-        <div className="p-6 border-b border-gray-800">
-          <h1 className="text-xl font-bold">{t('title')}</h1>
+        {/* Logo区域 - 添加渐变效果 */}
+        <div className="p-6 border-b border-slate-700/50 bg-gradient-to-r from-blue-600/10 to-transparent">
+          <h1 className="text-xl font-bold bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+            {t('title')}
+          </h1>
         </div>
-        <nav className="flex-1 p-4 space-y-1">
+        
+        {/* 导航区域 - 改进交互效果 */}
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {NAV_ITEMS.map((item) => {
             const isActive = pathname === item.href ||
               (item.href !== '/admin' && pathname.startsWith(item.href))
@@ -59,21 +64,29 @@ export function Sidebar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 px-3 py-2 rounded transition-colors ${
-                  isActive ? 'bg-gray-800 text-white' : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 group ${
+                  isActive 
+                    ? 'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-lg shadow-blue-500/25' 
+                    : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                 }`}
               >
-                <item.icon className="w-5 h-5" />
-                {item.label}
+                <item.icon className={`w-5 h-5 transition-transform duration-200 ${isActive ? 'scale-110' : 'group-hover:scale-110'}`} />
+                <span className="font-medium">{item.label}</span>
               </Link>
             )
           })}
         </nav>
-        <AdminLanguageSwitcher />
-        <div className="p-4 border-t border-gray-800">
+        
+        {/* 语言切换器 */}
+        <div className="px-4 py-2 border-t border-slate-700/50">
+          <AdminLanguageSwitcher />
+        </div>
+        
+        {/* 登出按钮 */}
+        <div className="p-4 border-t border-slate-700/50">
           <Button
             variant="ghost"
-            className="w-full justify-start text-gray-400 hover:text-white"
+            className="w-full justify-start text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all duration-200"
             onClick={handleLogout}
           >
             <LogOut className="w-5 h-5 mr-3" />
