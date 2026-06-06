@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
+import type { Metadata } from 'next'
 import { getTranslation } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -11,7 +12,22 @@ import { DownloadsSection } from '@/components/public/downloads-section'
 import { RelatedCasesSection } from '@/components/public/related-cases-section'
 import { ProductGallery } from '@/features/products/components/public/product-gallery'
 import { RelatedProducts } from '@/features/products/components/public/related-products'
+import { ProductSchema } from '@/components/seo/product-schema'
+import { generateProductMetadata } from '@/lib/seo/product-metadata'
 import { getProductWithEnhancements } from '@/lib/supabase/admin'
+
+export async function generateMetadata({ params }: { params: Promise<{ model: string; locale: string }> }): Promise<Metadata> {
+  const { model, locale } = await params
+  const product = await getProductWithEnhancements(model, locale)
+  
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+    }
+  }
+  
+  return generateProductMetadata({ product, locale })
+}
 
 export default async function ProductDetailPage({
   params,
@@ -32,8 +48,10 @@ export default async function ProductDetailPage({
   const applications = getTranslation(product.translations, locale, 'applications')
 
   return (
-    <div className="py-16">
-      <div className="container mx-auto px-4">
+    <>
+      <ProductSchema product={product} locale={locale} />
+      <div className="py-16">
+        <div className="container mx-auto px-4">
         {/* Hero */}
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           <ProductGallery
@@ -111,5 +129,6 @@ export default async function ProductDetailPage({
         <RelatedProducts productId={product.id} locale={locale} />
       </div>
     </div>
+    </>
   )
 }
