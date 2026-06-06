@@ -1,4 +1,26 @@
 import type { Category } from './category'
+import type { ProductTag } from './tag'
+
+export interface StandardizedSpec {
+  value: number
+  unit: string
+  label?: Record<string, string>
+}
+
+export interface ProductSpecsStandardized {
+  weight?: StandardizedSpec
+  maxTakeOffWeight?: StandardizedSpec
+  wingspan?: StandardizedSpec
+  length?: StandardizedSpec
+  maxEndurance?: StandardizedSpec
+  maxRange?: StandardizedSpec
+  cruiseSpeed?: StandardizedSpec
+  maxSpeed?: StandardizedSpec
+  maxCeiling?: StandardizedSpec
+  payloadCapacity?: StandardizedSpec
+  maxControlDistance?: StandardizedSpec
+  [key: string]: StandardizedSpec | undefined
+}
 
 export interface Product {
   id: string
@@ -15,9 +37,11 @@ export interface Product {
   featured: boolean
   compliance_flag: boolean
   spec_groups: SpecGroup[]
+  specs_standardized: ProductSpecsStandardized
   sort_order: number
   created_at: string
   updated_at: string
+  tag_objects?: ProductTag[]
 }
 
 export type TranslationStatus = 'translated' | 'pending' | 'syncing' | 'missing'
