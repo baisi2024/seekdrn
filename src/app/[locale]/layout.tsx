@@ -2,8 +2,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
-import { Navbar } from '@/components/public/navbar'
-import { Footer } from '@/components/public/footer'
+import { DynamicNavbar } from '@/components/navigation/dynamic-navbar'
+import { DynamicFooter } from '@/components/navigation/dynamic-footer'
 import LocaleHtmlUpdater from './locale-html-updater'
 
 export default async function LocaleLayout({
@@ -25,9 +25,9 @@ export default async function LocaleLayout({
     <>
       <LocaleHtmlUpdater locale={locale} />
       <NextIntlClientProvider messages={messages}>
-        <Navbar />
+        <DynamicNavbar locale={locale} />
         <main className="min-h-screen">{children}</main>
-        <Footer />
+        <DynamicFooter locale={locale} />
       </NextIntlClientProvider>
     </>
   )
