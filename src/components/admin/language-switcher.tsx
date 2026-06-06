@@ -7,7 +7,7 @@ export function AdminLanguageSwitcher() {
   const { language, setLanguage } = useAdminLanguage()
 
   return (
-    <div className="flex gap-2 p-4 border-t border-gray-800">
+    <div className="flex gap-2 p-4 border-t border-border">
       <Button
         variant={language === 'en' ? 'default' : 'ghost'}
         size="sm"
