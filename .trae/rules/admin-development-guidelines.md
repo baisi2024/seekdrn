@@ -283,6 +283,186 @@ const handleSubmit = async () => {
 - [Next.js 国际化](https://next-intl-docs.vercel.app)
 - [Supabase 文档](https://supabase.com/docs)
 
+### 6. 统一UI组件库
+
+**问题背景**：为了确保所有管理页面的UI一致性和可维护性，项目创建了统一的UI组件库。
+
+**强制要求**：
+- 所有新页面必须使用 AdminPage 组件作为页面容器
+- 所有卡片必须使用 AdminCard 组件
+- 所有文本必须使用 TranslatedText 组件或 useAdminTranslations hook
+- 禁止使用硬编码颜色（bg-gray-*, text-gray-*, border-gray-*）
+
+**核心组件**：
+
+#### AdminPage - 页面容器组件
+
+提供统一的页面布局、标题翻译和视觉效果。
+
+```typescript
+import { AdminPage } from '@/components/admin/core'
+
+export function MyPage() {
+  return (
+    <AdminPage 
+      title="my_page.title" 
+      actions={<AddButton />}
+      description="my_page.description"
+    >
+      {/* 页面内容 */}
+    </AdminPage>
+  )
+}
+```
+
+**AdminPage 属性**：
+- `title`: 页面标题翻译键（必需）
+- `actions`: 页面操作按钮（可选）
+- `description`: 页面描述翻译键（可选）
+- `gradient`: 是否显示渐变背景（默认 true）
+- `className`: 自定义类名（可选）
+
+#### AdminCard - 卡片容器组件
+
+提供统一的卡片样式、翻译和交互效果。
+
+```typescript
+import { AdminCard } from '@/components/admin/core'
+
+export function MyComponent() {
+  return (
+    <AdminCard 
+      title="my_card.title"
+      variant="elevated"
+      hover={true}
+    >
+      {/* 卡片内容 */}
+    </AdminCard>
+  )
+}
+```
+
+**AdminCard 属性**：
+- `title`: 卡片标题翻译键（可选）
+- `description`: 卡片描述翻译键（可选）
+- `variant`: 卡片变体（'default' | 'elevated' | 'bordered'）
+- `hover`: 是否启用悬停效果（默认 true）
+- `gradient`: 是否显示渐变背景（默认 false）
+
+#### TranslatedText - 翻译文本组件
+
+统一的翻译文本组件，自动处理翻译和插值。
+
+```typescript
+import { TranslatedText } from '@/components/admin/core'
+
+// 基础使用
+<TranslatedText textKey="products_page.title" />
+
+// 带备用文本
+<TranslatedText textKey="products_page.title" fallback="产品管理" />
+
+// 带变量插值
+<TranslatedText 
+  textKey="products_page.count" 
+  variables={{ count: 5 }} 
+/>
+
+// 使用不同的 HTML 标签
+<TranslatedText 
+  textKey="products_page.title" 
+  as="h1" 
+  className="text-2xl font-bold" 
+/>
+```
+
+**颜色替换工具**：
+
+使用 `normalizeColors()` 函数替换硬编码颜色：
+
+```typescript
+import { normalizeColors } from '@/components/admin/styles'
+
+// 替换前
+className="bg-gray-100 text-gray-500"
+
+// 替换后
+className={normalizeColors('bg-gray-100 text-gray-500')}
+// 结果: "bg-muted text-muted-foreground"
+```
+
+**颜色映射规则**：
+- `bg-gray-50` → `bg-muted/50`
+- `bg-gray-100` → `bg-muted`
+- `text-gray-500` → `text-muted-foreground`
+- `text-gray-700` → `text-foreground`
+- `border-gray-200` → `border-border`
+
+**效果系统**：
+
+使用预定义的视觉效果：
+
+```typescript
+import { effects, combineEffects } from '@/components/admin/styles'
+
+// 使用单个效果
+<div className={effects.card}>...</div>
+
+// 组合多个效果
+<div className={combineEffects('card', 'hover', 'fadeIn')}>...</div>
+```
+
+**可用效果**：
+- `card`: 卡片阴影和悬停效果
+- `button`: 按钮过渡效果
+- `gradientPage`: 页面渐变背景
+- `hover`: 悬停背景效果
+- `fadeIn`: 淡入动画
+
+**最佳实践**：
+
+1. **何时使用哪个组件**：
+   - 页面级别：使用 AdminPage
+   - 内容区域：使用 AdminCard
+   - 文本显示：使用 TranslatedText 或 useAdminTranslations
+
+2. **如何添加新的翻译键**：
+   - 在 `messages/en/admin.json` 添加英文翻译
+   - 在 `messages/zh/admin.json` 添加中文翻译
+   - 使用语义化的键名（如 `page_name.feature.item`）
+
+3. **如何确保样式一致性**：
+   - 使用设计系统变量而非硬编码颜色
+   - 使用效果系统而非自定义样式
+   - 使用统一的间距系统（space-y-4, gap-4）
+
+**示例：创建新的管理页面**
+
+```typescript
+'use client'
+
+import { AdminPage, AdminCard } from '@/components/admin/core'
+import { Button } from '@/components/ui/button'
+
+export default function NewFeaturePage() {
+  return (
+    <AdminPage 
+      title="new_feature.title"
+      actions={
+        <Button>
+          <TranslatedText textKey="new_feature.add" />
+        </Button>
+      }
+    >
+      <AdminCard title="new_feature.card_title">
+        {/* 内容 */}
+      </AdminCard>
+    </AdminPage>
+  )
+}
+```
+
 ## 更新日志
 
+- 2026-06-07: 添加统一UI组件库使用说明
 - 2026-06-07: 初始版本，定义三大核心要求
