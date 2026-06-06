@@ -147,7 +147,7 @@ export function CaseRelationsManager({
 
       {relations.length === 0 ? (
         <Card>
-          <CardContent className="p-8 text-center text-gray-500">
+          <CardContent className="p-8 text-center text-muted-foreground">
             No related cases. Click "Auto Match" or "Add Manually" to add cases.
           </CardContent>
         </Card>
@@ -161,10 +161,10 @@ export function CaseRelationsManager({
                     {getCaseTitle(relation.case_study)}
                   </p>
                   <div className="flex gap-2 mt-1">
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-muted-foreground">
                       {relation.case_study?.industry}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-muted-foreground">
                       {relation.case_study?.country}
                     </span>
                     {relation.is_manual ? (

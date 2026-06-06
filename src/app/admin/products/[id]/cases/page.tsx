@@ -106,7 +106,7 @@ export default function CasesManagePage() {
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Manage Related Cases</h1>
-        <p className="text-gray-600">Product: {product.model}</p>
+        <p className="text-muted-foreground">Product: {product.model}</p>
       </div>
       
       <CaseRelationsManager
