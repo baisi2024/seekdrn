@@ -135,3 +135,20 @@ CREATE POLICY "Admin all media"
   ON media FOR ALL
   USING (auth.jwt() ->> 'role' = 'admin')
   WITH CHECK (auth.jwt() ->> 'role' = 'admin');
+
+-- ============================================
+-- email_logs RLS policies
+-- ============================================
+ALTER TABLE email_logs ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Admins can manage email logs"
+  ON email_logs
+  FOR ALL
+  TO authenticated
+  USING (
+    EXISTS (
+      SELECT 1 FROM auth.users
+      WHERE auth.users.id = auth.uid()
+      AND auth.users.raw_user_meta_data->>'role' = 'admin'
+    )
+  );
