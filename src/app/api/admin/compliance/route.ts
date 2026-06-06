@@ -2,6 +2,7 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { POLICIES } from '@/lib/compliance/constants'
+import { PolicyItem } from '@/lib/compliance/types'
 
 /**
  * GET /api/admin/compliance
@@ -13,7 +14,7 @@ export async function GET() {
     const { data: policiesData, error } = await supabaseAdmin
       .from('footer_content')
       .select('*')
-      .in('section', POLICIES.map(p => p.slug))
+      .in('section', POLICIES.map(p => p.section))
 
     if (error) {
       console.error('Database error:', error)
@@ -21,20 +22,16 @@ export async function GET() {
     }
 
     // 合并政策配置和数据库数据
-    const policies = POLICIES.map(policyConfig => {
-      const dbData = policiesData?.find(p => p.section === policyConfig.slug)
+    const policies: PolicyItem[] = POLICIES.map(policyConfig => {
+      const dbData = policiesData?.find(p => p.section === policyConfig.section)
 
       return {
         id: dbData?.id || '',
-        slug: policyConfig.slug,
-        title: policyConfig.title,
-        description: policyConfig.description,
-        content: dbData?.translations || {},
-        version: '1.0',
-        effectiveDate: dbData?.created_at || new Date().toISOString(),
-        lastUpdated: dbData?.updated_at || new Date().toISOString(),
-        status: dbData?.published ? 'active' : 'draft',
-        category: policyConfig.category,
+        section: policyConfig.section,
+        translations: dbData?.translations || {},
+        published: dbData?.published ?? false,
+        created_at: dbData?.created_at || new Date().toISOString(),
+        updated_at: dbData?.updated_at
       }
     })
 

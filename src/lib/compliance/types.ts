@@ -3,36 +3,29 @@
  */
 export interface PolicyItem {
   id: string
-  slug: string
-  title: string
-  description: string
-  content: string
-  version: string
-  effectiveDate: string
-  lastUpdated: string
-  status: 'active' | 'draft' | 'archived'
-  category: string
+  section: string
+  translations: Record<string, { title?: string; content: string }>
+  published: boolean
+  created_at: string
+  updated_at?: string
 }
 
 /**
- * 政策更新记录类型
+ * 政策更新数据类型
  */
 export interface PolicyUpdate {
-  id: string
-  policyId: string
-  version: string
-  changes: string
-  updatedBy: string
-  updatedAt: string
+  translations: Record<string, { title?: string; content: string }>
+  published?: boolean
 }
 
 /**
  * 政策配置类型
  */
 export interface PolicyConfig {
+  section: string
   slug: string
-  title: string
-  description: string
-  category: string
-  defaultContent: string
+  name: {
+    en: string
+    zh: string
+  }
 }
