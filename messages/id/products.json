@@ -17,5 +17,18 @@
   "viewAll": "Lihat Semua",
   "downloadFile": "Unduh",
   "fileSize": "Ukuran File",
-  "language": "Bahasa"
+  "language": "Bahasa",
+  "faq": "FAQ",
+  "requestQuote": "Minta Penawaran",
+  "downloadMaterials": "Unduh Materi",
+  "scheduleDemo": "Jadwalkan Demo",
+  "relatedSolutions": "Solusi Terkait",
+  "tags": "Tag",
+  "documentTypes": {
+    "manual": "Manual",
+    "datasheet": "Lembar Data",
+    "certificate": "Sertifikat",
+    "brochure": "Brosur",
+    "other": "Lainnya"
+  }
 }
