@@ -13,6 +13,7 @@ import { BasicInfoTab } from '@/features/products/components/admin/product-tabs/
 import { SEOTab } from '@/features/products/components/admin/product-tabs/seo-tab'
 import { FAQTab } from '@/features/products/components/admin/product-tabs/faq-tab'
 import { DocumentsTab } from '@/features/products/components/admin/product-tabs/documents-tab'
+import { AdminPage } from '@/components/admin/core'
 import type { Category, ProductTag } from '@/features/products/types'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
@@ -114,10 +115,10 @@ export default function ProductEditPage() {
           .eq('id', params.id)
         if (error) throw error
       }
-      alert('Product saved successfully')
+      alert(t('productSaved'))
     } catch (error) {
       console.error('Save error:', error)
-      alert('Failed to save')
+      alert(t('saveFailed'))
     } finally {
       setSaving(false)
     }
@@ -154,18 +155,17 @@ export default function ProductEditPage() {
   const isNewProduct = params.id === 'new'
 
   return (
-    <div className="max-w-6xl">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">
-          {isNewProduct ? t('products_page.add') : t('products_page.edit')}
-        </h1>
+    <AdminPage
+      title={isNewProduct ? 'products_page.add' : 'products_page.edit'}
+      actions={
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => router.back()}>{t('cancel')}</Button>
           <Button onClick={handleSave} disabled={saving}>
             {saving ? t('saving') : t('save')}
           </Button>
         </div>
-      </div>
+      }
+    >
 
       {isNewProduct ? (
         <div className="space-y-6">
@@ -201,7 +201,7 @@ export default function ProductEditPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Videos</CardTitle>
+              <CardTitle>{t('videos')}</CardTitle>
             </CardHeader>
             <CardContent>
               <MediaUpload
@@ -263,7 +263,7 @@ export default function ProductEditPage() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Videos</CardTitle>
+                  <CardTitle>{t('videos')}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <MediaUpload
@@ -296,11 +296,11 @@ export default function ProductEditPage() {
           {currentTab === 'specs' && (
             <Card>
               <CardHeader>
-                <CardTitle>Specifications</CardTitle>
+                <CardTitle>{t('specifications')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
-                  Specifications can be edited on the dedicated{' '}
+                  {t('specifications')} can be edited on the dedicated{' '}
                   <a
                     href={`/admin/products/${params.id}/specs`}
                     className="text-primary hover:underline"
@@ -321,7 +321,7 @@ export default function ProductEditPage() {
           {currentTab === 'relations' && (
             <Card>
               <CardHeader>
-                <CardTitle>Related Products & Cases</CardTitle>
+                <CardTitle>{t('relatedProductsCases')}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">
@@ -338,6 +338,6 @@ export default function ProductEditPage() {
           )}
         </ProductTabs>
       )}
-    </div>
+    </AdminPage>
   )
 }
