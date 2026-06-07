@@ -105,6 +105,7 @@
   },
   "navigation_page": {
     "title": "导航管理",
+    "add": "添加导航项",
     "header": "头部导航",
     "footer": "底部导航",
     "addItem": "添加导航项",
