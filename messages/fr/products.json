@@ -17,5 +17,18 @@
   "viewAll": "Voir Tout",
   "downloadFile": "Télécharger",
   "fileSize": "Taille du Fichier",
-  "language": "Langue"
+  "language": "Langue",
+  "faq": "FAQ",
+  "requestQuote": "Demander un Devis",
+  "downloadMaterials": "Télécharger les Documents",
+  "scheduleDemo": "Planifier une Démo",
+  "relatedSolutions": "Solutions Connexes",
+  "tags": "Tags",
+  "documentTypes": {
+    "manual": "Manuel",
+    "datasheet": "Fiche Technique",
+    "certificate": "Certificat",
+    "brochure": "Brochure",
+    "other": "Autre"
+  }
 }
