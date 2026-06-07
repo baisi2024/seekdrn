@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Plus, Trash2, Sparkles } from 'lucide-react'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface CaseStudy {
   id: string
@@ -37,6 +38,7 @@ export function CaseRelationsManager({
   onSave,
   onAutoMatch 
 }: Props) {
+  const t = useAdminTranslations()
   const [relations, setRelations] = useState<CaseRelation[]>(initialRelations)
   const [saving, setSaving] = useState(false)
   const [matching, setMatching] = useState(false)
@@ -64,10 +66,10 @@ export function CaseRelationsManager({
     try {
       const matchedRelations = await onAutoMatch()
       setRelations(matchedRelations)
-      alert('Auto-matched cases!')
+      alert(t('case_relations.auto_matched'))
     } catch (error) {
       console.error('Auto-match error:', error)
-      alert('Failed to auto-match cases')
+      alert(t('case_relations.auto_match_failed'))
     } finally {
       setMatching(false)
     }
@@ -77,17 +79,17 @@ export function CaseRelationsManager({
     setSaving(true)
     try {
       await onSave(relations)
-      alert('Saved successfully!')
+      alert(t('case_relations.saved'))
     } catch (error) {
       console.error('Save error:', error)
-      alert('Failed to save')
+      alert(t('case_relations.save_failed'))
     } finally {
       setSaving(false)
     }
   }
 
   const getCaseTitle = (caseStudy?: CaseStudy) => {
-    if (!caseStudy) return 'Unknown'
+    if (!caseStudy) return t('case_relations.unknown')
     return caseStudy.translations?.en?.title || caseStudy.translations?.zh?.title || caseStudy.slug
   }
 
@@ -98,7 +100,7 @@ export function CaseRelationsManager({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Related Case Studies</h2>
+        <h2 className="text-xl font-semibold">{t('case_relations.title')}</h2>
         <div className="flex gap-2">
           <Button
             variant="outline"
@@ -106,11 +108,11 @@ export function CaseRelationsManager({
             disabled={matching}
           >
             <Sparkles className="w-4 h-4 mr-2" />
-            {matching ? 'Matching...' : 'Auto Match'}
+            {matching ? t('case_relations.matching') : t('case_relations.auto_match')}
           </Button>
           <Button onClick={() => setShowSelector(!showSelector)}>
             <Plus className="w-4 h-4 mr-2" />
-            Add Manually
+            {t('case_relations.add_manually')}
           </Button>
         </div>
       </div>
@@ -118,22 +120,22 @@ export function CaseRelationsManager({
       {showSelector && (
         <Card>
           <CardHeader>
-            <CardTitle>Select Case Study</CardTitle>
+            <CardTitle>{t('case_relations.select_case')}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2 max-h-60 overflow-y-auto">
               {availableCases.length === 0 ? (
-                <p className="text-gray-500">No available case studies</p>
+                <p className="text-muted-foreground">{t('case_relations.no_available')}</p>
               ) : (
                 availableCases.map(caseStudy => (
                   <div
                     key={caseStudy.id}
-                    className="flex items-center justify-between p-2 border rounded hover:bg-gray-50 cursor-pointer"
+                    className="flex items-center justify-between p-2 border rounded hover:bg-muted/50 cursor-pointer transition-colors"
                     onClick={() => addRelation(caseStudy.id)}
                   >
                     <div>
                       <p className="font-medium">{getCaseTitle(caseStudy)}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-muted-foreground">
                         {caseStudy.industry} - {caseStudy.country}
                       </p>
                     </div>
@@ -148,7 +150,7 @@ export function CaseRelationsManager({
       {relations.length === 0 ? (
         <Card>
           <CardContent className="p-8 text-center text-muted-foreground">
-            No related cases. Click "Auto Match" or "Add Manually" to add cases.
+            {t('case_relations.empty')}
           </CardContent>
         </Card>
       ) : (
@@ -169,11 +171,11 @@ export function CaseRelationsManager({
                     </span>
                     {relation.is_manual ? (
                       <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                        Manual
+                        {t('case_relations.manual')}
                       </span>
                     ) : (
                       <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                        Auto ({relation.relevance_score.toFixed(2)})
+                        {t('case_relations.auto')} ({relation.relevance_score.toFixed(2)})
                       </span>
                     )}
                   </div>
@@ -192,7 +194,7 @@ export function CaseRelationsManager({
       )}
 
       <Button onClick={handleSave} disabled={saving} className="w-full">
-        {saving ? 'Saving...' : 'Save Changes'}
+        {saving ? t('case_relations.saving') : t('case_relations.save_changes')}
       </Button>
     </div>
   )

@@ -13,8 +13,8 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog'
-import { getTags, createTag, updateTag, deleteTag } from '@/features/products/api/tags'
 import type { ProductTag, TagFormData } from '@/features/products/types'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 const LOCALES = ['en', 'zh'] as const
 const PRESET_COLORS = [
@@ -24,6 +24,7 @@ const PRESET_COLORS = [
 ]
 
 export function TagManager() {
+  const t = useAdminTranslations()
   const [tags, setTags] = useState<ProductTag[]>([])
   const [loading, setLoading] = useState(true)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
@@ -47,7 +48,9 @@ export function TagManager() {
 
   async function loadTags() {
     try {
-      const data = await getTags(true)
+      const res = await fetch('/api/admin/tags?includeProductCount=true')
+      if (!res.ok) throw new Error('Failed to fetch tags')
+      const data = await res.json()
       setTags(data)
     } catch (error) {
       console.error('Failed to load tags:', error)
@@ -88,32 +91,45 @@ export function TagManager() {
       }
 
       if (editingTag) {
-        await updateTag(editingTag.id, tagData)
+        const res = await fetch(`/api/admin/tags/${editingTag.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(tagData),
+        })
+        if (!res.ok) throw new Error('Failed to update tag')
       } else {
-        await createTag(tagData)
+        const res = await fetch('/api/admin/tags', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(tagData),
+        })
+        if (!res.ok) throw new Error('Failed to create tag')
       }
       await loadTags()
       setIsDialogOpen(false)
     } catch (error) {
       console.error('Failed to save tag:', error)
-      alert('Failed to save tag')
+      alert(t('tag_manager.save_failed'))
     }
   }
 
   const handleDelete = async (tagId: string) => {
-    if (!confirm('Are you sure you want to delete this tag? This will remove it from all products.')) return
+    if (!confirm(t('tag_manager.delete_confirm'))) return
 
     try {
-      await deleteTag(tagId)
+      const res = await fetch(`/api/admin/tags/${tagId}`, {
+        method: 'DELETE',
+      })
+      if (!res.ok) throw new Error('Failed to delete tag')
       await loadTags()
     } catch (error) {
       console.error('Failed to delete tag:', error)
-      alert('Failed to delete tag')
+      alert(t('tag_manager.delete_failed'))
     }
   }
 
   if (loading) {
-    return <div>Loading tags...</div>
+    return <div>{t('tag_manager.loading')}</div>
   }
 
   return (
@@ -121,14 +137,14 @@ export function TagManager() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Tags</CardTitle>
-            <Button onClick={openAddDialog}>Add Tag</Button>
+            <CardTitle>{t('tag_manager.title')}</CardTitle>
+            <Button onClick={openAddDialog}>{t('tag_manager.add')}</Button>
           </div>
         </CardHeader>
         <CardContent>
           {tags.length === 0 ? (
             <p className="text-center text-muted-foreground py-8">
-              No tags yet. Click &quot;Add Tag&quot; to create one.
+              {t('tag_manager.empty')}
             </p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -160,10 +176,10 @@ export function TagManager() {
                   </div>
                   <div className="flex gap-1">
                     <Button variant="ghost" size="sm" onClick={() => openEditDialog(tag)}>
-                      Edit
+                      {t('edit')}
                     </Button>
                     <Button variant="ghost" size="sm" onClick={() => handleDelete(tag.id)}>
-                      Delete
+                      {t('delete')}
                     </Button>
                   </div>
                 </div>
@@ -176,20 +192,20 @@ export function TagManager() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{editingTag ? 'Edit Tag' : 'Add Tag'}</DialogTitle>
+            <DialogTitle>{editingTag ? t('tag_manager.edit_title') : t('tag_manager.add_title')}</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
-              <Label>Slug</Label>
+              <Label>{t('tag_manager.slug_label')}</Label>
               <Input
                 value={formData.slug}
                 onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                placeholder="url-friendly-slug"
+                placeholder={t('tag_manager.slug_placeholder')}
               />
             </div>
 
             <div>
-              <Label>Color</Label>
+              <Label>{t('tag_manager.color_label')}</Label>
               <div className="flex flex-wrap gap-2 mt-2">
                 {PRESET_COLORS.map((color) => (
                   <button
@@ -223,7 +239,7 @@ export function TagManager() {
 
             {LOCALES.map((locale) => (
               <div key={locale}>
-                <Label>Name ({locale.toUpperCase()})</Label>
+                <Label>{t('tag_manager.name_label', { locale: locale.toUpperCase() })}</Label>
                 <Input
                   value={formData.translations[locale]?.name || ''}
                   onChange={(e) =>
@@ -241,10 +257,10 @@ export function TagManager() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-              Cancel
+              {t('cancel')}
             </Button>
             <Button onClick={handleSave}>
-              {editingTag ? 'Update' : 'Create'}
+              {editingTag ? t('create') : t('create')}
             </Button>
           </DialogFooter>
         </DialogContent>

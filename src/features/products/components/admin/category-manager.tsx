@@ -20,18 +20,65 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import {
-  getCategories,
-  getCategoryTree,
-  createCategory,
-  updateCategory,
-  deleteCategory,
-} from '@/features/products/api/categories'
 import type { Category, CategoryTree } from '@/features/products/types'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
+
+// API functions
+async function fetchCategories(): Promise<Category[]> {
+  const response = await fetch('/api/admin/categories')
+  if (!response.ok) throw new Error('Failed to fetch categories')
+  return response.json()
+}
+
+async function fetchCategoryTree(): Promise<CategoryTree> {
+  const categories = await fetchCategories()
+
+  const buildTree = (items: Category[], parentId: string | null = null): Category[] => {
+    return items
+      .filter(item => item.parent_id === parentId)
+      .map(item => ({
+        ...item,
+        children: buildTree(items, item.id)
+      }))
+  }
+
+  return {
+    nodes: buildTree(categories),
+    flatList: categories
+  }
+}
+
+async function createCategoryAPI(category: Partial<Category>): Promise<Category> {
+  const response = await fetch('/api/admin/categories', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(category)
+  })
+  if (!response.ok) throw new Error('Failed to create category')
+  return response.json()
+}
+
+async function updateCategoryAPI(id: string, category: Partial<Category>): Promise<Category> {
+  const response = await fetch(`/api/admin/categories/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(category)
+  })
+  if (!response.ok) throw new Error('Failed to update category')
+  return response.json()
+}
+
+async function deleteCategoryAPI(id: string): Promise<void> {
+  const response = await fetch(`/api/admin/categories/${id}`, {
+    method: 'DELETE'
+  })
+  if (!response.ok) throw new Error('Failed to delete category')
+}
 
 const LOCALES = ['en', 'zh'] as const
 
 export function CategoryManager() {
+  const t = useAdminTranslations()
   const [categories, setCategories] = useState<Category[]>([])
   const [categoryTree, setCategoryTree] = useState<CategoryTree | null>(null)
   const [loading, setLoading] = useState(true)
@@ -63,8 +110,8 @@ export function CategoryManager() {
   async function loadCategories() {
     try {
       const [flatList, tree] = await Promise.all([
-        getCategories(),
-        getCategoryTree(),
+        fetchCategories(),
+        fetchCategoryTree(),
       ])
       setCategories(flatList)
       setCategoryTree(tree)
@@ -107,27 +154,27 @@ export function CategoryManager() {
   const handleSave = async () => {
     try {
       if (editingCategory) {
-        await updateCategory(editingCategory.id, formData)
+        await updateCategoryAPI(editingCategory.id, formData)
       } else {
-        await createCategory(formData)
+        await createCategoryAPI(formData)
       }
       await loadCategories()
       setIsDialogOpen(false)
     } catch (error) {
       console.error('Failed to save category:', error)
-      alert('Failed to save category')
+      alert(t('category_manager.save_failed'))
     }
   }
 
   const handleDelete = async (categoryId: string) => {
-    if (!confirm('Are you sure you want to delete this category?')) return
+    if (!confirm(t('category_manager.delete_confirm'))) return
 
     try {
-      await deleteCategory(categoryId)
+      await deleteCategoryAPI(categoryId)
       await loadCategories()
     } catch (error) {
       console.error('Failed to delete category:', error)
-      alert('Failed to delete category')
+      alert(t('category_manager.delete_failed'))
     }
   }
 
@@ -159,13 +206,13 @@ export function CategoryManager() {
           </div>
           <div className="flex gap-2">
             <Button variant="ghost" size="sm" onClick={() => openAddDialog(category.id)}>
-              Add Child
+              {t('category_manager.add_child')}
             </Button>
             <Button variant="ghost" size="sm" onClick={() => openEditDialog(category)}>
-              Edit
+              {t('edit')}
             </Button>
             <Button variant="ghost" size="sm" onClick={() => handleDelete(category.id)}>
-              Delete
+              {t('delete')}
             </Button>
           </div>
         </div>
@@ -179,7 +226,7 @@ export function CategoryManager() {
   }
 
   if (loading) {
-    return <div>Loading categories...</div>
+    return <div>{t('category_manager.loading')}</div>
   }
 
   return (
@@ -187,8 +234,8 @@ export function CategoryManager() {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle>Categories</CardTitle>
-            <Button onClick={() => openAddDialog()}>Add Root Category</Button>
+            <CardTitle>{t('category_manager.title')}</CardTitle>
+            <Button onClick={() => openAddDialog()}>{t('category_manager.add_root')}</Button>
           </div>
         </CardHeader>
         <CardContent>
@@ -196,7 +243,7 @@ export function CategoryManager() {
             <div>{categoryTree.nodes.map((node) => renderCategoryNode(node))}</div>
           ) : (
             <p className="text-center text-muted-foreground py-8">
-              No categories yet. Click &quot;Add Root Category&quot; to create one.
+              {t('category_manager.empty')}
             </p>
           )}
         </CardContent>
@@ -206,21 +253,21 @@ export function CategoryManager() {
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>
-              {editingCategory ? 'Edit Category' : 'Add Category'}
+              {editingCategory ? t('category_manager.edit_title') : t('category_manager.add_title')}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Slug</Label>
+                <Label>{t('category_manager.slug_label')}</Label>
                 <Input
                   value={formData.slug}
                   onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                  placeholder="url-friendly-slug"
+                  placeholder={t('category_manager.slug_placeholder')}
                 />
               </div>
               <div>
-                <Label>Parent Category</Label>
+                <Label>{t('category_manager.parent_label')}</Label>
                 <Select
                   value={formData.parent_id || 'none'}
                   onValueChange={(value) =>
@@ -228,10 +275,10 @@ export function CategoryManager() {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="None (Root)" />
+                    <SelectValue placeholder={t('category_manager.parent_none')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="none">None (Root)</SelectItem>
+                    <SelectItem value="none">{t('category_manager.parent_none')}</SelectItem>
                     {categories.map((cat) => (
                       <SelectItem key={cat.id} value={cat.id}>
                         {cat.translations.en?.name || cat.slug}
@@ -244,15 +291,15 @@ export function CategoryManager() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Icon</Label>
+                <Label>{t('category_manager.icon_label')}</Label>
                 <Input
                   value={formData.icon}
                   onChange={(e) => setFormData({ ...formData, icon: e.target.value })}
-                  placeholder="icon-name"
+                  placeholder={t('category_manager.icon_placeholder')}
                 />
               </div>
               <div>
-                <Label>Sort Order</Label>
+                <Label>{t('category_manager.sort_label')}</Label>
                 <Input
                   type="number"
                   value={formData.sort_order}
@@ -264,17 +311,17 @@ export function CategoryManager() {
             </div>
 
             <div>
-              <Label>Image URL</Label>
+              <Label>{t('category_manager.image_label')}</Label>
               <Input
                 value={formData.image}
                 onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                placeholder="https://example.com/image.jpg"
+                placeholder={t('category_manager.image_placeholder')}
               />
             </div>
 
             {LOCALES.map((locale) => (
               <div key={locale} className="space-y-2">
-                <Label className="font-medium">Name ({locale.toUpperCase()})</Label>
+                <Label className="font-medium">{t('category_manager.name_label', { locale: locale.toUpperCase() })}</Label>
                 <Input
                   value={formData.translations[locale]?.name || ''}
                   onChange={(e) =>
@@ -295,10 +342,10 @@ export function CategoryManager() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
-              Cancel
+              {t('cancel')}
             </Button>
             <Button onClick={handleSave}>
-              {editingCategory ? 'Update' : 'Create'}
+              {editingCategory ? t('create') : t('create')}
             </Button>
           </DialogFooter>
         </DialogContent>
