@@ -17,5 +17,18 @@
   "viewAll": "عرض الكل",
   "downloadFile": "تحميل",
   "fileSize": "حجم الملف",
-  "language": "اللغة"
+  "language": "اللغة",
+  "faq": "الأسئلة الشائعة",
+  "requestQuote": "طلب عرض أسعار",
+  "downloadMaterials": "تحميل المواد",
+  "scheduleDemo": "جدولة عرض",
+  "relatedSolutions": "الحلول ذات الصلة",
+  "tags": "العلامات",
+  "documentTypes": {
+    "manual": "دليل المستخدم",
+    "datasheet": "ورقة البيانات",
+    "certificate": "شهادة",
+    "brochure": "كتيب",
+    "other": "أخرى"
+  }
 }
