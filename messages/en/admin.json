@@ -42,9 +42,13 @@
   "basicInfo": "Basic Info",
   "images": "Images",
   "videos": "Videos",
+  "video": "Video",
   "translations": "Translations",
   "date": "Date",
   "title_field": "Title",
+  "content": "Content",
+  "clientQuote": "Client Quote",
+  "addResult": "Add Result",
   "name": "Name",
   "company": "Company",
   "country": "Country",
@@ -57,6 +61,8 @@
   "of": "of",
   "results": "results",
   "productSaved": "Product saved successfully",
+  "caseStudyCreated": "Case study created successfully",
+  "caseStudySaved": "Case study saved successfully",
   "saveFailed": "Failed to save",
   "settingsSaved": "Settings saved",
   "specifications": "Specifications",
@@ -71,7 +77,30 @@
     "title": "Products",
     "add": "Add Product",
     "edit": "Edit Product",
-    "searchPlaceholder": "Search products..."
+    "searchPlaceholder": "Search products...",
+    "wizard": {
+      "step_basic": "Basic Info",
+      "step_content": "Content",
+      "step_specs": "Specifications",
+      "step_complete": "Complete",
+      "next": "Next",
+      "prev": "Previous",
+      "create": "Create Product",
+      "success": "Product created successfully",
+      "success_desc": "Product {model} has been created",
+      "suggestions": "Next Steps",
+      "suggestion_docs": "Complete Documents",
+      "suggestion_docs_desc": "Add product manuals and documentation",
+      "suggestion_seo": "SEO Optimization",
+      "suggestion_seo_desc": "Set page title, description and keywords",
+      "suggestion_faq": "FAQ Management",
+      "suggestion_faq_desc": "Add frequently asked questions",
+      "suggestion_relations": "Relations Management",
+      "suggestion_relations_desc": "Link case studies and solutions",
+      "back_to_list": "Back to Products",
+      "continue_edit": "Continue Editing",
+      "view_product": "View Product Page"
+    }
   },
   "categories_page": {
     "title": "Category Management",
@@ -88,6 +117,7 @@
   "case_studies_page": {
     "title": "Case Studies",
     "add": "Add Case Study",
+    "edit": "Edit Case Study",
     "searchPlaceholder": "Search case studies..."
   },
   "solutions_page": {

@@ -25,7 +25,7 @@ const templateFormSchema = z.object({
   description: z.string().optional(),
   available_variables: z.array(z.string()),
   is_active: z.boolean(),
-  translations: z.record(z.object({
+  translations: z.record(z.string(), z.object({
     subject: z.string(),
     body_html: z.string(),
   })),
@@ -150,7 +150,7 @@ export default function EmailTemplateEditPage() {
 
         <TabsContent value="edit" className="mt-6">
           <TemplateForm
-            template={template}
+            template={template ?? undefined}
             onSave={handleSave}
             saving={saving}
             onUnsavedChange={setHasUnsavedChanges}

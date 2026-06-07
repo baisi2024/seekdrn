@@ -59,6 +59,7 @@
     "react-day-picker": "^10.0.1",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.77.0",
+    "react-player": "^3.4.0",
     "react-window": "^2.2.7",
     "resend": "^6.12.4",
     "shadcn": "^4.10.0",

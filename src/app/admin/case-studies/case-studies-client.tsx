@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { DataTable } from '@/components/admin/data-table'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
-import { Plus } from 'lucide-react'
+import { Plus, Edit } from 'lucide-react'
 import { AdminPage } from '@/components/admin/core'
 
 interface CaseStudy {
@@ -34,6 +34,16 @@ export function CaseStudiesClient({ caseStudies }: CaseStudiesClientProps) {
         <Badge variant={item.published ? 'default' : 'secondary'}>
           {item.published ? t('published') : t('draft')}
         </Badge>
+      )
+    },
+    {
+      key: 'actions',
+      label: t('actions'),
+      render: (item: CaseStudy) => (
+        <Link href={`/admin/case-studies/${item.id}`} className={buttonVariants({ variant: 'ghost', size: 'sm' })}>
+          <Edit className="w-4 h-4 mr-1" />
+          {t('edit')}
+        </Link>
       )
     },
   ]

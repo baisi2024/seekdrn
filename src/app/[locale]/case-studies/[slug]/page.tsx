@@ -5,6 +5,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
+import { CaseHeroVideo } from '@/components/public/case-hero-video'
 
 export default async function CaseStudyDetailPage({
   params,
@@ -35,9 +36,10 @@ export default async function CaseStudyDetailPage({
         {/* Hero */}
         <div className="mb-12">
           {caseStudy.video_url ? (
-            <div className="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-6">
-              <video src={caseStudy.video_url} controls className="w-full h-full object-cover" />
-            </div>
+            <CaseHeroVideo 
+              videoUrl={caseStudy.video_url} 
+              poster={caseStudy.images && caseStudy.images[0]} 
+            />
           ) : caseStudy.images && caseStudy.images[0] ? (
             <div className="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-6 relative">
               <Image src={caseStudy.images[0]} alt={title} fill className="object-cover" />

@@ -54,12 +54,12 @@ export default async function ProductsPage({
     .order('created_at', { ascending: false })
 
   // 如果选择了标签，在内存中筛选（因为是多对多关系）
-  let filtered = products
+  let filtered = products ?? []
   if (tagSlugs.length > 0) {
     filtered = products?.filter((product) => {
       const productTagSlugs = product.tag_objects?.map((tag: ProductTag) => tag.slug) || []
       return tagSlugs.some((tagSlug) => productTagSlugs.includes(tagSlug))
-    })
+    }) ?? []
   }
 
   return (

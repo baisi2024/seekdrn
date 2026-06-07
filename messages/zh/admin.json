@@ -42,9 +42,13 @@
   "basicInfo": "基本信息",
   "images": "图片",
   "videos": "视频",
+  "video": "视频",
   "translations": "翻译",
   "date": "日期",
   "title_field": "标题",
+  "content": "内容",
+  "clientQuote": "客户引用",
+  "addResult": "添加成果",
   "name": "姓名",
   "company": "公司",
   "country": "国家",
@@ -57,6 +61,8 @@
   "of": "共",
   "results": "条结果",
   "productSaved": "产品保存成功",
+  "caseStudyCreated": "案例创建成功",
+  "caseStudySaved": "案例保存成功",
   "saveFailed": "保存失败",
   "settingsSaved": "设置已保存",
   "specifications": "规格",
@@ -71,7 +77,30 @@
     "title": "产品",
     "add": "添加产品",
     "edit": "编辑产品",
-    "searchPlaceholder": "搜索产品..."
+    "searchPlaceholder": "搜索产品...",
+    "wizard": {
+      "step_basic": "基础信息",
+      "step_content": "产品内容",
+      "step_specs": "规格参数",
+      "step_complete": "完成",
+      "next": "下一步",
+      "prev": "上一步",
+      "create": "创建产品",
+      "success": "产品创建成功",
+      "success_desc": "产品 {model} 已成功创建",
+      "suggestions": "后续完善建议",
+      "suggestion_docs": "完善文档",
+      "suggestion_docs_desc": "添加产品手册、说明书等下载资料",
+      "suggestion_seo": "SEO优化",
+      "suggestion_seo_desc": "设置页面标题、描述和关键词",
+      "suggestion_faq": "FAQ管理",
+      "suggestion_faq_desc": "添加常见问题解答",
+      "suggestion_relations": "关联管理",
+      "suggestion_relations_desc": "关联案例研究、解决方案等",
+      "back_to_list": "返回产品列表",
+      "continue_edit": "继续编辑",
+      "view_product": "查看产品页面"
+    }
   },
   "categories_page": {
     "title": "分类管理",
@@ -88,6 +117,7 @@
   "case_studies_page": {
     "title": "案例研究",
     "add": "添加案例研究",
+    "edit": "编辑案例研究",
     "searchPlaceholder": "搜索案例研究..."
   },
   "solutions_page": {

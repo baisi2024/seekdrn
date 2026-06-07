@@ -8,15 +8,31 @@ import { ProductCard } from '@/components/public/product-card'
 import { CaseCard } from '@/components/public/case-card'
 import { DemoForm } from '@/components/public/demo-form'
 import { Button } from '@/components/ui/button'
+import type { Product as ProductType } from '@/features/products/types/product'
 
 interface Product {
   id: string
   slug: string
-  category: string
+  category_id: string | null
+  category?: {
+    id: string
+    slug: string
+    translations: Record<string, Record<string, string>>
+  }
   image_url?: string
   translations?: Record<string, Record<string, string>>
   specs?: { label: string; value: string }[]
   featured?: boolean
+  images?: string[]
+  spec_groups?: Array<{
+    id: string
+    name: Record<string, string>
+    specs: Array<{ label: Record<string, string>; value: string; unit?: string }>
+  }>
+  tag_objects?: Array<{
+    id: string
+    translations: Record<string, Record<string, string>>
+  }>
 }
 
 interface CaseStudy {
@@ -68,7 +84,7 @@ export default async function HomePage({
     const [productsRes, casesRes] = await Promise.all([
       supabaseAdmin
         .from('products')
-        .select('id, slug, category, image_url, translations, specs, featured')
+        .select('id, slug, category_id, category:product_categories(id, slug, translations), image_url, translations, specs, featured')
         .eq('featured', true)
         .limit(6),
       supabaseAdmin
@@ -78,7 +94,10 @@ export default async function HomePage({
         .limit(3),
     ])
 
-    if (productsRes.data) products = productsRes.data
+    if (productsRes.data) products = productsRes.data.map((p: any) => ({
+      ...p,
+      category: Array.isArray(p.category) ? p.category[0] : p.category
+    }))
     if (casesRes.data) cases = casesRes.data
   } catch {
     // Supabase not connected — show empty states
@@ -97,7 +116,7 @@ export default async function HomePage({
 
   // Group products by category
   const productsByCategory = products.reduce<Record<string, Product[]>>((acc, product) => {
-    const cat = product.category || 'other'
+    const cat = (typeof product.category === 'object' && product.category?.slug) || 'other'
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(product)
     return acc
@@ -131,7 +150,7 @@ export default async function HomePage({
                   <h3 className="text-lg font-semibold text-gray-700 mb-6 capitalize">{category.replace('_', ' ')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categoryProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} locale={locale} />
+                      <ProductCard key={product.id} product={product as any} locale={locale} />
                     ))}
                   </div>
                 </div>

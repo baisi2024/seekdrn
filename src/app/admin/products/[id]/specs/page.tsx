@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { SpecGroupsEditor } from '@/components/admin/spec-groups-editor'
@@ -14,11 +14,7 @@ export default function SpecsManagePage() {
   const [specs, setSpecs] = useState<any[]>([])
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchData()
-  }, [params.id])
-
-  async function fetchData() {
+  const fetchData = useCallback(async () => {
     // 获取产品信息
     const { data: productData } = await supabase
       .from('products')
@@ -43,7 +39,11 @@ export default function SpecsManagePage() {
     }
 
     setLoading(false)
-  }
+  }, [params.id, supabase])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   async function handleSave(groups: any[], specsData: any[]) {
     // 更新产品规格组
