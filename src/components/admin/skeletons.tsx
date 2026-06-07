@@ -11,7 +11,7 @@ export const TemplateCardSkeleton = memo(function TemplateCardSkeleton() {
   return (
     <Card className="overflow-hidden">
       {/* 渐变边框效果 */}
-      <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
+      <div className="h-1 bg-primary" />
       
       <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-3">
         <div className="flex items-center gap-2">

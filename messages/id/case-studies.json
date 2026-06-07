@@ -1,5 +1,10 @@
 {
   "title": "Studi Kasus",
+  "metaDescription": "Temukan bagaimana solusi SeekDrone memberikan hasil nyata di bidang keselamatan publik, energi, pemetaan, dan operasi kontra-UAS.",
+  "subtitle": "Penerapan nyata dan hasil misi dari basis klien global kami.",
+  "readMore": "Baca Studi Kasus",
+  "untitled": "Studi Kasus Tanpa Judul",
+  "noCases": "Belum ada studi kasus tersedia",
   "filter": {
     "all": "Semua Industri",
     "publicSafety": "Keselamatan Publik",

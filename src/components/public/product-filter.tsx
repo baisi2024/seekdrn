@@ -65,7 +65,7 @@ export function ProductFilter({
   return (
     <div className="space-y-6 mb-8">
       {/* 分类导航 */}
-      <Tabs defaultValue={activeCategory}>
+      <Tabs value={activeCategory}>
         <TabsList>
           <Link
             href={buildUrl('all')}
@@ -118,13 +118,9 @@ export function ProductFilter({
           })}
           {activeTags.length > 0 && (
             <Link
-              href={buildUrl(undefined, undefined, false)}
+              href={buildUrl(undefined, undefined, true)}
               replace
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => {
-                const params = new URLSearchParams(searchParams.toString())
-                params.delete('tags')
-              }}
             >
               {locale === 'zh' ? '清除筛选' : 'Clear filters'}
             </Link>

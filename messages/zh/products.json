@@ -1,5 +1,8 @@
 {
   "title": "产品",
+  "metaDescription": "探索 SeekDrone 全面的工业级无人机平台、载荷、反无人机系统和地面控制解决方案。",
+  "subtitle": "探索我们完整的工业级无人机平台、载荷和反无人机解决方案系列。",
+  "showingResults": "找到 {count} 个产品",
   "filter": {
     "all": "全部",
     "uav": "无人机平台",
@@ -30,6 +33,10 @@
   "scheduleDemo": "预约演示",
   "relatedSolutions": "相关解决方案",
   "tags": "标签",
+  "bottomCta": {
+    "title": "准备部署了吗？",
+    "subtitle": "联系我们的团队，讨论您的任务需求，找到合适的解决方案。"
+  },
   "documentTypes": {
     "manual": "用户手册",
     "datasheet": "数据表",

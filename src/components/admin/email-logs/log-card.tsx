@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, XCircle, Clock, Eye, Mail } from 'lucide-react'
 import { format } from 'date-fns'
-import { zhCN } from 'date-fns/locale'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 export interface EmailLog {
   id: string
@@ -29,6 +29,7 @@ interface LogCardProps {
 }
 
 export const LogCard = memo(function LogCard({ log, onView, showTimeline = false }: LogCardProps) {
+  const t = useAdminTranslations()
   const [isHovered, setIsHovered] = useState(false)
 
   const getStatusConfig = () => {
@@ -39,7 +40,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
           color: 'text-green-500',
           bg: 'bg-green-500/10',
           gradient: 'from-green-500 to-emerald-500',
-          label: '已发送',
+          label: t('email_logs_detail.status_sent'),
         }
       case 'failed':
         return {
@@ -47,7 +48,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
           color: 'text-red-500',
           bg: 'bg-red-500/10',
           gradient: 'from-red-500 to-pink-500',
-          label: '失败',
+          label: t('email_logs_detail.status_failed'),
         }
       default:
         return {
@@ -55,7 +56,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
           color: 'text-yellow-500',
           bg: 'bg-yellow-500/10',
           gradient: 'from-yellow-500 to-orange-500',
-          label: '待发送',
+          label: t('email_logs_detail.status_pending'),
         }
     }
   }
@@ -66,7 +67,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
   const formatDate = (dateString: string | null) => {
     if (!dateString) return '-'
     try {
-      return format(new Date(dateString), 'yyyy-MM-dd HH:mm:ss', { locale: zhCN })
+      return format(new Date(dateString), 'yyyy-MM-dd HH:mm:ss')
     } catch {
       return dateString
     }
@@ -75,7 +76,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
   const formatTime = (dateString: string | null) => {
     if (!dateString) return '-'
     try {
-      return format(new Date(dateString), 'HH:mm', { locale: zhCN })
+      return format(new Date(dateString), 'HH:mm')
     } catch {
       return dateString
     }
@@ -89,7 +90,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         role="article"
-        aria-label={`邮件记录: ${log.recipient_email}`}
+        aria-label={`${t('email_logs_detail.email_record')}: ${log.recipient_email}`}
       >
         {/* 时间线 */}
         <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-border via-border to-transparent" />
@@ -144,7 +145,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
                 {/* 悬停时显示错误信息 */}
                 {isHovered && log.error_message && (
                   <p className="text-xs text-red-500 line-clamp-2 animate-fade-in">
-                    错误: {log.error_message}
+                    {t('email_logs_detail.error_prefix')} {log.error_message}
                   </p>
                 )}
               </div>
@@ -154,7 +155,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
                 variant="ghost"
                 onClick={() => onView(log)}
                 className="shrink-0 hover:bg-purple-100 hover:text-purple-600"
-                aria-label="查看详情"
+                aria-label={t('email_logs_detail.view_detail')}
               >
                 <Eye className="h-4 w-4" />
               </Button>
@@ -179,7 +180,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       role="article"
-      aria-label={`邮件记录: ${log.recipient_email}`}
+      aria-label={`${t('email_logs_detail.email_record')}: ${log.recipient_email}`}
     >
       {/* 顶部渐变条 */}
       <div className={`h-1 bg-gradient-to-r ${statusConfig.gradient}`} />
@@ -218,7 +219,7 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
             {/* 悬停时显示错误信息 */}
             {isHovered && log.error_message && (
               <p className="text-xs text-red-500 line-clamp-1 animate-fade-in">
-                错误: {log.error_message}
+                {t('email_logs_detail.error_prefix')} {log.error_message}
               </p>
             )}
           </div>
@@ -232,10 +233,10 @@ export const LogCard = memo(function LogCard({ log, onView, showTimeline = false
                 onView(log)
               }}
               className="hover:bg-purple-100 hover:text-purple-600"
-              aria-label="查看详情"
+              aria-label={t('email_logs_detail.view_detail')}
             >
               <Eye className="h-4 w-4 mr-1" />
-              查看
+              {t('email_logs_detail.view')}
             </Button>
           </div>
         </div>

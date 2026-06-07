@@ -8,12 +8,14 @@ import { PolicyEditor } from './policy-editor'
 import { PolicyItem, PolicyUpdate } from '@/lib/compliance/types'
 import { POLICIES } from '@/lib/compliance/constants'
 import { toast } from 'sonner'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface ComplianceManagerProps {
   initialPolicies?: PolicyItem[]
 }
 
 export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
+  const t = useAdminTranslations()
   // 状态管理
   const [policies, setPolicies] = useState<PolicyItem[]>(initialPolicies || [])
   const [loading, setLoading] = useState(!initialPolicies)
@@ -32,7 +34,7 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
       setPolicies(data.policies || [])
     } catch (error) {
       console.error('Error fetching policies:', error)
-      toast.error('Failed to load policies')
+      toast.error(t('compliance_page.load_failed'))
     } finally {
       setLoading(false)
     }
@@ -79,13 +81,13 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
         throw new Error('Failed to update policy')
       }
 
-      toast.success('Policy updated successfully')
+      toast.success(t('compliance_page.policy_updated'))
       setEditingPolicy(null)
       // 重新加载数据
       await fetchPolicies()
     } catch (error) {
       console.error('Error updating policy:', error)
-      toast.error('Failed to update policy')
+      toast.error(t('compliance_page.policy_update_failed'))
       throw error // 让 PolicyEditor 处理错误
     } finally {
       setUpdating(null)
@@ -117,12 +119,12 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
         throw new Error('Failed to update policy')
       }
 
-      toast.success(`Policy ${published ? 'published' : 'unpublished'}`)
+      toast.success(published ? t('compliance_page.policy_published') : t('compliance_page.policy_unpublished'))
       // 重新加载数据
       await fetchPolicies()
     } catch (error) {
       console.error('Error toggling published status:', error)
-      toast.error('Failed to update policy status')
+      toast.error(t('compliance_page.policy_status_failed'))
     } finally {
       setUpdating(null)
     }
@@ -139,9 +141,9 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
       {/* 头部工具栏 */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Compliance Policies</h2>
+          <h2 className="text-2xl font-bold">{t('compliance_page.title')}</h2>
           <p className="text-sm text-muted-foreground">
-            Manage compliance policies and their content
+            {t('compliance_page.subtitle')}
           </p>
         </div>
         <Button
@@ -151,7 +153,7 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
           disabled={loading}
         >
           <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
-          Refresh
+          {t('compliance_page.refresh')}
         </Button>
       </div>
 
@@ -170,7 +172,7 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
               <div className="flex-1">
                 <h3 className="font-medium">{getPolicyName(policy)}</h3>
                 <p className="text-sm text-muted-foreground">
-                  Section: {policy.section}
+                  {`${t('compliance_page.section')}: ${policy.section}`}
                 </p>
               </div>
 
@@ -188,7 +190,7 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
                     disabled={updating === policy.section}
                   />
                   <span className="text-sm">
-                    {policy.published ? 'Published' : 'Draft'}
+                    {policy.published ? t('compliance_page.published_status') : t('compliance_page.draft_status')}
                   </span>
                 </div>
 
@@ -200,7 +202,7 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
                   disabled={updating === policy.section}
                 >
                   <Edit className="h-4 w-4 mr-2" />
-                  Edit
+                  {t('edit')}
                 </Button>
               </div>
             </div>

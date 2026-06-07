@@ -387,7 +387,7 @@ export default function CaseStudyEditPage() {
                   ...caseStudy,
                   client_quote: { ...caseStudy.client_quote, zh: e.target.value }
                 })}
-                placeholder="中文客户引用"
+                placeholder={t('case_studies_page.chinese_client_quote')}
               />
             </div>
           </CardContent>

@@ -10,6 +10,8 @@ import { ArrowLeft, Save, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { z } from 'zod'
+import { AdminPage } from '@/components/admin/core'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface Template {
   template_key: string
@@ -36,13 +38,16 @@ type TemplateFormData = z.infer<typeof templateFormSchema>
 export default function EmailTemplateEditPage() {
   const params = useParams()
   const router = useRouter()
+  const t = useAdminTranslations()
   const [template, setTemplate] = useState<Template | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
+  const isNew = params.key === 'new'
+
   useEffect(() => {
-    if (params.key === 'new') {
+    if (isNew) {
       setLoading(false)
       return
     }
@@ -54,20 +59,19 @@ export default function EmailTemplateEditPage() {
         setLoading(false)
       })
       .catch(() => {
-        toast.error('加载模板失败')
+        toast.error(t('email_templates_page.loadFailed'))
         setLoading(false)
       })
-  }, [params.key])
+  }, [params.key, isNew, t])
 
   const handleSave = useCallback(async (data: TemplateFormData) => {
     setSaving(true)
     try {
-      const url =
-        params.key === 'new'
-          ? '/api/admin/email-templates'
-          : `/api/admin/email-templates/${params.key}`
+      const url = isNew
+        ? '/api/admin/email-templates'
+        : `/api/admin/email-templates/${params.key}`
 
-      const method = params.key === 'new' ? 'POST' : 'PUT'
+      const method = isNew ? 'POST' : 'PUT'
 
       const response = await fetch(url, {
         method,
@@ -76,21 +80,21 @@ export default function EmailTemplateEditPage() {
       })
 
       if (response.ok) {
-        toast.success('模板保存成功')
+        toast.success(t('email_templates_page.saveSuccess'))
         setHasUnsavedChanges(false)
-        if (params.key === 'new') {
+        if (isNew) {
           router.push('/admin/email-templates')
         }
       } else {
         const error = await response.json()
-        toast.error(error.message || '保存失败')
+        toast.error(error.message || t('email_templates_page.saveFailed'))
       }
     } catch {
-      toast.error('保存失败，请重试')
+      toast.error(t('email_templates_page.saveFailed'))
     } finally {
       setSaving(false)
     }
-  }, [params.key, router])
+  }, [params.key, isNew, router, t])
 
   // 离开页面时的未保存提示
   useEffect(() => {
@@ -113,38 +117,36 @@ export default function EmailTemplateEditPage() {
     )
   }
 
-  return (
-    <div className="space-y-6">
-      {/* 页面标题 */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link href="/admin/email-templates">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              返回列表
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-2xl font-bold">
-              {params.key === 'new' ? '新建邮件模板' : '编辑邮件模板'}
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              {params.key === 'new' ? '创建一个新的邮件模板' : `编辑模板: ${params.key}`}
-            </p>
-          </div>
-        </div>
-      </div>
+  const titleKey = isNew
+    ? 'email_templates_page.newTitle'
+    : 'email_templates_page.editTitle'
 
-      {/* Tabs 布局 */}
+  const descriptionKey = isNew
+    ? 'email_templates_page.newDescription'
+    : 'email_templates_page.editDescription'
+
+  return (
+    <AdminPage
+      title={titleKey}
+      description={descriptionKey}
+      actions={
+        <Link href="/admin/email-templates">
+          <Button variant="ghost" size="sm">
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            {t('email_templates_page.backToList')}
+          </Button>
+        </Link>
+      }
+    >
       <Tabs defaultValue="edit" className="w-full">
         <TabsList className="grid w-full max-w-md grid-cols-2">
           <TabsTrigger value="edit" className="flex items-center gap-2">
             <Save className="w-4 h-4" />
-            编辑模板
+            {t('email_templates_page.editTab')}
           </TabsTrigger>
           <TabsTrigger value="preview" className="flex items-center gap-2">
             <Eye className="w-4 h-4" />
-            预览测试
+            {t('email_templates_page.previewTab')}
           </TabsTrigger>
         </TabsList>
 
@@ -165,11 +167,11 @@ export default function EmailTemplateEditPage() {
             />
           ) : (
             <div className="text-center py-12 text-muted-foreground">
-              请先保存模板后再进行预览测试
+              {t('email_templates_page.saveBeforePreview')}
             </div>
           )}
         </TabsContent>
       </Tabs>
-    </div>
+    </AdminPage>
   )
 }

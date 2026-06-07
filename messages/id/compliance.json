@@ -1,15 +1,26 @@
 {
   "title": "Kepatuhan",
+  "metaDescription": "Kerangka kepatuhan SeekDrone yang mencakup kontrol ekspor, kebijakan privasi, ketentuan penggunaan, dan kebijakan cookie.",
+  "subtitle": "Komitmen kami terhadap kepatuhan regulasi, perlindungan data, dan operasi yang etis.",
+  "noContent": "Konten tidak tersedia untuk kebijakan ini.",
   "export": {
-    "title": "Kepatuhan Ekspor"
+    "title": "Kepatuhan Ekspor",
+    "description": "Peraturan perdagangan internasional dan kerangka kontrol ekspor yang mengatur produk dan teknologi kami."
   },
   "privacy": {
-    "title": "Kebijakan Privasi"
+    "title": "Kebijakan Privasi",
+    "description": "Bagaimana kami mengumpulkan, menggunakan, dan melindungi data pribadi Anda sesuai dengan peraturan privasi global."
   },
   "terms": {
-    "title": "Ketentuan Penggunaan"
+    "title": "Ketentuan Penggunaan",
+    "description": "Syarat dan ketentuan yang mengatur penggunaan situs web, produk, dan layanan kami."
   },
   "cookie": {
-    "title": "Kebijakan Cookie"
+    "title": "Kebijakan Cookie",
+    "description": "Informasi tentang bagaimana kami menggunakan cookie dan teknologi serupa di situs web kami."
+  },
+  "generalNotice": {
+    "title": "Pernyataan Kepatuhan Umum",
+    "content": "SeekDrone beroperasi sesuai dengan peraturan kontrol ekspor internasional, termasuk namun tidak terbatas pada Pengaturan Wassenaar, ITAR, dan EAR. Produk kami ditujukan untuk digunakan di pasar dan aplikasi yang disetujui saja. Semua penjualan tunduk pada verifikasi pengguna akhir dan persyaratan lisensi ekspor jika berlaku."
   }
 }

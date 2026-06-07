@@ -1,7 +1,10 @@
 {
+  "title": "Soluciones",
+  "metaDescription": "Soluciones integrales con drones para seguridad pública, inspección de infraestructura, agricultura y aplicaciones de defensa.",
   "challenge": "Desafío",
   "solution": "Solución",
   "workflow": "Flujo de Trabajo",
   "keyMetrics": "Métricas Clave",
-  "relatedCases": "Casos Relacionados"
+  "relatedCases": "Casos Relacionados",
+  "requestDemo": "Solicitar una Demo"
 }

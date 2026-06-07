@@ -1,0 +1,26 @@
+{
+  "title": "Tuân thủ",
+  "metaDescription": "Khung tuân thủ của SeekDrone bao gồm kiểm soát xuất khẩu, chính sách bảo mật, điều khoản sử dụng và chính sách cookie.",
+  "subtitle": "Cam kết của chúng tôi về tuân thủ quy định, bảo vệ dữ liệu và hoạt động có đạo đức.",
+  "noContent": "Nội dung không khả dụng cho chính sách này.",
+  "export": {
+    "title": "Tuân thủ Xuất khẩu",
+    "description": "Các quy định thương mại quốc tế và khung kiểm soát xuất khẩu điều chỉnh sản phẩm và công nghệ của chúng tôi."
+  },
+  "privacy": {
+    "title": "Chính sách Bảo mật",
+    "description": "Cách chúng tôi thu thập, sử dụng và bảo vệ dữ liệu cá nhân của bạn theo các quy định bảo mật toàn cầu."
+  },
+  "terms": {
+    "title": "Điều khoản Sử dụng",
+    "description": "Các điều khoản và điều kiện điều chỉnh việc sử dụng trang web, sản phẩm và dịch vụ của chúng tôi."
+  },
+  "cookie": {
+    "title": "Chính sách Cookie",
+    "description": "Thông tin về cách chúng tôi sử dụng cookie và các công nghệ tương tự trên trang web của chúng tôi."
+  },
+  "generalNotice": {
+    "title": "Tuyên bố Tuân thủ Chung",
+    "content": "SeekDrone hoạt động tuân thủ các quy định kiểm soát xuất khẩu quốc tế, bao gồm nhưng không giới hạn ở Thỏa thuận Wassenaar, ITAR và EAR. Sản phẩm của chúng tôi chỉ dành cho các thị trường và ứng dụng được phê duyệt. Tất cả các giao dịch bán hàng đều phải được xác minh người dùng cuối và đáp ứng yêu cầu giấy phép xuất khẩu khi có liên quan."
+  }
+}

@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useMemo } from 'react'
+import { memo, useMemo, useState, useEffect } from 'react'
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card'
 import { Mail, CheckCircle2, Clock } from 'lucide-react'
 import { EmailTemplate } from '../email-templates-table'
@@ -13,23 +13,23 @@ interface TemplatesStatsProps {
 }
 
 // 迷你图表组件
-const MiniChart = memo(function MiniChart({ 
-  data, 
-  color = 'blue' 
-}: { 
+const MiniChart = memo(function MiniChart({
+  data,
+  color = 'blue'
+}: {
   data: number[]
-  color?: 'blue' | 'green' | 'orange' | 'purple'
+  color?: 'blue' | 'green' | 'orange'
 }) {
+  const t = useAdminTranslations()
   const max = Math.max(...data, 1)
   const colorClasses = {
-    blue: 'from-blue-500 to-blue-300',
+    blue: 'from-primary to-primary/70',
     green: 'from-green-500 to-green-300',
     orange: 'from-orange-500 to-orange-300',
-    purple: 'from-purple-500 to-purple-300',
   }
 
   return (
-    <div className="flex items-end gap-0.5 h-8" role="img" aria-label="迷你趋势图">
+    <div className="flex items-end gap-0.5 h-8" role="img" aria-label={t('email_templates_page.statsTotal')}>
       {data.map((value, index) => (
         <div
           key={index}
@@ -59,7 +59,7 @@ const StatCard = memo(function StatCard({
   title: string
   value: number | string
   icon: React.ElementType
-  color: 'blue' | 'green' | 'orange' | 'purple'
+  color: 'blue' | 'green' | 'orange'
   trend?: number
   miniChartData?: number[]
 }) {
@@ -70,9 +70,9 @@ const StatCard = memo(function StatCard({
 
   const colorClasses = {
     blue: {
-      text: 'text-blue-600',
-      bg: 'bg-blue-500/10',
-      gradient: 'from-blue-500 to-cyan-500',
+      text: 'text-primary',
+      bg: 'bg-primary/10',
+      gradient: 'from-primary to-primary/70',
     },
     green: {
       text: 'text-green-600',
@@ -83,11 +83,6 @@ const StatCard = memo(function StatCard({
       text: 'text-orange-600',
       bg: 'bg-orange-500/10',
       gradient: 'from-orange-500 to-amber-500',
-    },
-    purple: {
-      text: 'text-purple-600',
-      bg: 'bg-purple-500/10',
-      gradient: 'from-purple-500 to-pink-500',
     },
   }
 
@@ -143,16 +138,12 @@ export function TemplatesStats({ templates }: TemplatesStatsProps) {
     const totalTemplates = templates.length
     const activeTemplates = templates.filter(t => t.is_active).length
     const lastUpdated = templates.length > 0 
-      ? new Date(templates[0].updated_at).toLocaleDateString('zh-CN', {
+      ? new Date(templates[0].updated_at).toLocaleDateString(undefined, {
           year: 'numeric',
           month: '2-digit',
           day: '2-digit',
         })
       : t('email_templates_page.noData')
-
-    // 生成模拟的趋势数据（实际项目中应该从 API 获取）
-    const generateTrendData = (base: number) => 
-      Array.from({ length: 7 }, () => Math.max(0, base + Math.floor(Math.random() * 5 - 2)))
 
     return [
       {
@@ -160,14 +151,14 @@ export function TemplatesStats({ templates }: TemplatesStatsProps) {
         value: totalTemplates,
         icon: Mail,
         color: 'blue' as const,
-        miniChartData: generateTrendData(totalTemplates),
+        miniChartBase: totalTemplates,
       },
       {
         title: t('email_templates_page.statsActive'),
         value: activeTemplates,
         icon: CheckCircle2,
         color: 'green' as const,
-        miniChartData: generateTrendData(activeTemplates),
+        miniChartBase: activeTemplates,
       },
       {
         title: t('email_templates_page.statsLastUpdate'),
@@ -178,10 +169,27 @@ export function TemplatesStats({ templates }: TemplatesStatsProps) {
     ]
   }, [templates, t])
 
+  // 使用 useState + useEffect 延迟生成随机数据，避免 SSR hydration 不匹配
+  const [chartData, setChartData] = useState<Map<string, number[]>>(new Map())
+
+  const totalTemplates = templates.length
+  const activeTemplates = templates.filter(t => t.is_active).length
+
+  useEffect(() => {
+    const generateTrendData = (base: number) => 
+      Array.from({ length: 7 }, () => Math.max(0, base + Math.floor(Math.random() * 5 - 2)))
+
+    const newChartData = new Map<string, number[]>()
+    newChartData.set(t('email_templates_page.statsTotal'), generateTrendData(totalTemplates))
+    newChartData.set(t('email_templates_page.statsActive'), generateTrendData(activeTemplates))
+    setChartData(newChartData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalTemplates, activeTemplates])
+
   return (
-    <div className="grid gap-4 md:grid-cols-3" role="region" aria-label="模板统计">
+    <div className="grid gap-4 md:grid-cols-3" role="region" aria-label={t('email_templates_page.title')}>
       {stats.map((stat) => (
-        <StatCard key={stat.title} {...stat} />
+        <StatCard key={stat.title} {...stat} miniChartData={chartData.get(stat.title)} />
       ))}
     </div>
   )

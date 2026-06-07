@@ -182,7 +182,7 @@ export function ProductsClient({ products, categories, tags }: ProductsClientPro
     },
     {
       key: 'tags',
-      label: '标签',
+      label: t('tags'),
       render: (item: Product) => (
         <div className="flex flex-wrap gap-1">
           {item.tag_objects?.slice(0, 3).map((tag) => {

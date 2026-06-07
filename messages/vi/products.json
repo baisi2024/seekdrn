@@ -1,0 +1,47 @@
+{
+  "title": "Sản phẩm",
+  "metaDescription": "Khám phá dòng sản phẩm toàn diện của SeekDrone bao gồm nền tảng UAV công nghiệp, tải trọng, hệ thống chống UAV và giải pháp điều khiển mặt đất.",
+  "subtitle": "Khám phá dòng sản phẩm đầy đủ của chúng tôi về nền tảng drone công nghiệp, tải trọng và giải pháp chống UAV.",
+  "showingResults": "Đã tìm thấy {count} sản phẩm",
+  "filter": {
+    "all": "Tất cả",
+    "uav": "Nền tảng UAV",
+    "payload": "Tải trọng",
+    "cuas": "Chống UAV",
+    "ground_control": "Điều khiển Mặt đất"
+  },
+  "specs": "Thông số Kỹ thuật",
+  "advantages": "Ưu điểm Chính",
+  "capabilities": "Năng lực Cốt lõi",
+  "applications": "Ứng dụng",
+  "relatedCases": "Nghiên cứu Điển hình Liên quan",
+  "relatedProducts": "Sản phẩm Liên quan",
+  "downloads": "Tải xuống",
+  "viewAll": "Xem Tất cả",
+  "downloadFile": "Tải xuống",
+  "fileSize": "Kích thước Tệp",
+  "language": "Ngôn ngữ",
+  "noProducts": "Không tìm thấy sản phẩm",
+  "requestDemo": "Yêu cầu Demo",
+  "learnMore": "Tìm hiểu Thêm",
+  "untitledProduct": "Sản phẩm Chưa có Tên",
+  "noDescription": "Không có mô tả",
+  "complianceNotice": "Sản phẩm này cần đánh giá tuân thủ. Liên hệ chúng tôi để biết thông số kỹ thuật chi tiết.",
+  "faq": "Câu hỏi Thường gặp",
+  "requestQuote": "Yêu cầu Báo giá",
+  "downloadMaterials": "Tải Tài liệu",
+  "scheduleDemo": "Lên lịch Demo",
+  "relatedSolutions": "Giải pháp Liên quan",
+  "tags": "Thẻ",
+  "bottomCta": {
+    "title": "Sẵn Sàng Triển Khai?",
+    "subtitle": "Liên hệ với đội ngũ của chúng tôi để thảo luận về yêu cầu nhiệm vụ và tìm giải pháp phù hợp."
+  },
+  "documentTypes": {
+    "manual": "Hướng dẫn Sử dụng",
+    "datasheet": "Bảng Dữ liệu",
+    "certificate": "Chứng nhận",
+    "brochure": "Tài liệu Giới thiệu",
+    "other": "Khác"
+  }
+}

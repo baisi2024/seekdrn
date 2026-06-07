@@ -1,0 +1,23 @@
+{
+  "title": "Nghiên cứu Điển hình",
+  "metaDescription": "Khám phá cách các giải pháp của SeekDrone mang lại kết quả thực tế trong an toàn công cộng, năng lượng, khảo sát và hoạt động chống UAV.",
+  "subtitle": "Triển khai thực tế và kết quả nhiệm vụ từ cơ sở khách hàng toàn cầu của chúng tôi.",
+  "readMore": "Đọc Nghiên cứu Điển hình",
+  "untitled": "Nghiên cứu Điển hình Chưa có Tên",
+  "noCases": "Chưa có nghiên cứu điển hình nào",
+  "filter": {
+    "all": "Tất cả Ngành",
+    "publicSafety": "An toàn Công cộng",
+    "energy": "Năng lượng",
+    "surveying": "Khảo sát",
+    "environmental": "Môi trường",
+    "cuas": "Chống UAV"
+  },
+  "background": "Bối cảnh",
+  "challenge": "Thách thức",
+  "solution": "Giải pháp",
+  "results": "Kết quả",
+  "clientQuote": "Đánh giá của Khách hàng",
+  "fieldFootage": "Hình ảnh Thực địa",
+  "relatedProducts": "Sản phẩm Liên quan"
+}

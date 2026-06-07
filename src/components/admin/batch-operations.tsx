@@ -68,10 +68,10 @@ export function BatchOperations({
     setLoading(true)
     try {
       await onBatchPublish(selectedIds, published)
-      toast.success(published ? '批量发布成功' : '批量取消发布成功')
+      toast.success(published ? t('batch_operations.publish_success') : t('batch_operations.unpublish_success'))
       onSelectionChange([])
     } catch {
-      toast.error('操作失败')
+      toast.error(t('batch_operations.operation_failed'))
     } finally {
       setLoading(false)
     }
@@ -82,11 +82,11 @@ export function BatchOperations({
     setLoading(true)
     try {
       await onBatchDelete(selectedIds)
-      toast.success('批量删除成功')
+      toast.success(t('batch_operations.batch_delete_success'))
       onSelectionChange([])
       setShowDeleteDialog(false)
     } catch (error) {
-      toast.error('删除失败')
+      toast.error(t('batch_operations.delete_failed'))
     } finally {
       setLoading(false)
     }
@@ -97,12 +97,12 @@ export function BatchOperations({
     setLoading(true)
     try {
       await onBatchSetCategory(selectedIds, selectedCategory)
-      toast.success('批量设置分类成功')
+      toast.success(t('batch_operations.batch_set_category_success'))
       onSelectionChange([])
       setShowCategoryDialog(false)
       setSelectedCategory('')
     } catch (error) {
-      toast.error('设置分类失败')
+      toast.error(t('batch_operations.set_category_failed'))
     } finally {
       setLoading(false)
     }
@@ -113,12 +113,12 @@ export function BatchOperations({
     setLoading(true)
     try {
       await onBatchSetTags(selectedIds, selectedTags)
-      toast.success('批量设置标签成功')
+      toast.success(t('batch_operations.batch_set_tags_success'))
       onSelectionChange([])
       setShowTagDialog(false)
       setSelectedTags([])
     } catch {
-      toast.error('设置标签失败')
+      toast.error(t('batch_operations.set_tags_failed'))
     } finally {
       setLoading(false)
     }
@@ -138,7 +138,7 @@ export function BatchOperations({
     <>
       <div className="flex items-center gap-3 p-3 bg-muted/50 border rounded-lg">
         <Badge variant="secondary" className="px-3 py-1">
-          已选择 {selectedIds.length} 项
+          {t('batch_operations.selected_count').replace('{count}', String(selectedIds.length))}
         </Badge>
 
         <div className="flex items-center gap-2 ml-auto">
@@ -149,7 +149,7 @@ export function BatchOperations({
             disabled={loading}
           >
             <Eye className="w-4 h-4 mr-1" />
-            批量发布
+            {t('batch_operations.batch_publish')}
           </Button>
 
           <Button
@@ -159,7 +159,7 @@ export function BatchOperations({
             disabled={loading}
           >
             <EyeOff className="w-4 h-4 mr-1" />
-            取消发布
+            {t('batch_operations.batch_unpublish')}
           </Button>
 
           <Button
@@ -169,7 +169,7 @@ export function BatchOperations({
             disabled={loading}
           >
             <FolderOpen className="w-4 h-4 mr-1" />
-            设置分类
+            {t('batch_operations.set_category')}
           </Button>
 
           <Button
@@ -179,7 +179,7 @@ export function BatchOperations({
             disabled={loading}
           >
             <Tag className="w-4 h-4 mr-1" />
-            设置标签
+            {t('batch_operations.set_tags')}
           </Button>
 
           <Button
@@ -189,7 +189,7 @@ export function BatchOperations({
             disabled={loading}
           >
             <Trash2 className="w-4 h-4 mr-1" />
-            批量删除
+            {t('batch_operations.batch_delete')}
           </Button>
 
           <Button
@@ -197,7 +197,7 @@ export function BatchOperations({
             size="sm"
             onClick={() => onSelectionChange([])}
           >
-            取消选择
+            {t('batch_operations.cancel_selection')}
           </Button>
         </div>
       </div>
@@ -208,22 +208,22 @@ export function BatchOperations({
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <AlertCircle className="w-5 h-5 text-destructive" />
-              确认删除
+              {t('batch_operations.confirm_delete')}
             </DialogTitle>
             <DialogDescription>
-              您确定要删除选中的 {selectedIds.length} 个产品吗？此操作无法撤销。
+              {t('batch_operations.delete_confirm_message').replace('{count}', String(selectedIds.length))}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>
-              取消
+              {t('cancel')}
             </Button>
             <Button
               variant="destructive"
               onClick={handleBatchDelete}
               disabled={loading}
             >
-              {loading ? '删除中...' : '确认删除'}
+              {loading ? t('batch_operations.deleting') : t('batch_operations.confirm_delete_btn')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -233,9 +233,9 @@ export function BatchOperations({
       <Dialog open={showCategoryDialog} onOpenChange={setShowCategoryDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>批量设置分类</DialogTitle>
+            <DialogTitle>{t('batch_operations.batch_set_category')}</DialogTitle>
             <DialogDescription>
-              为选中的 {selectedIds.length} 个产品设置分类
+              {t('batch_operations.set_category_desc').replace('{count}', String(selectedIds.length))}
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
@@ -260,10 +260,10 @@ export function BatchOperations({
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowCategoryDialog(false)}>
-              取消
+              {t('cancel')}
             </Button>
             <Button onClick={handleBatchSetCategory} disabled={loading || !selectedCategory}>
-              {loading ? '设置中...' : '确认'}
+              {loading ? t('batch_operations.setting') : t('batch_operations.confirm')}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -273,9 +273,9 @@ export function BatchOperations({
       <Dialog open={showTagDialog} onOpenChange={setShowTagDialog}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>批量设置标签</DialogTitle>
+            <DialogTitle>{t('batch_operations.batch_set_tags')}</DialogTitle>
             <DialogDescription>
-              为选中的 {selectedIds.length} 个产品设置标签
+              {t('batch_operations.set_tags_desc').replace('{count}', String(selectedIds.length))}
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
@@ -301,10 +301,10 @@ export function BatchOperations({
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShowTagDialog(false)}>
-              取消
+              {t('cancel')}
             </Button>
             <Button onClick={handleBatchSetTags} disabled={loading}>
-              {loading ? '设置中...' : '确认'}
+              {loading ? t('batch_operations.setting') : t('batch_operations.confirm')}
             </Button>
           </DialogFooter>
         </DialogContent>

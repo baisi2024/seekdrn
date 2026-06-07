@@ -1,9 +1,65 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url)
+    const category = searchParams.get('category')
+    const search = searchParams.get('search')
+    const page = searchParams.get('page')
+    const pageSize = searchParams.get('pageSize')
+
+    let query = supabaseAdmin
+      .from('products')
+      .select('*, category:product_categories(*)', { count: 'exact' })
+      .order('sort_order')
+      .order('created_at', { ascending: false })
+
+    if (category) {
+      query = query.eq('category_id', category)
+    }
+
+    if (search) {
+      query = query.textSearch('search_vector', search)
+    }
+
+    if (page && pageSize) {
+      const from = (Number(page) - 1) * Number(pageSize)
+      const to = from + Number(pageSize) - 1
+      query = query.range(from, to)
+    }
+
+    const { data, error, count } = await query
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 400 })
+    }
+
+    return NextResponse.json({ products: data, total: count || 0 })
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 })
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+
+    // 支持 compare 操作
+    if (body.action === 'compare' && body.ids) {
+      const { data, error } = await supabaseAdmin
+        .from('products')
+        .select('*, category:product_categories(*)')
+        .in('id', body.ids)
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 400 })
+      }
+
+      return NextResponse.json({ data })
+    }
+
     const { product, tags: tagSlugs } = body
 
     // 查找分类 slug（category 字段是必填的）

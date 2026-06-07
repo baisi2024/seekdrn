@@ -9,6 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from 'sonner'
 import { Eye, Send, RefreshCw } from 'lucide-react'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface PreviewPanelProps {
   templateKey: string
@@ -17,10 +18,11 @@ interface PreviewPanelProps {
 
 const SUPPORTED_LANGUAGES = [
   { code: 'en', name: 'English' },
-  { code: 'zh', name: '中文' },
+  { code: 'zh', name: 'Chinese' },
 ]
 
 export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelProps) {
+  const t = useAdminTranslations()
   const [variables, setVariables] = useState<Record<string, string>>({})
   const [preview, setPreview] = useState<{ subject: string; body_html: string } | null>(null)
   const [testEmail, setTestEmail] = useState('')
@@ -38,14 +40,14 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
       })
       
       if (!response.ok) {
-        throw new Error('预览失败')
+        throw new Error(t('preview_panel.preview_failed'))
       }
       
       const data = await response.json()
       setPreview(data)
-      toast.success('预览加载成功')
+      toast.success(t('preview_panel.preview_loaded'))
     } catch {
-      toast.error('预览加载失败，请重试')
+      toast.error(t('preview_panel.preview_load_failed'))
     } finally {
       setLoading(false)
     }
@@ -53,7 +55,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
 
   const handleTestSend = async () => {
     if (!testEmail) {
-      toast.error('请输入测试邮箱地址')
+      toast.error(t('preview_panel.enter_test_email'))
       return
     }
 
@@ -66,12 +68,12 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
       })
       
       if (!response.ok) {
-        throw new Error('发送失败')
+        throw new Error(t('preview_panel.send_failed'))
       }
       
-      toast.success(`测试邮件已发送至 ${testEmail}`)
+      toast.success(t('preview_panel.test_email_sent').replace('{email}', testEmail))
     } catch {
-      toast.error('发送失败，请重试')
+      toast.error(t('preview_panel.send_failed_retry'))
     } finally {
       setSending(false)
     }
@@ -84,15 +86,15 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
         {/* 语言选择 */}
         <Card>
           <CardHeader>
-            <CardTitle>预览配置</CardTitle>
-            <CardDescription>选择语言并填写变量值</CardDescription>
+            <CardTitle>{t('preview_panel.config_title')}</CardTitle>
+            <CardDescription>{t('preview_panel.config_desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label>语言</Label>
+              <Label>{t('preview_panel.language')}</Label>
               <Select value={language} onValueChange={(value) => value && setLanguage(value)}>
                 <SelectTrigger>
-                  <SelectValue placeholder="选择语言" />
+                  <SelectValue placeholder={t('preview_panel.select_language')} />
                 </SelectTrigger>
                 <SelectContent>
                   {SUPPORTED_LANGUAGES.map((lang) => (
@@ -107,7 +109,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
             {/* 变量输入 */}
             {availableVariables.length > 0 && (
               <div className="space-y-3">
-                <Label>变量值</Label>
+                <Label>{t('preview_panel.variable_values')}</Label>
                 <div className="space-y-3">
                   {availableVariables.map((varName) => (
                     <div key={varName} className="space-y-1">
@@ -120,7 +122,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
                         onChange={(e) =>
                           setVariables({ ...variables, [varName]: e.target.value })
                         }
-                        placeholder={`输入 ${varName} 的值`}
+                        placeholder={t('preview_panel.enter_var_value').replace('{name}', varName)}
                       />
                     </div>
                   ))}
@@ -134,7 +136,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
               ) : (
                 <Eye className="w-4 h-4 mr-2" />
               )}
-              {loading ? '加载中...' : '生成预览'}
+              {loading ? t('preview_panel.loading_status') : t('preview_panel.generate_preview')}
             </Button>
           </CardContent>
         </Card>
@@ -142,12 +144,12 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
         {/* 测试发送 */}
         <Card>
           <CardHeader>
-            <CardTitle>测试发送</CardTitle>
-            <CardDescription>发送测试邮件到指定邮箱</CardDescription>
+            <CardTitle>{t('preview_panel.test_send_title')}</CardTitle>
+            <CardDescription>{t('preview_panel.test_send_desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="test-email">测试邮箱</Label>
+              <Label htmlFor="test-email">{t('preview_panel.test_email')}</Label>
               <Input
                 id="test-email"
                 type="email"
@@ -163,7 +165,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
               variant="outline"
             >
               <Send className="w-4 h-4 mr-2" />
-              {sending ? '发送中...' : '发送测试邮件'}
+              {sending ? t('preview_panel.sending_status') : t('preview_panel.send_test_email')}
             </Button>
           </CardContent>
         </Card>
@@ -172,9 +174,9 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
       {/* 右侧：预览区域 */}
       <Card className="lg:sticky lg:top-6 lg:self-start">
         <CardHeader>
-          <CardTitle>邮件预览</CardTitle>
+          <CardTitle>{t('preview_panel.email_preview')}</CardTitle>
           <CardDescription>
-            {preview ? '实际邮件效果预览' : '点击"生成预览"查看效果'}
+            {preview ? t('preview_panel.actual_preview') : t('preview_panel.click_to_preview')}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -182,11 +184,11 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
             <ScrollArea className="h-[600px] w-full rounded-md border">
               <div className="p-4 space-y-4">
                 <div>
-                  <Label className="text-sm font-semibold text-muted-foreground">主题</Label>
+                  <Label className="text-sm font-semibold text-muted-foreground">{t('preview_panel.subject')}</Label>
                   <p className="mt-1 text-lg font-semibold">{preview.subject}</p>
                 </div>
                 <div className="border-t pt-4">
-                  <Label className="text-sm font-semibold text-muted-foreground">内容</Label>
+                  <Label className="text-sm font-semibold text-muted-foreground">{t('preview_panel.content_label')}</Label>
                   <div 
                     className="mt-2 prose prose-sm max-w-none"
                     dangerouslySetInnerHTML={{ __html: preview.body_html }} 
@@ -198,7 +200,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
             <div className="h-[400px] flex items-center justify-center border rounded-md">
               <div className="text-center text-muted-foreground">
                 <Eye className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                <p>预览将在此处显示</p>
+                <p>{t('preview_panel.preview_placeholder')}</p>
               </div>
             </div>
           )}

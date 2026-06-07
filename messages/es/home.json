@@ -1,8 +1,8 @@
 {
   "hero": {
-    "title": "UAVs Industriales, Probados Donde Más Importa",
-    "subtitle": "Plataformas de drones probadas en combate y soluciones contra-UAS para defensa, seguridad e infraestructura crítica.",
-    "cta": "Solicitar una Demostración"
+    "title": "UAVs Industriales Probados en Combate para Entornos Críticos",
+    "subtitle": "Plataformas de drones probadas en combate y soluciones anti-UAS para defensa, seguridad e infraestructura crítica.",
+    "cta": "Solicitar Demostración"
   },
   "trustBar": {
     "flightHours": "Horas de Vuelo",
@@ -24,6 +24,9 @@
   "ctaSection": {
     "title": "¿Listo para Ver Nuestras Soluciones en Acción?",
     "subtitle": "Programe una demostración en vivo con nuestro equipo.",
-    "button": "Solicitar una Demostración"
+    "button": "Solicitar Demostración"
+  },
+  "faq": {
+    "title": "Preguntas Frecuentes"
   }
 }

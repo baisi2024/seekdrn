@@ -8,6 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { PolicyItem, PolicyUpdate } from '@/lib/compliance/types'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { RichEditor } from './rich-editor'
 
 interface Props {
@@ -19,6 +20,7 @@ interface Props {
 const LANGUAGES = ['en', 'zh', 'ar', 'es', 'fr', 'pt', 'id']
 
 export function PolicyEditor({ policy, onSave, onClose }: Props) {
+  const t = useAdminTranslations()
   const [translations, setTranslations] = useState<Record<string, { title?: string; content: string }>>(
     policy.translations || { en: { content: '' } }
   )
@@ -43,7 +45,7 @@ export function PolicyEditor({ policy, onSave, onClose }: Props) {
     <Dialog open onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Edit Policy</DialogTitle>
+          <DialogTitle>{t('policy_editor.edit_title')}</DialogTitle>
         </DialogHeader>
 
         <div className="space-y-4">
@@ -57,18 +59,18 @@ export function PolicyEditor({ policy, onSave, onClose }: Props) {
             {LANGUAGES.map(lang => (
               <TabsContent key={lang} value={lang} className="space-y-4">
                 <div>
-                  <Label>Title ({lang})</Label>
+                  <Label>{t('policy_editor.title_label').replace('{lang}', lang)}</Label>
                   <Input
                     type="text"
                     className="w-full mt-1"
                     value={translations[lang]?.title || ''}
                     onChange={(e) => updateTranslation(lang, 'title', e.target.value)}
-                    placeholder="Policy title"
+                    placeholder={t('policy_editor.title_placeholder')}
                   />
                 </div>
 
                 <div>
-                  <Label>Content ({lang})</Label>
+                  <Label>{t('policy_editor.content_label').replace('{lang}', lang)}</Label>
                   <div className="mt-1 border rounded">
                     <RichEditor
                       content={translations[lang]?.content || ''}
@@ -82,12 +84,12 @@ export function PolicyEditor({ policy, onSave, onClose }: Props) {
 
           <div className="flex items-center gap-2">
             <Switch checked={published} onCheckedChange={setPublished} />
-            <Label>Published</Label>
+            <Label>{t('policy_editor.published_label')}</Label>
           </div>
 
           <div className="flex justify-end gap-2">
-            <Button variant="outline" onClick={onClose}>Cancel</Button>
-            <Button onClick={handleSave}>Save</Button>
+            <Button variant="outline" onClick={onClose}>{t('cancel')}</Button>
+            <Button onClick={handleSave}>{t('save')}</Button>
           </div>
         </div>
       </DialogContent>

@@ -35,13 +35,13 @@ export function DownloadsSection({ downloads, locale }: Props) {
             <Card key={item.id}>
               <CardContent className="p-4">
                 <div className="flex items-start gap-4">
-                  <FileText className="w-8 h-8 text-blue-600 flex-shrink-0" />
+                  <FileText className="w-8 h-8 text-primary flex-shrink-0" />
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold mb-1">{title}</h3>
                     {description && (
-                      <p className="text-sm text-gray-600 mb-2">{description}</p>
+                      <p className="text-sm text-muted-foreground mb-2">{description}</p>
                     )}
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <span>{item.language.toUpperCase()}</span>
                       <span>{formatFileSize(item.file_size)}</span>
                     </div>

@@ -1,5 +1,8 @@
 {
   "title": "Produk",
+  "metaDescription": "Jelajahi rangkaian lengkap platform UAV industri, muatan, sistem kontra-UAS, dan solusi kontrol darat SeekDrone.",
+  "subtitle": "Jelajahi rangkaian lengkap platform drone industri, muatan, dan solusi kontra-UAS kami.",
+  "showingResults": "{count} produk ditemukan",
   "filter": {
     "all": "Semua",
     "uav": "Platform UAV",
@@ -18,12 +21,22 @@
   "downloadFile": "Unduh",
   "fileSize": "Ukuran File",
   "language": "Bahasa",
+  "noProducts": "Tidak ada produk ditemukan",
+  "requestDemo": "Minta Demo",
+  "learnMore": "Pelajari Lebih Lanjut",
+  "untitledProduct": "Produk Tanpa Judul",
+  "noDescription": "Tidak ada deskripsi tersedia",
+  "complianceNotice": "Produk ini memerlukan penilaian kepatuhan. Hubungi kami untuk spesifikasi terperinci.",
   "faq": "FAQ",
   "requestQuote": "Minta Penawaran",
   "downloadMaterials": "Unduh Materi",
   "scheduleDemo": "Jadwalkan Demo",
   "relatedSolutions": "Solusi Terkait",
   "tags": "Tag",
+  "bottomCta": {
+    "title": "Siap Menerapkan?",
+    "subtitle": "Hubungi tim kami untuk mendiskusikan kebutuhan misi Anda dan menemukan solusi yang tepat."
+  },
   "documentTypes": {
     "manual": "Manual",
     "datasheet": "Lembar Data",

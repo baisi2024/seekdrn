@@ -83,7 +83,7 @@ export function ProductFilters({
           <SelectValue placeholder={t('select_category')} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">全部分类</SelectItem>
+          <SelectItem value="">{t('product_filters.all_categories')}</SelectItem>
           {categories.map((category) => {
             const name = category.translations?.zh?.name || category.translations?.en?.name || category.slug
             return (
@@ -101,10 +101,10 @@ export function ProductFilters({
         onValueChange={(value) => handleFilterChange('tag', value ?? '')}
       >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="选择标签" />
+          <SelectValue placeholder={t('product_filters.select_tag')} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">全部标签</SelectItem>
+          <SelectItem value="">{t('product_filters.all_tags')}</SelectItem>
           {tags.map((tag) => {
             const name = tag.translations?.zh?.name || tag.translations?.en?.name || tag.slug
             return (
@@ -125,10 +125,10 @@ export function ProductFilters({
           <SelectValue placeholder={t('status')} />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">全部状态</SelectItem>
+          <SelectItem value="">{t('product_filters.all_status')}</SelectItem>
           <SelectItem value="published">{t('published')}</SelectItem>
           <SelectItem value="draft">{t('draft')}</SelectItem>
-          <SelectItem value="featured">推荐</SelectItem>
+          <SelectItem value="featured">{t('product_filters.featured')}</SelectItem>
         </SelectContent>
       </Select>
 
@@ -141,7 +141,7 @@ export function ProductFilters({
           className="h-9 px-3"
         >
           <X className="w-4 h-4 mr-1" />
-          清除筛选
+          {t('product_filters.clear_filters')}
         </Button>
       )}
     </div>

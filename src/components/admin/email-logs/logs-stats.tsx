@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useMemo } from 'react'
+import { memo, useMemo, useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Mail, CheckCircle, XCircle, TrendingUp, TrendingDown } from 'lucide-react'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
@@ -29,10 +29,10 @@ const MiniChart = memo(function MiniChart({
 }) {
   const max = Math.max(...data, 1)
   const colorClasses = {
-    blue: 'from-blue-500 to-blue-300',
+    blue: 'from-primary to-primary/70',
     green: 'from-green-500 to-green-300',
     red: 'from-red-500 to-red-300',
-    purple: 'from-purple-500 to-purple-300',
+    purple: 'from-primary to-primary/70',
   }
 
   return (
@@ -63,6 +63,7 @@ const StatCard = memo(function StatCard({
   iconBg,
   trend,
   miniChartData,
+  t,
 }: {
   title: string
   value: number | string
@@ -71,6 +72,7 @@ const StatCard = memo(function StatCard({
   iconBg: string
   trend?: number | null
   miniChartData?: number[]
+  t: ReturnType<typeof useAdminTranslations>
 }) {
   const { value: animatedValue } = useAnimatedNumber(
     typeof value === 'number' ? value : 0,
@@ -141,19 +143,15 @@ export function LogsStats({ stats, previousStats }: LogsStatsProps) {
     return trend
   }
 
-  // 生成模拟的趋势数据
-  const generateTrendData = (base: number) => 
-    Array.from({ length: 7 }, () => Math.max(0, base + Math.floor(Math.random() * 5 - 2)))
-
   const statsData = useMemo(() => [
     {
       title: t('email_logs_page.statsTotal'),
       value: stats.total,
       icon: Mail,
-      iconColor: 'text-blue-500',
-      iconBg: 'bg-blue-500/10',
+      iconColor: 'text-primary',
+      iconBg: 'bg-primary/10',
       trend: calculateTrend(stats.total, previousStats?.total),
-      miniChartData: generateTrendData(stats.total),
+      miniChartData: [] as number[],
     },
     {
       title: t('email_logs_page.statsSent'),
@@ -162,7 +160,7 @@ export function LogsStats({ stats, previousStats }: LogsStatsProps) {
       iconColor: 'text-green-500',
       iconBg: 'bg-green-500/10',
       trend: calculateTrend(stats.sent, previousStats?.sent),
-      miniChartData: generateTrendData(stats.sent),
+      miniChartData: [] as number[],
     },
     {
       title: t('email_logs_page.statsFailed'),
@@ -171,22 +169,36 @@ export function LogsStats({ stats, previousStats }: LogsStatsProps) {
       iconColor: 'text-red-500',
       iconBg: 'bg-red-500/10',
       trend: calculateTrend(stats.failed, previousStats?.failed),
-      miniChartData: generateTrendData(stats.failed),
+      miniChartData: [] as number[],
     },
     {
       title: t('email_logs_page.statsSuccessRate'),
       value: `${successRate}%`,
       icon: TrendingUp,
-      iconColor: 'text-purple-500',
-      iconBg: 'bg-purple-500/10',
+      iconColor: 'text-primary',
+      iconBg: 'bg-primary/10',
       trend: null,
     },
   ], [stats, previousStats, successRate, t])
 
+  // 延迟生成随机趋势数据，避免 SSR hydration 不匹配
+  const [chartData, setChartData] = useState<number[][]>([])
+
+  useEffect(() => {
+    const generateTrendData = (base: number) => 
+      Array.from({ length: 7 }, () => Math.max(0, base + Math.floor(Math.random() * 5 - 2)))
+
+    setChartData([
+      generateTrendData(stats.total),
+      generateTrendData(stats.sent),
+      generateTrendData(stats.failed),
+    ])
+  }, [stats.total, stats.sent, stats.failed])
+
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4" role="region" aria-label="邮件日志统计">
-      {statsData.map((stat) => (
-        <StatCard key={stat.title} {...stat} />
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4" role="region" aria-label={t('email_logs_page.title')}>
+      {statsData.map((stat, index) => (
+        <StatCard key={stat.title} {...stat} miniChartData={chartData[index]} t={t} />
       ))}
     </div>
   )

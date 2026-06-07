@@ -13,7 +13,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { CheckCircle, XCircle, Clock, RefreshCw } from 'lucide-react'
 import { format } from 'date-fns'
-import { zhCN } from 'date-fns/locale'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import type { EmailLog } from './log-card'
 
 interface LogDetailSheetProps {
@@ -29,6 +29,7 @@ export function LogDetailSheet({
   onOpenChange,
   onResend,
 }: LogDetailSheetProps) {
+  const t = useAdminTranslations()
   if (!log) return null
 
   const getStatusIcon = () => {
@@ -56,7 +57,7 @@ export function LogDetailSheet({
   const formatDate = (dateString: string | null) => {
     if (!dateString) return '-'
     try {
-      return format(new Date(dateString), 'yyyy-MM-dd HH:mm:ss', { locale: zhCN })
+      return format(new Date(dateString), 'yyyy-MM-dd HH:mm:ss')
     } catch {
       return dateString
     }
@@ -106,7 +107,7 @@ export function LogDetailSheet({
 
             {log.error_message && (
               <div className="space-y-1">
-                <span className="text-sm font-medium text-muted-foreground">错误信息</span>
+                <span className="text-sm font-medium text-muted-foreground">{t('email_logs_detail.error_message')}</span>
                 <div className="p-3 rounded-md bg-destructive/10 text-destructive text-sm">
                   {log.error_message}
                 </div>
@@ -118,7 +119,7 @@ export function LogDetailSheet({
 
           {log.subject && (
             <div className="space-y-2">
-              <h3 className="text-sm font-medium">邮件主题</h3>
+              <h3 className="text-sm font-medium">{t('email_logs_detail.email_subject')}</h3>
               <p className="text-sm text-muted-foreground">{log.subject}</p>
             </div>
           )}
@@ -158,7 +159,7 @@ export function LogDetailSheet({
                 variant="outline"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
-                重新发送
+                {t('email_logs_detail.resend')}
               </Button>
             </>
           )}

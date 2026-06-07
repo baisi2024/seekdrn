@@ -1,0 +1,47 @@
+{
+  "title": "محصولات",
+  "metaDescription": "طیف جامع سکوهای پهپاد صنعتی، محموله‌ها، سامانه‌های ضد پهپاد و راه‌حل‌های کنترل زمینی SeekDrone را کاوش کنید.",
+  "subtitle": "طیف کامل سکوهای پهپاد صنعتی، محموله‌ها و راه‌حل‌های ضد پهپاد ما را کاوش کنید.",
+  "showingResults": "{count} محصول یافت شد",
+  "filter": {
+    "all": "همه",
+    "uav": "سکوهای پهپاد",
+    "payload": "محموله‌ها",
+    "cuas": "ضد پهپاد",
+    "ground_control": "کنترل زمینی"
+  },
+  "specs": "مشخصات فنی",
+  "advantages": "مزایای اصلی",
+  "capabilities": "قابلیت‌های اصلی",
+  "applications": "کاربردها",
+  "relatedCases": "مطالعات موردی مرتبط",
+  "relatedProducts": "محصولات مرتبط",
+  "downloads": "دانلودها",
+  "viewAll": "مشاهده همه",
+  "downloadFile": "دانلود",
+  "fileSize": "حجم فایل",
+  "language": "زبان",
+  "noProducts": "محصولی یافت نشد",
+  "requestDemo": "درخواست دمو",
+  "learnMore": "بیشتر بدانید",
+  "untitledProduct": "محصول بدون عنوان",
+  "noDescription": "توضیحاتی موجود نیست",
+  "complianceNotice": "این محصول نیازمند ارزیابی انطباق است. برای مشخصات دقیق با ما تماس بگیرید.",
+  "faq": "سوالات متداول",
+  "requestQuote": "درخواست قیمت",
+  "downloadMaterials": "دانلود مواد",
+  "scheduleDemo": "زمان‌بندی دمو",
+  "relatedSolutions": "راه‌حل‌های مرتبط",
+  "tags": "برچسب‌ها",
+  "bottomCta": {
+    "title": "آماده استقرار هستید؟",
+    "subtitle": "با تیم ما تماس بگیرید تا نیازمندی‌های مأموریت خود را بررسی کرده و راه‌حل مناسب را پیدا کنید."
+  },
+  "documentTypes": {
+    "manual": "راهنما",
+    "datasheet": "برگه داده",
+    "certificate": "گواهینامه",
+    "brochure": "بروشور",
+    "other": "سایر"
+  }
+}

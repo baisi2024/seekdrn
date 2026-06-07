@@ -1,7 +1,7 @@
 {
   "hero": {
-    "title": "UAV Industri, Teruji Di Mana Paling Penting",
-    "subtitle": "Platform drone yang terbukti dalam pertempuran dan solusi anti-UAS untuk pertahanan, keamanan, dan infrastruktur kritis.",
+    "title": "UAV Industri Teruji Tempur untuk Lingkungan Kritis",
+    "subtitle": "Platform drone teruji tempur dan solusi anti-UAS untuk pertahanan, keamanan, dan infrastruktur kritis.",
     "cta": "Minta Demo"
   },
   "trustBar": {
@@ -23,7 +23,10 @@
   },
   "ctaSection": {
     "title": "Siap Melihat Solusi Kami Beraksi?",
-    "subtitle": "Jadwalkan demonstrasi langsung dengan tim kami.",
+    "subtitle": "Jadwalkan demo langsung dengan tim kami.",
     "button": "Minta Demo"
+  },
+  "faq": {
+    "title": "Pertanyaan Umum"
   }
 }

@@ -4,12 +4,10 @@ import { useState, useEffect, useCallback, useMemo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { VariableValidator } from './variable-validator'
@@ -17,19 +15,9 @@ import { RichEditor } from './rich-editor'
 import { Save, Eye, X, Plus, Check, Loader2 } from 'lucide-react'
 import { useAutoSave } from '@/hooks/use-auto-save'
 import { useDebounce } from '@/hooks/use-debounce'
-
-const templateSchema = z.object({
-  template_key: z.string().min(1, '模板标识不能为空').regex(/^[a-z0-9_]+$/, '只能包含小写字母、数字和下划线'),
-  description: z.string().optional(),
-  available_variables: z.array(z.string()),
-  is_active: z.boolean(),
-  translations: z.record(z.string(), z.object({
-    subject: z.string().min(1, '主题不能为空'),
-    body_html: z.string().min(1, '内容不能为空'),
-  })),
-})
-
-type TemplateFormData = z.infer<typeof templateSchema>
+import { AdminCard } from '@/components/admin/core'
+import { AdminButton } from '@/components/admin/core'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface Template {
   template_key?: string
@@ -48,12 +36,32 @@ interface TemplateFormProps {
 
 const SUPPORTED_LANGUAGES = [
   { code: 'en', name: 'English' },
-  { code: 'zh', name: '中文' },
+  { code: 'zh', name: 'Chinese' },
 ]
 
+type TemplateFormData = {
+  template_key: string
+  description?: string
+  available_variables: string[]
+  is_active: boolean
+  translations: Record<string, { subject: string; body_html: string }>
+}
+
 export function TemplateForm({ template, onSave, saving, onUnsavedChange }: TemplateFormProps) {
+  const t = useAdminTranslations()
   const [variableInput, setVariableInput] = useState('')
   const [activeLanguage, setActiveLanguage] = useState('en')
+
+  const templateSchema = useMemo(() => z.object({
+    template_key: z.string().min(1, t('template_form_validation.template_key_required')).regex(/^[a-z0-9_]+$/, t('template_form_validation.template_key_pattern')),
+    description: z.string().optional(),
+    available_variables: z.array(z.string()),
+    is_active: z.boolean(),
+    translations: z.record(z.string(), z.object({
+      subject: z.string().min(1, t('template_form_validation.subject_required')),
+      body_html: z.string().min(1, t('template_form_validation.content_required')),
+    })),
+  }), [t])
 
   const {
     register,
@@ -78,26 +86,21 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
 
   const watchedValues = watch()
   
-  // 防抖表单数据
   const debouncedValues = useDebounce(watchedValues, 500)
   
-  // 自动保存
   const { isSaving: isAutoSaving, lastSaved, hasUnsavedChanges } = useAutoSave({
     data: debouncedValues,
     onSave: async (data) => {
-      // 这里可以调用实际的保存 API
       console.log('Auto saving:', data)
     },
     delay: 3000,
     enabled: isDirty,
   })
 
-  // 监听表单变化
   useEffect(() => {
     onUnsavedChange?.(isDirty)
   }, [isDirty, onUnsavedChange])
 
-  // 添加变量
   const handleAddVariable = useCallback(() => {
     const trimmed = variableInput.trim()
     if (trimmed && !watchedValues.available_variables.includes(trimmed)) {
@@ -106,7 +109,6 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
     }
   }, [variableInput, watchedValues.available_variables, setValue])
 
-  // 移除变量
   const handleRemoveVariable = useCallback((variable: string) => {
     setValue(
       'available_variables',
@@ -122,18 +124,16 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
     handleSubmit(onSubmit)()
   }
 
-  // 格式化最后保存时间
   const formatLastSaved = (date: Date) => {
     const now = new Date()
     const diff = now.getTime() - date.getTime()
     const seconds = Math.floor(diff / 1000)
     
-    if (seconds < 60) return '刚刚'
-    if (seconds < 3600) return `${Math.floor(seconds / 60)} 分钟前`
-    return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' })
+    if (seconds < 60) return t('template_form_validation.just_now')
+    if (seconds < 3600) return t('template_form_validation.minutes_ago').replace('{count}', String(Math.floor(seconds / 60)))
+    return date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
   }
 
-  // 变量列表
   const variablesList = useMemo(() => watchedValues.available_variables, [watchedValues.available_variables])
 
   return (
@@ -143,14 +143,14 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
         <div className="fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-2 rounded-lg bg-background border shadow-lg animate-fade-in">
           {isAutoSaving ? (
             <>
-              <Loader2 className="h-4 w-4 animate-spin text-blue-500" />
-              <span className="text-sm">自动保存中...</span>
+              <Loader2 className="h-4 w-4 animate-spin text-primary" />
+              <span className="text-sm">{t('email_templates_page.autoSaving')}</span>
             </>
           ) : lastSaved ? (
             <>
               <Check className="h-4 w-4 text-green-500" />
               <span className="text-sm text-muted-foreground">
-                已保存 · {formatLastSaved(lastSaved)}
+                {t('email_templates_page.saved')} · {formatLastSaved(lastSaved)}
               </span>
             </>
           ) : null}
@@ -158,45 +158,30 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
       )}
       
       {/* 基本信息 */}
-      <Card className="overflow-hidden">
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle>基本信息</CardTitle>
-              <CardDescription>模板的基本配置和标识</CardDescription>
-            </div>
-            {hasUnsavedChanges && (
-              <Badge variant="outline" className="text-yellow-500 border-yellow-500">
-                未保存更改
-              </Badge>
-            )}
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <AdminCard title="email_templates_page.basicInfoTitle" description="email_templates_page.basicInfoDesc" variant="bordered">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="template_key">
-                模板标识 <span className="text-red-500">*</span>
+                {t('email_templates_page.templateKeyLabel')} <span className="text-destructive">*</span>
               </Label>
               <Input
                 id="template_key"
                 {...register('template_key')}
                 placeholder="welcome_email"
                 disabled={!!template}
-                className={errors.template_key ? 'border-red-500' : ''}
+                className={errors.template_key ? 'border-destructive' : ''}
                 aria-invalid={errors.template_key ? 'true' : 'false'}
               />
               {errors.template_key && (
-                <p className="text-sm text-red-500" role="alert">{errors.template_key.message}</p>
+                <p className="text-sm text-destructive" role="alert">{errors.template_key.message}</p>
               )}
               <p className="text-xs text-muted-foreground">
-                唯一标识符，只能包含小写字母、数字和下划线
+                {t('email_templates_page.templateKeyHint')}
               </p>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="is_active">激活状态</Label>
+              <Label htmlFor="is_active">{t('email_templates_page.activeStatus')}</Label>
               <div className="flex items-center gap-2 pt-2">
                 <Controller
                   name="is_active"
@@ -205,41 +190,35 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                     <Switch 
                       checked={field.value} 
                       onCheckedChange={field.onChange}
-                      aria-label="激活状态"
+                      aria-label={t('email_templates_page.activeStatus')}
                     />
                   )}
                 />
                 <span className="text-sm text-muted-foreground">
-                  {watchedValues.is_active ? '已激活' : '未激活'}
+                  {watchedValues.is_active ? t('email_templates_page.statusActive') : t('email_templates_page.statusInactive')}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">描述</Label>
+          <div className="space-y-2 mt-4">
+            <Label htmlFor="description">{t('email_templates_page.descriptionLabel')}</Label>
             <Textarea
               id="description"
               {...register('description')}
-              placeholder="描述这个邮件模板的用途..."
+              placeholder={t('email_templates_page.descriptionPlaceholder')}
               rows={3}
             />
           </div>
-        </CardContent>
-      </Card>
+      </AdminCard>
 
       {/* 变量配置 */}
-      <Card>
-        <CardHeader>
-          <CardTitle>变量配置</CardTitle>
-          <CardDescription>定义模板中可用的变量</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
+      <AdminCard title="email_templates_page.variablesTitle" description="email_templates_page.variablesDesc" variant="bordered">
           <div className="flex gap-2">
             <Input
               value={variableInput}
               onChange={(e) => setVariableInput(e.target.value)}
-              placeholder="输入变量名（如：name, email）"
+              placeholder={t('email_templates_page.variablePlaceholder')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault()
@@ -247,15 +226,15 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                 }
               }}
             />
-            <Button type="button" onClick={handleAddVariable} variant="outline">
+            <AdminButton type="button" onClick={handleAddVariable} variant="outline">
               <Plus className="w-4 h-4 mr-2" />
-              添加
-            </Button>
+              {t('email_templates_page.addVariable')}
+            </AdminButton>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mt-4">
             {watchedValues.available_variables.length === 0 ? (
-              <p className="text-sm text-muted-foreground">暂无变量，请添加模板中使用的变量</p>
+              <p className="text-sm text-muted-foreground">{t('email_templates_page.noVariables')}</p>
             ) : (
               watchedValues.available_variables.map((variable) => (
                 <Badge key={variable} variant="secondary" className="px-3 py-1">
@@ -263,7 +242,7 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                   <button
                     type="button"
                     onClick={() => handleRemoveVariable(variable)}
-                    className="ml-2 hover:text-red-500"
+                    className="ml-2 hover:text-destructive"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -271,17 +250,10 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
               ))
             )}
           </div>
-        </CardContent>
-      </Card>
+      </AdminCard>
 
       {/* 邮件内容 */}
-      <Card className="overflow-hidden">
-        <div className="h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500" />
-        <CardHeader>
-          <CardTitle>邮件内容</CardTitle>
-          <CardDescription>配置不同语言的邮件主题和内容</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <AdminCard title="email_templates_page.emailContentTitle" description="email_templates_page.emailContentDesc" variant="bordered">
           <Tabs value={activeLanguage} onValueChange={setActiveLanguage}>
             <TabsList className="mb-4">
               {SUPPORTED_LANGUAGES.map((lang) => (
@@ -298,7 +270,7 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
               <TabsContent key={lang.code} value={lang.code} className="space-y-4">
                 <div className="space-y-2">
                   <Label>
-                    邮件主题 <span className="text-red-500">*</span>
+                    {t('email_templates_page.subjectLabel')} <span className="text-destructive">*</span>
                   </Label>
                   <Controller
                     name={`translations.${lang.code}.subject`}
@@ -307,11 +279,11 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                       <>
                         <Input
                           {...field}
-                          placeholder="输入邮件主题..."
-                          className={errors.translations?.[lang.code]?.subject ? 'border-red-500' : ''}
+                          placeholder={t('email_templates_page.subjectPlaceholder')}
+                          className={errors.translations?.[lang.code]?.subject ? 'border-destructive' : ''}
                         />
                         {errors.translations?.[lang.code]?.subject && (
-                          <p className="text-sm text-red-500">
+                          <p className="text-sm text-destructive">
                             {errors.translations[lang.code]?.subject?.message}
                           </p>
                         )}
@@ -322,7 +294,7 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
 
                 <div className="space-y-2">
                   <Label>
-                    邮件内容 <span className="text-red-500">*</span>
+                    {t('email_templates_page.bodyLabel')} <span className="text-destructive">*</span>
                   </Label>
                   <Controller
                     name={`translations.${lang.code}.body_html`}
@@ -332,10 +304,10 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                         <RichEditor
                           content={field.value}
                           onChange={field.onChange}
-                          placeholder="输入邮件内容..."
+                          placeholder={t('email_templates_page.bodyPlaceholder')}
                         />
                         {errors.translations?.[lang.code]?.body_html && (
-                          <p className="text-sm text-red-500">
+                          <p className="text-sm text-destructive">
                             {errors.translations[lang.code]?.body_html?.message}
                           </p>
                         )}
@@ -344,7 +316,6 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
                   />
                 </div>
 
-                {/* 变量验证 */}
                 <VariableValidator
                   content={`${watchedValues.translations[lang.code]?.subject || ''} ${watchedValues.translations[lang.code]?.body_html || ''}`}
                   availableVariables={watchedValues.available_variables}
@@ -352,37 +323,34 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
               </TabsContent>
             ))}
           </Tabs>
-        </CardContent>
-      </Card>
+      </AdminCard>
 
       {/* 操作按钮 */}
       <div className="flex gap-4 justify-end sticky bottom-4 bg-background/80 backdrop-blur-sm p-4 rounded-lg border">
-        <Button 
+        <AdminButton 
           type="button" 
           variant="outline" 
           onClick={handleSaveAndPreview}
-          className="hover:bg-purple-100 hover:text-purple-600"
         >
           <Eye className="w-4 h-4 mr-2" />
-          保存并预览
-        </Button>
-        <Button 
+          {t('email_templates_page.saveAndPreview')}
+        </AdminButton>
+        <AdminButton 
           type="submit" 
           disabled={saving}
-          className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600"
         >
           {saving ? (
             <>
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-              保存中...
+              {t('email_templates_page.saving')}
             </>
           ) : (
             <>
               <Save className="w-4 h-4 mr-2" />
-              保存模板
+              {t('email_templates_page.saveTemplate')}
             </>
           )}
-        </Button>
+        </AdminButton>
       </div>
     </form>
   )

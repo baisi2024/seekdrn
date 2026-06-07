@@ -1,0 +1,32 @@
+{
+  "hero": {
+    "title": "Battle-Proven Industrial UAVs for Critical Environments",
+    "subtitle": "Combat-tested drone platforms and counter-UAS solutions for defense, security, and critical infrastructure.",
+    "cta": "Request Demo"
+  },
+  "trustBar": {
+    "flightHours": "Flight Hours",
+    "countries": "Countries",
+    "enterpriseClients": "Enterprise Clients",
+    "support": "Support"
+  },
+  "products": {
+    "title": "Our Products",
+    "viewAll": "View All Products"
+  },
+  "solutions": {
+    "title": "Industry Solutions"
+  },
+  "cases": {
+    "title": "Case Studies",
+    "viewAll": "View All Cases"
+  },
+  "ctaSection": {
+    "title": "Ready to See Our Solutions in Action?",
+    "subtitle": "Schedule a live demo with our team.",
+    "button": "Request Demo"
+  },
+  "faq": {
+    "title": "คำถามที่พบบ่อย"
+  }
+}

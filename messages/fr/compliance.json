@@ -1,15 +1,26 @@
 {
   "title": "Conformité",
+  "metaDescription": "Cadre de conformité de SeekDrone couvrant les contrôles à l'exportation, la politique de confidentialité, les conditions d'utilisation et la politique des cookies.",
+  "subtitle": "Notre engagement envers la conformité réglementaire, la protection des données et les opérations éthiques.",
+  "noContent": "Contenu non disponible pour cette politique.",
   "export": {
-    "title": "Conformité à l'Exportation"
+    "title": "Conformité à l'Exportation",
+    "description": "Réglementations du commerce international et cadre de contrôle des exportations régissant nos produits et technologies."
   },
   "privacy": {
-    "title": "Politique de Confidentialité"
+    "title": "Politique de Confidentialité",
+    "description": "Comment nous collectons, utilisons et protégeons vos données personnelles conformément aux réglementations mondiales sur la confidentialité."
   },
   "terms": {
-    "title": "Conditions d'Utilisation"
+    "title": "Conditions d'Utilisation",
+    "description": "Conditions générales régissant l'utilisation de notre site Web, de nos produits et services."
   },
   "cookie": {
-    "title": "Politique des Cookies"
+    "title": "Politique des Cookies",
+    "description": "Informations sur la façon dont nous utilisons les cookies et technologies similaires sur notre site Web."
+  },
+  "generalNotice": {
+    "title": "Déclaration Générale de Conformité",
+    "content": "SeekDrone opère en conformité avec les réglementations internationales de contrôle des exportations, y compris mais sans s'y limiter l'Arrangement de Wassenaar, ITAR et EAR. Nos produits sont destinés à une utilisation exclusive sur les marchés et applications approuvés. Toutes les ventes sont soumises à la vérification de l'utilisateur final et aux exigences de licence d'exportation le cas échéant."
   }
 }

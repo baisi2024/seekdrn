@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import type { Product, FilterState } from '../types'
-import { getProducts, compareProducts } from '../api'
 
 interface ProductStore {
   products: Product[]
@@ -30,8 +29,18 @@ export const useProductStore = create<ProductStore>((set, get) => ({
     set({ loading: true })
     try {
       const newFilters = { ...get().filters, ...filters }
-      const { products, total } = await getProducts(newFilters)
-      set({ products, total, filters: newFilters, loading: false })
+      const params = new URLSearchParams()
+      if (newFilters.category) params.set('category', newFilters.category)
+      if (newFilters.search) params.set('search', newFilters.search)
+      if (newFilters.page) params.set('page', String(newFilters.page))
+      if (newFilters.pageSize) params.set('pageSize', String(newFilters.pageSize))
+
+      const res = await fetch(`/api/admin/products?${params.toString()}`)
+      const result = await res.json()
+
+      if (!res.ok) throw new Error(result.error || 'Failed to fetch products')
+
+      set({ products: result.products || [], total: result.total || 0, filters: newFilters, loading: false })
     } catch (error) {
       console.error('Failed to fetch products:', error)
       set({ loading: false })
@@ -64,8 +73,14 @@ export const useProductStore = create<ProductStore>((set, get) => ({
       return
     }
     try {
-      const results = await compareProducts(compareList)
-      set({ compareResults: results })
+      const res = await fetch('/api/admin/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'compare', ids: compareList }),
+      })
+      const result = await res.json()
+      if (!res.ok) throw new Error(result.error || 'Failed to compare products')
+      set({ compareResults: result.data || [] })
     } catch (error) {
       console.error('Failed to fetch compare results:', error)
     }

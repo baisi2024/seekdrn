@@ -53,7 +53,7 @@ export const TemplateCard = memo(function TemplateCard({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('zh-CN', {
+    return date.toLocaleDateString(undefined, {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit',
@@ -77,40 +77,32 @@ export const TemplateCard = memo(function TemplateCard({
       onMouseLeave={() => setIsHovered(false)}
       className="group relative"
     >
-      {/* 渐变边框效果 */}
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm" />
-      
       <Card 
         className={`
           relative overflow-hidden
-          bg-white/80 backdrop-blur-sm
-          border-2 border-transparent
-          hover:border-purple-500/30
-          hover:shadow-2xl hover:shadow-purple-500/10
+          shadow-lg hover:shadow-xl
+          hover:border-primary/50
           transition-all duration-300 ease-out
           ${isSortableDragging ? 'rotate-2 scale-105 shadow-2xl' : ''}
           ${isDragging ? 'opacity-50' : ''}
         `}
         role="article"
-        aria-label={`邮件模板: ${template.template_key}`}
+        aria-label={`${t('email_templates_page.title')}: ${template.template_key}`}
       >
-        {/* 顶部渐变条 */}
-        <div className="h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500" />
-        
         {/* 拖拽手柄 */}
         <button
           {...attributes}
           {...listeners}
           className="absolute left-2 top-5 p-1 rounded hover:bg-muted cursor-grab active:cursor-grabbing opacity-0 group-hover:opacity-100 transition-opacity z-10"
-          aria-label="拖拽排序"
+          aria-label={t('email_templates_page.title')}
         >
           <GripVertical className="h-4 w-4 text-muted-foreground" />
         </button>
         
       <CardHeader className="flex flex-row items-start justify-between space-y-0 pb-3 pl-10">
         <div className="flex items-center gap-2">
-          <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/10 to-purple-500/10">
-            <Mail className="h-4 w-4 text-blue-600" />
+          <div className="p-2 rounded-lg bg-primary/10">
+            <Mail className="h-4 w-4 text-primary" />
           </div>
           <div>
             <h3 className="font-semibold text-base">{template.template_key}</h3>
@@ -126,7 +118,7 @@ export const TemplateCard = memo(function TemplateCard({
           variant={template.is_active ? 'default' : 'secondary'}
           className={`
             transition-all duration-300
-            ${template.is_active ? 'bg-gradient-to-r from-green-500 to-emerald-500' : ''}
+            ${template.is_active ? 'bg-primary' : ''}
           `}
         >
           {template.is_active ? t('email_templates_page.statusActive') : t('email_templates_page.statusInactive')}
@@ -138,17 +130,17 @@ export const TemplateCard = memo(function TemplateCard({
           {template.description || t('email_templates_page.noDescription')}
         </p>
         
-        {/* 可用变量列表 - 悬停时显示更多 */}
+        {/* 可用变量列表 */}
         <div className="space-y-1">
           <p className="text-xs font-medium text-muted-foreground">{t('email_templates_page.availableVariables')}</p>
           <div className="flex flex-wrap gap-1">
-            <code className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 px-2 py-1 rounded transition-all hover:scale-105 hover:shadow-sm cursor-pointer">
+            <code className="text-xs bg-muted border border-border px-2 py-1 rounded">
               {'{{name}}'}
             </code>
-            <code className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 px-2 py-1 rounded transition-all hover:scale-105 hover:shadow-sm cursor-pointer">
+            <code className="text-xs bg-muted border border-border px-2 py-1 rounded">
               {'{{email}}'}
             </code>
-            <code className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100 px-2 py-1 rounded transition-all hover:scale-105 hover:shadow-sm cursor-pointer">
+            <code className="text-xs bg-muted border border-border px-2 py-1 rounded">
               {'{{link}}'}
             </code>
           </div>
@@ -158,13 +150,13 @@ export const TemplateCard = memo(function TemplateCard({
         {isHovered && (
           <div className="mt-3 pt-3 border-t border-dashed animate-fade-in">
             <p className="text-xs text-muted-foreground">
-              模板 ID: <code className="bg-muted px-1 rounded">{template.id}</code>
+              {`${t('email_templates_page.templateKeyLabel')}:`} <code className="bg-muted px-1 rounded">{template.id}</code>
             </p>
           </div>
         )}
       </CardContent>
       
-      <CardFooter className="flex items-center justify-between border-t pt-3 bg-gradient-to-r from-muted/30 to-muted/10">
+      <CardFooter className="flex items-center justify-between border-t pt-3 bg-muted/30">
         <p className="text-xs text-muted-foreground">
           {t('email_templates_page.updatedAt')} {formatDate(template.updated_at)}
         </p>
@@ -172,13 +164,13 @@ export const TemplateCard = memo(function TemplateCard({
         <div className="flex items-center gap-1">
           <Link 
             href={`/admin/email-templates/${template.template_key}`}
-            aria-label={`编辑模板 ${template.template_key}`}
+            aria-label={`${t('edit')} ${template.template_key}`}
           >
             <Button 
               size="icon-sm" 
               variant="ghost" 
               title={t('edit')}
-              className="hover:bg-blue-100 hover:text-blue-600 transition-colors"
+              className="hover:bg-primary/10 hover:text-primary transition-colors"
             >
               <Edit className="h-3.5 w-3.5" />
             </Button>
@@ -188,8 +180,8 @@ export const TemplateCard = memo(function TemplateCard({
             size="icon-sm" 
             variant="ghost" 
             title={t('email_templates_page.preview')}
-            className="hover:bg-purple-100 hover:text-purple-600 transition-colors"
-            aria-label="预览模板"
+            className="hover:bg-accent hover:text-accent-foreground transition-colors"
+            aria-label={t('email_templates_page.preview')}
           >
             <Eye className="h-3.5 w-3.5" />
           </Button>
@@ -200,8 +192,8 @@ export const TemplateCard = memo(function TemplateCard({
                 <button
                   type="button"
                   title={t('delete')}
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 hover:bg-red-100 hover:text-red-600"
-                  aria-label="删除模板"
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 hover:bg-destructive/10 hover:text-destructive"
+                  aria-label={t('delete')}
                 />
               }
             >
@@ -222,7 +214,6 @@ export const TemplateCard = memo(function TemplateCard({
                   variant="destructive" 
                   onClick={handleDelete}
                   disabled={isDeleting}
-                  className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600"
                 >
                   {isDeleting ? t('email_templates_page.deleting') : t('delete')}
                 </Button>

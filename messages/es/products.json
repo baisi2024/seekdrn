@@ -1,5 +1,8 @@
 {
   "title": "Productos",
+  "metaDescription": "Explore la gama completa de plataformas UAV industriales, cargas útiles, sistemas contra-UAS y soluciones de control terrestre de SeekDrone.",
+  "subtitle": "Explore nuestra gama completa de plataformas de drones industriales, cargas útiles y soluciones contra-UAS.",
+  "showingResults": "{count} productos encontrados",
   "filter": {
     "all": "Todos",
     "uav": "Plataformas UAV",
@@ -18,12 +21,22 @@
   "downloadFile": "Descargar",
   "fileSize": "Tamaño del Archivo",
   "language": "Idioma",
+  "noProducts": "No se encontraron productos",
+  "requestDemo": "Solicitar Demostración",
+  "learnMore": "Más Información",
+  "untitledProduct": "Producto Sin Título",
+  "noDescription": "Sin descripción disponible",
+  "complianceNotice": "Este producto requiere evaluación de cumplimiento. Contáctenos para obtener especificaciones detalladas.",
   "faq": "Preguntas Frecuentes",
   "requestQuote": "Solicitar Cotización",
   "downloadMaterials": "Descargar Materiales",
   "scheduleDemo": "Programar Demo",
   "relatedSolutions": "Soluciones Relacionadas",
   "tags": "Etiquetas",
+  "bottomCta": {
+    "title": "¿Listo para Desplegar?",
+    "subtitle": "Póngase en contacto con nuestro equipo para discutir los requisitos de su misión y encontrar la solución adecuada."
+  },
   "documentTypes": {
     "manual": "Manual",
     "datasheet": "Hoja de Datos",

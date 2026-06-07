@@ -15,6 +15,10 @@ const LOCALE_NAMES: Record<string, string> = {
   pt: 'Português',
   id: 'Bahasa Indonesia',
   zh: '中文',
+  th: 'ไทย',
+  vi: 'Tiếng Việt',
+  fa: 'فارسی',
+  ru: 'Русский',
 }
 
 export function LanguageSwitcher() {

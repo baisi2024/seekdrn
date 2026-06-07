@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 import type { MediaItem, MediaFilter } from '../types'
-import { getMedia, uploadMedia, deleteMedia } from '../api'
 
 interface MediaStore {
   items: MediaItem[]
@@ -31,8 +30,18 @@ export const useMediaStore = create<MediaStore>((set, get) => ({
     set({ loading: true })
     try {
       const newFilter = { ...get().filter, ...filter }
-      const items = await getMedia(newFilter)
-      set({ items, filter: newFilter, loading: false })
+      const params = new URLSearchParams()
+      if (newFilter.type) params.set('type', newFilter.type)
+      if (newFilter.search) params.set('search', newFilter.search)
+      if (newFilter.sortBy) params.set('sortBy', newFilter.sortBy)
+      if (newFilter.sortOrder) params.set('sortOrder', newFilter.sortOrder)
+
+      const res = await fetch(`/api/admin/media?${params.toString()}`)
+      const result = await res.json()
+
+      if (!res.ok) throw new Error(result.error || 'Failed to fetch media')
+
+      set({ items: result.data || [], filter: newFilter, loading: false })
     } catch (error) {
       console.error('Failed to fetch media:', error)
       set({ loading: false })
@@ -57,7 +66,23 @@ export const useMediaStore = create<MediaStore>((set, get) => ({
   uploadFiles: async (files, tags = []) => {
     set({ uploading: true })
     try {
-      const newItems = await uploadMedia(files, tags)
+      const formData = new FormData()
+      for (const file of files) {
+        formData.append('files', file)
+      }
+      if (tags.length > 0) {
+        formData.append('tags', JSON.stringify(tags))
+      }
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const result = await res.json()
+      if (!res.ok) throw new Error(result.error || 'Upload failed')
+
+      const newItems = result.data || result.items || []
       set({ items: [...newItems, ...get().items], uploading: false })
     } catch (error) {
       console.error('Failed to upload files:', error)
@@ -71,7 +96,15 @@ export const useMediaStore = create<MediaStore>((set, get) => ({
     set({ loading: true })
     try {
       for (const id of selected) {
-        await deleteMedia(id)
+        const res = await fetch('/api/admin/media', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id }),
+        })
+        if (!res.ok) {
+          const result = await res.json()
+          throw new Error(result.error || 'Delete failed')
+        }
       }
       set({
         items: get().items.filter(i => !selected.includes(i.id)),

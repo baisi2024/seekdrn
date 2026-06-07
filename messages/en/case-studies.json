@@ -1,5 +1,10 @@
 {
   "title": "Case Studies",
+  "metaDescription": "Discover how SeekDrone solutions deliver real-world results across public safety, energy, surveying, and counter-UAS operations.",
+  "subtitle": "Real-world deployments and mission outcomes from our global client base.",
+  "readMore": "Read Case Study",
+  "untitled": "Untitled Case Study",
+  "noCases": "No case studies available yet",
   "filter": {
     "all": "All Industries",
     "publicSafety": "Public Safety",

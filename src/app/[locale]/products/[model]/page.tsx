@@ -1,33 +1,44 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import type { Metadata } from 'next'
 import { getTranslation } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
-import { DatasheetDownloadButton } from '@/components/public/datasheet-download-button'
-import { SpecsSection } from '@/components/public/specs-section'
-import { DownloadsSection } from '@/components/public/downloads-section'
-import { RelatedCasesSection } from '@/components/public/related-cases-section'
 import { ProductGallery } from '@/features/products/components/public/product-gallery'
-import { RelatedProducts } from '@/features/products/components/public/related-products'
 import { ProductFAQSection } from '@/features/products/components/public/product-faq'
 import { ProductSchema } from '@/components/seo/product-schema'
 import { generateProductMetadata } from '@/lib/seo/product-metadata'
 import { getProductWithEnhancements } from '@/lib/supabase/admin'
-import { FileText, Calendar, MessageSquare } from 'lucide-react'
+import { SpecsSection } from '@/components/public/specs-section'
+import { DownloadsSection } from '@/components/public/downloads-section'
+import { RelatedCasesSection } from '@/components/public/related-cases-section'
+import { RelatedProducts } from '@/features/products/components/public/related-products'
+import { trackCTAClick } from '@/lib/gtm'
+import {
+  MessageSquare,
+  FileText,
+  Calendar,
+  Shield,
+  ChevronRight,
+  Zap,
+  Target,
+  Radio,
+} from 'lucide-react'
+
+interface Relation {
+  relation_type: string
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ model: string; locale: string }> }): Promise<Metadata> {
   const { model, locale } = await params
   const product = await getProductWithEnhancements(model, locale)
-  
+
   if (!product) {
-    return {
-      title: 'Product Not Found',
-    }
+    return { title: 'Product Not Found' }
   }
-  
+
   return generateProductMetadata({ product, locale })
 }
 
@@ -49,144 +60,265 @@ export default async function ProductDetailPage({
   const capabilities = getTranslation(product.translations, locale, 'capabilities')
   const applications = getTranslation(product.translations, locale, 'applications')
 
-  // 获取标签
   const tags = product.tags || []
-
-  // 准备文档数据
   const documents = product.documents || []
-
-  // 准备FAQ数据
   const faqs = product.faqs || []
 
-  // 准备关联数据
-  const relations = product.relations || []
-  const caseRelations = relations.filter((r: any) => r.relation_type === 'case_study')
-  const solutionRelations = relations.filter((r: any) => r.relation_type === 'solution')
-  const productRelations = relations.filter((r: any) => r.relation_type === 'related_product')
+  const relations = (product.relations || []) as Relation[]
+  const caseRelations = relations.filter((r) => r.relation_type === 'case_study')
+
+  // Extract key specs for hero stats bar (from first spec group, first 4 specs)
+  const heroStats: Array<{ label: string; value: string; unit: string }> = product.spec_groups && product.spec_groups.length > 0
+    ? product.spec_groups[0].specs.slice(0, 4).map((spec: any) => ({
+        label: getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0],
+        value: spec.value,
+        unit: spec.unit || '',
+      }))
+    : []
 
   return (
     <>
       <ProductSchema product={product} locale={locale} />
-      <div className="py-16">
-        <div className="container mx-auto px-4">
-        {/* Hero */}
-        <div className="grid lg:grid-cols-2 gap-12 mb-16">
-          <ProductGallery
-            images={product.images || []}
-            videos={product.videos || []}
-          />
-          <div className="space-y-6">
-            {/* 标签展示 */}
-            {tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {tags.map((tag: string) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            
-            <Badge variant="outline" className="font-mono">{product.model}</Badge>
-            <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{name}</h1>
-            <p className="text-lg text-gray-600">{overview}</p>
-            
-            {/* 三个CTA按钮 */}
-            <div className="flex flex-wrap gap-4">
-              <Link 
-                href={`/${locale}#demo-form`} 
-                className={buttonVariants({ size: 'lg' })}
-              >
-                <MessageSquare className="w-4 h-4 mr-2" />
-                {t('requestQuote')}
-              </Link>
-              
-              {documents.length > 0 && (
-                <Link 
-                  href="#downloads-section"
-                  className={buttonVariants({ size: 'lg', variant: 'outline' })}
-                >
-                  <FileText className="w-4 h-4 mr-2" />
-                  {t('downloadMaterials')}
+
+      {/* ===== HERO SECTION ===== */}
+      <section className="relative bg-gradient-to-b from-primary/5 to-background">
+        <div className="container mx-auto px-4 py-12 lg:py-16">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            {/* Left: Gallery */}
+            <ProductGallery
+              images={product.images || []}
+              videos={product.videos || []}
+            />
+
+            {/* Right: Product Info */}
+            <div className="space-y-6">
+              {/* Breadcrumb */}
+              <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Link href={`/${locale}/products`} className="hover:text-foreground transition-colors">
+                  {t('title')}
                 </Link>
+                <ChevronRight className="w-3.5 h-3.5" />
+                <span className="text-foreground">{name}</span>
+              </nav>
+
+              {/* Tags */}
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((tag: string) => (
+                    <Badge key={tag} variant="secondary">{tag}</Badge>
+                  ))}
+                </div>
               )}
-              
-              <Link 
-                href={`/${locale}#demo-form`}
-                className={buttonVariants({ size: 'lg', variant: 'secondary' })}
-              >
-                <Calendar className="w-4 h-4 mr-2" />
-                {t('scheduleDemo')}
-              </Link>
+
+              {/* Model + Name */}
+              <div>
+                <Badge variant="outline" className="font-mono mb-3">{product.model}</Badge>
+                <h1 className="text-3xl lg:text-4xl font-bold text-foreground">{name}</h1>
+                <p className="mt-3 text-lg text-muted-foreground leading-relaxed">{overview}</p>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-3 pt-2">
+                <Link
+                  href={`/${locale}#demo-form`}
+                  className={buttonVariants({ size: 'lg' })}
+                  onClick={() => trackCTAClick('product_hero', 'request_quote')}
+                >
+                  <MessageSquare className="w-4 h-4 mr-2" />
+                  {t('requestQuote')}
+                </Link>
+
+                {documents.length > 0 && (
+                  <Link
+                    href="#downloads"
+                    className={buttonVariants({ size: 'lg', variant: 'outline' })}
+                  >
+                    <FileText className="w-4 h-4 mr-2" />
+                    {t('downloadMaterials')}
+                  </Link>
+                )}
+
+                <Link
+                  href={`/${locale}#demo-form`}
+                  className={buttonVariants({ size: 'lg', variant: 'secondary' })}
+                  onClick={() => trackCTAClick('product_hero', 'schedule_demo')}
+                >
+                  <Calendar className="w-4 h-4 mr-2" />
+                  {t('scheduleDemo')}
+                </Link>
+              </div>
+
+              {/* Compliance Badges */}
+              {product.compliance_flag && (
+                <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-800">
+                  <Shield className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
+                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                    {t('complianceNotice')}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Specs - 使用新组件 */}
-        {product.spec_groups && product.spec_groups.length > 0 && !product.compliance_flag && (
-          <SpecsSection groups={product.spec_groups} locale={locale} />
-        )}
-
-        {/* Compliance notice for C-UAS products */}
-        {product.compliance_flag && (
-          <section className="mb-16">
-            <Card className="border-yellow-200 bg-yellow-50">
-              <CardContent className="p-6">
-                <p className="text-yellow-800">
-                  {t('complianceNotice')}
-                </p>
-              </CardContent>
-            </Card>
-          </section>
-        )}
-
-        {/* Advantages */}
-        {advantages && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-6">{t('advantages')}</h2>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: advantages }} />
-          </section>
-        )}
-
-        {/* Capabilities */}
-        {capabilities && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-6">{t('capabilities')}</h2>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: capabilities }} />
-          </section>
-        )}
-
-        {/* Applications */}
-        {applications && (
-          <section className="mb-16">
-            <h2 className="text-2xl font-bold mb-6">{t('applications')}</h2>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: applications }} />
-          </section>
-        )}
-
-        {/* Downloads - 更新数据源 */}
-        {documents && documents.length > 0 && (
-          <div id="downloads-section">
-            <DownloadsSection downloads={documents} locale={locale} />
+      {/* ===== KEY STATS BAR ===== */}
+      {heroStats.length > 0 && (
+        <section className="border-y border-border bg-card">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+              {heroStats.map((stat, i) => (
+                <div key={i} className="py-6 px-6 text-center">
+                  <div className="font-mono text-2xl lg:text-3xl font-bold text-primary">
+                    {stat.value}<span className="text-base ml-0.5 font-normal text-muted-foreground">{stat.unit}</span>
+                  </div>
+                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
+        </section>
+      )}
+
+      {/* ===== ANCHOR NAV ===== */}
+      <nav className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center gap-6 overflow-x-auto py-3 text-sm font-medium scrollbar-none">
+            {[
+              { id: 'specs', label: t('specs') },
+              { id: 'advantages', label: t('advantages') },
+              { id: 'capabilities', label: t('capabilities') },
+              { id: 'applications', label: t('applications') },
+              ...(documents.length > 0 ? [{ id: 'downloads', label: t('downloads') }] : []),
+              ...(faqs.length > 0 ? [{ id: 'faq', label: t('faq') }] : []),
+              ...(caseRelations.length > 0 ? [{ id: 'cases', label: t('relatedCases') }] : []),
+            ].map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className="whitespace-nowrap text-muted-foreground hover:text-foreground transition-colors border-b-2 border-transparent hover:border-primary pb-0.5"
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* ===== CONTENT SECTIONS ===== */}
+      <div className="container mx-auto px-4 py-12 lg:py-16 space-y-20">
+
+        {/* Specs Section */}
+        {product.spec_groups && product.spec_groups.length > 0 && (
+          <section id="specs">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <Zap className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">{t('specs')}</h2>
+            </div>
+            <SpecsSection groups={product.spec_groups} locale={locale} />
+          </section>
         )}
 
-        {/* FAQ */}
+        {/* Advantages Section */}
+        {advantages && (
+          <section id="advantages">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <Target className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">{t('advantages')}</h2>
+            </div>
+            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: advantages }} />
+          </section>
+        )}
+
+        {/* Capabilities Section */}
+        {capabilities && (
+          <section id="capabilities">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <Radio className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">{t('capabilities')}</h2>
+            </div>
+            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: capabilities }} />
+          </section>
+        )}
+
+        {/* Applications Section */}
+        {applications && (
+          <section id="applications">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <Shield className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">{t('applications')}</h2>
+            </div>
+            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: applications }} />
+          </section>
+        )}
+
+        {/* Downloads Section */}
+        {documents && documents.length > 0 && (
+          <section id="downloads">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="rounded-lg bg-primary/10 p-2">
+                <FileText className="w-5 h-5 text-primary" />
+              </div>
+              <h2 className="text-2xl font-bold text-foreground">{t('downloads')}</h2>
+            </div>
+            <DownloadsSection downloads={documents} locale={locale} />
+          </section>
+        )}
+
+        {/* FAQ Section */}
         {faqs && faqs.length > 0 && (
-          <section className="mb-16">
+          <section id="faq">
             <ProductFAQSection faqs={faqs} locale={locale} />
           </section>
         )}
 
-        {/* Related Cases - 信任背书 */}
+        {/* Related Cases */}
         {product.related_cases && product.related_cases.length > 0 && (
-          <RelatedCasesSection cases={product.related_cases} locale={locale} />
+          <section id="cases">
+            <RelatedCasesSection cases={product.related_cases} locale={locale} />
+          </section>
         )}
-
-        {/* Related Products */}
-        <RelatedProducts productId={product.id} locale={locale} />
       </div>
-    </div>
+
+      {/* ===== BOTTOM CTA BANNER ===== */}
+      <section className="bg-primary text-primary-foreground">
+        <div className="container mx-auto px-4 py-16 text-center">
+          <h2 className="text-2xl lg:text-3xl font-bold mb-4">
+            {t('bottomCta.title')}
+          </h2>
+          <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+            {t('bottomCta.subtitle')}
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href={`/${locale}#demo-form`}
+              className={buttonVariants({ size: 'lg', variant: 'secondary' })}
+              onClick={() => trackCTAClick('product_bottom', 'request_quote')}
+            >
+              <MessageSquare className="w-4 h-4 mr-2" />
+              {t('requestQuote')}
+            </Link>
+            <Link
+              href={`/${locale}#demo-form`}
+              className={buttonVariants({ size: 'lg', variant: 'outline' })}
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              {t('scheduleDemo')}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== RELATED PRODUCTS ===== */}
+      <RelatedProducts productId={product.id} locale={locale} />
     </>
   )
 }

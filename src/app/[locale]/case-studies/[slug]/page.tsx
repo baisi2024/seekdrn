@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
 import Image from 'next/image'
@@ -6,6 +7,32 @@ import { getTranslation } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { CaseHeroVideo } from '@/components/public/case-hero-video'
+
+interface CaseResult {
+  value: string
+  metric: string
+  unit?: string
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
+  const { slug, locale } = await params
+
+  const { data: caseStudy } = await supabaseAdmin
+    .from('case_studies')
+    .select('translations')
+    .eq('slug', slug)
+    .eq('published', true)
+    .maybeSingle()
+
+  const title = caseStudy ? getTranslation(caseStudy.translations, locale, 'title') : 'Case Study'
+
+  return {
+    title,
+    alternates: {
+      canonical: `/${locale}/case-studies/${slug}`,
+    },
+  }
+}
 
 export default async function CaseStudyDetailPage({
   params,
@@ -36,12 +63,12 @@ export default async function CaseStudyDetailPage({
         {/* Hero */}
         <div className="mb-12">
           {caseStudy.video_url ? (
-            <CaseHeroVideo 
-              videoUrl={caseStudy.video_url} 
-              poster={caseStudy.images && caseStudy.images[0]} 
+            <CaseHeroVideo
+              videoUrl={caseStudy.video_url}
+              poster={caseStudy.images && caseStudy.images[0]}
             />
           ) : caseStudy.images && caseStudy.images[0] ? (
-            <div className="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-6 relative">
+            <div className="aspect-video rounded-lg overflow-hidden bg-muted mb-6 relative">
               <Image src={caseStudy.images[0]} alt={title} fill className="object-cover" />
             </div>
           ) : null}
@@ -49,46 +76,46 @@ export default async function CaseStudyDetailPage({
             <Badge>{caseStudy.industry}</Badge>
             {caseStudy.country && <Badge variant="outline">{caseStudy.country}</Badge>}
           </div>
-          <h1 className="text-3xl lg:text-4xl font-bold text-gray-900">{title}</h1>
+          <h1 className="text-3xl lg:text-4xl font-bold text-foreground">{title}</h1>
         </div>
 
         {/* Background */}
         {background && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">{t('background')}</h2>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: background }} />
+            <h2 className="text-2xl font-bold text-foreground mb-4">{t('background')}</h2>
+            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: background }} />
           </section>
         )}
 
         {/* Challenge */}
         {challenge && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">{t('challenge')}</h2>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: challenge }} />
+            <h2 className="text-2xl font-bold text-foreground mb-4">{t('challenge')}</h2>
+            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: challenge }} />
           </section>
         )}
 
         {/* Solution */}
         {solution && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">{t('solution')}</h2>
-            <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: solution }} />
+            <h2 className="text-2xl font-bold text-foreground mb-4">{t('solution')}</h2>
+            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: solution }} />
           </section>
         )}
 
         {/* Results */}
         {caseStudy.results && caseStudy.results.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">{t('results')}</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">{t('results')}</h2>
             <div className="grid md:grid-cols-3 gap-4">
-              {caseStudy.results.map((r: any, i: number) => (
+              {(caseStudy.results as CaseResult[]).map((r, i) => (
                 <Card key={i}>
                   <CardContent className="p-6 text-center">
-                    <div className="font-mono font-bold text-3xl text-blue-600 mb-2">
+                    <div className="font-mono font-bold text-3xl text-primary mb-2">
                       {r.value}
                     </div>
-                    <div className="text-sm text-gray-600">{r.metric}</div>
-                    {r.unit && <div className="text-xs text-gray-400 mt-1">{r.unit}</div>}
+                    <div className="text-sm text-muted-foreground">{r.metric}</div>
+                    {r.unit && <div className="text-xs text-muted-foreground/60 mt-1">{r.unit}</div>}
                   </CardContent>
                 </Card>
               ))}
@@ -99,10 +126,10 @@ export default async function CaseStudyDetailPage({
         {/* Client Quote */}
         {clientQuote && (
           <section className="mb-12">
-            <Card className="bg-gray-50">
+            <Card className="bg-muted">
               <CardContent className="p-6">
-                <blockquote className="text-lg italic text-gray-700">
-                  "{clientQuote}"
+                <blockquote className="text-lg italic text-foreground">
+                  &ldquo;{clientQuote}&rdquo;
                 </blockquote>
               </CardContent>
             </Card>
@@ -112,10 +139,10 @@ export default async function CaseStudyDetailPage({
         {/* Field Footage */}
         {caseStudy.images && caseStudy.images.length > 1 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-4">{t('fieldFootage')}</h2>
+            <h2 className="text-2xl font-bold text-foreground mb-4">{t('fieldFootage')}</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {caseStudy.images.slice(1).map((img: string, i: number) => (
-                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-gray-100 relative">
+                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-muted relative">
                   <Image src={img} alt={`Footage ${i + 1}`} fill className="object-cover" />
                 </div>
               ))}

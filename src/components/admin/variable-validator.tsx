@@ -4,6 +4,7 @@ import { validateVariables } from '@/lib/email-helpers'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle2, AlertCircle, AlertTriangle } from 'lucide-react'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface VariableValidatorProps {
   content: string
@@ -11,6 +12,7 @@ interface VariableValidatorProps {
 }
 
 export function VariableValidator({ content, availableVariables }: VariableValidatorProps) {
+  const t = useAdminTranslations()
   const result = validateVariables(content, availableVariables)
 
   if (result.valid && result.unused.length === 0) {
@@ -21,10 +23,10 @@ export function VariableValidator({ content, availableVariables }: VariableValid
             <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5" />
             <div>
               <p className="font-medium text-green-700 dark:text-green-300">
-                变量验证通过
+                {t('variable_validator.validation_passed')}
               </p>
               <p className="text-sm text-green-600 dark:text-green-400 mt-1">
-                所有变量都已正确定义并使用
+                {t('variable_validator.all_vars_defined')}
               </p>
             </div>
           </div>
@@ -42,7 +44,7 @@ export function VariableValidator({ content, availableVariables }: VariableValid
               <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5" />
               <div className="flex-1">
                 <p className="font-medium text-red-700 dark:text-red-300">
-                  缺少变量定义
+                  {t('variable_validator.missing_vars')}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {result.missing.map((variable) => (
@@ -52,7 +54,7 @@ export function VariableValidator({ content, availableVariables }: VariableValid
                   ))}
                 </div>
                 <p className="text-sm text-red-600 dark:text-red-400 mt-2">
-                  请在&quot;变量配置&quot;中添加这些变量
+                  {t('variable_validator.add_vars_hint')}
                 </p>
               </div>
             </div>
@@ -63,7 +65,7 @@ export function VariableValidator({ content, availableVariables }: VariableValid
               <AlertTriangle className="w-5 h-5 text-yellow-600 dark:text-yellow-400 mt-0.5" />
               <div className="flex-1">
                 <p className="font-medium text-yellow-700 dark:text-yellow-300">
-                  未使用的变量
+                  {t('variable_validator.unused_vars')}
                 </p>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {result.unused.map((variable) => (
@@ -73,7 +75,7 @@ export function VariableValidator({ content, availableVariables }: VariableValid
                   ))}
                 </div>
                 <p className="text-sm text-yellow-600 dark:text-yellow-400 mt-2">
-                  这些变量已定义但未在模板中使用
+                  {t('variable_validator.unused_vars_hint')}
                 </p>
               </div>
             </div>

@@ -1,5 +1,8 @@
 {
   "title": "Products",
+  "metaDescription": "Explore SeekDrone's comprehensive range of industrial UAV platforms, payloads, counter-UAS systems, and ground control solutions.",
+  "subtitle": "Explore our complete range of industrial drone platforms, payloads, and counter-UAS solutions.",
+  "showingResults": "{count} products found",
   "filter": {
     "all": "All",
     "uav": "UAV Platforms",
@@ -30,6 +33,10 @@
   "scheduleDemo": "Schedule Demo",
   "relatedSolutions": "Related Solutions",
   "tags": "Tags",
+  "bottomCta": {
+    "title": "Ready to Deploy?",
+    "subtitle": "Get in touch with our team to discuss your mission requirements and find the right solution."
+  },
   "documentTypes": {
     "manual": "Manual",
     "datasheet": "Datasheet",

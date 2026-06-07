@@ -11,6 +11,7 @@ import {
   Plus,
   RefreshCw 
 } from 'lucide-react'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface EmptyStateProps {
   icon?: React.ReactNode
@@ -74,13 +75,14 @@ export const EmptyTemplatesState = memo(function EmptyTemplatesState({
 }: {
   onCreate?: () => void
 }) {
+  const t = useAdminTranslations()
   return (
     <EmptyState
       icon={<Mail className="h-8 w-8 text-muted-foreground" />}
-      title="暂无邮件模板"
-      description="创建您的第一个邮件模板，开始发送专业的邮件内容"
+      title={t('empty_states.no_templates')}
+      description={t('empty_states.create_first_template')}
       action={onCreate ? {
-        label: '创建模板',
+        label: t('empty_states.create_template'),
         onClick: onCreate,
         icon: <Plus className="h-4 w-4" />,
       } : undefined}
@@ -96,13 +98,14 @@ export const EmptyLogsState = memo(function EmptyLogsState({
 }: {
   onRefresh?: () => void
 }) {
+  const t = useAdminTranslations()
   return (
     <EmptyState
       icon={<Inbox className="h-8 w-8 text-muted-foreground" />}
-      title="暂无邮件记录"
-      description="还没有发送任何邮件，邮件发送记录将显示在这里"
+      title={t('empty_states.no_logs')}
+      description={t('empty_states.no_emails_yet')}
       action={onRefresh ? {
-        label: '刷新',
+        label: t('empty_states.refresh'),
         onClick: onRefresh,
         icon: <RefreshCw className="h-4 w-4" />,
       } : undefined}
@@ -120,13 +123,14 @@ export const EmptySearchState = memo(function EmptySearchState({
   query: string
   onClear?: () => void
 }) {
+  const t = useAdminTranslations()
   return (
     <EmptyState
       icon={<Search className="h-8 w-8 text-muted-foreground" />}
-      title="未找到结果"
-      description={`没有找到与"${query}"相关的内容，请尝试其他关键词`}
+      title={t('empty_states.no_results')}
+      description={t('empty_states.no_results_desc').replace('{query}', query)}
       action={onClear ? {
-        label: '清除搜索',
+        label: t('empty_states.clear_search'),
         onClick: onClear,
       } : undefined}
     />

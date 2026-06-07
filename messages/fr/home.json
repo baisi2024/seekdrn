@@ -1,13 +1,13 @@
 {
   "hero": {
-    "title": "UAV Industriels, Testés Là Où C'est Le Plus Important",
-    "subtitle": "Plateformes de drones éprouvées au combat et solutions anti-UAS pour la défense, la sécurité et les infrastructures critiques.",
+    "title": "Drones Industriels Éprouvés au Combat pour Environnements Critiques",
+    "subtitle": "Plateformes de drones testées au combat et solutions anti-drones pour la défense, la sécurité et les infrastructures critiques.",
     "cta": "Demander une Démo"
   },
   "trustBar": {
     "flightHours": "Heures de Vol",
     "countries": "Pays",
-    "enterpriseClients": "Clients Entreprises",
+    "enterpriseClients": "Clients Entreprise",
     "support": "Support"
   },
   "products": {
@@ -19,11 +19,14 @@
   },
   "cases": {
     "title": "Études de Cas",
-    "viewAll": "Voir Tous les Cas"
+    "viewAll": "Voir Toutes les Études"
   },
   "ctaSection": {
     "title": "Prêt à Voir Nos Solutions en Action ?",
     "subtitle": "Planifiez une démonstration en direct avec notre équipe.",
     "button": "Demander une Démo"
+  },
+  "faq": {
+    "title": "Questions Fréquentes"
   }
 }

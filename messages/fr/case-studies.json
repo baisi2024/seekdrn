@@ -1,5 +1,10 @@
 {
   "title": "Études de Cas",
+  "metaDescription": "Découvrez comment les solutions SeekDrone produisent des résultats concrets dans les domaines de la sécurité publique, de l'énergie, de l'arpentage et des opérations anti-UAS.",
+  "subtitle": "Déploiements réels et résultats de missions de notre clientèle mondiale.",
+  "readMore": "Lire l'Étude de Cas",
+  "untitled": "Étude de Cas Sans Titre",
+  "noCases": "Aucune étude de cas disponible pour le moment",
   "filter": {
     "all": "Toutes les Industries",
     "publicSafety": "Sécurité Publique",

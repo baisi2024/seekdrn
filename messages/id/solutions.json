@@ -1,7 +1,10 @@
 {
+  "title": "Solusi",
+  "metaDescription": "Solusi drone komprehensif untuk keselamatan publik, inspeksi infrastruktur, pertanian, dan aplikasi pertahanan.",
   "challenge": "Tantangan",
   "solution": "Solusi",
   "workflow": "Alur Kerja",
   "keyMetrics": "Metrik Utama",
-  "relatedCases": "Kasus Terkait"
+  "relatedCases": "Kasus Terkait",
+  "requestDemo": "Minta Demo"
 }

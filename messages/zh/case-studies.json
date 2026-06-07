@@ -1,5 +1,10 @@
 {
   "title": "案例研究",
+  "metaDescription": "了解 SeekDrone 解决方案如何在公共安全、能源、测绘和反无人机行动中实现实际成果。",
+  "subtitle": "来自我们全球客户的实际部署和任务成果。",
+  "readMore": "阅读案例研究",
+  "untitled": "未命名案例研究",
+  "noCases": "暂无案例研究",
   "filter": {
     "all": "所有行业",
     "publicSafety": "公共安全",

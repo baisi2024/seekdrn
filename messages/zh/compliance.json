@@ -1,15 +1,26 @@
 {
   "title": "合规",
+  "metaDescription": "SeekDrone 的合规框架，涵盖出口管制、隐私政策、使用条款和 Cookie 政策。",
+  "subtitle": "我们对法规合规、数据保护和道德运营的承诺。",
+  "noContent": "此政策内容暂不可用。",
   "export": {
-    "title": "出口合规"
+    "title": "出口合规",
+    "description": "管理我们产品和技术进出口的国际交易法规和出口管制框架。"
   },
   "privacy": {
-    "title": "隐私政策"
+    "title": "隐私政策",
+    "description": "我们如何根据全球隐私法规收集、使用和保护您的个人数据。"
   },
   "terms": {
-    "title": "使用条款"
+    "title": "使用条款",
+    "description": "规范使用我们网站、产品和服务相关的条款和条件。"
   },
   "cookie": {
-    "title": "Cookie 政策"
+    "title": "Cookie 政策",
+    "description": "关于我们如何在网站上使用 Cookie 和类似技术的信息。"
+  },
+  "generalNotice": {
+    "title": "通用合规声明",
+    "content": "SeekDrone 的经营遵守国际出口管制法规，包括但不限于瓦森纳安排、ITAR 和 EAR。我们的产品仅适用于经批准的市场和应用。所有销售均需经过最终用户验证，并在适用时取得出口许可证。"
   }
 }

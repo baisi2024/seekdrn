@@ -1,5 +1,10 @@
 {
   "title": "Casos de Estudio",
+  "metaDescription": "Descubra cómo las soluciones de SeekDrone ofrecen resultados reales en seguridad pública, energía, topografía y operaciones contra-UAS.",
+  "subtitle": "Despliegues reales y resultados de misiones de nuestra base global de clientes.",
+  "readMore": "Leer Caso de Estudio",
+  "untitled": "Caso de Estudio Sin Título",
+  "noCases": "Aún no hay casos de estudio disponibles",
   "filter": {
     "all": "Todas las Industrias",
     "publicSafety": "Seguridad Pública",
