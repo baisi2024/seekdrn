@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { FixedSizeList as List } from 'react-window'
+import { List } from 'react-window'
 import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
@@ -12,6 +12,7 @@ import { LogsFilters, type FilterValues } from './logs-filters'
 import { LogCard, type EmailLog } from './log-card'
 import { LogDetailSheet } from './log-detail-sheet'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
+import { AdminPage } from '@/components/admin/core'
 
 interface EmailLogsClientProps {
   initialLogs: EmailLog[]
@@ -138,12 +139,9 @@ export function EmailLogsClient({ initialLogs, templates }: EmailLogsClientProps
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Mail className="h-6 w-6" />
-          <h1 className="text-2xl font-bold">{t('email_logs_page.title')}</h1>
-        </div>
+    <AdminPage
+      title="email_logs_page.title"
+      actions={
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <Switch
@@ -165,8 +163,8 @@ export function EmailLogsClient({ initialLogs, templates }: EmailLogsClientProps
             {t('email_logs_page.refresh')}
           </Button>
         </div>
-      </div>
-
+      }
+    >
       <LogsStats stats={stats} />
 
       <LogsFilters
@@ -206,6 +204,6 @@ export function EmailLogsClient({ initialLogs, templates }: EmailLogsClientProps
         onOpenChange={setSheetOpen}
         onResend={handleResend}
       />
-    </div>
+    </AdminPage>
   )
 }

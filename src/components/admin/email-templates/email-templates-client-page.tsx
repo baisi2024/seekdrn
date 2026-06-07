@@ -10,6 +10,7 @@ import { EmailTemplate } from '@/components/admin/email-templates-table'
 import { TemplateCard } from './template-card'
 import { TemplatesStats } from './templates-stats'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
+import { AdminPage } from '@/components/admin/core'
 
 interface EmailTemplatesClientPageProps {
   templates: EmailTemplate[]
@@ -50,21 +51,17 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
   ]
 
   return (
-    <div className="space-y-6">
-      {/* 页面标题 */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex items-center gap-3">
-          <Mail className="h-6 w-6 text-primary" />
-          <h1 className="text-2xl font-bold">{t('email_templates_page.title')}</h1>
-        </div>
+    <AdminPage
+      title="email_templates_page.title"
+      actions={
         <Link href="/admin/email-templates/new">
           <Button size="sm">
             <Plus className="h-4 w-4 mr-1" />
             {t('email_templates_page.newTemplate')}
           </Button>
         </Link>
-      </div>
-
+      }
+    >
       {/* 统计卡片 */}
       <TemplatesStats templates={templates} />
 
@@ -79,7 +76,7 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
             className="pl-9"
           />
         </div>
-        
+
         <div className="flex gap-2">
           {filterButtons.map((filter) => (
             <Badge
@@ -99,13 +96,13 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
         <div className="text-center py-12">
           <Mail className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
           <p className="text-muted-foreground">
-            {searchQuery || statusFilter !== 'all' 
+            {searchQuery || statusFilter !== 'all'
               ? t('email_templates_page.noTemplatesFound')
               : t('email_templates_page.noTemplates')}
           </p>
           {searchQuery || statusFilter !== 'all' ? (
-            <Button 
-              variant="link" 
+            <Button
+              variant="link"
               onClick={() => {
                 setSearchQuery('')
                 setStatusFilter('all')
@@ -130,6 +127,6 @@ export function EmailTemplatesClientPage({ templates }: EmailTemplatesClientPage
           ))}
         </div>
       )}
-    </div>
+    </AdminPage>
   )
 }
