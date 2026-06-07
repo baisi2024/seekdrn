@@ -17,5 +17,18 @@
   "viewAll": "Ver Tudo",
   "downloadFile": "Baixar",
   "fileSize": "Tamanho do Arquivo",
-  "language": "Idioma"
+  "language": "Idioma",
+  "faq": "FAQ",
+  "requestQuote": "Solicitar Cotação",
+  "downloadMaterials": "Baixar Materiais",
+  "scheduleDemo": "Agendar Demo",
+  "relatedSolutions": "Soluções Relacionadas",
+  "tags": "Tags",
+  "documentTypes": {
+    "manual": "Manual",
+    "datasheet": "Ficha Técnica",
+    "certificate": "Certificado",
+    "brochure": "Brochura",
+    "other": "Outro"
+  }
 }
