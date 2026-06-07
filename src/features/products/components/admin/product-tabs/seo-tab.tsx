@@ -11,8 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { createClient } from '@/lib/supabase/client'
 import type { ProductSEO, SEOFormData } from '@/features/products/types'
 import { SEO_LIMITS } from '@/features/products/types'
-
-const LOCALES = ['en', 'zh'] as const
+import { LOCALES } from '@/lib/constants/locales'
 
 interface SEOTabProps {
   productId: string
@@ -36,7 +35,8 @@ export function SEOTab({ productId }: SEOTabProps) {
         if (error) throw error
 
         const seoMap: Record<string, ProductSEO | null> = {}
-        LOCALES.forEach((locale) => {
+        LOCALES.forEach((localeObj) => {
+          const locale = localeObj.code
           seoMap[locale] = (data as ProductSEO[])?.find((d) => d.locale === locale) || null
         })
         setSeoData(seoMap)
@@ -65,7 +65,8 @@ export function SEOTab({ productId }: SEOTabProps) {
     setSaving(true)
     try {
       await Promise.all(
-        LOCALES.map(async (locale) => {
+        LOCALES.map(async (localeObj) => {
+          const locale = localeObj.code
           const seo = seoData[locale]
           if (seo) {
             const { error } = await supabase
@@ -115,14 +116,14 @@ export function SEOTab({ productId }: SEOTabProps) {
       <Tabs value={currentLocale} onValueChange={setCurrentLocale}>
         <TabsList>
           {LOCALES.map((locale) => (
-            <TabsTrigger key={locale} value={locale}>
-              {locale.toUpperCase()}
+            <TabsTrigger key={locale.code} value={locale.code}>
+              {locale.label}
             </TabsTrigger>
           ))}
         </TabsList>
 
         {LOCALES.map((locale) => (
-          <TabsContent key={locale} value={locale} className="space-y-6">
+          <TabsContent key={locale.code} value={locale.code} className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Meta Information</CardTitle>
@@ -132,12 +133,12 @@ export function SEOTab({ productId }: SEOTabProps) {
                   <div className="flex justify-between">
                     <Label>Meta Title</Label>
                     <span className="text-sm text-muted-foreground">
-                      {(seoData[locale]?.meta_title?.length || 0)}/{SEO_LIMITS.meta_title}
+                      {(seoData[locale.code]?.meta_title?.length || 0)}/{SEO_LIMITS.meta_title}
                     </span>
                   </div>
                   <Input
-                    value={seoData[locale]?.meta_title || ''}
-                    onChange={(e) => updateField(locale, 'meta_title', e.target.value)}
+                    value={seoData[locale.code]?.meta_title || ''}
+                    onChange={(e) => updateField(locale.code, 'meta_title', e.target.value)}
                     maxLength={SEO_LIMITS.meta_title}
                   />
                 </div>
@@ -146,12 +147,12 @@ export function SEOTab({ productId }: SEOTabProps) {
                   <div className="flex justify-between">
                     <Label>Meta Description</Label>
                     <span className="text-sm text-muted-foreground">
-                      {(seoData[locale]?.meta_description?.length || 0)}/{SEO_LIMITS.meta_description}
+                      {(seoData[locale.code]?.meta_description?.length || 0)}/{SEO_LIMITS.meta_description}
                     </span>
                   </div>
                   <Textarea
-                    value={seoData[locale]?.meta_description || ''}
-                    onChange={(e) => updateField(locale, 'meta_description', e.target.value)}
+                    value={seoData[locale.code]?.meta_description || ''}
+                    onChange={(e) => updateField(locale.code, 'meta_description', e.target.value)}
                     maxLength={SEO_LIMITS.meta_description}
                     rows={3}
                   />
@@ -160,10 +161,10 @@ export function SEOTab({ productId }: SEOTabProps) {
                 <div>
                   <Label>Meta Keywords</Label>
                   <Input
-                    value={(seoData[locale]?.meta_keywords || []).join(', ')}
+                    value={(seoData[locale.code]?.meta_keywords || []).join(', ')}
                     onChange={(e) =>
                       updateField(
-                        locale,
+                        locale.code,
                         'meta_keywords',
                         e.target.value.split(',').map((k) => k.trim()).filter(Boolean)
                       )
@@ -171,7 +172,7 @@ export function SEOTab({ productId }: SEOTabProps) {
                     placeholder="keyword1, keyword2, keyword3"
                   />
                   <div className="flex flex-wrap gap-1 mt-2">
-                    {(seoData[locale]?.meta_keywords || []).map((keyword, idx) => (
+                    {(seoData[locale.code]?.meta_keywords || []).map((keyword, idx) => (
                       <Badge key={idx} variant="secondary">
                         {keyword}
                       </Badge>
@@ -190,12 +191,12 @@ export function SEOTab({ productId }: SEOTabProps) {
                   <div className="flex justify-between">
                     <Label>OG Title</Label>
                     <span className="text-sm text-muted-foreground">
-                      {(seoData[locale]?.og_title?.length || 0)}/{SEO_LIMITS.og_title}
+                      {(seoData[locale.code]?.og_title?.length || 0)}/{SEO_LIMITS.og_title}
                     </span>
                   </div>
                   <Input
-                    value={seoData[locale]?.og_title || ''}
-                    onChange={(e) => updateField(locale, 'og_title', e.target.value)}
+                    value={seoData[locale.code]?.og_title || ''}
+                    onChange={(e) => updateField(locale.code, 'og_title', e.target.value)}
                     maxLength={SEO_LIMITS.og_title}
                   />
                 </div>
@@ -204,12 +205,12 @@ export function SEOTab({ productId }: SEOTabProps) {
                   <div className="flex justify-between">
                     <Label>OG Description</Label>
                     <span className="text-sm text-muted-foreground">
-                      {(seoData[locale]?.og_description?.length || 0)}/{SEO_LIMITS.og_description}
+                      {(seoData[locale.code]?.og_description?.length || 0)}/{SEO_LIMITS.og_description}
                     </span>
                   </div>
                   <Textarea
-                    value={seoData[locale]?.og_description || ''}
-                    onChange={(e) => updateField(locale, 'og_description', e.target.value)}
+                    value={seoData[locale.code]?.og_description || ''}
+                    onChange={(e) => updateField(locale.code, 'og_description', e.target.value)}
                     maxLength={SEO_LIMITS.og_description}
                     rows={3}
                   />
@@ -218,8 +219,8 @@ export function SEOTab({ productId }: SEOTabProps) {
                 <div>
                   <Label>OG Image URL</Label>
                   <Input
-                    value={seoData[locale]?.og_image || ''}
-                    onChange={(e) => updateField(locale, 'og_image', e.target.value)}
+                    value={seoData[locale.code]?.og_image || ''}
+                    onChange={(e) => updateField(locale.code, 'og_image', e.target.value)}
                     placeholder="https://example.com/image.jpg"
                   />
                 </div>

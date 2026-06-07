@@ -1,0 +1,14 @@
+{
+  "searchStringsArray": [
+    "agriculture drone company",
+    "security drone",
+    "drone surveying",
+    "logistics drone",
+    "drone services"
+  ],
+  "location": "Singapore",
+  "maxCrawledPlaces": 50,
+  "scrapeContacts": true,
+  "scrapeEmail": true,
+  "scrapePhone": true
+}

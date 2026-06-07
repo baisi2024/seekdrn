@@ -95,7 +95,12 @@ export function StepBasic({ data, onChange, categories, tags }: StepBasicProps) 
               onValueChange={(value) => onChange({ category_id: value || null })}
             >
               <SelectTrigger className="mt-2">
-                <SelectValue placeholder={t('select_category')} />
+                <SelectValue placeholder={t('select_category')}>
+                  {data.category_id && categories.find(c => c.id === data.category_id) && (
+                    categories.find(c => c.id === data.category_id)?.translations.en?.name ||
+                    categories.find(c => c.id === data.category_id)?.slug
+                  )}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 {categories.map((cat) => (

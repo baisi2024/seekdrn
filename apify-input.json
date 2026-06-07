@@ -1,0 +1,24 @@
+{
+  "queries": [
+    {
+      "keyword": "drone procurement",
+      "location": "Dubai"
+    },
+    {
+      "keyword": "UAV procurement",
+      "location": "Singapore"
+    },
+    {
+      "keyword": "drone purchasing",
+      "location": "South Africa"
+    },
+    {
+      "keyword": "drone supply chain",
+      "location": "Malaysia"
+    },
+    {
+      "keyword": "unmanned aerial vehicle",
+      "location": "Thailand"
+    }
+  ]
+}

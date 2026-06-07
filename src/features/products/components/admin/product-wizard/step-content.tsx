@@ -8,11 +8,7 @@ import { Input } from '@/components/ui/input'
 import { RichEditor } from '@/components/admin/rich-editor'
 import { MediaUpload } from '@/components/admin/image-upload'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
-
-const LOCALES = [
-  { code: 'zh', label: '中文' },
-  { code: 'en', label: 'English' },
-]
+import { LOCALES, getLocaleLabel } from '@/lib/constants/locales'
 
 const TRANSLATION_FIELDS = [
   { key: 'name', label: '产品名称', labelEn: 'Product Name', required: true },
@@ -64,7 +60,7 @@ export function StepContent({ data, onChange }: StepContentProps) {
             {TRANSLATION_FIELDS.map((field) => (
               <div key={field.key}>
                 <Label className="text-base font-medium">
-                  {locale.code === 'zh' ? field.label : field.labelEn}
+                  {field.labelEn}
                   {field.required && <span className="text-red-500 ml-1">*</span>}
                 </Label>
                 {field.richText ? (
@@ -72,14 +68,14 @@ export function StepContent({ data, onChange }: StepContentProps) {
                     <RichEditor
                       content={data.translations[locale.code]?.[field.key] || ''}
                       onChange={(value) => updateTranslation(locale.code, field.key, value)}
-                      placeholder={`输入${field.label}...`}
+                      placeholder={`Enter ${field.labelEn}...`}
                     />
                   </div>
                 ) : (
                   <Input
                     value={data.translations[locale.code]?.[field.key] || ''}
                     onChange={(e) => updateTranslation(locale.code, field.key, e.target.value)}
-                    placeholder={`输入${field.label}...`}
+                    placeholder={`Enter ${field.labelEn}...`}
                     className="mt-2"
                   />
                 )}

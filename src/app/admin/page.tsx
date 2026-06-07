@@ -2,15 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { InquiryCardTitle, ProductCardTitle, CaseStudyCardTitle } from './dashboard-title'
 import { AdminPage } from '@/components/admin/core'
-import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 function DashboardContent({ inquiryCount, productCount, caseCount }: {
   inquiryCount: number | null
   productCount: number | null
   caseCount: number | null
 }) {
-  const t = useAdminTranslations()
-
   return (
     <div className="grid md:grid-cols-3 gap-6">
       <Card>

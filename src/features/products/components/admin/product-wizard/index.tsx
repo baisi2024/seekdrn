@@ -9,7 +9,6 @@ import { StepBasic } from './step-basic'
 import { StepContent } from './step-content'
 import { StepSpecs } from './step-specs'
 import { StepComplete } from './step-complete'
-import { createClient } from '@/lib/supabase/client'
 import { Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { Category, ProductTag } from '@/features/products/types'
@@ -49,7 +48,6 @@ interface ProductWizardProps {
 export function ProductWizard({ categories, tags }: ProductWizardProps) {
   const t = useAdminTranslations()
   const router = useRouter()
-  const supabase = createClient()
   
   const [currentStep, setCurrentStep] = useState(0)
   const [saving, setSaving] = useState(false)
@@ -110,7 +108,6 @@ export function ProductWizard({ categories, tags }: ProductWizardProps) {
         model: data.model,
         slug: data.slug,
         category_id: data.category_id,
-        tags: data.tags,
         sort_order: data.sort_order,
         published: data.published,
         featured: data.featured,
@@ -122,15 +119,19 @@ export function ProductWizard({ categories, tags }: ProductWizardProps) {
         spec_groups: [],
       }
 
-      const { data: newProduct, error } = await supabase
-        .from('products')
-        .insert([productData])
-        .select('id')
-        .single()
+      const res = await fetch('/api/admin/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product: productData, tags: data.tags }),
+      })
 
-      if (error) throw error
-      
-      setCreatedProductId(newProduct.id)
+      const result = await res.json()
+
+      if (!res.ok) {
+        throw new Error(result.error || 'Failed to create product')
+      }
+
+      setCreatedProductId(result.id)
       handleNext()
     } catch (error) {
       console.error('Failed to create product:', error)

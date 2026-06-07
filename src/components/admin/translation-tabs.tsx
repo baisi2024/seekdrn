@@ -2,16 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { RichEditor } from './rich-editor'
-
-const LOCALES = [
-  { code: 'en', label: 'English' },
-  { code: 'ar', label: 'Arabic' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'fr', label: 'French' },
-  { code: 'pt', label: 'Portuguese' },
-  { code: 'id', label: 'Indonesian' },
-  { code: 'zh', label: 'Chinese' },
-]
+import { LOCALES } from '@/lib/constants/locales'
 
 interface TranslationTabsProps {
   translations: Record<string, Record<string, string>>

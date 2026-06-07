@@ -1,0 +1,13 @@
+{
+  "searchStringsArray": [
+    "agriculture drone",
+    "security drone",
+    "drone surveying",
+    "drone services"
+  ],
+  "location": "Johannesburg, South Africa",
+  "maxCrawledPlaces": 50,
+  "scrapeContacts": true,
+  "scrapeEmail": true,
+  "scrapePhone": true
+}

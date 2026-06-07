@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" dir="ltr">
+    <html lang="en" dir="ltr" suppressHydrationWarning>
       <body className="font-sans antialiased">
         <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID!} />
         {children}
