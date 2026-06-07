@@ -22,6 +22,7 @@ import {
 } from '@/components/ui/select'
 import type { Category, CategoryTree } from '@/features/products/types'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
+import { LOCALES } from '@/lib/constants/locales'
 
 // API functions
 async function fetchCategories(): Promise<Category[]> {
@@ -74,8 +75,6 @@ async function deleteCategoryAPI(id: string): Promise<void> {
   })
   if (!response.ok) throw new Error('Failed to delete category')
 }
-
-const LOCALES = ['en', 'zh'] as const
 
 export function CategoryManager() {
   const t = useAdminTranslations()
@@ -320,17 +319,17 @@ export function CategoryManager() {
             </div>
 
             {LOCALES.map((locale) => (
-              <div key={locale} className="space-y-2">
-                <Label className="font-medium">{t('category_manager.name_label')} ({locale.toUpperCase()})</Label>
+              <div key={locale.code} className="space-y-2">
+                <Label className="font-medium">{t('category_manager.name_label')} ({locale.label})</Label>
                 <Input
-                  value={formData.translations[locale]?.name || ''}
+                  value={formData.translations[locale.code]?.name || ''}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
                       translations: {
                         ...formData.translations,
-                        [locale]: {
-                          ...formData.translations[locale],
+                        [locale.code]: {
+                          ...formData.translations[locale.code],
                           name: e.target.value,
                         },
                       },
