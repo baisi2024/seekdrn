@@ -20,16 +20,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import type { NavigationItem, NavigationItemCreate, NavigationItemUpdate } from '@/lib/navigation/types'
-
-const LOCALES = [
-  { code: 'en', label: 'English' },
-  { code: 'ar', label: 'Arabic' },
-  { code: 'es', label: 'Spanish' },
-  { code: 'fr', label: 'French' },
-  { code: 'pt', label: 'Portuguese' },
-  { code: 'id', label: 'Indonesian' },
-  { code: 'zh', label: 'Chinese' },
-]
+import { LOCALES } from '@/lib/constants/locales'
 
 interface NavItemEditorProps {
   open: boolean
