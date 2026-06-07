@@ -22,8 +22,7 @@ import {
 } from '@/components/ui/dialog'
 import { createClient } from '@/lib/supabase/client'
 import type { ProductFAQ, FAQFormData } from '@/features/products/types'
-
-const LOCALES = ['en', 'zh'] as const
+import { LOCALES } from '@/lib/constants/locales'
 
 interface FAQTabProps {
   productId: string
@@ -50,7 +49,8 @@ export function FAQTab({ productId }: FAQTabProps) {
         if (error) throw error
 
         const faqMap: Record<string, ProductFAQ[]> = {}
-        LOCALES.forEach((locale) => {
+        LOCALES.forEach((localeObj) => {
+          const locale = localeObj.code
           faqMap[locale] = (data as ProductFAQ[])?.filter((f) => f.locale === locale) || []
         })
         setFaqs(faqMap)
@@ -153,18 +153,18 @@ export function FAQTab({ productId }: FAQTabProps) {
       <Tabs value={currentLocale} onValueChange={setCurrentLocale}>
         <TabsList>
           {LOCALES.map((locale) => (
-            <TabsTrigger key={locale} value={locale}>
-              {locale.toUpperCase()} ({faqs[locale]?.length || 0})
+            <TabsTrigger key={locale.code} value={locale.code}>
+              {locale.label} ({faqs[locale.code]?.length || 0})
             </TabsTrigger>
           ))}
         </TabsList>
 
         {LOCALES.map((locale) => (
-          <TabsContent key={locale} value={locale}>
+          <TabsContent key={locale.code} value={locale.code}>
             <Card>
               <CardHeader>
                 <div className="flex items-center justify-between">
-                  <CardTitle>FAQs ({locale.toUpperCase()})</CardTitle>
+                  <CardTitle>FAQs ({locale.label})</CardTitle>
                   <Button onClick={openAddDialog}>Add FAQ</Button>
                 </div>
               </CardHeader>
