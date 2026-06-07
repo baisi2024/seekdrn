@@ -69,8 +69,18 @@ export async function getProductWithEnhancements(slug: string, locale: string) {
     return null
   }
 
-  // 获取相关案例
-  const relatedCases = await matchRelatedCases(product.id)
+  // 并行获取所有关联数据
+  const [
+    relatedCases,
+    faqs,
+    documents,
+    relations
+  ] = await Promise.all([
+    matchRelatedCases(product.id),
+    getProductFAQs(product.id, locale),
+    getProductDocuments(product.id),
+    getProductRelations(product.id)
+  ])
 
   // 组织规格组
   const specGroups = organizeSpecGroups(product.product_specs, product.spec_groups)
@@ -78,8 +88,60 @@ export async function getProductWithEnhancements(slug: string, locale: string) {
   return {
     ...product,
     spec_groups: specGroups,
-    related_cases: relatedCases
+    related_cases: relatedCases,
+    faqs,
+    documents,
+    relations
   }
+}
+
+// 获取产品FAQ
+async function getProductFAQs(productId: string, locale: string) {
+  const { data, error } = await supabaseAdmin
+    .from('product_faqs')
+    .select('*')
+    .eq('product_id', productId)
+    .eq('locale', locale)
+    .order('sort_order')
+
+  if (error) {
+    console.error('Error fetching FAQs:', error)
+    return []
+  }
+
+  return data || []
+}
+
+// 获取产品文档
+async function getProductDocuments(productId: string) {
+  const { data, error } = await supabaseAdmin
+    .from('product_documents')
+    .select('*')
+    .eq('product_id', productId)
+    .order('sort_order')
+
+  if (error) {
+    console.error('Error fetching documents:', error)
+    return []
+  }
+
+  return data || []
+}
+
+// 获取产品关联
+async function getProductRelations(productId: string) {
+  const { data, error } = await supabaseAdmin
+    .from('product_relations')
+    .select('*')
+    .eq('product_id', productId)
+    .order('sort_order')
+
+  if (error) {
+    console.error('Error fetching relations:', error)
+    return []
+  }
+
+  return data || []
 }
 
 function organizeSpecGroups(specs: any[], specGroupsConfig: any[]) {
