@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Play } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -49,10 +50,11 @@ export function RelatedCasesSection({ cases, locale }: Props) {
               <Card className="h-full hover:shadow-lg transition-shadow">
                 <div className="aspect-video relative bg-gray-100">
                   {caseStudy.images && caseStudy.images.length > 0 ? (
-                    <img
+                    <Image
                       src={caseStudy.images[0]}
                       alt={title}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-gray-400">

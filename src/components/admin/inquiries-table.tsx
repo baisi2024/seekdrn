@@ -1,5 +1,6 @@
 'use client'
 
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { DataTable } from '@/components/admin/data-table'
 import { Badge } from '@/components/ui/badge'
 
@@ -15,19 +16,21 @@ interface Inquiry {
 }
 
 export function InquiriesTable({ inquiries }: { inquiries: Inquiry[] }) {
+  const t = useAdminTranslations()
+
   const columns = [
     {
       key: 'created_at',
-      label: 'Date',
+      label: t('date'),
       render: (item: Inquiry) => new Date(item.created_at).toLocaleDateString()
     },
-    { key: 'full_name', label: 'Name' },
-    { key: 'company', label: 'Company' },
-    { key: 'country', label: 'Country' },
-    { key: 'application_interest', label: 'Application' },
+    { key: 'full_name', label: t('name') },
+    { key: 'company', label: t('company') },
+    { key: 'country', label: t('country') },
+    { key: 'application_interest', label: t('application') },
     {
       key: 'compliance_status',
-      label: 'Compliance',
+      label: t('compliance_field'),
       render: (item: Inquiry) => (
         <Badge variant={item.compliance_status === 'approved' ? 'default' : item.compliance_status === 'review_required' ? 'secondary' : 'destructive'}>
           {item.compliance_status}
@@ -36,7 +39,7 @@ export function InquiriesTable({ inquiries }: { inquiries: Inquiry[] }) {
     },
     {
       key: 'follow_up_status',
-      label: 'Status',
+      label: t('status'),
       render: (item: Inquiry) => (
         <Badge variant="outline">{item.follow_up_status}</Badge>
       )
@@ -47,7 +50,7 @@ export function InquiriesTable({ inquiries }: { inquiries: Inquiry[] }) {
     <DataTable
       data={inquiries}
       columns={columns}
-      searchPlaceholder="Search inquiries..."
+      searchPlaceholder={t('inquiries_page.searchPlaceholder')}
       onRowClick={(item) => window.location.href = `/admin/inquiries/${item.id}`}
     />
   )

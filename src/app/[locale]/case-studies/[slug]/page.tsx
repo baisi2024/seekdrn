@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
+import Image from 'next/image'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
@@ -38,8 +39,8 @@ export default async function CaseStudyDetailPage({
               <video src={caseStudy.video_url} controls className="w-full h-full object-cover" />
             </div>
           ) : caseStudy.images && caseStudy.images[0] ? (
-            <div className="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-6">
-              <img src={caseStudy.images[0]} alt={title} className="w-full h-full object-cover" />
+            <div className="aspect-video rounded-lg overflow-hidden bg-gray-100 mb-6 relative">
+              <Image src={caseStudy.images[0]} alt={title} fill className="object-cover" />
             </div>
           ) : null}
           <div className="flex gap-2 mb-4">
@@ -112,8 +113,8 @@ export default async function CaseStudyDetailPage({
             <h2 className="text-2xl font-bold mb-4">{t('fieldFootage')}</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {caseStudy.images.slice(1).map((img: string, i: number) => (
-                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-gray-100">
-                  <img src={img} alt={`Footage ${i + 1}`} className="w-full h-full object-cover" />
+                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-gray-100 relative">
+                  <Image src={img} alt={`Footage ${i + 1}`} fill className="object-cover" />
                 </div>
               ))}
             </div>

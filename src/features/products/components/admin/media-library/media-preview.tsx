@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { getPublicUrl } from '@/features/products/api'
 import type { MediaItem } from '@/features/products/types'
@@ -20,11 +21,14 @@ export function MediaPreview({ item, onClose }: MediaPreviewProps) {
         </DialogHeader>
         <div className="mt-4 flex items-center justify-center">
           {item.type === 'image' ? (
-            <img
-              src={getPublicUrl(item.r2_key)}
-              alt={item.filename}
-              className="max-w-full max-h-[60vh] object-contain"
-            />
+            <div className="relative w-full max-w-full h-[60vh]">
+              <Image
+                src={getPublicUrl(item.r2_key)}
+                alt={item.filename}
+                fill
+                className="object-contain"
+              />
+            </div>
           ) : item.type === 'video' ? (
             <video
               src={getPublicUrl(item.r2_key)}

@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -38,7 +37,6 @@ interface Tag {
 interface BatchOperationsProps {
   selectedIds: string[]
   onSelectionChange: (ids: string[]) => void
-  totalItems: number
   categories: Category[]
   tags: Tag[]
   onBatchPublish: (ids: string[], published: boolean) => Promise<void>
@@ -50,7 +48,6 @@ interface BatchOperationsProps {
 export function BatchOperations({
   selectedIds,
   onSelectionChange,
-  totalItems,
   categories,
   tags,
   onBatchPublish,
@@ -73,7 +70,7 @@ export function BatchOperations({
       await onBatchPublish(selectedIds, published)
       toast.success(published ? '批量发布成功' : '批量取消发布成功')
       onSelectionChange([])
-    } catch (error) {
+    } catch {
       toast.error('操作失败')
     } finally {
       setLoading(false)
@@ -120,7 +117,7 @@ export function BatchOperations({
       onSelectionChange([])
       setShowTagDialog(false)
       setSelectedTags([])
-    } catch (error) {
+    } catch {
       toast.error('设置标签失败')
     } finally {
       setLoading(false)

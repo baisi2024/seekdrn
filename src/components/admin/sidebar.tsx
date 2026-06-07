@@ -14,7 +14,9 @@ import {
   MailOpen,
   Settings,
   Image,
-  LogOut
+  LogOut,
+  FolderOpen,
+  Tags
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
@@ -29,12 +31,15 @@ export function Sidebar() {
     { href: '/admin', icon: LayoutDashboard, label: t('dashboard') },
     { href: '/admin/inquiries', icon: Mail, label: t('inquiries') },
     { href: '/admin/products', icon: Package, label: t('products') },
+    { href: '/admin/categories', icon: FolderOpen, label: t('categories') },
+    { href: '/admin/tags', icon: Tags, label: t('tags') },
     { href: '/admin/case-studies', icon: FileText, label: t('caseStudies') },
     { href: '/admin/solutions', icon: Lightbulb, label: t('solutions') },
     { href: '/admin/navigation', icon: Navigation, label: t('navigation') },
     { href: '/admin/footer', icon: LayoutGrid, label: t('footer') },
     { href: '/admin/compliance', icon: Shield, label: t('compliance') },
     { href: '/admin/email-templates', icon: MailOpen, label: t('emailTemplates') },
+    { href: '/admin/email-logs', icon: Mail, label: t('emailLogs') },
     { href: '/admin/settings', icon: Settings, label: t('settings') },
     { href: '/admin/media', icon: Image, label: t('media') },
   ]

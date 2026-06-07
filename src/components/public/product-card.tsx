@@ -1,7 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 interface Product {
   id: string
@@ -18,6 +20,7 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, locale }: ProductCardProps) {
+  const t = useTranslations('products')
   const title = getTranslation(product.translations || {}, locale, 'name')
   const description = getTranslation(product.translations || {}, locale, 'description')
   const categoryLabel = getTranslation(product.translations || {}, locale, 'category') || product.category
@@ -29,10 +32,11 @@ export function ProductCard({ product, locale }: ProductCardProps) {
       {/* Image Area */}
       <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
         {product.image_url ? (
-          <img
+          <Image
             src={product.image_url}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
@@ -49,10 +53,10 @@ export function ProductCard({ product, locale }: ProductCardProps) {
       {/* Content */}
       <div className="p-5 space-y-3">
         <h3 className="font-semibold text-gray-900 text-lg leading-snug">
-          {title || 'Untitled Product'}
+          {title || t('untitledProduct')}
         </h3>
         <p className="text-sm text-gray-600 line-clamp-2">
-          {description || 'No description available.'}
+          {description || t('noDescription')}
         </p>
 
         {/* Spec Rows */}
@@ -73,7 +77,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
             href={`/${locale}/products/${product.slug}`}
             className="inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-700 transition-colors"
           >
-            Learn More
+            {t('learnMore')}
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

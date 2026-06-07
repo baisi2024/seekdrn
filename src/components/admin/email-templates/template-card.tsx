@@ -196,15 +196,14 @@ export const TemplateCard = memo(function TemplateCard({
           
           <Dialog>
             <DialogTrigger asChild>
-              <Button 
-                size="icon-sm" 
-                variant="ghost" 
+              <button
+                type="button"
                 title={t('delete')}
-                className="hover:bg-red-100 hover:text-red-600 transition-colors"
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 hover:bg-red-100 hover:text-red-600"
                 aria-label="删除模板"
               >
                 <Trash2 className="h-3.5 w-3.5 text-destructive" />
-              </Button>
+              </button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>

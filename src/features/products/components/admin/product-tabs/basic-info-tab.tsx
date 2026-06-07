@@ -12,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import type { Category, ProductTag } from '@/features/products/types'
 
 interface BasicInfoTabProps {
@@ -32,6 +33,7 @@ interface BasicInfoTabProps {
 }
 
 export function BasicInfoTab({ categories, tags: allTags, initialData, onChange }: BasicInfoTabProps) {
+  const t = useAdminTranslations()
 
   const toggleTag = (tagSlug: string) => {
     const newTags = initialData.tags.includes(tagSlug)
@@ -44,39 +46,39 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Basic Information</CardTitle>
+          <CardTitle>{t('basicInfo')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="model">Model</Label>
+              <Label htmlFor="model">{t('model')}</Label>
               <Input
                 id="model"
                 value={initialData.model}
                 onChange={(e) => onChange({ model: e.target.value })}
-                placeholder="Product model number"
+                placeholder={t('product_model_placeholder')}
               />
             </div>
             <div>
-              <Label htmlFor="slug">Slug</Label>
+              <Label htmlFor="slug">{t('slug')}</Label>
               <Input
                 id="slug"
                 value={initialData.slug}
                 onChange={(e) => onChange({ slug: e.target.value })}
-                placeholder="URL-friendly identifier"
+                placeholder={t('slug_placeholder')}
               />
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="category">Category</Label>
+              <Label htmlFor="category">{t('category')}</Label>
               <Select
                 value={initialData.category_id || ''}
                 onValueChange={(value) => onChange({ category_id: value || null })}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Select category" />
+                  <SelectValue placeholder={t('select_category')} />
                 </SelectTrigger>
                 <SelectContent>
                   {categories.map((cat) => (
@@ -88,7 +90,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
               </Select>
             </div>
             <div>
-              <Label htmlFor="sort_order">Sort Order</Label>
+              <Label htmlFor="sort_order">{t('sort_order')}</Label>
               <Input
                 id="sort_order"
                 type="number"
@@ -102,7 +104,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
 
       <Card>
         <CardHeader>
-          <CardTitle>Tags</CardTitle>
+          <CardTitle>{t('tags')}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2">
@@ -124,7 +126,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
           </div>
           {allTags.length === 0 && (
             <p className="text-muted-foreground text-sm">
-              No tags available. Create tags in the Tags management page.
+              {t('no_tags_available')}
             </p>
           )}
         </CardContent>
@@ -132,7 +134,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
 
       <Card>
         <CardHeader>
-          <CardTitle>Status</CardTitle>
+          <CardTitle>{t('status')}</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-2">
@@ -141,7 +143,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
               checked={initialData.published}
               onCheckedChange={(checked) => onChange({ published: checked })}
             />
-            <Label htmlFor="published">Published</Label>
+            <Label htmlFor="published">{t('published')}</Label>
           </div>
 
           <div className="flex items-center gap-2">
@@ -150,7 +152,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
               checked={initialData.featured}
               onCheckedChange={(checked) => onChange({ featured: checked })}
             />
-            <Label htmlFor="featured">Featured</Label>
+            <Label htmlFor="featured">{t('featured')}</Label>
           </div>
 
           <div className="flex items-center gap-2">
@@ -159,7 +161,7 @@ export function BasicInfoTab({ categories, tags: allTags, initialData, onChange 
               checked={initialData.compliance_flag}
               onCheckedChange={(checked) => onChange({ compliance_flag: checked })}
             />
-            <Label htmlFor="compliance">Compliance Required</Label>
+            <Label htmlFor="compliance">{t('complianceRequired')}</Label>
           </div>
         </CardContent>
       </Card>

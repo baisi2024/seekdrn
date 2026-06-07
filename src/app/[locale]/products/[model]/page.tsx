@@ -64,7 +64,7 @@ export default async function ProductDetailPage({
             <p className="text-lg text-gray-600">{overview}</p>
             <div className="flex flex-wrap gap-4">
               <Link href={`/${locale}#demo-form`} className={buttonVariants({ size: 'lg' })}>
-                Request Demo
+                {t('requestDemo')}
               </Link>
               {product.datasheet_url && (
                 <DatasheetDownloadButton productModel={product.model} datasheetUrl={product.datasheet_url} />
@@ -84,7 +84,7 @@ export default async function ProductDetailPage({
             <Card className="border-yellow-200 bg-yellow-50">
               <CardContent className="p-6">
                 <p className="text-yellow-800">
-                  This product requires compliance assessment. Contact us for detailed specifications.
+                  {t('complianceNotice')}
                 </p>
               </CardContent>
             </Card>

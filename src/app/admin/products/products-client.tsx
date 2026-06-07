@@ -5,7 +5,6 @@ import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
 import { Plus, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -245,7 +244,6 @@ export function ProductsClient({ products, categories, tags }: ProductsClientPro
         <BatchOperations
           selectedIds={selectedIds}
           onSelectionChange={setSelectedIds}
-          totalItems={filteredProducts.length}
           categories={categories}
           tags={tags}
           onBatchPublish={handleBatchPublish}

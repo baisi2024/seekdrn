@@ -17,5 +17,11 @@
   "viewAll": "View All",
   "downloadFile": "Download",
   "fileSize": "File Size",
-  "language": "Language"
+  "language": "Language",
+  "noProducts": "No products found",
+  "requestDemo": "Request Demo",
+  "learnMore": "Learn More",
+  "untitledProduct": "Untitled Product",
+  "noDescription": "No description available",
+  "complianceNotice": "This product requires compliance assessment. Contact us for detailed specifications."
 }

@@ -2,6 +2,7 @@ import { supabaseAdmin } from '@/lib/supabase/admin'
 import { ComplianceManager } from '@/components/admin/compliance-manager'
 import { PolicyItem } from '@/lib/compliance/types'
 import { POLICIES } from '@/lib/compliance/constants'
+import { AdminPage } from '@/components/admin/core'
 
 export default async function CompliancePage() {
   // 查询所有政策数据
@@ -25,8 +26,8 @@ export default async function CompliancePage() {
   })
 
   return (
-    <div className="p-6">
+    <AdminPage title="compliance_page.title">
       <ComplianceManager initialPolicies={policies} />
-    </div>
+    </AdminPage>
   )
 }

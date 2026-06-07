@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react'
 
@@ -25,11 +26,12 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
   return (
     <>
       <div className="relative">
-        <div className="aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
-          <img
+        <div className="aspect-[4/3] rounded-lg overflow-hidden bg-gray-100 relative">
+          <Image
             src={images[currentIndex]}
             alt={`Image ${currentIndex + 1}`}
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
           />
         </div>
 
@@ -64,11 +66,11 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all ${
+              className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all relative ${
                 index === currentIndex ? 'border-blue-500' : 'border-transparent'
               }`}
             >
-              <img src={image} alt="" className="w-full h-full object-cover" />
+              <Image src={image} alt="" fill className="object-cover" />
             </button>
           ))}
         </div>
@@ -82,11 +84,14 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
           >
             <X className="w-5 h-5" />
           </button>
-          <img
-            src={images[currentIndex]}
-            alt=""
-            className="w-full h-auto max-h-[90vh] object-contain"
-          />
+          <div className="relative w-full h-[90vh]">
+            <Image
+              src={images[currentIndex]}
+              alt=""
+              fill
+              className="object-contain"
+            />
+          </div>
         </DialogContent>
       </Dialog>
     </>

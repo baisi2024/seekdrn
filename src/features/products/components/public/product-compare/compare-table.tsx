@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { getTranslation } from '@/lib/utils'
 import { X } from 'lucide-react'
 import type { Product } from '@/features/products/types'
@@ -61,9 +62,9 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
                   >
                     <X className="w-3 h-3" />
                   </button>
-                  <div className="aspect-video rounded overflow-hidden mb-2">
+                  <div className="aspect-video rounded overflow-hidden mb-2 relative">
                     {product.images?.[0] && (
-                      <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
+                      <Image src={product.images[0]} alt="" fill className="object-cover" />
                     )}
                   </div>
                   <p className="font-semibold">{getTranslation(product.translations, 'en', 'name')}</p>

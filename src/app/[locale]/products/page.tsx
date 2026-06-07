@@ -50,7 +50,7 @@ export default async function ProductsPage({
           </div>
         ) : (
           <div className="text-center text-gray-500 py-12">
-            No products found
+            {t('noProducts')}
           </div>
         )}
       </div>

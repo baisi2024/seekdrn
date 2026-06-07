@@ -44,7 +44,7 @@ export function MediaGrid({ items, selected, viewMode, loading, onSelect }: Medi
               onClick={() => onSelect(item)}
               onDoubleClick={() => setPreviewItem(item)}
               className={`relative aspect-square rounded-lg overflow-hidden cursor-pointer border-2 transition-all ${
-                selected.includes(item.id) ? 'border-blue-500' : 'border-transparent hover:border-gray-300'
+                selected.includes(item.id) ? 'border-blue-500' : 'border-transparent hover:border-border'
               }`}
             >
               {item.type === 'image' ? (

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Play } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -34,10 +35,11 @@ export function Hero({ heroConfig }: HeroProps) {
           <div className="relative">
             <div className="aspect-[4/3] rounded-2xl bg-gray-100 overflow-hidden relative">
               {heroConfig?.image_url ? (
-                <img
+                <Image
                   src={heroConfig.image_url}
                   alt={heroConfig.title || t('hero.title')}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">

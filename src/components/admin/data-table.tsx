@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
 
 interface Column<T> {
   key: keyof T | string
@@ -26,6 +27,7 @@ export function DataTable<T extends { id: string }>({
   pageSize = 10,
   onRowClick,
 }: DataTableProps<T>) {
+  const t = useAdminTranslations()
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)
 
@@ -95,8 +97,8 @@ export function DataTable<T extends { id: string }>({
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-muted mb-4">
               <Search className="w-6 h-6 text-muted-foreground" />
             </div>
-            <p className="text-sm font-medium text-foreground mb-1">No results found</p>
-            <p className="text-xs text-muted-foreground">Try adjusting your search terms</p>
+            <p className="text-sm font-medium text-foreground mb-1">{t('noResults')}</p>
+            <p className="text-xs text-muted-foreground">{t('tryAdjusting')}</p>
           </div>
         )}
       </div>
@@ -105,9 +107,9 @@ export function DataTable<T extends { id: string }>({
       {totalPages > 1 && (
         <div className="flex items-center justify-between px-2">
           <div className="text-sm text-muted-foreground">
-            Showing <span className="font-medium text-foreground">{page * pageSize + 1}</span> to{' '}
-            <span className="font-medium text-foreground">{Math.min((page + 1) * pageSize, filtered.length)}</span> of{' '}
-            <span className="font-medium text-foreground">{filtered.length}</span> results
+            {t('showing')} <span className="font-medium text-foreground">{page * pageSize + 1}</span> {t('to')}{' '}
+            <span className="font-medium text-foreground">{Math.min((page + 1) * pageSize, filtered.length)}</span> {t('of')}{' '}
+            <span className="font-medium text-foreground">{filtered.length}</span> {t('results')}
           </div>
           <div className="flex gap-2">
             <Button

@@ -1,10 +1,10 @@
 import { MediaLibrary } from '@/features/products/components/admin/media-library'
+import { AdminPage } from '@/components/admin/core'
 
 export default function MediaPage() {
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Media Library</h1>
+    <AdminPage title="media_page.title">
       <MediaLibrary mode="manage" />
-    </div>
+    </AdminPage>
   )
 }

@@ -1,12 +1,14 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { createClient } from '@/lib/supabase/client'
+import { useAdminTranslations } from '@/hooks/use-admin-translations'
+import { AdminPage } from '@/components/admin/core'
 
 interface SettingsData {
   site_name: Record<string, string>
@@ -19,6 +21,7 @@ interface SettingsData {
 }
 
 export default function SettingsPage() {
+  const t = useAdminTranslations()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [settings, setSettings] = useState<SettingsData>({
@@ -32,21 +35,20 @@ export default function SettingsPage() {
   })
   const supabase = createClient()
 
-  const fetchSettings = useCallback(async () => {
-    const { data } = await supabase
-      .from('site_settings')
-      .select('*')
-      .single()
-
-    if (data) {
-      setSettings(data)
-    }
-    setLoading(false)
-  }, [supabase])
-
   useEffect(() => {
+    async function fetchSettings() {
+      const { data } = await supabase
+        .from('site_settings')
+        .select('*')
+        .single()
+
+      if (data) {
+        setSettings(data)
+      }
+      setLoading(false)
+    }
     fetchSettings()
-  }, [fetchSettings])
+  }, [supabase])
 
   async function handleSave() {
     setSaving(true)
@@ -55,36 +57,36 @@ export default function SettingsPage() {
         .from('site_settings')
         .update(settings)
         .eq('id', 1)
-      
+
       if (error) throw error
-      alert('Settings saved')
+      alert(t('settingsSaved'))
     } catch (error) {
       console.error('Save error:', error)
-      alert('Failed to save')
+      alert(t('saveFailed'))
     } finally {
       setSaving(false)
     }
   }
 
-  if (loading) return <div>Loading...</div>
+  if (loading) return <div>{t('loading')}</div>
 
   return (
-    <div className="max-w-2xl">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Site Settings</h1>
+    <AdminPage
+      title="settings_page.title"
+      actions={
         <Button onClick={handleSave} disabled={saving}>
-          {saving ? 'Saving...' : 'Save'}
+          {saving ? t('saving') : t('save')}
         </Button>
-      </div>
-
-      <div className="space-y-6">
+      }
+    >
+      <div className="max-w-2xl space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Basic Info</CardTitle>
+            <CardTitle>{t('settings_page.basicInfo')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>Site Name</Label>
+              <Label>{t('settings_page.siteName')}</Label>
               <Input
                 value={settings.site_name?.en || ''}
                 onChange={(e) => setSettings({
@@ -94,14 +96,14 @@ export default function SettingsPage() {
               />
             </div>
             <div>
-              <Label>Contact Email</Label>
+              <Label>{t('settings_page.contactEmail')}</Label>
               <Input
                 value={settings.contact_email || ''}
                 onChange={(e) => setSettings({ ...settings, contact_email: e.target.value })}
               />
             </div>
             <div>
-              <Label>WhatsApp</Label>
+              <Label>{t('settings_page.whatsapp')}</Label>
               <Input
                 value={settings.contact_whatsapp || ''}
                 onChange={(e) => setSettings({ ...settings, contact_whatsapp: e.target.value })}
@@ -112,7 +114,7 @@ export default function SettingsPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Language Settings</CardTitle>
+            <CardTitle>{t('settings_page.languageSettings')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center gap-2">
@@ -120,18 +122,18 @@ export default function SettingsPage() {
                 checked={settings.enable_chinese}
                 onCheckedChange={(v) => setSettings({ ...settings, enable_chinese: v })}
               />
-              <Label>Enable Chinese</Label>
+              <Label>{t('settings_page.enableChinese')}</Label>
             </div>
             <div className="flex items-center gap-2">
               <Switch
                 checked={settings.enable_chinese_by_ip}
                 onCheckedChange={(v) => setSettings({ ...settings, enable_chinese_by_ip: v })}
               />
-              <Label>Auto-detect Chinese by IP</Label>
+              <Label>{t('settings_page.autoDetectChinese')}</Label>
             </div>
           </CardContent>
         </Card>
       </div>
-    </div>
+    </AdminPage>
   )
 }

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
 
@@ -29,10 +30,11 @@ export function CaseCard({ caseStudy, locale }: CaseCardProps) {
       {/* Video/Image Area */}
       <div className="aspect-video bg-gray-100 relative overflow-hidden">
         {caseStudy.image_url ? (
-          <img
+          <Image
             src={caseStudy.image_url}
             alt={title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
