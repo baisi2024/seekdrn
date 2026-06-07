@@ -321,7 +321,7 @@ export function CategoryManager() {
 
             {LOCALES.map((locale) => (
               <div key={locale} className="space-y-2">
-                <Label className="font-medium">{t('category_manager.name_label', { locale: locale.toUpperCase() })}</Label>
+                <Label className="font-medium">{t('category_manager.name_label')} ({locale.toUpperCase()})</Label>
                 <Input
                   value={formData.translations[locale]?.name || ''}
                   onChange={(e) =>

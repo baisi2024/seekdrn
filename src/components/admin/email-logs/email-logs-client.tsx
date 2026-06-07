@@ -186,14 +186,13 @@ export function EmailLogsClient({ initialLogs, templates }: EmailLogsClientProps
           </div>
         ) : (
           <div className="border rounded-lg">
-            <List
-              height={600}
-              itemCount={filteredLogs.length}
-              itemSize={100}
-              width="100%"
-            >
-              {Row}
-            </List>
+            {(List as any)({
+              height: 600,
+              itemCount: filteredLogs.length,
+              itemSize: 100,
+              width: '100%',
+              children: Row,
+            })}
           </div>
         )}
       </div>

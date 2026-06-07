@@ -239,7 +239,7 @@ export function BatchOperations({
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
-            <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <Select value={selectedCategory} onValueChange={(value) => value && setSelectedCategory(value)}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder={t('select_category')} />
               </SelectTrigger>

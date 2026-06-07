@@ -75,12 +75,12 @@ export function RichEditor({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        heading: enabledFeatures.headings,
-        bulletList: enabledFeatures.lists,
-        orderedList: enabledFeatures.lists,
-        blockquote: enabledFeatures.blocks,
-        codeBlock: enabledFeatures.blocks,
-        horizontalRule: enabledFeatures.blocks,
+        heading: enabledFeatures.headings ? {} : false,
+        bulletList: enabledFeatures.lists ? {} : false,
+        orderedList: enabledFeatures.lists ? {} : false,
+        blockquote: enabledFeatures.blocks ? {} : false,
+        codeBlock: enabledFeatures.blocks ? {} : false,
+        horizontalRule: enabledFeatures.blocks ? {} : false,
       }),
       Underline,
       TextAlign.configure({
@@ -128,13 +128,13 @@ export function RichEditor({
   })
 
   // 更新字数统计
-  const updateWordCount = useCallback((editor: typeof editor) => {
-    if (!editor) return
+  const updateWordCount = useCallback((ed: any) => {
+    if (!ed) return
 
-    const text = editor.getText()
+    const text = ed.getText()
     const characters = text.length
-    const words = text.split(/\s+/).filter((word) => word.length > 0).length
-    const paragraphs = editor.storage.paragraph?.length || 0
+    const words = text.split(/\s+/).filter((word: string) => word.length > 0).length
+    const paragraphs = ed.storage.paragraph?.length || 0
 
     setWordCount({ characters, words, paragraphs })
   }, [])

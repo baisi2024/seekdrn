@@ -120,7 +120,7 @@ export function StepSpecs({ data, onChange }: StepSpecsProps) {
                     <Select
                       value={currentValue?.unit || spec.defaultUnit}
                       onValueChange={(unit) => {
-                        updateSpec(spec.key, currentValue?.value || 0, unit)
+                        updateSpec(spec.key, currentValue?.value || 0, unit ?? spec.defaultUnit)
                       }}
                     >
                       <SelectTrigger className="w-24">

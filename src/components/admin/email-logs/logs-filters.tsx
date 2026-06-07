@@ -61,7 +61,7 @@ export function LogsFilters({
               <Select
                 value={filters.status}
                 onValueChange={(value) =>
-                  onFiltersChange({ ...filters, status: value })
+                  onFiltersChange({ ...filters, status: value ?? '' })
                 }
               >
                 <SelectTrigger className="w-full">
@@ -81,7 +81,7 @@ export function LogsFilters({
               <Select
                 value={filters.template_key}
                 onValueChange={(value) =>
-                  onFiltersChange({ ...filters, template_key: value })
+                  onFiltersChange({ ...filters, template_key: value ?? '' })
                 }
               >
                 <SelectTrigger className="w-full">

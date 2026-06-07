@@ -23,8 +23,9 @@ export async function RelatedProducts({ productId, locale }: RelatedProductsProp
             product={{
               id: product.id,
               slug: product.slug,
-              category: product.category?.slug || '',
-              image_url: product.images?.[0],
+              category_id: product.category_id,
+              category: product.category,
+              images: product.images,
               translations: product.translations,
             }}
             locale={locale}

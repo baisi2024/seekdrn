@@ -90,7 +90,7 @@ export function PreviewPanel({ templateKey, availableVariables }: PreviewPanelPr
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label>语言</Label>
-              <Select value={language} onValueChange={setLanguage}>
+              <Select value={language} onValueChange={(value) => value && setLanguage(value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="选择语言" />
                 </SelectTrigger>

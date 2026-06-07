@@ -25,7 +25,8 @@ export function useAutoSave<T>(options: UseAutoSaveOptions<T>) {
 
   // 创建防抖保存函数
   const createDebouncedSave = useCallback(() => {
-    return debounce(async (dataToSave: T) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const saveFn = async (dataToSave: T) => {
       try {
         setIsSaving(true)
         await onSave(dataToSave)
@@ -36,7 +37,8 @@ export function useAutoSave<T>(options: UseAutoSaveOptions<T>) {
       } finally {
         setIsSaving(false)
       }
-    }, delay)
+    }
+    return debounce(saveFn as (...args: unknown[]) => unknown, delay) as (data: T) => void
   }, [onSave, delay])
 
   // 初始化防抖函数

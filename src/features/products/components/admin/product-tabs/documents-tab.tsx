@@ -190,11 +190,9 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
                       <Button
                         variant="outline"
                         size="sm"
-                        asChild
+                        render={<a href={doc.file_url} target="_blank" rel="noopener noreferrer" />}
                       >
-                        <a href={doc.file_url} target="_blank" rel="noopener noreferrer">
-                          View
-                        </a>
+                        View
                       </Button>
                       <Button
                         variant="ghost"
@@ -254,7 +252,7 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
                 <Select
                   value={formData.language}
                   onValueChange={(value) =>
-                    setFormData({ ...formData, language: value })
+                    setFormData({ ...formData, language: value ?? '' })
                   }
                 >
                   <SelectTrigger>

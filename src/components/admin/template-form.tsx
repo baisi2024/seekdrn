@@ -23,7 +23,7 @@ const templateSchema = z.object({
   description: z.string().optional(),
   available_variables: z.array(z.string()),
   is_active: z.boolean(),
-  translations: z.record(z.object({
+  translations: z.record(z.string(), z.object({
     subject: z.string().min(1, '主题不能为空'),
     body_html: z.string().min(1, '内容不能为空'),
   })),

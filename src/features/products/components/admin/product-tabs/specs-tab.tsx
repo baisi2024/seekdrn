@@ -35,6 +35,10 @@ const PREDEFINED_SPECS = [
 interface SpecValue {
   value: number
   unit: string
+  label?: {
+    zh: string
+    en: string
+  }
 }
 
 interface SpecsTabProps {
@@ -207,7 +211,7 @@ export function SpecsTab({ productId }: SpecsTabProps) {
                     <Select
                       value={currentValue?.unit || spec.defaultUnit}
                       onValueChange={(unit) => {
-                        updateSpec(spec.key, currentValue?.value || 0, unit)
+                        updateSpec(spec.key, currentValue?.value || 0, unit ?? spec.defaultUnit)
                       }}
                     >
                       <SelectTrigger className="w-24">

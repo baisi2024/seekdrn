@@ -1,7 +1,6 @@
 'use client'
 
 import { DataTable } from './data-table'
-import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -16,61 +15,48 @@ export interface EmailLog {
   created_at: string
 }
 
-const columns: ColumnDef<EmailLog>[] = [
-  {
-    accessorKey: 'recipient_email',
-    header: 'Recipient',
-  },
-  {
-    accessorKey: 'template_key',
-    header: 'Template',
-  },
-  {
-    accessorKey: 'language',
-    header: 'Language',
-  },
-  {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => {
-      const status = row.getValue('status')
-      const variant =
-        status === 'sent'
-          ? 'default'
-          : status === 'failed'
-          ? 'destructive'
-          : 'secondary'
-      return <Badge variant={variant}>{status}</Badge>
-    },
-  },
-  {
-    accessorKey: 'sent_at',
-    header: 'Sent At',
-    cell: ({ row }) => {
-      const sentAt = row.getValue('sent_at')
-      if (!sentAt) return '-'
-      return new Date(sentAt as string).toLocaleString()
-    },
-  },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      const log = row.original
-      return (
-        <Link href={`/admin/email-logs/${log.id}`}>
-          <Button size="sm" variant="outline">
-            View
-          </Button>
-        </Link>
-      )
-    },
-  },
-]
-
 interface EmailLogsTableProps {
   data: EmailLog[]
 }
 
 export function EmailLogsTable({ data }: EmailLogsTableProps) {
+  const columns = [
+    { key: 'recipient_email', label: 'Recipient' },
+    { key: 'template_key', label: 'Template' },
+    { key: 'language', label: 'Language' },
+    {
+      key: 'status',
+      label: 'Status',
+      render: (item: EmailLog) => {
+        const variant =
+          item.status === 'sent'
+            ? 'default'
+            : item.status === 'failed'
+            ? 'destructive'
+            : 'secondary'
+        return <Badge variant={variant}>{item.status}</Badge>
+      },
+    },
+    {
+      key: 'sent_at',
+      label: 'Sent At',
+      render: (item: EmailLog) => {
+        if (!item.sent_at) return '-'
+        return new Date(item.sent_at).toLocaleString()
+      },
+    },
+    {
+      key: 'actions',
+      label: 'Actions',
+      render: (item: EmailLog) => (
+        <Link href={`/admin/email-logs/${item.id}`}>
+          <Button size="sm" variant="outline">
+            View
+          </Button>
+        </Link>
+      ),
+    },
+  ]
+
   return <DataTable columns={columns} data={data} />
 }

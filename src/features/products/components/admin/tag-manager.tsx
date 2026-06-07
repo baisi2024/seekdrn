@@ -239,7 +239,7 @@ export function TagManager() {
 
             {LOCALES.map((locale) => (
               <div key={locale}>
-                <Label>{t('tag_manager.name_label', { locale: locale.toUpperCase() })}</Label>
+                <Label>{t('tag_manager.name_label')} ({locale.toUpperCase()})</Label>
                 <Input
                   value={formData.translations[locale]?.name || ''}
                   onChange={(e) =>

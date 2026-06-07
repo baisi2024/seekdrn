@@ -31,10 +31,11 @@ export function ProductSchema({ product, locale }: ProductSchemaProps) {
     }),
     additionalProperty: Object.entries(product.specs_standardized || {})
       .filter(([key]) => key !== 'weight')
+      .filter(([, spec]) => spec)
       .map(([key, spec]) => ({
         '@type': 'PropertyValue',
         name: formatSpecName(key),
-        value: `${spec.value} ${spec.unit}`,
+        value: `${(spec as any).value} ${(spec as any).unit}`,
       })),
   }
 

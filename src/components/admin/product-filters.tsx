@@ -77,7 +77,7 @@ export function ProductFilters({
       {/* 分类筛选 */}
       <Select
         value={filters.category}
-        onValueChange={(value) => handleFilterChange('category', value)}
+        onValueChange={(value) => handleFilterChange('category', value ?? '')}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder={t('select_category')} />
@@ -98,7 +98,7 @@ export function ProductFilters({
       {/* 标签筛选 */}
       <Select
         value={filters.tag}
-        onValueChange={(value) => handleFilterChange('tag', value)}
+        onValueChange={(value) => handleFilterChange('tag', value ?? '')}
       >
         <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="选择标签" />
@@ -119,7 +119,7 @@ export function ProductFilters({
       {/* 状态筛选 */}
       <Select
         value={filters.status}
-        onValueChange={(value) => handleFilterChange('status', value)}
+        onValueChange={(value) => handleFilterChange('status', value ?? '')}
       >
         <SelectTrigger className="w-[150px]">
           <SelectValue placeholder={t('status')} />

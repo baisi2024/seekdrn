@@ -20,7 +20,7 @@ export function generateProductMetadata({
   const title = seoData?.meta_title || `${translation.name || product.model} | ${siteName}`
   const description = seoData?.meta_description || truncate(translation.overview || '', 160)
   const keywords = seoData?.meta_keywords || extractKeywords(translation)
-  const image = seo?.[locale]?.og_image || product.images?.[0] || ''
+  const image = (seo?.[locale] as any)?.og_image || product.images?.[0] || ''
 
   return {
     title,

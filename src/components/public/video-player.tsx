@@ -20,10 +20,10 @@ export function VideoPlayer({
   return (
     <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden">
       <ReactPlayer
-        url={url}
+        src={url}
         poster={poster}
         controls={controls}
-        autoplay={autoplay}
+        autoPlay={autoplay}
         loop={loop}
         width="100%"
         height="100%"
