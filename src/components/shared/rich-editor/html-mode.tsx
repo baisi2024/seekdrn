@@ -34,7 +34,8 @@ export function HtmlMode({
     if (content !== htmlCode) {
       setHtmlCode(content)
     }
-  }, [content, htmlCode])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [content])
 
   // 简单的HTML验证
   const validateHtml = useCallback((html: string): boolean => {
