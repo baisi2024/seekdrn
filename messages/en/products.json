@@ -23,5 +23,18 @@
   "learnMore": "Learn More",
   "untitledProduct": "Untitled Product",
   "noDescription": "No description available",
-  "complianceNotice": "This product requires compliance assessment. Contact us for detailed specifications."
+  "complianceNotice": "This product requires compliance assessment. Contact us for detailed specifications.",
+  "faq": "FAQ",
+  "requestQuote": "Request Quote",
+  "downloadMaterials": "Download Materials",
+  "scheduleDemo": "Schedule Demo",
+  "relatedSolutions": "Related Solutions",
+  "tags": "Tags",
+  "documentTypes": {
+    "manual": "Manual",
+    "datasheet": "Datasheet",
+    "certificate": "Certificate",
+    "brochure": "Brochure",
+    "other": "Other"
+  }
 }
