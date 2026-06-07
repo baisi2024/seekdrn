@@ -24,9 +24,9 @@ import {
 import { createClient } from '@/lib/supabase/client'
 import type { ProductDocument, DocumentType, DocumentFormData } from '@/features/products/types'
 import { DOCUMENT_TYPE_LABELS } from '@/features/products/types'
+import { LOCALES } from '@/lib/constants/locales'
 
 const DOCUMENT_TYPES: DocumentType[] = ['manual', 'datasheet', 'certificate', 'brochure', 'other']
-const LOCALES = ['en', 'zh'] as const
 
 interface DocumentsTabProps {
   productId: string
@@ -279,19 +279,19 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
             </div>
 
             {LOCALES.map((locale) => (
-              <div key={locale} className="space-y-2">
+              <div key={locale.code} className="space-y-2">
                 <Label className="text-sm font-medium">
-                  Title ({locale.toUpperCase()})
+                  Title ({locale.label})
                 </Label>
                 <Input
-                  value={formData.translations[locale]?.title || ''}
+                  value={formData.translations[locale.code]?.title || ''}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
                       translations: {
                         ...formData.translations,
-                        [locale]: {
-                          ...formData.translations[locale],
+                        [locale.code]: {
+                          ...formData.translations[locale.code],
                           title: e.target.value,
                         },
                       },
@@ -299,17 +299,17 @@ export function DocumentsTab({ productId }: DocumentsTabProps) {
                   }
                 />
                 <Label className="text-sm font-medium">
-                  Description ({locale.toUpperCase()})
+                  Description ({locale.label})
                 </Label>
                 <Textarea
-                  value={formData.translations[locale]?.description || ''}
+                  value={formData.translations[locale.code]?.description || ''}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
                       translations: {
                         ...formData.translations,
-                        [locale]: {
-                          ...formData.translations[locale],
+                        [locale.code]: {
+                          ...formData.translations[locale.code],
                           description: e.target.value,
                         },
                       },
