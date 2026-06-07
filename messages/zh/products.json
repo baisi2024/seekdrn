@@ -23,5 +23,18 @@
   "learnMore": "了解更多",
   "untitledProduct": "未命名产品",
   "noDescription": "暂无描述",
-  "complianceNotice": "此产品需要合规评估。联系我们获取详细规格。"
+  "complianceNotice": "此产品需要合规评估。联系我们获取详细规格。",
+  "faq": "常见问题",
+  "requestQuote": "立即询价",
+  "downloadMaterials": "下载资料",
+  "scheduleDemo": "预约演示",
+  "relatedSolutions": "相关解决方案",
+  "tags": "标签",
+  "documentTypes": {
+    "manual": "用户手册",
+    "datasheet": "数据表",
+    "certificate": "证书",
+    "brochure": "宣传册",
+    "other": "其他"
+  }
 }
