@@ -22,5 +22,12 @@
   "generalNotice": {
     "title": "Общее Заявление о Соответствии",
     "content": "SeekDrone осуществляет деятельность в соответствии с международными правилами экспортного контроля, включая, помимо прочего, Вассенаарские договорённости, ITAR и EAR. Наша продукция предназначена для использования только на одобренных рынках и в одобренных приложениях. Все продажи подлежат проверке конечного пользователя и требованиям экспортной лицензии, где это применимо."
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
   }
 }

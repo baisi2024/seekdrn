@@ -43,5 +43,61 @@
     "certificate": "گواهینامه",
     "brochure": "بروشور",
     "other": "سایر"
+  },
+  "intro": {
+    "eyebrow": "Product selection"
+  },
+  "detailsCta": "View details",
+  "missionSelector": {
+    "title": "Choose by mission before model",
+    "subtitle": "Start with the operating scenario, then narrow to the right aircraft, payload, or counter-UAS package.",
+    "viewRecommended": "View recommended",
+    "missions": {
+      "publicSafety": {
+        "title": "Public safety missions",
+        "description": "Deploy reliable aerial overwatch, search, and command visibility."
+      },
+      "infrastructureInspection": {
+        "title": "Infrastructure inspection",
+        "description": "Match aircraft and payloads for power, energy, and industrial assets."
+      },
+      "mappingSurvey": {
+        "title": "Mapping and survey",
+        "description": "Plan efficient capture workflows for geospatial and construction teams."
+      },
+      "perimeterSecurity": {
+        "title": "Perimeter security",
+        "description": "Build persistent monitoring around critical sites and events."
+      },
+      "counterUas": {
+        "title": "Counter-UAS response",
+        "description": "Coordinate detection, assessment, and mitigation procurement."
+      },
+      "disasterResponse": {
+        "title": "Disaster response",
+        "description": "Select portable systems for rapid assessment and emergency logistics."
+      }
+    }
+  },
+  "procurementDecision": {
+    "title": "Procurement decision fit"
+  },
+  "procurementPack": {
+    "title": "Procurement pack and compliance support",
+    "subtitle": "Collect specs, documents, and compliance guidance for procurement, technical, and legal review.",
+    "supportLabel": "Ask procurement support",
+    "complianceLabel": "Compliance support"
+  },
+  "compare": {
+    "title": "مقایسه محصولات",
+    "add_to_compare": "افزودن به مقایسه",
+    "added_to_compare": "افزوده شد",
+    "start_compare": "شروع مقایسه",
+    "clear_all": "پاک کردن",
+    "max_reached": "شما می‌توانید تا ۳ محصول را مقایسه کنید",
+    "select_another": "حداقل ۲ محصول برای مقایسه انتخاب کنید",
+    "specification": "مشخصات",
+    "request_quote": "درخواست قیمت",
+    "view_details": "مشاهده جزئیات"
   }
 }

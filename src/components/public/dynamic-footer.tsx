@@ -7,9 +7,6 @@ interface DynamicFooterProps {
   locale: string
 }
 
-/**
- * 获取导航项的多语言标签
- */
 function getLabel(item: { translations: Record<string, string> }, locale: string, defaultLocale: string = 'en'): string {
   if (item.translations[locale]) {
     return item.translations[locale]
@@ -21,9 +18,6 @@ function getLabel(item: { translations: Record<string, string> }, locale: string
   return availableLabels[0] || ''
 }
 
-/**
- * 处理 URL
- */
 function processUrl(url: string, linkType: 'internal' | 'external', locale: string): string {
   if (linkType === 'external') {
     return url
@@ -35,7 +29,6 @@ function processUrl(url: string, linkType: 'internal' | 'external', locale: stri
 }
 
 export async function DynamicFooter({ locale }: DynamicFooterProps) {
-  // 获取页脚导航数据
   let navItems: NavigationItem[] = []
   try {
     navItems = await getNavigation('footer')
@@ -43,39 +36,42 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
     console.error('Failed to fetch footer navigation:', error)
   }
 
-  // 获取翻译
   const t = await getTranslations({ locale, namespace: 'common' })
-
-  // 过滤已发布的导航项
   const publishedItems = navItems.filter(item => item.published)
 
   return (
-    <footer className="bg-gray-900 text-gray-400">
+    <footer className="border-t border-border bg-[#f7f8f5] text-muted-foreground">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo 和描述 */}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm" suppressHydrationWarning>
+            <div className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded bg-primary">
+                <span className="text-sm font-bold text-primary-foreground" suppressHydrationWarning>
                   {t('brand.shortName')}
                 </span>
               </div>
-              <span className="font-bold text-lg text-white" suppressHydrationWarning>
+              <span className="text-lg font-bold text-foreground" suppressHydrationWarning>
                 {t('brand.name')}
               </span>
             </div>
-            <p className="text-sm">Industrial UAV solutions and counter-drone systems for defense, security, and critical infrastructure.</p>
+            <p className="text-sm leading-6">{t('footer.description')}</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link href={`/${locale}#demo-form`} className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90">
+                {t('cta.requestQuote')}
+              </Link>
+              <Link href={`/${locale}/products`} className="rounded-full border border-border bg-background px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary/40">
+                {t('cta.exploreProducts')}
+              </Link>
+            </div>
           </div>
 
-          {/* 动态导航列 */}
           {publishedItems.map((item) => {
             const label = getLabel(item, locale)
             const children = item.children?.filter(c => c.published) || []
 
             return (
               <div key={item.id}>
-                <h3 className="text-white font-semibold mb-4" suppressHydrationWarning>{label}</h3>
+                <h3 className="mb-4 font-semibold text-foreground" suppressHydrationWarning>{label}</h3>
                 <ul className="space-y-2 text-sm">
                   {children.map((child) => {
                     const childLabel = getLabel(child, locale)
@@ -88,13 +84,13 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
                             href={childHref}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="hover:text-white transition-colors"
+                            className="transition-colors hover:text-foreground"
                             suppressHydrationWarning
                           >
                             {childLabel}
                           </a>
                         ) : (
-                          <Link href={childHref} className="hover:text-white transition-colors" suppressHydrationWarning>
+                          <Link href={childHref} className="transition-colors hover:text-foreground" suppressHydrationWarning>
                             {childLabel}
                           </Link>
                         )}
@@ -107,8 +103,7 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
           })}
         </div>
 
-        {/* 版权信息 */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
+        <div className="mt-8 border-t border-border pt-8 text-center text-sm">
           © {new Date().getFullYear()} SeekDrone. {t('footer.rights')}
         </div>
       </div>

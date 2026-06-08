@@ -397,7 +397,7 @@ INSERT INTO case_studies (slug, industry, country, translations, results, images
       "en": {
         "title": "Airport Counter-UAS Protection",
         "client": "Paris Charles de Gaulle Airport",
-        "summary": "Comprehensive counter-UAS system protecting one of Europe\'s busiest airports.",
+        "summary": "Comprehensive counter-UAS system protecting one of Europe''s busiest airports.",
         "challenge": "Drone incursions were causing flight disruptions and security concerns at major international airport.",
         "solution": "Deployed CUAS-400 integrated system with 360° coverage, automated detection, and graduated response protocols.",
         "outcome": "Zero successful drone incursions since deployment, 156 attempts neutralized, and zero flight disruptions from drone activity."

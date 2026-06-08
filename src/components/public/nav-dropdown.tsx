@@ -71,7 +71,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           suppressHydrationWarning
         >
           {label}
@@ -82,7 +82,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
     return (
       <Link
         href={href}
-        className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+        className="text-sm text-muted-foreground hover:text-foreground transition-colors"
         suppressHydrationWarning
       >
         {label}
@@ -95,7 +95,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button variant="ghost" size="sm" className="h-auto px-2 py-1 text-sm text-gray-600 hover:text-gray-900" />
+          <Button variant="ghost" size="sm" className="h-auto px-2 py-1 text-sm text-muted-foreground hover:text-foreground" />
         }
       >
         <span suppressHydrationWarning>{label}</span>

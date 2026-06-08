@@ -8,7 +8,7 @@
     "solutions": "الحلول",
     "caseStudies": "دراسات الحالة",
     "support": "الدعم",
-    "requestDemo": "طلب عرض توضيحي"
+    "requestDemo": "Request Quote"
   },
   "form": {
     "fullName": "الاسم الكامل",
@@ -17,13 +17,49 @@
     "country": "الدولة",
     "applicationInterest": "مجال التطبيق",
     "submit": "إرسال",
-    "submitting": "جارٍ الإرسال..."
+    "submitting": "جارٍ الإرسال...",
+    "eyebrow": "Procurement and mission inquiry",
+    "title": "Tell us what you need to accomplish",
+    "subtitle": "Choose your intent so our sales, technical, or compliance team can respond with the right next step.",
+    "intent": "Inquiry intent",
+    "message": "Additional details",
+    "messagePlaceholder": "Mission scenario, target model, procurement timeline, or compliance questions",
+    "intents": {
+      "quote": "Request quote",
+      "demo": "Schedule demo",
+      "datasheet": "Datasheet / procurement pack",
+      "compliance": "Compliance support",
+      "partnership": "Channel / partnership"
+    },
+    "submitByIntent": {
+      "quote": "Request Quote",
+      "demo": "Request Demo",
+      "datasheet": "Request Datasheet",
+      "compliance": "Ask Compliance Support",
+      "partnership": "Discuss Partnership"
+    },
+    "successByIntent": {
+      "quote": "Your quote request has been submitted.",
+      "demo": "Your demo request has been submitted.",
+      "datasheet": "Your datasheet request has been submitted.",
+      "compliance": "Your compliance request has been submitted.",
+      "partnership": "Your partnership inquiry has been submitted."
+    },
+    "intentHelp": {
+      "quote": "احصل على إرشاد حول النموذج والميزانية والتسليم.",
+      "demo": "خطط لمراجعة فنية مع فريقك.",
+      "datasheet": "اجمع المواصفات ووثائق الشراء.",
+      "compliance": "راجع أسئلة التصدير والمستخدم النهائي والسياسات.",
+      "partnership": "ناقش القنوات أو التكامل أو التعاون الإقليمي."
+    }
   },
   "cta": {
     "requestDemo": "طلب عرض توضيحي",
     "downloadSpec": "تحميل المواصفات",
     "learnMore": "معرفة المزيد",
-    "inquireAssessment": "استفسار للتقييم"
+    "inquireAssessment": "استفسار للتقييم",
+    "requestQuote": "Request Quote",
+    "exploreProducts": "Explore Products"
   },
   "error": {
     "required": "هذا الحقل مطلوب",
@@ -40,6 +76,49 @@
     "zh": "中文"
   },
   "footer": {
-    "rights": "جميع الحقوق محفوظة."
+    "rights": "جميع الحقوق محفوظة.",
+    "description": "Enterprise UAV and counter-UAS solutions for public safety, energy inspection, mapping, and airspace security."
+  },
+  "inline_form": {
+    "title": "تواصل معنا",
+    "step1_title": "ماذا تحتاج؟",
+    "step2_title": "سياق المشروع",
+    "step3_title": "معلومات الاتصال",
+    "intent_quote": "طلب عرض أسعار",
+    "intent_demo": "جدولة عرض توضيحي",
+    "intent_datasheet": "تحميل ورقة البيانات",
+    "intent_compliance": "استفسار الامتثال",
+    "intent_partnership": "استكشاف الشراكة",
+    "company_label": "الشركة",
+    "country_label": "الدولة",
+    "message_label": "أخبرنا عن مشروعك",
+    "name_label": "الاسم الكامل",
+    "email_label": "البريد الإلكتروني",
+    "phone_label": "الهاتف (اختياري)",
+    "submit_button": "إرسال",
+    "submitting_button": "جارٍ الإرسال...",
+    "success_title": "شكراً لك!",
+    "success_message": "سنتواصل معك خلال 24 ساعة.",
+    "review_notice": "استفسارك قيد المراجعة بسبب متطلبات الامتثال."
+  },
+  "breadcrumb": {
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "solutions": "الحلول",
+    "case_studies": "دراسات الحالة",
+    "compliance": "الامتثال"
+  },
+  "share": {
+    "title": "مشاركة",
+    "linkedin": "مشاركة على LinkedIn",
+    "twitter": "مشاركة على X",
+    "email": "مشاركة عبر البريد الإلكتروني",
+    "copy_link": "نسخ الرابط",
+    "link_copied": "تم نسخ الرابط!"
+  },
+  "pagination": {
+    "previous": "السابق",
+    "next": "التالي",
+    "page": "صفحة {current} من {total}"
   }
 }

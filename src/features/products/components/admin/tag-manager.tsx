@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import type { ProductTag, TagFormData } from '@/features/products/types'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
-import { LOCALE_CODES } from '@/lib/constants/locales'
+import { LOCALES, LOCALE_CODES } from '@/lib/constants/locales'
 
 const PRESET_COLORS = [
   '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e',
@@ -237,17 +237,17 @@ export function TagManager() {
               </div>
             </div>
 
-            {LOCALE_CODES.map((locale) => (
-              <div key={locale}>
-                <Label>{t('tag_manager.name_label')} ({locale.toUpperCase()})</Label>
+            {LOCALES.map((locale) => (
+              <div key={locale.code}>
+                <Label>{t('tag_manager.name_label')} ({locale.label})</Label>
                 <Input
-                  value={formData.translations[locale]?.name || ''}
+                  value={formData.translations[locale.code]?.name || ''}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
                       translations: {
                         ...formData.translations,
-                        [locale]: { name: e.target.value },
+                        [locale.code]: { name: e.target.value },
                       },
                     })
                   }

@@ -79,6 +79,7 @@ export function MediaLibrary({ mode, accept = 'all', multiple = false, maxSelect
         viewMode={viewMode}
         loading={loading}
         onSelect={handleSelect}
+        onMediaUpdated={fetchMedia}
       />
     </div>
   )

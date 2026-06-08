@@ -4,6 +4,8 @@ import { getTranslations } from 'next-intl/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
 import { POLICIES, POLICY_SLUG_MAP } from '@/lib/compliance/constants'
+import { ComplianceSupportBlock } from '@/components/public/compliance-support-block'
+import { Breadcrumb } from '@/components/public/breadcrumb'
 
 export async function generateStaticParams() {
   const locales = ['en', 'ar', 'es', 'fr', 'pt', 'id', 'zh']
@@ -53,6 +55,7 @@ export default async function PolicyPage({
 }) {
   const { locale, slug } = await params
   const t = await getTranslations('compliance')
+  const tc = await getTranslations('common')
 
   const section = POLICY_SLUG_MAP[slug]
   if (!section) {
@@ -81,6 +84,13 @@ export default async function PolicyPage({
   return (
     <div className="py-16">
       <div className="container mx-auto px-4 max-w-3xl">
+        <Breadcrumb
+          items={[
+            { label: tc('breadcrumb.home'), href: `/${locale}` },
+            { label: tc('breadcrumb.compliance'), href: `/${locale}/compliance` },
+            { label: title || policyName },
+          ]}
+        />
         <h1 className="text-3xl font-bold text-foreground mb-8">
           {title || policyName}
         </h1>
@@ -92,6 +102,17 @@ export default async function PolicyPage({
             {t('noContent')}
           </p>
         )}
+
+        <div className="mt-12">
+          <ComplianceSupportBlock
+            locale={locale}
+            title={t('support.title')}
+            subtitle={t('support.subtitle')}
+            quoteLabel={t('support.quoteLabel')}
+            packLabel={t('support.packLabel')}
+            policyLabel={t('support.policyLabel')}
+          />
+        </div>
       </div>
     </div>
   )

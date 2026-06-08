@@ -1,17 +1,23 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Box } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { CompareCheckbox } from '@/components/public/compare-checkbox'
 import type { Category } from '@/features/products/types/category'
 import type { ProductTag } from '@/features/products/types/tag'
+
+interface CategorySummary {
+  translations?: Record<string, Record<string, string>>
+}
 
 interface Product {
   id: string
   slug: string
+  model?: string
   category_id: string | null
-  category?: Category
+  category?: Category | CategorySummary | null
   tag_objects?: ProductTag[]
   images?: string[]
   translations?: Record<string, Record<string, string>>
@@ -30,107 +36,106 @@ interface ProductCardProps {
 export function ProductCard({ product, locale }: ProductCardProps) {
   const t = useTranslations('products')
   const title = getTranslation(product.translations || {}, locale, 'name')
-  const description = getTranslation(product.translations || {}, locale, 'description')
-
-  // 获取分类名称
-  const categoryLabel = product.category
+  const description = getTranslation(product.translations || {}, locale, 'overview')
+  const categoryLabel = product.category?.translations
     ? getTranslation(product.category.translations, locale, 'name')
     : null
-
-  // 获取标签（最多显示3个）
   const tags = product.tag_objects || []
   const displayTags = tags.slice(0, 3)
-  const remainingTagsCount = tags.length - 3
-
-  // 获取图片
   const imageUrl = product.images && product.images.length > 0 ? product.images[0] : null
-
-  // 获取规格（从第一个规格组中取前3个）
-  const specs = product.spec_groups && product.spec_groups.length > 0
-    ? product.spec_groups[0].specs.slice(0, 3)
-    : []
+  const specs = product.spec_groups?.flatMap((group) => group.specs).slice(0, 3) || []
+  const positioning = description || categoryLabel || t('noDescription')
 
   return (
-    <div className="group rounded-xl border border-border bg-background overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      {/* Image Area */}
-      <div className="aspect-[4/3] bg-muted relative overflow-hidden">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
+      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
         {imageUrl ? (
           <Image
             src={imageUrl}
-            alt={title}
+            alt={title || product.model || t('untitledProduct')}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
-            <svg className="w-16 h-16 text-muted-foreground/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
+          <div className="flex h-full w-full items-center justify-center bg-muted">
+            <Box className="h-14 w-14 text-muted-foreground/40" />
           </div>
         )}
-        <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-          {categoryLabel && (
-            <Badge variant="secondary" className="text-xs">{categoryLabel}</Badge>
-          )}
+        <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
+          {product.model && <Badge className="font-mono text-xs">{product.model}</Badge>}
+          {categoryLabel && <Badge variant="secondary" className="text-xs">{categoryLabel}</Badge>}
+        </div>
+        <div className="absolute right-3 top-3">
+          <CompareCheckbox
+            product={{
+              id: product.id,
+              model: product.model,
+              slug: product.slug,
+              name: title || product.model || '',
+              category: categoryLabel || undefined,
+              image: imageUrl || undefined,
+              tags: displayTags.map((tag) => getTranslation(tag.translations, locale, 'name')).filter(Boolean),
+              spec_groups: product.spec_groups,
+            }}
+          />
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5 space-y-3">
-        <h3 className="font-semibold text-foreground text-lg leading-snug">
-          {title || t('untitledProduct')}
-        </h3>
-        <p className="text-sm text-muted-foreground line-clamp-2">
-          {description || t('noDescription')}
-        </p>
+      <div className="flex flex-1 flex-col p-5">
+        <div>
+          {product.model && <div className="text-xs font-semibold text-muted-foreground">{product.model}</div>}
+          <h3 className="mt-2 text-lg font-semibold leading-snug text-foreground">
+            {title || product.model || t('untitledProduct')}
+          </h3>
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
+            {positioning}
+          </p>
+        </div>
 
-        {/* Tags */}
-        {displayTags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {displayTags.map((tag) => {
-              const tagName = getTranslation(tag.translations, locale, 'name')
-              return (
-                <Badge key={tag.id} variant="outline" className="text-xs">
-                  {tagName}
-                </Badge>
-              )
-            })}
-            {remainingTagsCount > 0 && (
-              <Badge variant="outline" className="text-xs">
-                +{remainingTagsCount}
-              </Badge>
-            )}
-          </div>
-        )}
-
-        {/* Spec Rows */}
         {specs.length > 0 && (
-          <div className="space-y-2 pt-1">
+          <dl className="mt-5 grid grid-cols-3 gap-2">
             {specs.map((spec) => {
               const label = getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0]
               return (
-                <div key={label} className="flex items-center justify-between text-sm">
-                  <span className="text-muted-foreground">{label}</span>
-                  <span className="font-mono text-foreground">
+                <div key={`${label}-${spec.value}`} className="rounded-xl border border-border bg-[#f7f8f5] p-3">
+                  <dt className="truncate text-xs text-muted-foreground">{label}</dt>
+                  <dd className="mt-1 truncate font-mono text-sm font-semibold text-foreground">
                     {spec.value}{spec.unit || ''}
-                  </span>
+                  </dd>
                 </div>
               )
+            })}
+          </dl>
+        )}
+
+        {displayTags.length > 0 && (
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {displayTags.map((tag) => {
+              const tagName = getTranslation(tag.translations, locale, 'name')
+              return tagName ? (
+                <Badge
+                  key={tag.id}
+                  variant="outline"
+                  className="text-xs"
+                  style={tag.color ? { backgroundColor: tag.color, borderColor: tag.color, color: '#fff' } : undefined}
+                >
+                  {tagName}
+                </Badge>
+              ) : null
             })}
           </div>
         )}
 
-        {/* Learn More Link */}
-        <div className="pt-2">
+        <div className="mt-auto pt-5">
           <Link
             href={`/${locale}/products/${product.slug}`}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
           >
-            {t('learnMore')}
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            {t('detailsCta')}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
       </div>
-    </div>
+    </article>
   )
 }

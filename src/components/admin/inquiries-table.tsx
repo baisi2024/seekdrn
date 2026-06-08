@@ -1,8 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { DataTable } from '@/components/admin/data-table'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 interface Inquiry {
   id: string
@@ -10,13 +12,32 @@ interface Inquiry {
   full_name: string
   company: string
   country: string
+  email: string
+  phone: string
   application_interest: string
+  product_interest: string
+  intent: string
   compliance_status: string
   follow_up_status: string
 }
 
+const STATUS_OPTIONS = ['all', 'pending', 'contacted', 'qualified', 'closed_won', 'closed_lost']
+
+const STATUS_VARIANTS: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
+  pending: 'secondary',
+  contacted: 'outline',
+  qualified: 'default',
+  closed_won: 'default',
+  closed_lost: 'destructive',
+}
+
 export function InquiriesTable({ inquiries }: { inquiries: Inquiry[] }) {
   const t = useAdminTranslations()
+  const [statusFilter, setStatusFilter] = useState('all')
+
+  const filteredInquiries = statusFilter === 'all'
+    ? inquiries
+    : inquiries.filter((item) => item.follow_up_status === statusFilter)
 
   const columns = [
     {
@@ -27,7 +48,21 @@ export function InquiriesTable({ inquiries }: { inquiries: Inquiry[] }) {
     { key: 'full_name', label: t('name') },
     { key: 'company', label: t('company') },
     { key: 'country', label: t('country') },
-    { key: 'application_interest', label: t('application') },
+    {
+      key: 'phone',
+      label: t('inquiries_page.phone'),
+      render: (item: Inquiry) => item.phone || '-'
+    },
+    {
+      key: 'product_interest',
+      label: t('inquiries_page.productInterest'),
+      render: (item: Inquiry) => item.product_interest || '-'
+    },
+    {
+      key: 'intent',
+      label: t('inquiries_page.intent'),
+      render: (item: Inquiry) => item.intent || '-'
+    },
     {
       key: 'compliance_status',
       label: t('compliance_field'),
@@ -41,17 +76,35 @@ export function InquiriesTable({ inquiries }: { inquiries: Inquiry[] }) {
       key: 'follow_up_status',
       label: t('status'),
       render: (item: Inquiry) => (
-        <Badge variant="outline">{item.follow_up_status}</Badge>
+        <Badge variant={STATUS_VARIANTS[item.follow_up_status] || 'outline'}>
+          {item.follow_up_status}
+        </Badge>
       )
     },
   ]
 
   return (
-    <DataTable
-      data={inquiries}
-      columns={columns}
-      searchPlaceholder={t('inquiries_page.searchPlaceholder')}
-      onRowClick={(item) => window.location.href = `/admin/inquiries/${item.id}`}
-    />
+    <div className="space-y-4">
+      {/* Status filter */}
+      <div className="flex items-center gap-2">
+        {STATUS_OPTIONS.map((status) => (
+          <Button
+            key={status}
+            variant={statusFilter === status ? 'default' : 'outline'}
+            size="sm"
+            onClick={() => setStatusFilter(status)}
+          >
+            {status === 'all' ? t('inquiries_page.allStatus') : status}
+          </Button>
+        ))}
+      </div>
+
+      <DataTable
+        data={filteredInquiries}
+        columns={columns}
+        searchPlaceholder={t('inquiries_page.searchPlaceholder')}
+        onRowClick={(item) => window.location.href = `/admin/inquiries/${item.id}`}
+      />
+    </div>
   )
 }

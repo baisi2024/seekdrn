@@ -8,7 +8,7 @@
     "solutions": "Soluciones",
     "caseStudies": "Casos de Estudio",
     "support": "Soporte",
-    "requestDemo": "Solicitar Demostración"
+    "requestDemo": "Request Quote"
   },
   "form": {
     "fullName": "Nombre Completo",
@@ -17,13 +17,49 @@
     "country": "País",
     "applicationInterest": "Interés de Aplicación",
     "submit": "Enviar",
-    "submitting": "Enviando..."
+    "submitting": "Enviando...",
+    "eyebrow": "Procurement and mission inquiry",
+    "title": "Tell us what you need to accomplish",
+    "subtitle": "Choose your intent so our sales, technical, or compliance team can respond with the right next step.",
+    "intent": "Inquiry intent",
+    "message": "Additional details",
+    "messagePlaceholder": "Mission scenario, target model, procurement timeline, or compliance questions",
+    "intents": {
+      "quote": "Request quote",
+      "demo": "Schedule demo",
+      "datasheet": "Datasheet / procurement pack",
+      "compliance": "Compliance support",
+      "partnership": "Channel / partnership"
+    },
+    "submitByIntent": {
+      "quote": "Request Quote",
+      "demo": "Request Demo",
+      "datasheet": "Request Datasheet",
+      "compliance": "Ask Compliance Support",
+      "partnership": "Discuss Partnership"
+    },
+    "successByIntent": {
+      "quote": "Your quote request has been submitted.",
+      "demo": "Your demo request has been submitted.",
+      "datasheet": "Your datasheet request has been submitted.",
+      "compliance": "Your compliance request has been submitted.",
+      "partnership": "Your partnership inquiry has been submitted."
+    },
+    "intentHelp": {
+      "quote": "Reciba orientación sobre modelo, presupuesto y entrega.",
+      "demo": "Planifique una revisión técnica con su equipo.",
+      "datasheet": "Reúna especificaciones y documentos de compra.",
+      "compliance": "Revise preguntas de exportación, usuario final y políticas.",
+      "partnership": "Analice canal, integración o cooperación regional."
+    }
   },
   "cta": {
     "requestDemo": "Solicitar una Demostración",
     "downloadSpec": "Descargar Especificaciones",
     "learnMore": "Más Información",
-    "inquireAssessment": "Consultar Evaluación"
+    "inquireAssessment": "Consultar Evaluación",
+    "requestQuote": "Request Quote",
+    "exploreProducts": "Explore Products"
   },
   "error": {
     "required": "Este campo es obligatorio",
@@ -40,6 +76,49 @@
     "zh": "中文"
   },
   "footer": {
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "description": "Enterprise UAV and counter-UAS solutions for public safety, energy inspection, mapping, and airspace security."
+  },
+  "inline_form": {
+    "title": "Contáctenos",
+    "step1_title": "¿Qué necesita?",
+    "step2_title": "Contexto del proyecto",
+    "step3_title": "Información de contacto",
+    "intent_quote": "Solicitar cotización",
+    "intent_demo": "Programar demo",
+    "intent_datasheet": "Descargar ficha técnica",
+    "intent_compliance": "Consulta de cumplimiento",
+    "intent_partnership": "Explorar asociación",
+    "company_label": "Empresa",
+    "country_label": "País",
+    "message_label": "Cuéntenos sobre su proyecto",
+    "name_label": "Nombre completo",
+    "email_label": "Correo electrónico",
+    "phone_label": "Teléfono (opcional)",
+    "submit_button": "Enviar",
+    "submitting_button": "Enviando...",
+    "success_title": "¡Gracias!",
+    "success_message": "Nos comunicaremos con usted en 24 horas.",
+    "review_notice": "Su consulta está en revisión debido a requisitos de cumplimiento."
+  },
+  "breadcrumb": {
+    "home": "Inicio",
+    "products": "Productos",
+    "solutions": "Soluciones",
+    "case_studies": "Casos de Estudio",
+    "compliance": "Cumplimiento"
+  },
+  "share": {
+    "title": "Compartir",
+    "linkedin": "Compartir en LinkedIn",
+    "twitter": "Compartir en X",
+    "email": "Compartir por correo electrónico",
+    "copy_link": "Copiar enlace",
+    "link_copied": "¡Enlace copiado!"
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "page": "Página {current} de {total}"
   }
 }

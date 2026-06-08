@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ArrowRight, PackageOpen, Video } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getSiteSettings } from '@/lib/site-settings/api'
@@ -11,18 +12,27 @@ import { SolutionsGrid } from '@/components/public/solutions-grid'
 import { CTASection } from '@/components/public/cta-section'
 import { FAQSection } from '@/components/public/faq-section'
 import { DemoForm } from '@/components/public/demo-form'
+import { MissionSelector } from '@/components/public/mission-selector'
+import type { ProductTag } from '@/features/products/types/tag'
+import type { SpecGroup } from '@/features/products/types/product'
+
+interface ProductCategorySummary {
+  id?: string
+  slug?: string
+  translations?: Record<string, Record<string, string>>
+}
 
 interface Product {
   id: string
   slug: string
   category_id: string | null
-  category?: any
+  category?: ProductCategorySummary | null
   images?: string[]
   translations?: Record<string, Record<string, string>>
   specs?: { label: string; value: string }[]
   featured?: boolean
-  spec_groups?: any[]
-  tag_objects?: any[]
+  spec_groups?: SpecGroup[]
+  tag_objects?: ProductTag[]
 }
 
 interface CaseStudy {
@@ -69,9 +79,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
   const siteSettings = settings.status === 'fulfilled' ? settings.value : null
   const faqList = faqs.status === 'fulfilled' ? faqs.value : []
   const products: Product[] = productsRes.status === 'fulfilled' && productsRes.value.data
-    ? productsRes.value.data.map((p: any) => ({
+    ? (productsRes.value.data as unknown as Array<Omit<Product, 'category'> & { category?: ProductCategorySummary | ProductCategorySummary[] | null }>).map((p) => ({
         ...p,
-        category: Array.isArray(p.category) ? p.category[0] : p.category
+        category: Array.isArray(p.category) ? p.category[0] : p.category,
       }))
     : []
   const cases: CaseStudy[] = casesRes.status === 'fulfilled' && casesRes.value.data
@@ -88,17 +98,31 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     return acc
   }, {})
 
+  const missionOptions = ['publicSafety', 'infrastructureInspection', 'mappingSurvey', 'perimeterSecurity', 'counterUas', 'disasterResponse'].map((key) => ({
+    key,
+    title: t(`missionSelector.missions.${key}.title`),
+    description: t(`missionSelector.missions.${key}.description`),
+    href: `/${locale}/products?mission=${key}`,
+  }))
+
   return (
     <>
       <Hero heroConfig={siteSettings?.hero_config} />
       <TrustBar config={siteSettings?.trust_bar_config} />
+      <MissionSelector
+        title={t('missionSelector.title')}
+        subtitle={t('missionSelector.subtitle')}
+        viewLabel={t('missionSelector.viewRecommended')}
+        options={missionOptions}
+      />
 
       <section className="py-16 lg:py-24 bg-background">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-10">
             <h2 className="text-3xl font-bold text-foreground">{t('products.title')}</h2>
-            <Link href={`/${locale}/products`} className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-              {t('products.viewAll')} &rarr;
+            <Link href={`/${locale}/products`} className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+              {t('products.viewAll')}
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -109,7 +133,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
                   <h3 className="text-lg font-semibold text-foreground/70 mb-6 capitalize">{category.replace(/_/g, ' ')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {categoryProducts.map((product) => (
-                      <ProductCard key={product.id} product={product as any} locale={locale} />
+                      <ProductCard key={product.id} product={product} locale={locale} />
                     ))}
                   </div>
                 </div>
@@ -117,10 +141,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           ) : (
             <div className="text-center py-16 text-muted-foreground">
-              <svg className="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-              <p className="text-sm">Featured products coming soon.</p>
+              <PackageOpen className="mx-auto mb-4 h-16 w-16 opacity-30" />
+              <p className="text-sm">{t('products.empty')}</p>
             </div>
           )}
         </div>
@@ -132,8 +154,9 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-10">
             <h2 className="text-3xl font-bold text-foreground">{t('cases.title')}</h2>
-            <Link href={`/${locale}/case-studies`} className="text-sm font-medium text-primary hover:text-primary/80 transition-colors">
-              {t('cases.viewAll')} &rarr;
+            <Link href={`/${locale}/case-studies`} className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
+              {t('cases.viewAll')}
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
 
@@ -145,10 +168,8 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
             </div>
           ) : (
             <div className="text-center py-16 text-muted-foreground">
-              <svg className="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-              </svg>
-              <p className="text-sm">Featured case studies coming soon.</p>
+              <Video className="mx-auto mb-4 h-16 w-16 opacity-30" />
+              <p className="text-sm">{t('cases.empty')}</p>
             </div>
           )}
         </div>

@@ -22,5 +22,20 @@
   "generalNotice": {
     "title": "بيان الامتثال العام",
     "content": "تعمل SeekDrone وفقًا للوائح مراقبة التصدير الدولية، بما في ذلك على سبيل المثال لا الحصر ترتيب واسينار و ITAR و EAR. منتجاتنا مخصصة للاستخدام في الأسواق والتطبيقات المعتمدة فقط. تخضع جميع المبيعات للتحقق من المستخدم النهائي ومتطلبات ترخيص التصدير حيثما ينطبق ذلك."
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
+  },
+  "query_tool": {
+    "title": "التحقق من توفر التصدير",
+    "select_country": "اختر دولتك/منطقتك",
+    "available": "المنتجات متاحة للتصدير إلى هذه المنطقة.",
+    "restricted": "هذه المنطقة بها قيود على التصدير.",
+    "request_availability": "طلب توفر المنتج",
+    "contact_compliance": "تواصل مع فريق الامتثال"
   }
 }

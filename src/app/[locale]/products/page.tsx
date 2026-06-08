@@ -1,12 +1,17 @@
 import type { Metadata } from 'next'
+import { PackageOpen } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
 import { ProductCard } from '@/components/public/product-card'
 import { ProductFilter } from '@/components/public/product-filter'
 import { ProductSearch } from '@/components/public/product-search'
+import { MissionSelector } from '@/components/public/mission-selector'
+import { Breadcrumb } from '@/components/public/breadcrumb'
+import { Pagination } from '@/components/public/pagination'
 import type { Category } from '@/features/products/types/category'
 import type { ProductTag } from '@/features/products/types/tag'
+import { MISSION_TAG_MAPPING } from '@/lib/constants/mission-mapping'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -26,15 +31,26 @@ export default async function ProductsPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ cat?: string; tags?: string; q?: string }>
+  searchParams: Promise<{ cat?: string; tags?: string; q?: string; mission?: string; page?: string }>
 }) {
   const { locale } = await params
   const sp = await searchParams
-  const categorySlug = sp.cat || 'all'
-  const tagSlugs = sp.tags ? sp.tags.split(',').filter(Boolean) : []
+  const missionKey = sp.mission || ''
+  const currentPage = Math.max(1, parseInt(sp.page || '1', 10))
+  const pageSize = 12
+
+  // Resolve mission mapping to category and tags
+  const missionMapping = missionKey ? MISSION_TAG_MAPPING[missionKey] : undefined
+  const categorySlug = sp.cat || missionMapping?.category || 'all'
+  const tagSlugs = sp.tags
+    ? sp.tags.split(',').filter(Boolean)
+    : missionMapping?.tags
+      ? [...missionMapping.tags]
+      : []
   const searchQuery = sp.q || ''
 
   const t = await getTranslations('products')
+  const tc = await getTranslations('common')
 
   // 获取分类列表
   const { data: categories } = await supabaseAdmin
@@ -90,15 +106,55 @@ export default async function ProductsPage({
     })
   }
 
+  // Pagination
+  const totalCount = filtered.length
+  const totalPages = Math.ceil(totalCount / pageSize)
+  const paginatedProducts = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize)
+
+  // Build base search params for pagination (exclude page)
+  const paginationSearchParams: Record<string, string> = {}
+  if (sp.cat) paginationSearchParams.cat = sp.cat
+  if (sp.tags) paginationSearchParams.tags = sp.tags
+  if (sp.q) paginationSearchParams.q = sp.q
+  if (sp.mission) paginationSearchParams.mission = sp.mission
+
+  const missionOptions = ['publicSafety', 'infrastructureInspection', 'mappingSurvey', 'perimeterSecurity', 'counterUas', 'disasterResponse'].map((key) => ({
+    key,
+    title: t(`missionSelector.missions.${key}.title`),
+    description: t(`missionSelector.missions.${key}.description`),
+    href: `/${locale}/products?mission=${key}`,
+  }))
+
   return (
-    <div className="py-16">
+    <div className="bg-background py-16">
       <div className="container mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground">{t('title')}</h1>
-          <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
+        <Breadcrumb
+          items={[
+            { label: tc('breadcrumb.home'), href: `/${locale}` },
+            { label: tc('breadcrumb.products') },
+          ]}
+        />
+        <div className="mb-10 rounded-3xl border border-border bg-[#f7f8f5] p-8 lg:p-10">
+          <p className="text-sm font-semibold text-primary">{t('intro.eyebrow')}</p>
+          <h1 className="mt-3 text-3xl font-bold text-foreground lg:text-5xl">{t('title')}</h1>
+          <p className="mt-4 max-w-3xl text-lg leading-7 text-muted-foreground">
             {t('subtitle')}
           </p>
+          {missionKey && (
+            <p className="mt-3 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
+              {t(`missionSelector.missions.${missionKey}.title`)}
+            </p>
+          )}
         </div>
+
+        <MissionSelector
+          title={t('missionSelector.title')}
+          subtitle={t('missionSelector.subtitle')}
+          viewLabel={t('missionSelector.viewRecommended')}
+          options={missionOptions}
+        />
+      </div>
+      <div className="container mx-auto px-4 pt-16">
 
         <ProductSearch
           locale={locale}
@@ -115,22 +171,26 @@ export default async function ProductsPage({
           />
         </div>
 
-        {filtered && filtered.length > 0 ? (
+        {paginatedProducts && paginatedProducts.length > 0 ? (
           <>
             <p className="text-sm text-muted-foreground mb-4">
-              {t('showingResults', { count: filtered.length })}
+              {t('showingResults', { count: totalCount })}
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filtered.map((product) => (
+              {paginatedProducts.map((product) => (
                 <ProductCard key={product.id} product={product} locale={locale} />
               ))}
             </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              baseUrl={`/${locale}/products`}
+              searchParams={paginationSearchParams}
+            />
           </>
         ) : (
           <div className="text-center py-16 text-muted-foreground">
-            <svg className="w-16 h-16 mx-auto mb-4 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-            </svg>
+            <PackageOpen className="mx-auto mb-4 h-16 w-16 opacity-30" />
             <p className="text-sm">{t('noProducts')}</p>
           </div>
         )}

@@ -4,6 +4,9 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { DynamicNavbar } from '@/components/public/dynamic-navbar'
 import { DynamicFooter } from '@/components/public/dynamic-footer'
+import { LeadFormProvider } from '@/components/public/lead-form-provider'
+import { ProductCompareProvider } from '@/components/public/product-compare-provider'
+import { ProductCompareBar } from '@/components/public/product-compare-bar'
 import LocaleHtmlUpdater from './locale-html-updater'
 import type { Metadata } from 'next'
 import { getSiteSettings } from '@/lib/site-settings/api'
@@ -73,9 +76,14 @@ export default async function LocaleLayout({
     <>
       <LocaleHtmlUpdater locale={locale} />
       <NextIntlClientProvider messages={messages}>
-        <DynamicNavbar locale={locale} />
-        <main className="min-h-screen">{children}</main>
-        <DynamicFooter locale={locale} />
+        <LeadFormProvider locale={locale}>
+          <ProductCompareProvider>
+            <DynamicNavbar locale={locale} />
+            <main className="min-h-screen">{children}</main>
+            <DynamicFooter locale={locale} />
+            <ProductCompareBar />
+          </ProductCompareProvider>
+        </LeadFormProvider>
       </NextIntlClientProvider>
     </>
   )

@@ -19,5 +19,40 @@
   "results": "النتائج",
   "clientQuote": "شهادة العميل",
   "fieldFootage": "لقطات ميدانية",
-  "relatedProducts": "المنتجات ذات الصلة"
+  "relatedProducts": "المنتجات ذات الصلة",
+  "resultsEyebrow": "Proof first",
+  "proofIntro": {
+    "eyebrow": "Deployment proof",
+    "subtitle": "Review outcomes, mission context, and deployment evidence before shortlisting a similar project.",
+    "points": {
+      "mission": {
+        "title": "Mission context",
+        "description": "Understand the operating scenario and constraints."
+      },
+      "procurement": {
+        "title": "Procurement value",
+        "description": "Use outcome metrics to support internal decisions."
+      },
+      "deployment": {
+        "title": "Deployment proof",
+        "description": "Review field media and execution flow."
+      }
+    }
+  },
+  "similarProject": {
+    "title": "Planning a similar project?",
+    "subtitle": "Share your region, scenario, and objectives so we can recommend a suitable product package.",
+    "primaryCta": "Discuss similar project",
+    "secondaryCta": "View products"
+  },
+  "proofCard": {
+    "description": "دليل نشر {industry} للمشترين في {country}.",
+    "global": "العالم"
+  },
+  "filter_industry": "الصناعة",
+  "filter_country": "الدولة",
+  "filter_all": "الكل",
+  "no_results_cta": "لا تجد ما تبحث عنه؟ اتصل بنا للحصول على حلول مخصصة.",
+  "products_used": "المنتجات المستخدمة",
+  "request_similar": "طلب حل مشابه"
 }

@@ -1,8 +1,11 @@
+'use client'
+
 import { FileText, Download } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { getTranslation } from '@/lib/utils'
 import { formatFileSize } from '@/lib/format-file-size'
+import { trackDatasheetDownload } from '@/lib/gtm'
 
 interface Download {
   id: string
@@ -18,9 +21,10 @@ interface Download {
 interface Props {
   downloads: Download[]
   locale: string
+  productModel?: string
 }
 
-export function DownloadsSection({ downloads, locale }: Props) {
+export function DownloadsSection({ downloads, locale, productModel }: Props) {
   if (!downloads || downloads.length === 0) return null
 
   return (
@@ -30,6 +34,16 @@ export function DownloadsSection({ downloads, locale }: Props) {
         {downloads.map(item => {
           const title = getTranslation(item.title, locale, 'en')
           const description = getTranslation(item.description, locale, 'en')
+
+          const handleDownloadClick = () => {
+            if (productModel) {
+              trackDatasheetDownload({
+                product_model: productModel,
+                document_type: item.type,
+                locale,
+              })
+            }
+          }
 
           return (
             <Card key={item.id}>
@@ -51,6 +65,7 @@ export function DownloadsSection({ downloads, locale }: Props) {
                     variant="outline"
                     render={<a href={item.file_url} download />}
                     data-testid="download-button"
+                    onClick={handleDownloadClick}
                   >
                     <Download className="w-4 h-4" />
                   </Button>

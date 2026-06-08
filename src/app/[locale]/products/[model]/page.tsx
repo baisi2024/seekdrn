@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
 import { getTranslation } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { ProductGallery } from '@/features/products/components/public/product-gallery'
 import { ProductFAQSection } from '@/features/products/components/public/product-faq'
@@ -14,13 +12,19 @@ import { SpecsSection } from '@/components/public/specs-section'
 import { DownloadsSection } from '@/components/public/downloads-section'
 import { RelatedCasesSection } from '@/components/public/related-cases-section'
 import { RelatedProducts } from '@/features/products/components/public/related-products'
-import { CTALink } from '@/components/public/cta-link'
+import { LeadFormCTAButton } from '@/components/public/lead-form-cta-button'
+import { ShareButtons } from '@/components/public/share-buttons'
+import { ProcurementPackCTA } from '@/components/public/procurement-pack-cta'
+import { ProcurementDecisionBar } from '@/components/public/procurement-decision-bar'
+import { InlineLeadForm } from '@/components/public/inline-lead-form'
+import { AddToCompareButton } from '@/components/public/add-to-compare-button'
+import { Breadcrumb } from '@/components/public/breadcrumb'
+import type { Spec } from '@/features/products/types/product'
 import {
   MessageSquare,
   FileText,
   Calendar,
   Shield,
-  ChevronRight,
   Zap,
   Target,
   Radio,
@@ -48,6 +52,7 @@ export default async function ProductDetailPage({
 }) {
   const { model, locale } = await params
   const t = await getTranslations('products')
+  const tc = await getTranslations('common')
 
   const product = await getProductWithEnhancements(model, locale)
 
@@ -59,7 +64,11 @@ export default async function ProductDetailPage({
   const capabilities = getTranslation(product.translations, locale, 'capabilities')
   const applications = getTranslation(product.translations, locale, 'applications')
 
-  const tags = product.tags || []
+  const categoryLabel = product.category?.translations
+    ? getTranslation(product.category.translations, locale, 'name')
+    : null
+
+  const tags = product.tag_objects || []
   const documents = product.documents || []
   const faqs = product.faqs || []
 
@@ -68,12 +77,16 @@ export default async function ProductDetailPage({
 
   // Extract key specs for hero stats bar (from first spec group, first 4 specs)
   const heroStats: Array<{ label: string; value: string; unit: string }> = product.spec_groups && product.spec_groups.length > 0
-    ? product.spec_groups[0].specs.slice(0, 4).map((spec: any) => ({
+    ? product.spec_groups[0].specs.slice(0, 4).map((spec: Spec) => ({
         label: getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0],
         value: spec.value,
         unit: spec.unit || '',
       }))
     : []
+  const decisionItems = heroStats.slice(0, 3).map((stat) => ({
+    label: stat.label,
+    value: `${stat.value}${stat.unit}`,
+  }))
 
   return (
     <>
@@ -92,20 +105,30 @@ export default async function ProductDetailPage({
             {/* Right: Product Info */}
             <div className="space-y-6">
               {/* Breadcrumb */}
-              <nav className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <Link href={`/${locale}/products`} className="hover:text-foreground transition-colors">
-                  {t('title')}
-                </Link>
-                <ChevronRight className="w-3.5 h-3.5" />
-                <span className="text-foreground">{name}</span>
-              </nav>
+              <Breadcrumb
+                items={[
+                  { label: tc('breadcrumb.home'), href: `/${locale}` },
+                  { label: tc('breadcrumb.products'), href: `/${locale}/products` },
+                  ...(categoryLabel ? [{ label: categoryLabel }] : []),
+                  { label: name || '' },
+                ]}
+              />
 
               {/* Tags */}
               {tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {tags.map((tag: string) => (
-                    <Badge key={tag} variant="secondary">{tag}</Badge>
-                  ))}
+                  {tags.map((tag: any) => {
+                    const tagName = getTranslation(tag.translations, locale, 'name') || tag.slug
+                    return (
+                      <Badge
+                        key={tag.id || tag.slug}
+                        variant="secondary"
+                        style={tag.color ? { backgroundColor: tag.color, borderColor: tag.color, color: '#fff' } : undefined}
+                      >
+                        {tagName}
+                      </Badge>
+                    )
+                  })}
                 </div>
               )}
 
@@ -114,47 +137,69 @@ export default async function ProductDetailPage({
                 <Badge variant="outline" className="font-mono mb-3">{product.model}</Badge>
                 <h1 className="text-3xl lg:text-4xl font-bold text-foreground">{name}</h1>
                 <p className="mt-3 text-lg text-muted-foreground leading-relaxed">{overview}</p>
+                <div className="mt-3">
+                  <ShareButtons title={name} description={overview} pageType="product" locale={locale} />
+                </div>
               </div>
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-3 pt-2">
-                <CTALink
-                  href={`/${locale}#demo-form`}
+                <AddToCompareButton
+                  product={{
+                    id: product.id,
+                    model: product.model,
+                    slug: product.slug,
+                    name: name || '',
+                    category: categoryLabel || undefined,
+                    image: product.images && product.images.length > 0 ? product.images[0] : undefined,
+                    tags: tags.map((tag: any) => getTranslation(tag.translations, locale, 'name') || tag.slug),
+                    spec_groups: product.spec_groups,
+                  }}
+                />
+
+                <LeadFormCTAButton
+                  intent="quote"
+                  productModel={product.model}
+                  pageType="product"
+                  locale={locale}
                   size="lg"
-                  trackingLocation="product_hero"
-                  trackingAction="request_quote"
                 >
                   <MessageSquare className="w-4 h-4 mr-2" />
                   {t('requestQuote')}
-                </CTALink>
+                </LeadFormCTAButton>
 
                 {documents.length > 0 && (
-                  <Link
-                    href="#downloads"
-                    className={buttonVariants({ size: 'lg', variant: 'outline' })}
+                  <LeadFormCTAButton
+                    intent="datasheet"
+                    productModel={product.model}
+                    pageType="product"
+                    locale={locale}
+                    size="lg"
+                    variant="outline"
                   >
                     <FileText className="w-4 h-4 mr-2" />
                     {t('downloadMaterials')}
-                  </Link>
+                  </LeadFormCTAButton>
                 )}
 
-                <CTALink
-                  href={`/${locale}#demo-form`}
+                <LeadFormCTAButton
+                  intent="demo"
+                  productModel={product.model}
+                  pageType="product"
+                  locale={locale}
                   size="lg"
                   variant="outline"
-                  trackingLocation="product_hero"
-                  trackingAction="schedule_demo"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
                   {t('scheduleDemo')}
-                </CTALink>
+                </LeadFormCTAButton>
               </div>
 
               {/* Compliance Badges */}
               {product.compliance_flag && (
-                <div className="flex items-center gap-2 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-950/30 border border-yellow-200 dark:border-yellow-800">
-                  <Shield className="w-5 h-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0" />
-                  <p className="text-sm text-yellow-800 dark:text-yellow-200">
+                <div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
+                  <Shield className="w-5 h-5 flex-shrink-0 text-amber-600" />
+                  <p className="text-sm text-amber-900">
                     {t('complianceNotice')}
                   </p>
                 </div>
@@ -163,6 +208,18 @@ export default async function ProductDetailPage({
           </div>
         </div>
       </section>
+
+      {decisionItems.length > 0 && (
+        <ProcurementDecisionBar
+          locale={locale}
+          title={t('procurementDecision.title')}
+          items={decisionItems}
+          quoteLabel={t('requestQuote')}
+          datasheetLabel={t('downloadMaterials')}
+          hasDocuments={documents.length > 0}
+          productModel={product.model}
+        />
+      )}
 
       {/* ===== KEY STATS BAR ===== */}
       {heroStats.length > 0 && (
@@ -209,6 +266,16 @@ export default async function ProductDetailPage({
 
       {/* ===== CONTENT SECTIONS ===== */}
       <div className="container mx-auto px-4 py-12 lg:py-16 space-y-20">
+        <ProcurementPackCTA
+          locale={locale}
+          title={t('procurementPack.title')}
+          subtitle={t('procurementPack.subtitle')}
+          datasheetLabel={t('downloadMaterials')}
+          supportLabel={t('procurementPack.supportLabel')}
+          complianceLabel={t('procurementPack.complianceLabel')}
+          hasDocuments={documents.length > 0}
+          productModel={product.model}
+        />
 
         {/* Specs Section */}
         {product.spec_groups && product.spec_groups.length > 0 && (
@@ -271,7 +338,7 @@ export default async function ProductDetailPage({
               </div>
               <h2 className="text-2xl font-bold text-foreground">{t('downloads')}</h2>
             </div>
-            <DownloadsSection downloads={documents} locale={locale} />
+            <DownloadsSection downloads={documents} locale={locale} productModel={product.model} />
           </section>
         )}
 
@@ -300,33 +367,46 @@ export default async function ProductDetailPage({
             {t('bottomCta.subtitle')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <CTALink
-              href={`/${locale}#demo-form`}
+            <LeadFormCTAButton
+              intent="quote"
+              productModel={product.model}
+              pageType="product"
+              locale={locale}
               size="lg"
               variant="secondary"
-              trackingLocation="product_bottom"
-              trackingAction="request_quote"
+              className="inline-flex items-center justify-center rounded-md bg-secondary text-secondary-foreground px-6 py-3 text-sm font-medium hover:bg-secondary/90 transition-colors"
             >
               <MessageSquare className="w-4 h-4 mr-2" />
               {t('requestQuote')}
-            </CTALink>
-            <CTALink
-              href={`/${locale}#demo-form`}
+            </LeadFormCTAButton>
+            <LeadFormCTAButton
+              intent="demo"
+              productModel={product.model}
+              pageType="product"
+              locale={locale}
               size="lg"
               variant="ghost"
-              className="text-primary-foreground border border-primary-foreground/30 hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              trackingLocation="product_bottom"
-              trackingAction="schedule_demo"
+              className="inline-flex items-center justify-center rounded-md border border-primary-foreground/30 text-primary-foreground px-6 py-3 text-sm font-medium hover:bg-primary-foreground/10 hover:text-primary-foreground transition-colors"
             >
               <Calendar className="w-4 h-4 mr-2" />
               {t('scheduleDemo')}
-            </CTALink>
+            </LeadFormCTAButton>
           </div>
         </div>
       </section>
 
       {/* ===== RELATED PRODUCTS ===== */}
       <RelatedProducts productId={product.id} locale={locale} />
+
+      {/* ===== INLINE LEAD FORM ===== */}
+      <div className="container mx-auto px-4 py-12">
+        <InlineLeadForm
+          mode="inline"
+          defaultIntent="quote"
+          productModel={product.model}
+          locale={locale}
+        />
+      </div>
     </>
   )
 }

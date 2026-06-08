@@ -22,5 +22,20 @@
   "generalNotice": {
     "title": "Pernyataan Kepatuhan Umum",
     "content": "SeekDrone beroperasi sesuai dengan peraturan kontrol ekspor internasional, termasuk namun tidak terbatas pada Pengaturan Wassenaar, ITAR, dan EAR. Produk kami ditujukan untuk digunakan di pasar dan aplikasi yang disetujui saja. Semua penjualan tunduk pada verifikasi pengguna akhir dan persyaratan lisensi ekspor jika berlaku."
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
+  },
+  "query_tool": {
+    "title": "Periksa Ketersediaan Ekspor",
+    "select_country": "Pilih negara/wilayah Anda",
+    "available": "Produk tersedia untuk ekspor ke wilayah ini.",
+    "restricted": "Wilayah ini memiliki pembatasan ekspor.",
+    "request_availability": "Minta Ketersediaan Produk",
+    "contact_compliance": "Hubungi Tim Kepatuhan"
   }
 }

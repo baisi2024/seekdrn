@@ -8,7 +8,7 @@
     "solutions": "Solutions",
     "caseStudies": "Case Studies",
     "support": "Support",
-    "requestDemo": "Request Demo"
+    "requestDemo": "Request Quote"
   },
   "form": {
     "fullName": "Full Name",
@@ -17,13 +17,42 @@
     "country": "Country",
     "applicationInterest": "Application Interest",
     "submit": "Submit",
-    "submitting": "Submitting..."
+    "submitting": "Submitting...",
+    "eyebrow": "Procurement and mission inquiry",
+    "title": "Tell us what you need to accomplish",
+    "subtitle": "Choose your intent so our sales, technical, or compliance team can respond with the right next step.",
+    "intent": "Inquiry intent",
+    "message": "Additional details",
+    "messagePlaceholder": "Mission scenario, target model, procurement timeline, or compliance questions",
+    "intents": {
+      "quote": "Request quote",
+      "demo": "Schedule demo",
+      "datasheet": "Datasheet / procurement pack",
+      "compliance": "Compliance support",
+      "partnership": "Channel / partnership"
+    },
+    "submitByIntent": {
+      "quote": "Request Quote",
+      "demo": "Request Demo",
+      "datasheet": "Request Datasheet",
+      "compliance": "Ask Compliance Support",
+      "partnership": "Discuss Partnership"
+    },
+    "successByIntent": {
+      "quote": "Your quote request has been submitted.",
+      "demo": "Your demo request has been submitted.",
+      "datasheet": "Your datasheet request has been submitted.",
+      "compliance": "Your compliance request has been submitted.",
+      "partnership": "Your partnership inquiry has been submitted."
+    }
   },
   "cta": {
     "requestDemo": "Request a Demo",
     "downloadSpec": "Download Spec",
     "learnMore": "Learn More",
-    "inquireAssessment": "Inquire for Assessment"
+    "inquireAssessment": "Inquire for Assessment",
+    "requestQuote": "Request Quote",
+    "exploreProducts": "Explore Products"
   },
   "error": {
     "required": "This field is required",
@@ -44,6 +73,14 @@
     "ru": "Русский"
   },
   "footer": {
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "description": "Enterprise UAV and counter-UAS solutions for public safety, energy inspection, mapping, and airspace security."
+  },
+  "breadcrumb": {
+    "home": "หน้าแรก",
+    "products": "ผลิตภัณฑ์",
+    "solutions": "โซลูชัน",
+    "case_studies": "กรณีศึกษา",
+    "compliance": "การปฏิบัติตามกฎระเบียบ"
   }
 }

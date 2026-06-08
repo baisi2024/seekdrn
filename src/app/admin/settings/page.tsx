@@ -9,6 +9,36 @@ import { Switch } from '@/components/ui/switch'
 import { createClient } from '@/lib/supabase/client'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { AdminPage } from '@/components/admin/core'
+import { MultilingualInput } from '@/features/products/components/admin/multilingual-input'
+
+interface TrustBarStat {
+  label: Record<string, string>
+  value: string
+}
+
+interface HeroConfig {
+  title: Record<string, string>
+  subtitle: Record<string, string>
+  cta_text: Record<string, string>
+  cta_link: string
+  background_image: string
+}
+
+interface TrustBarConfig {
+  stats?: TrustBarStat[]
+}
+
+interface CtaConfig {
+  title: Record<string, string>
+  subtitle: Record<string, string>
+  button_text: Record<string, string>
+}
+
+interface SeoConfig {
+  default_title: Record<string, string>
+  default_description: Record<string, string>
+  og_image: string
+}
 
 interface SettingsData {
   site_name: Record<string, string>
@@ -18,11 +48,17 @@ interface SettingsData {
   enabled_languages: string[]
   enable_chinese: boolean
   enable_chinese_by_ip: boolean
-  trust_bar_config?: Record<string, any>
-  cta_config?: Record<string, any>
-  seo_metadata?: Record<string, any>
+  trust_bar_config?: TrustBarConfig
+  cta_config?: CtaConfig
+  seo_metadata?: SeoConfig
+  hero_config?: HeroConfig
   gtm_id?: string
 }
+
+const DEFAULT_HERO_CONFIG: HeroConfig = { title: {}, subtitle: {}, cta_text: {}, cta_link: '', background_image: '' }
+const DEFAULT_TRUST_BAR: TrustBarConfig = { stats: [] }
+const DEFAULT_CTA: CtaConfig = { title: {}, subtitle: {}, button_text: {} }
+const DEFAULT_SEO: SeoConfig = { default_title: {}, default_description: {}, og_image: '' }
 
 export default function SettingsPage() {
   const t = useAdminTranslations()
@@ -39,23 +75,27 @@ export default function SettingsPage() {
     trust_bar_config: { stats: [] },
     cta_config: { title: {}, subtitle: {}, button_text: {} },
     seo_metadata: { default_title: {}, default_description: {}, og_image: '' },
+    hero_config: DEFAULT_HERO_CONFIG,
     gtm_id: '',
   })
   const supabase = createClient()
 
   useEffect(() => {
-    async function fetchSettings() {
+    async function loadSettings() {
       const { data } = await supabase
         .from('site_settings')
         .select('*')
         .single()
 
       if (data) {
-        setSettings(data)
+        setSettings({
+          ...data,
+          hero_config: data.hero_config || DEFAULT_HERO_CONFIG,
+        })
       }
       setLoading(false)
     }
-    fetchSettings()
+    loadSettings()
   }, [supabase])
 
   async function handleSave() {
@@ -76,6 +116,11 @@ export default function SettingsPage() {
     }
   }
 
+  const hero: HeroConfig = settings.hero_config ?? DEFAULT_HERO_CONFIG
+  const trustBar: TrustBarConfig = settings.trust_bar_config ?? DEFAULT_TRUST_BAR
+  const cta: CtaConfig = settings.cta_config ?? DEFAULT_CTA
+  const seo: SeoConfig = settings.seo_metadata ?? DEFAULT_SEO
+
   if (loading) return <div>{t('loading')}</div>
 
   return (
@@ -88,6 +133,62 @@ export default function SettingsPage() {
       }
     >
       <div className="max-w-2xl space-y-6">
+        {/* Hero Config */}
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('settings_page.heroConfig')}</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <MultilingualInput
+              label={t('settings_page.heroTitle')}
+              value={hero.title || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                hero_config: { ...hero, title: v }
+              })}
+            />
+            <MultilingualInput
+              label={t('settings_page.heroSubtitle')}
+              value={hero.subtitle || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                hero_config: { ...hero, subtitle: v }
+              })}
+              type="textarea"
+            />
+            <MultilingualInput
+              label={t('settings_page.heroCtaText')}
+              value={hero.cta_text || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                hero_config: { ...hero, cta_text: v }
+              })}
+            />
+            <div>
+              <Label>{t('settings_page.heroCtaLink')}</Label>
+              <Input
+                value={hero.cta_link || ''}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  hero_config: { ...hero, cta_link: e.target.value }
+                })}
+                placeholder="/contact"
+              />
+            </div>
+            <div>
+              <Label>{t('settings_page.heroBackgroundImage')}</Label>
+              <Input
+                value={hero.background_image || ''}
+                onChange={(e) => setSettings({
+                  ...settings,
+                  hero_config: { ...hero, background_image: e.target.value }
+                })}
+                placeholder="https://example.com/hero-bg.jpg"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <CardTitle>{t('settings_page.basicInfo')}</CardTitle>
@@ -142,31 +243,33 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
+        {/* Trust Bar - Multilingual */}
         <Card>
           <CardHeader>
             <CardTitle>Trust Bar</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="flex gap-3">
-                <div className="flex-1">
-                  <Label>Label EN #{i + 1}</Label>
-                  <Input
-                    value={(settings.trust_bar_config as any)?.stats?.[i]?.label?.en || ''}
-                    onChange={(e) => {
-                      const stats = [...((settings.trust_bar_config as any)?.stats || [])]
-                      if (!stats[i]) stats[i] = { label: {}, value: '' }
-                      stats[i] = { ...stats[i], label: { ...stats[i].label, en: e.target.value } }
-                      setSettings({ ...settings, trust_bar_config: { stats } })
-                    }}
-                  />
+              <div key={i} className="space-y-3 p-4 border rounded-lg">
+                <div className="text-sm font-medium text-muted-foreground">
+                  {t('settings_page.statItem')} #{i + 1}
                 </div>
-                <div className="w-32">
-                  <Label>Value #{i + 1}</Label>
+                <MultilingualInput
+                  label={t('settings_page.statLabel')}
+                  value={trustBar.stats?.[i]?.label || {}}
+                  onChange={(v) => {
+                    const stats = [...(trustBar.stats || [])]
+                    if (!stats[i]) stats[i] = { label: {}, value: '' }
+                    stats[i] = { ...stats[i], label: v }
+                    setSettings({ ...settings, trust_bar_config: { stats } })
+                  }}
+                />
+                <div>
+                  <Label>{t('settings_page.statValue')}</Label>
                   <Input
-                    value={(settings.trust_bar_config as any)?.stats?.[i]?.value || ''}
+                    value={trustBar.stats?.[i]?.value || ''}
                     onChange={(e) => {
-                      const stats = [...((settings.trust_bar_config as any)?.stats || [])]
+                      const stats = [...(trustBar.stats || [])]
                       if (!stats[i]) stats[i] = { label: {}, value: '' }
                       stats[i] = { ...stats[i], value: e.target.value }
                       setSettings({ ...settings, trust_bar_config: { stats } })
@@ -178,76 +281,70 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
+        {/* CTA Section - Multilingual */}
         <Card>
           <CardHeader>
             <CardTitle>CTA Section</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <Label>Title (EN)</Label>
-              <Input
-                value={((settings.cta_config as any)?.title?.en) || ''}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  cta_config: { ...(settings.cta_config as any), title: { ...((settings.cta_config as any)?.title || {}), en: e.target.value } }
-                })}
-              />
-            </div>
-            <div>
-              <Label>Subtitle (EN)</Label>
-              <Input
-                value={((settings.cta_config as any)?.subtitle?.en) || ''}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  cta_config: { ...(settings.cta_config as any), subtitle: { ...((settings.cta_config as any)?.subtitle || {}), en: e.target.value } }
-                })}
-              />
-            </div>
-            <div>
-              <Label>Button Text (EN)</Label>
-              <Input
-                value={((settings.cta_config as any)?.button_text?.en) || ''}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  cta_config: { ...(settings.cta_config as any), button_text: { ...((settings.cta_config as any)?.button_text || {}), en: e.target.value } }
-                })}
-              />
-            </div>
+            <MultilingualInput
+              label={t('settings_page.ctaTitle')}
+              value={cta.title || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                cta_config: { ...cta, title: v }
+              })}
+            />
+            <MultilingualInput
+              label={t('settings_page.ctaSubtitle')}
+              value={cta.subtitle || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                cta_config: { ...cta, subtitle: v }
+              })}
+              type="textarea"
+            />
+            <MultilingualInput
+              label={t('settings_page.ctaButtonText')}
+              value={cta.button_text || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                cta_config: { ...cta, button_text: v }
+              })}
+            />
           </CardContent>
         </Card>
 
+        {/* SEO & GTM - Multilingual */}
         <Card>
           <CardHeader>
             <CardTitle>SEO & GTM</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <Label>Default Title (EN)</Label>
-              <Input
-                value={((settings.seo_metadata as any)?.default_title?.en) || ''}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  seo_metadata: { ...(settings.seo_metadata as any), default_title: { ...((settings.seo_metadata as any)?.default_title || {}), en: e.target.value } }
-                })}
-              />
-            </div>
-            <div>
-              <Label>Default Description (EN)</Label>
-              <Input
-                value={((settings.seo_metadata as any)?.default_description?.en) || ''}
-                onChange={(e) => setSettings({
-                  ...settings,
-                  seo_metadata: { ...(settings.seo_metadata as any), default_description: { ...((settings.seo_metadata as any)?.default_description || {}), en: e.target.value } }
-                })}
-              />
-            </div>
+            <MultilingualInput
+              label={t('settings_page.seoDefaultTitle')}
+              value={seo.default_title || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                seo_metadata: { ...seo, default_title: v }
+              })}
+            />
+            <MultilingualInput
+              label={t('settings_page.seoDefaultDescription')}
+              value={seo.default_description || {}}
+              onChange={(v) => setSettings({
+                ...settings,
+                seo_metadata: { ...seo, default_description: v }
+              })}
+              type="textarea"
+            />
             <div>
               <Label>OG Image URL</Label>
               <Input
-                value={((settings.seo_metadata as any)?.og_image) || ''}
+                value={seo.og_image || ''}
                 onChange={(e) => setSettings({
                   ...settings,
-                  seo_metadata: { ...(settings.seo_metadata as any), og_image: e.target.value }
+                  seo_metadata: { ...seo, og_image: e.target.value }
                 })}
               />
             </div>

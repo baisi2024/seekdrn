@@ -9,7 +9,11 @@ interface Inquiry {
   full_name: string
   company: string
   country: string
+  email: string
+  phone: string
   application_interest: string
+  product_interest: string
+  intent: string
   compliance_status: string
   follow_up_status: string
 }

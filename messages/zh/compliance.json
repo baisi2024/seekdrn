@@ -22,5 +22,20 @@
   "generalNotice": {
     "title": "通用合规声明",
     "content": "SeekDrone 的经营遵守国际出口管制法规，包括但不限于瓦森纳安排、ITAR 和 EAR。我们的产品仅适用于经批准的市场和应用。所有销售均需经过最终用户验证，并在适用时取得出口许可证。"
+  },
+  "support": {
+    "title": "采购与合规支持",
+    "subtitle": "需要出口合规、最终用户审核、资料包或采购流程支持时，请提前联系我们。",
+    "quoteLabel": "咨询支持",
+    "packLabel": "查看产品资料",
+    "policyLabel": "合规支持"
+  },
+  "query_tool": {
+    "title": "查询出口可用性",
+    "select_country": "选择国家/地区",
+    "available": "产品可出口至该地区。",
+    "restricted": "该地区有出口限制。",
+    "request_availability": "查询产品可用性",
+    "contact_compliance": "联系合规团队"
   }
 }

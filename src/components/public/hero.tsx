@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslations, useLocale } from 'next-intl'
-import { Play } from 'lucide-react'
+import { ArrowRight, CheckCircle2, FileText, ShieldCheck } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
@@ -29,68 +29,72 @@ export function Hero({ heroConfig }: HeroProps) {
   const subtitle = heroConfig?.subtitle
     ? getTranslation(heroConfig.subtitle, locale, 'subtitle')
     : t('hero.subtitle')
-  const category = heroConfig?.category || 'Industrial UAV'
+  const category = heroConfig?.category || t('hero.category')
   const imageUrl = heroConfig?.image_url || null
-  const indicators = heroConfig?.indicators || [
-    { label: 'Flight Range', value: 85 },
-    { label: 'Payload Capacity', value: 70 },
-    { label: 'Wind Resistance', value: 90 },
+  const indicators = heroConfig?.indicators || []
+  const proofItems = [
+    { icon: FileText, label: t('hero.indicators.procurement') },
+    { icon: ShieldCheck, label: t('hero.indicators.deployment') },
+    { icon: CheckCircle2, label: t('hero.indicators.support') },
   ]
 
   return (
     <section className="relative overflow-hidden bg-background">
-      <div className="container mx-auto px-4 py-16 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="relative">
-            <div className="aspect-[4/3] rounded-2xl bg-muted overflow-hidden relative">
-              {imageUrl ? (
-                <Image src={imageUrl} alt={title} fill className="object-cover" priority />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-muted to-muted/50">
-                  <svg className="w-24 h-24 text-muted-foreground/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                  </svg>
-                </div>
-              )}
-              <div className="absolute top-4 left-4">
-                <Badge>{category}</Badge>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-background/90 shadow-lg flex items-center justify-center cursor-pointer hover:bg-background transition-colors">
-                  <Play className="w-6 h-6 text-primary ml-1" />
-                </div>
-              </div>
-            </div>
-          </div>
-
+      <div className="container mx-auto px-4 py-16 lg:py-20">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div className="space-y-6">
-            <Badge variant="outline" className="font-mono text-xs uppercase tracking-wider">
+            <Badge variant="outline" className="text-xs font-semibold">
               {category}
             </Badge>
-            <h1 className="text-4xl lg:text-5xl font-bold text-foreground leading-tight">{title}</h1>
-            <p className="text-lg text-muted-foreground leading-relaxed">{subtitle}</p>
-
-            <div className="space-y-4">
-              {indicators.map((indicator) => (
-                <div key={indicator.label} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-foreground font-medium">{indicator.label}</span>
-                    <span className="font-mono text-primary">{indicator.value}%</span>
-                  </div>
-                  <div className="h-2 w-full rounded-full bg-muted">
-                    <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${indicator.value}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
+            <h1 className="max-w-3xl text-4xl font-bold leading-tight text-foreground lg:text-6xl">{title}</h1>
+            <p className="max-w-2xl text-lg leading-8 text-muted-foreground">{subtitle}</p>
 
             <div className="flex flex-wrap gap-4 pt-2">
               <Button render={<Link href="#demo-form" />} nativeButton={false} size="lg">
-                {tc('cta.requestDemo')}
+                {tc('cta.requestQuote')}
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button variant="outline" size="lg">
-                {tc('cta.downloadSpec')}
+              <Button render={<Link href={`/${locale}/products`} />} nativeButton={false} variant="outline" size="lg">
+                {tc('cta.exploreProducts')}
               </Button>
+            </div>
+
+            <div className="grid gap-3 pt-4 sm:grid-cols-3">
+              {proofItems.map((item) => {
+                const Icon = item.icon
+                return (
+                  <div key={item.label} className="rounded-2xl border border-border bg-[#f7f8f5] p-4">
+                    <Icon className="h-5 w-5 text-primary" />
+                    <p className="mt-3 text-sm font-medium text-foreground">{item.label}</p>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border bg-muted shadow-sm">
+              {imageUrl ? (
+                <Image src={imageUrl} alt={title} fill className="object-cover" priority />
+              ) : (
+                <Image
+                  src="/globe.svg"
+                  alt={title}
+                  fill
+                  className="object-contain p-16 opacity-70"
+                  priority
+                />
+              )}
+              {indicators.length > 0 && (
+                <div className="absolute bottom-4 left-4 right-4 grid gap-2 rounded-2xl border border-background/70 bg-background/95 p-4 shadow-sm">
+                  {indicators.slice(0, 3).map((indicator) => (
+                    <div key={indicator.label} className="flex items-center justify-between gap-4 text-sm">
+                      <span className="text-muted-foreground">{indicator.label}</span>
+                      <span className="font-mono font-semibold text-primary">{indicator.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -22,5 +22,12 @@
   "generalNotice": {
     "title": "بیانیه عمومی انطباق",
     "content": "SeekDrone مطابق با مقررات بین‌المللی کنترل صادرات، از جمله اما نه محدود به ترتیبات واسنار، ITAR و EAR فعالیت می‌کند. محصولات ما صرفاً برای استفاده در بازارها و کاربردهای تأیید شده در نظر گرفته شده‌اند. تمام فروش‌ها منوط به تأیید کاربر نهایی و الزامات مجوز صادرات در موارد مربوطه می‌باشد."
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
   }
 }

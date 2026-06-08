@@ -11,6 +11,15 @@ const schema = z.object({
   country: z.string().min(1),
   application_interest: z.string().min(1),
   source_page: z.string().optional(),
+  inquiry_intent: z.enum(['quote', 'demo', 'datasheet', 'compliance', 'partnership']).optional(),
+  message: z.string().optional(),
+  phone: z.string().optional(),
+  product_interest: z.string().optional(),
+  intent: z.string().optional(),
+  utm_source: z.string().optional(),
+  utm_medium: z.string().optional(),
+  utm_campaign: z.string().optional(),
+  locale: z.string().optional(),
 })
 
 export async function POST(request: NextRequest) {
@@ -36,9 +45,20 @@ export async function POST(request: NextRequest) {
         company: data.company,
         email: data.email,
         country: data.country,
-        application_interest: data.application_interest,
+        application_interest: data.inquiry_intent
+          ? `${data.application_interest} | intent:${data.inquiry_intent}${data.message ? ` | note:${data.message}` : ''}`
+          : data.message
+            ? `${data.application_interest} | note:${data.message}`
+            : data.application_interest,
         source_page: data.source_page || null,
         compliance_status: complianceStatus,
+        phone: data.phone || null,
+        product_interest: data.product_interest || null,
+        intent: data.intent || data.inquiry_intent || null,
+        utm_source: data.utm_source || null,
+        utm_medium: data.utm_medium || null,
+        utm_campaign: data.utm_campaign || null,
+        locale: data.locale || null,
       })
 
     if (insertError) {
@@ -60,6 +80,8 @@ export async function POST(request: NextRequest) {
       country: data.country,
       application_interest: data.application_interest,
       source_page: data.source_page || '',
+      inquiry_intent: data.inquiry_intent || 'demo',
+      message: data.message || '',
       current_year: new Date().getFullYear().toString(),
     }).catch(console.error)
 
@@ -76,6 +98,8 @@ export async function POST(request: NextRequest) {
       application_interest: data.application_interest,
       source_page: data.source_page || '',
       compliance_status: complianceStatus,
+      inquiry_intent: data.inquiry_intent || 'demo',
+      message: data.message || '',
       current_year: new Date().getFullYear().toString(),
     }).catch(console.error)
 

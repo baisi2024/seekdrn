@@ -59,7 +59,8 @@ export async function getProductWithEnhancements(slug: string, locale: string) {
     .select(`
       *,
       product_specs(*),
-      product_downloads(*)
+      product_downloads(*),
+      tag_objects:product_tags!product_tag_relations(id, slug, translations, color)
     `)
     .eq('slug', slug)
     .eq('published', true)

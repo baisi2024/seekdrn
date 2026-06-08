@@ -22,5 +22,12 @@
   "generalNotice": {
     "title": "Tuyên bố Tuân thủ Chung",
     "content": "SeekDrone hoạt động tuân thủ các quy định kiểm soát xuất khẩu quốc tế, bao gồm nhưng không giới hạn ở Thỏa thuận Wassenaar, ITAR và EAR. Sản phẩm của chúng tôi chỉ dành cho các thị trường và ứng dụng được phê duyệt. Tất cả các giao dịch bán hàng đều phải được xác minh người dùng cuối và đáp ứng yêu cầu giấy phép xuất khẩu khi có liên quan."
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
   }
 }

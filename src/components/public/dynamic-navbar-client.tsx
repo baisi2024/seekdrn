@@ -51,15 +51,15 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText, brandNa
   const publishedItems = navItems.filter(item => item.published)
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href={`/${locale}`} className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm" suppressHydrationWarning>
+          <div className="h-8 w-8 rounded bg-primary flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm" suppressHydrationWarning>
               {brandShortName}
             </span>
           </div>
-          <span className="font-bold text-lg text-gray-900" suppressHydrationWarning>
+          <span className="font-bold text-lg text-foreground" suppressHydrationWarning>
             {brandName}
           </span>
         </Link>
@@ -96,7 +96,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText, brandNa
                           href={href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-lg text-gray-700 hover:text-gray-900"
+                          className="text-lg text-muted-foreground hover:text-foreground"
                           onClick={() => setOpen(false)}
                           suppressHydrationWarning
                         >
@@ -105,7 +105,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText, brandNa
                       ) : (
                         <Link
                           href={href}
-                          className="text-lg text-gray-700 hover:text-gray-900"
+                          className="text-lg text-muted-foreground hover:text-foreground"
                           onClick={() => setOpen(false)}
                           suppressHydrationWarning
                         >
@@ -126,7 +126,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText, brandNa
                                 href={childHref}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block text-sm text-gray-600 hover:text-gray-900"
+                                className="block text-sm text-muted-foreground hover:text-foreground"
                                 onClick={() => setOpen(false)}
                                 suppressHydrationWarning
                               >
@@ -136,7 +136,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText, brandNa
                               <Link
                                 key={child.id}
                                 href={childHref}
-                                className="block text-sm text-gray-600 hover:text-gray-900"
+                                className="block text-sm text-muted-foreground hover:text-foreground"
                                 onClick={() => setOpen(false)}
                                 suppressHydrationWarning
                               >

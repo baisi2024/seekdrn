@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { getTranslation } from '@/lib/utils'
 
@@ -15,32 +15,34 @@ interface CTASectionProps {
 
 export function CTASection({ config }: CTASectionProps) {
   const locale = useLocale()
+  const t = useTranslations('home')
 
   const title = config?.title
     ? getTranslation(config.title, locale, 'title')
-    : (locale === 'zh' ? '准备好见证我们的解决方案了吗？' : 'Ready to see our solutions in action?')
+    : t('ctaSection.title')
 
   const subtitle = config?.subtitle
     ? getTranslation(config.subtitle, locale, 'subtitle')
-    : (locale === 'zh' ? '与我们的团队预约现场演示。' : 'Schedule a live demo with our team.')
+    : t('ctaSection.subtitle')
 
   const buttonText = config?.button_text
     ? getTranslation(config.button_text, locale, 'text')
-    : (locale === 'zh' ? '申请演示' : 'Request a Demo')
+    : t('ctaSection.button')
 
   return (
-    <section className="py-16 lg:py-24 bg-primary">
+    <section className="bg-[#f7f8f5] py-16 lg:py-24">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl lg:text-4xl font-bold text-primary-foreground mb-4">{title}</h2>
-        <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">{subtitle}</p>
-        <Button
-          render={<Link href="#demo-form" />}
-          nativeButton={false}
-          size="lg"
-          variant="secondary"
-        >
-          {buttonText}
-        </Button>
+        <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-background p-8 shadow-sm lg:p-12">
+          <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">{title}</h2>
+          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">{subtitle}</p>
+          <Button
+            render={<Link href="#demo-form" />}
+            nativeButton={false}
+            size="lg"
+          >
+            {buttonText}
+          </Button>
+        </div>
       </div>
     </section>
   )

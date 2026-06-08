@@ -5,12 +5,14 @@ import { trackDatasheetDownload } from '@/lib/gtm'
 
 interface DatasheetDownloadButtonProps {
   productModel: string
+  documentType?: string
+  locale?: string
   datasheetUrl: string
 }
 
-export function DatasheetDownloadButton({ productModel, datasheetUrl }: DatasheetDownloadButtonProps) {
+export function DatasheetDownloadButton({ productModel, documentType = 'datasheet', locale = 'en', datasheetUrl }: DatasheetDownloadButtonProps) {
   const handleClick = () => {
-    trackDatasheetDownload(productModel)
+    trackDatasheetDownload({ product_model: productModel, document_type: documentType, locale })
   }
 
   return (

@@ -88,7 +88,7 @@ export async function PUT(
 
     // 触发 ISR 重新验证
     // 重新验证所有语言版本的政策页面
-    const locales = ['en', 'ar', 'es', 'fr', 'pt', 'id']
+    const locales = ['en', 'ar', 'es', 'fr', 'pt', 'id', 'zh']
     for (const locale of locales) {
       revalidatePath(`/${locale}/compliance/${section}`, 'page')
     }

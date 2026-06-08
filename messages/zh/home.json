@@ -1,8 +1,14 @@
 {
   "hero": {
-    "title": "工业级无人机，在最关键的环境中经过实战验证",
-    "subtitle": "经实战验证的无人机平台和反无人机解决方案，服务于国防、安全和关键基础设施领域。",
-    "cta": "申请演示"
+    "title": "面向关键任务的企业级无人机采购平台",
+    "subtitle": "用真实产品、案例与合规支持，加速从任务需求到采购决策。",
+    "cta": "申请演示",
+    "indicators": {
+      "procurement": "采购就绪",
+      "deployment": "部署适配",
+      "support": "全球支持"
+    },
+    "category": "工业级无人机系统"
   },
   "trustBar": {
     "flightHours": "飞行小时",
@@ -22,11 +28,42 @@
     "viewAll": "查看所有案例"
   },
   "ctaSection": {
-    "title": "准备好见证我们的解决方案了吗？",
-    "subtitle": "与我们的团队预约现场演示。",
-    "button": "申请演示"
+    "title": "准备推进采购或演示？",
+    "subtitle": "告诉我们任务、地区和时间表，我们会匹配合适型号和下一步资料。",
+    "button": "获取报价"
   },
   "faq": {
     "title": "常见问题"
+  },
+  "missionSelector": {
+    "title": "按任务选择产品与方案",
+    "subtitle": "从任务场景出发，快速定位适合的无人机平台、载荷或反无人机系统。",
+    "viewRecommended": "查看推荐",
+    "missions": {
+      "publicSafety": {
+        "title": "公共安全",
+        "description": "为搜救、巡逻和指挥提供稳定空中视角。"
+      },
+      "infrastructureInspection": {
+        "title": "基础设施巡检",
+        "description": "匹配电力、能源和工业资产巡检所需平台与载荷。"
+      },
+      "mappingSurvey": {
+        "title": "测绘勘察",
+        "description": "为测绘和施工团队规划高效率采集流程。"
+      },
+      "perimeterSecurity": {
+        "title": "周界安防",
+        "description": "为关键场地和活动建立持续监测能力。"
+      },
+      "counterUas": {
+        "title": "反无人机",
+        "description": "协调探测、研判与处置采购。"
+      },
+      "disasterResponse": {
+        "title": "应急救援",
+        "description": "选择适合快速评估和应急投送的便携系统。"
+      }
+    }
   }
 }

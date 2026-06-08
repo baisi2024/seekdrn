@@ -22,5 +22,20 @@
   "generalNotice": {
     "title": "Déclaration Générale de Conformité",
     "content": "SeekDrone opère en conformité avec les réglementations internationales de contrôle des exportations, y compris mais sans s'y limiter l'Arrangement de Wassenaar, ITAR et EAR. Nos produits sont destinés à une utilisation exclusive sur les marchés et applications approuvés. Toutes les ventes sont soumises à la vérification de l'utilisateur final et aux exigences de licence d'exportation le cas échéant."
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
+  },
+  "query_tool": {
+    "title": "Vérifier la disponibilité à l'exportation",
+    "select_country": "Sélectionnez votre pays/région",
+    "available": "Les produits sont disponibles à l'exportation vers cette région.",
+    "restricted": "Cette région est soumise à des restrictions d'exportation.",
+    "request_availability": "Demander la disponibilité du produit",
+    "contact_compliance": "Contacter l'équipe de conformité"
   }
 }

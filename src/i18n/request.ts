@@ -20,6 +20,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
       compliance: (await import(`../../messages/${locale}/compliance.json`)).default,
       footer: (await import(`../../messages/${locale}/footer.json`)).default,
       admin: (await import(`../../messages/${locale}/admin.json`)).default,
+      inline_form: (await import(`../../messages/${locale}/inline_form.json`)).default,
     },
   }
 })

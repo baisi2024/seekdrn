@@ -368,28 +368,30 @@ export default function CaseStudyEditPage() {
             <CardTitle>{t('clientQuote')}</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div>
-              <Label>English</Label>
-              <Input
-                value={caseStudy.client_quote.en || ''}
-                onChange={(e) => setCaseStudy({
-                  ...caseStudy,
-                  client_quote: { ...caseStudy.client_quote, en: e.target.value }
-                })}
-                placeholder="Client quote in English"
-              />
-            </div>
-            <div>
-              <Label>中文</Label>
-              <Input
-                value={caseStudy.client_quote.zh || ''}
-                onChange={(e) => setCaseStudy({
-                  ...caseStudy,
-                  client_quote: { ...caseStudy.client_quote, zh: e.target.value }
-                })}
-                placeholder={t('case_studies_page.chinese_client_quote')}
-              />
-            </div>
+            {['en', 'zh', 'ar', 'es', 'fr', 'id', 'pt'].map((locale) => {
+              const localeLabels: Record<string, string> = {
+                en: 'English',
+                zh: '中文',
+                ar: 'Arabic',
+                es: 'Spanish',
+                fr: 'French',
+                id: 'Indonesian',
+                pt: 'Portuguese',
+              }
+              return (
+                <div key={locale}>
+                  <Label>{localeLabels[locale]}</Label>
+                  <Input
+                    value={caseStudy.client_quote[locale] || ''}
+                    onChange={(e) => setCaseStudy({
+                      ...caseStudy,
+                      client_quote: { ...caseStudy.client_quote, [locale]: e.target.value }
+                    })}
+                    placeholder={`Client quote in ${localeLabels[locale]}`}
+                  />
+                </div>
+              )
+            })}
           </CardContent>
         </Card>
       )}

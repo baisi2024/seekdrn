@@ -5,6 +5,7 @@ import { useSearchParams, usePathname } from 'next/navigation'
 import { Tabs, TabsList } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
+import { DynamicIcon } from '@/components/public/dynamic-icon'
 import type { Category } from '@/features/products/types/category'
 import type { ProductTag } from '@/features/products/types/tag'
 
@@ -85,6 +86,7 @@ export function ProductFilter({
                 className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all hover:text-foreground data-[active]:bg-background data-[active]:text-foreground"
                 data-active={activeCategory === category.slug ? '' : undefined}
               >
+                {category.icon && <DynamicIcon name={category.icon} className="w-4 h-4" />}
                 {name}
               </Link>
             )

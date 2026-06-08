@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SeekDrone UI/UX Direction Comparison</title>
+  <style>
+    :root {
+      --ease: cubic-bezier(.32,.72,0,1);
+      --ink: #f5f7f8;
+      --muted: #8f9aa2;
+      --line: rgba(255,255,255,.12);
+      --radar: #4fd1b0;
+      --amber: #d6a84f;
+      --bg: #070a0d;
+      --panel: #11161a;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #070a0d;
+      color: var(--ink);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px),
+        radial-gradient(circle at 78% 12%, rgba(79,209,176,.18), transparent 34%),
+        radial-gradient(circle at 12% 58%, rgba(214,168,79,.08), transparent 30%);
+      background-size: 42px 42px, 42px 42px, auto, auto;
+      opacity: .9;
+    }
+    .page { position: relative; padding: 42px 32px 64px; }
+    .intro { max-width: 1180px; margin: 0 auto 28px; display: flex; justify-content: space-between; gap: 28px; align-items: end; }
+    .kicker { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 7px 12px; color: var(--radar); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; background: rgba(255,255,255,.04); }
+    h1 { margin: 18px 0 10px; font-size: clamp(34px, 5vw, 70px); letter-spacing: -.06em; line-height: .92; }
+    .intro p { margin: 0; color: #aab4ba; max-width: 720px; line-height: 1.7; }
+    .legend { color: #87929a; font-size: 13px; line-height: 1.7; max-width: 340px; }
+    .grid { max-width: 1480px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, minmax(260px, 1fr)); gap: 18px; align-items: stretch; }
+    .direction {
+      border-radius: 30px;
+      padding: 7px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.10);
+      min-height: 760px;
+      transform: translateY(0);
+      transition: transform 700ms var(--ease), border-color 700ms var(--ease), background 700ms var(--ease);
+    }
+    .direction:hover { transform: translateY(-6px); border-color: rgba(79,209,176,.35); background: rgba(255,255,255,.075); }
+    .inner { height: 100%; border-radius: 24px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,.08); }
+    .label { position: absolute; top: 18px; left: 18px; z-index: 5; display: flex; flex-direction: column; gap: 6px; }
+    .label b { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+    .label span { font-size: 12px; color: #8f9aa2; }
+
+    .mini-site { height: 100%; padding: 72px 20px 22px; display: flex; flex-direction: column; gap: 18px; }
+    .nav { height: 46px; border-radius: 999px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-size: 12px; }
+    .brand { display:flex; align-items:center; gap:8px; font-weight:700; }
+    .mark { width: 23px; height: 23px; border-radius: 7px; display:grid; place-items:center; font-size:10px; }
+    .links { display:flex; gap: 12px; color: inherit; opacity: .7; }
+    .hero { display:grid; gap: 14px; }
+    .hero h2 { margin:0; font-size: 30px; line-height: 1.02; letter-spacing: -.05em; }
+    .hero p { margin:0; font-size: 13px; line-height: 1.6; color: inherit; opacity: .72; }
+    .actions { display:flex; gap: 8px; flex-wrap: wrap; }
+    .btn { border:0; border-radius:999px; padding: 10px 13px; font-weight:700; font-size:12px; display:inline-flex; gap: 8px; align-items:center; }
+    .btn .dot { width: 22px; height:22px; border-radius:50%; display:grid; place-items:center; background: rgba(0,0,0,.12); }
+    .visual { min-height: 170px; border-radius: 24px; position: relative; overflow: hidden; }
+    .drone-placeholder { position:absolute; inset: 26px 22px; border-radius: 18px; border: 1px dashed currentColor; opacity: .5; display:grid; place-items:center; font-size:11px; letter-spacing:.12em; text-transform:uppercase; }
+    .metrics { display:grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .metric { border-radius: 16px; padding: 13px 10px; }
+    .metric strong { display:block; font-size: 20px; letter-spacing:-.05em; }
+    .metric span { display:block; font-size: 10px; opacity:.62; margin-top: 4px; }
+    .cards { display:grid; gap: 8px; margin-top: auto; }
+    .card { border-radius: 18px; padding: 13px; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+    .card b { font-size: 13px; }
+    .card small { color: inherit; opacity:.6; }
+
+    /* current */
+    .current .inner { background:#fff; color:#111827; }
+    .current .nav { border:1px solid #e5e7eb; background:rgba(255,255,255,.92); }
+    .current .mark { background:#2563eb; color:#fff; }
+    .current .hero h2 { color:#111827; }
+    .current .visual { background:linear-gradient(135deg,#eff6ff,#f8fafc); color:#2563eb; border:1px solid #e5e7eb; }
+    .current .btn.primary { background:#2563eb; color:#fff; }
+    .current .btn.secondary { background:#fff; color:#111827; border:1px solid #d1d5db; }
+    .current .metric,.current .card { background:#f9fafb; border:1px solid #e5e7eb; }
+
+    /* tactical */
+    .tactical .inner { background: linear-gradient(180deg,#0b0f12,#11171b); color:#f4f7f8; }
+    .tactical .nav { background: rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.12); box-shadow: inset 0 1px rgba(255,255,255,.08); }
+    .tactical .mark { background:#4fd1b0; color:#06100d; }
+    .tactical .hero h2 { color:#f5f7f8; }
+    .tactical .visual { background: radial-gradient(circle at 72% 28%, rgba(79,209,176,.2), transparent 35%), #151b20; color:#4fd1b0; border:1px solid rgba(255,255,255,.12); }
+    .tactical .visual::before { content:""; position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px); background-size:24px 24px; }
+    .tactical .btn.primary { background:#4fd1b0; color:#06100d; }
+    .tactical .btn.secondary { background:rgba(255,255,255,.06); color:#f5f7f8; border:1px solid rgba(255,255,255,.14); }
+    .tactical .metric,.tactical .card { background:rgba(255,255,255,.055); border:1px solid rgba(255,255,255,.10); }
+    .tactical .metric strong { color:#4fd1b0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    /* editorial */
+    .editorial .inner { background:#f3efe4; color:#17130f; }
+    .editorial .nav { background:rgba(255,255,255,.42); border:1px solid rgba(23,19,15,.14); }
+    .editorial .mark { background:#17130f; color:#f3efe4; border-radius:50%; }
+    .editorial .hero h2 { font-family: Georgia, 'Times New Roman', serif; font-weight:500; color:#17130f; }
+    .editorial .visual { background:#ded4bd; color:#5b4b30; border:1px solid rgba(23,19,15,.12); }
+    .editorial .btn.primary { background:#17130f; color:#f3efe4; }
+    .editorial .btn.secondary { background:transparent; color:#17130f; border:1px solid rgba(23,19,15,.22); }
+    .editorial .metric,.editorial .card { background:rgba(255,255,255,.42); border:1px solid rgba(23,19,15,.12); }
+    .editorial .metric strong { color:#8a6426; }
+
+    /* light */
+    .light .inner { background:#edf1f2; color:#101619; }
+    .light .nav { background:rgba(255,255,255,.72); border:1px solid rgba(16,22,25,.1); box-shadow:0 20px 60px rgba(28,43,51,.08); }
+    .light .mark { background:#101619; color:#fff; }
+    .light .visual { background:linear-gradient(135deg,#ffffff,#dfe7e8); color:#607178; border:1px solid rgba(16,22,25,.08); box-shadow:0 30px 90px rgba(28,43,51,.12); }
+    .light .btn.primary { background:#101619; color:#fff; }
+    .light .btn.secondary { background:#fff; color:#101619; border:1px solid rgba(16,22,25,.12); }
+    .light .metric,.light .card { background:rgba(255,255,255,.76); border:1px solid rgba(16,22,25,.08); box-shadow:0 18px 50px rgba(28,43,51,.07); }
+    .light .metric strong { color:#177a66; }
+
+    .notes { max-width:1480px; margin: 22px auto 0; display:grid; grid-template-columns: repeat(4, 1fr); gap:18px; }
+    .note { border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.045); border-radius:22px; padding:18px; color:#aeb8be; font-size:13px; line-height:1.7; }
+    .note b { color:#fff; display:block; margin-bottom:6px; }
+    @media (max-width: 1180px) { .grid,.notes { grid-template-columns: repeat(2, 1fr); } .intro { flex-direction:column; align-items:start; } }
+    @media (max-width: 720px) { .page { padding: 24px 14px 42px; } .grid,.notes { grid-template-columns: 1fr; } .direction { min-height: 680px; } .links { display:none; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="intro">
+      <div>
+        <span class="kicker">SeekDrone UI / UX Direction Review</span>
+        <h1>当前风格 vs 三个升级方向</h1>
+        <p>这是视觉气质对比，不是最终生产页面。左一模拟当前站点的蓝白通用风；后三个是可选升级方向。重点看：信任感、工业感、转化按钮、产品信息层级。</p>
+      </div>
+      <div class="legend">建议优先看第一屏感觉：采购方是否会觉得「可信、专业、值得联系」。如果喜欢某个方向，也可以混合：比如 A 的深色工业感 + C 的轻量阅读性。</div>
+    </section>
+
+    <section class="grid">
+      <article class="direction current">
+        <div class="inner">
+          <div class="label"><b>Current Abstract</b><span>当前通用蓝白 SaaS 感</span></div>
+          <div class="mini-site">
+            <div class="nav"><div class="brand"><span class="mark">SD</span>SeekDrone</div><div class="links"><span>Products</span><span>Cases</span></div></div>
+            <div class="hero"><h2>Industrial UAV Solutions</h2><p>Commercial drones and counter-UAS systems for defense, security and infrastructure.</p><div class="actions"><button class="btn primary">Request Demo</button><button class="btn secondary">View Products</button></div></div>
+            <div class="visual"><div class="drone-placeholder">Product Image</div></div>
+            <div class="metrics"><div class="metric"><strong>50k+</strong><span>Hours</span></div><div class="metric"><strong>30+</strong><span>Countries</span></div><div class="metric"><strong>24h</strong><span>Reply</span></div></div>
+            <div class="cards"><div class="card"><div><b>Product Card</b><br><small>Model / specs / CTA</small></div><span>→</span></div><div class="card"><div><b>Case Study</b><br><small>Industry result</small></div><span>→</span></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="direction tactical">
+        <div class="inner">
+          <div class="label"><b>A · Precision Defense</b><span>推荐：精密防务工业界面</span></div>
+          <div class="mini-site">
+            <div class="nav"><div class="brand"><span class="mark">SD</span>SeekDrone</div><div class="links"><span>Platforms</span><span>Operations</span></div></div>
+            <div class="hero"><h2>Field-proven UAV platforms for critical missions.</h2><p>Built for procurement teams that need technical confidence, export clarity and deployment proof.</p><div class="actions"><button class="btn primary">Request Quote <span class="dot">↗</span></button><button class="btn secondary">Download Datasheet</button></div></div>
+            <div class="visual"><div class="drone-placeholder">Verified Product Render</div></div>
+            <div class="metrics"><div class="metric"><strong>50K+</strong><span>FLIGHT HOURS</span></div><div class="metric"><strong>30+</strong><span>COUNTRIES</span></div><div class="metric"><strong>99.9%</strong><span>MISSION READY</span></div></div>
+            <div class="cards"><div class="card"><div><b>Counter-UAS Platform</b><br><small>Radar-ready · field support</small></div><span>↗</span></div><div class="card"><div><b>Defense Deployment Case</b><br><small>Measured outcomes first</small></div><span>↗</span></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="direction editorial">
+        <div class="inner">
+          <div class="label"><b>B · Procurement Editorial</b><span>高端、稳重、资料型</span></div>
+          <div class="mini-site">
+            <div class="nav"><div class="brand"><span class="mark">SD</span>SeekDrone</div><div class="links"><span>Systems</span><span>Reports</span></div></div>
+            <div class="hero"><h2>Unmanned systems for long-cycle institutional procurement.</h2><p>A quieter premium direction, closer to defense report / engineering whitepaper aesthetics.</p><div class="actions"><button class="btn primary">Talk to Sales <span class="dot">→</span></button><button class="btn secondary">Read Cases</button></div></div>
+            <div class="visual"><div class="drone-placeholder">Editorial Product Plate</div></div>
+            <div class="metrics"><div class="metric"><strong>12</strong><span>Mission profiles</span></div><div class="metric"><strong>4</strong><span>Compliance paths</span></div><div class="metric"><strong>3</strong><span>Buying teams</span></div></div>
+            <div class="cards"><div class="card"><div><b>Procurement Confidence</b><br><small>Compliance / documents</small></div><span>→</span></div><div class="card"><div><b>Operational Report</b><br><small>Case-led persuasion</small></div><span>→</span></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="direction light">
+        <div class="inner">
+          <div class="label"><b>C · Clean Engineering</b><span>轻量、现代、易读</span></div>
+          <div class="mini-site">
+            <div class="nav"><div class="brand"><span class="mark">SD</span>SeekDrone</div><div class="links"><span>Products</span><span>Solutions</span></div></div>
+            <div class="hero"><h2>Choose the right drone system with less friction.</h2><p>A brighter conversion-focused direction for international B2B buyers and mobile traffic.</p><div class="actions"><button class="btn primary">Find My Platform <span class="dot">→</span></button><button class="btn secondary">Request Quote</button></div></div>
+            <div class="visual"><div class="drone-placeholder">Clean Product Module</div></div>
+            <div class="metrics"><div class="metric"><strong>3 min</strong><span>Product match</span></div><div class="metric"><strong>11</strong><span>Languages</span></div><div class="metric"><strong>24h</strong><span>Response</span></div></div>
+            <div class="cards"><div class="card"><div><b>Application Selector</b><br><small>Scenario → product</small></div><span>→</span></div><div class="card"><div><b>Mobile-first Inquiry</b><br><small>Shorter form path</small></div><span>→</span></div></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="notes">
+      <div class="note"><b>当前问题</b>通用蓝白、安全但普通；适合功能验证，不足以支撑防务/工业采购的高级信任感。</div>
+      <div class="note"><b>A 推荐</b>最符合 SeekDrone：深色战术表面、雷达青绿、工程网格、强参数表达。适合全站主视觉。</div>
+      <div class="note"><b>B 备选</b>更像采购报告/白皮书，适合合规、案例、资料下载页面，但首页可能不够有冲击力。</div>
+      <div class="note"><b>C 备选</b>更轻、更易读，适合移动端和产品筛选；可与 A 混合，避免深色页面过重。</div>
+    </section>
+  </main>
+</body>
+</html>

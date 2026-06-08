@@ -10,9 +10,12 @@ import { Plus } from 'lucide-react'
 
 interface Solution {
   id: string
-  title: string
-  category: string
+  slug: string
+  icon: string
+  translations: Record<string, Record<string, string>>
   published: boolean
+  sort_order: number
+  created_at: string
 }
 
 interface SolutionsClientProps {
@@ -23,8 +26,18 @@ export function SolutionsClient({ solutions }: SolutionsClientProps) {
   const t = useAdminTranslations()
 
   const columns = [
-    { key: 'title', label: t('title_field') },
-    { key: 'category', label: t('category') },
+    {
+      key: 'slug',
+      label: t('slug'),
+    },
+    {
+      key: 'title',
+      label: t('title_field'),
+      render: (item: Solution) => {
+        const title = item.translations?.en?.title || item.translations?.zh?.title || '-'
+        return <span>{title}</span>
+      }
+    },
     {
       key: 'published',
       label: t('status'),
@@ -33,6 +46,10 @@ export function SolutionsClient({ solutions }: SolutionsClientProps) {
           {item.published ? t('published') : t('draft')}
         </Badge>
       )
+    },
+    {
+      key: 'sort_order',
+      label: t('sort_order'),
     },
   ]
 
@@ -50,6 +67,7 @@ export function SolutionsClient({ solutions }: SolutionsClientProps) {
         data={solutions}
         columns={columns}
         searchPlaceholder={t('solutions_page.searchPlaceholder')}
+        onRowClick={(item) => window.location.href = `/admin/solutions/${item.id}`}
       />
     </AdminPage>
   )

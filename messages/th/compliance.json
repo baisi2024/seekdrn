@@ -22,5 +22,12 @@
   "generalNotice": {
     "title": "คำชี้แจงการปฏิบัติตามกฎระเบียบทั่วไป",
     "content": "SeekDrone ดำเนินงานตามกฎระเบียบการควบคุมการส่งออกระหว่างประเทศ รวมถึงแต่ไม่จำกัดเพียงข้อตกลง Wassenaar, ITAR และ EAR ผลิตภัณฑ์ของเรามีวัตถุประสงค์เพื่อใช้ในตลาดและการใช้งานที่ได้รับอนุมัติเท่านั้น การขายทั้งหมดขึ้นอยู่กับการตรวจสอบผู้ใช้ปลายทางและข้อกำหนดใบอนุญาตการส่งออกตามที่เกี่ยวข้อง"
+  },
+  "support": {
+    "title": "Procurement and compliance support",
+    "subtitle": "Contact us early for export review, end-user checks, procurement packs, and buyer documentation.",
+    "quoteLabel": "Ask support",
+    "packLabel": "View product documents",
+    "policyLabel": "Compliance support"
   }
 }

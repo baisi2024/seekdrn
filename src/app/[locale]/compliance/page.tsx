@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import { supabaseAdmin } from '@/lib/supabase/admin'
-import { getTranslation } from '@/lib/utils'
 import { Card, CardContent } from '@/components/ui/card'
+import { ComplianceSupportBlock } from '@/components/public/compliance-support-block'
+import { ComplianceQueryTool } from '@/components/public/compliance-query-tool'
 import { Shield, FileText, Cookie, Scale } from 'lucide-react'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -21,22 +21,22 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 
 const POLICY_ITEMS = [
   {
-    slug: 'export-compliance',
+    slug: 'export',
     icon: Shield,
     key: 'export',
   },
   {
-    slug: 'privacy-policy',
+    slug: 'privacy',
     icon: FileText,
     key: 'privacy',
   },
   {
-    slug: 'terms-of-use',
+    slug: 'terms',
     icon: Scale,
     key: 'terms',
   },
   {
-    slug: 'cookie-policy',
+    slug: 'cookie',
     icon: Cookie,
     key: 'cookie',
   },
@@ -54,10 +54,22 @@ export default async function CompliancePage({
     <div className="py-16">
       <div className="container mx-auto px-4">
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-foreground">{t('title')}</h1>
-          <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
+          <p className="text-sm font-semibold text-primary">{t('support.policyLabel')}</p>
+          <h1 className="mt-3 text-3xl font-bold text-foreground lg:text-5xl">{t('title')}</h1>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl">
             {t('subtitle')}
           </p>
+        </div>
+
+        <div className="mb-12">
+          <ComplianceSupportBlock
+            locale={locale}
+            title={t('support.title')}
+            subtitle={t('support.subtitle')}
+            quoteLabel={t('support.quoteLabel')}
+            packLabel={t('support.packLabel')}
+            policyLabel={t('support.policyLabel')}
+          />
         </div>
 
         <div className="grid md:grid-cols-2 gap-6 mb-16">
@@ -95,6 +107,11 @@ export default async function CompliancePage({
               </p>
             </CardContent>
           </Card>
+        </div>
+
+        {/* Compliance Query Tool */}
+        <div className="max-w-3xl mt-8">
+          <ComplianceQueryTool locale={locale} />
         </div>
       </div>
     </div>

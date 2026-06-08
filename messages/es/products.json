@@ -43,5 +43,63 @@
     "certificate": "Certificado",
     "brochure": "Folleto",
     "other": "Otro"
+  },
+  "intro": {
+    "eyebrow": "Product selection"
+  },
+  "detailsCta": "View details",
+  "missionSelector": {
+    "title": "Choose by mission before model",
+    "subtitle": "Start with the operating scenario, then narrow to the right aircraft, payload, or counter-UAS package.",
+    "viewRecommended": "View recommended",
+    "missions": {
+      "publicSafety": {
+        "title": "Public safety missions",
+        "description": "Deploy reliable aerial overwatch, search, and command visibility."
+      },
+      "infrastructureInspection": {
+        "title": "Infrastructure inspection",
+        "description": "Match aircraft and payloads for power, energy, and industrial assets."
+      },
+      "mappingSurvey": {
+        "title": "Mapping and survey",
+        "description": "Plan efficient capture workflows for geospatial and construction teams."
+      },
+      "perimeterSecurity": {
+        "title": "Perimeter security",
+        "description": "Build persistent monitoring around critical sites and events."
+      },
+      "counterUas": {
+        "title": "Counter-UAS response",
+        "description": "Coordinate detection, assessment, and mitigation procurement."
+      },
+      "disasterResponse": {
+        "title": "Disaster response",
+        "description": "Select portable systems for rapid assessment and emergency logistics."
+      }
+    }
+  },
+  "procurementDecision": {
+    "title": "Procurement decision fit"
+  },
+  "procurementPack": {
+    "title": "Procurement pack and compliance support",
+    "subtitle": "Collect specs, documents, and compliance guidance for procurement, technical, and legal review.",
+    "supportLabel": "Ask procurement support",
+    "complianceLabel": "Compliance support"
+  },
+  "used_in_case": "Utilizado en este caso",
+  "request_quote_for": "Solicitar cotización para {model}",
+  "compare": {
+    "title": "Comparar Productos",
+    "add_to_compare": "Agregar a Comparar",
+    "added_to_compare": "Agregado",
+    "start_compare": "Iniciar Comparación",
+    "clear_all": "Limpiar",
+    "max_reached": "Puede comparar hasta 3 productos",
+    "select_another": "Seleccione al menos 2 productos para comparar",
+    "specification": "Especificación",
+    "request_quote": "Solicitar Cotización",
+    "view_details": "Ver Detalles"
   }
 }

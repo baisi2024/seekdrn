@@ -43,5 +43,63 @@
     "certificate": "证书",
     "brochure": "宣传册",
     "other": "其他"
+  },
+  "intro": {
+    "eyebrow": "产品选型"
+  },
+  "detailsCta": "查看详情",
+  "missionSelector": {
+    "title": "按任务选择产品与方案",
+    "subtitle": "从任务场景出发，快速定位适合的无人机平台、载荷或反无人机系统。",
+    "viewRecommended": "查看推荐",
+    "missions": {
+      "publicSafety": {
+        "title": "公共安全",
+        "description": "为搜救、巡逻和指挥提供稳定空中视角。"
+      },
+      "infrastructureInspection": {
+        "title": "基础设施巡检",
+        "description": "匹配电力、能源和工业资产巡检所需平台与载荷。"
+      },
+      "mappingSurvey": {
+        "title": "测绘勘察",
+        "description": "为测绘和施工团队规划高效率采集流程。"
+      },
+      "perimeterSecurity": {
+        "title": "周界安防",
+        "description": "为关键场地和活动建立持续监测能力。"
+      },
+      "counterUas": {
+        "title": "反无人机",
+        "description": "协调探测、研判与处置采购。"
+      },
+      "disasterResponse": {
+        "title": "应急救援",
+        "description": "选择适合快速评估和应急投送的便携系统。"
+      }
+    }
+  },
+  "procurementDecision": {
+    "title": "采购决策参考"
+  },
+  "procurementPack": {
+    "title": "采购资料包与合规支持",
+    "subtitle": "获取规格、资料与合规确认，帮助采购、技术和法务团队同步评估。",
+    "supportLabel": "咨询采购支持",
+    "complianceLabel": "合规支持"
+  },
+  "used_in_case": "本案例使用产品",
+  "request_quote_for": "获取 {model} 报价",
+  "compare": {
+    "title": "产品对比",
+    "add_to_compare": "添加对比",
+    "added_to_compare": "已添加",
+    "start_compare": "开始对比",
+    "clear_all": "清空",
+    "max_reached": "最多对比3个产品",
+    "select_another": "请选择至少2个产品进行对比",
+    "specification": "规格参数",
+    "request_quote": "获取报价",
+    "view_details": "查看详情"
   }
 }

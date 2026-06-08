@@ -6,5 +6,33 @@
   "workflow": "Flujo de Trabajo",
   "keyMetrics": "Métricas Clave",
   "relatedCases": "Casos Relacionados",
-  "requestDemo": "Solicitar una Demo"
+  "requestDemo": "Solicitar una Demo",
+  "eyebrow": "Mission solution",
+  "detailSubtitle": "Evaluate the solution through workflow, product fit, and deployment proof.",
+  "exploreProducts": "Explore Products",
+  "missionWorkflow": {
+    "title": "Mission workflow from assessment to deployment",
+    "subtitle": "Keep the existing challenge, solution, and workflow content while organizing the next actions for buyers.",
+    "steps": {
+      "assess": {
+        "title": "Assess mission and constraints",
+        "description": "Confirm scenario, region, compliance needs, and procurement timeline."
+      },
+      "configure": {
+        "title": "Configure platform and payload",
+        "description": "Match aircraft, payload, ground control, and support documents."
+      },
+      "deploy": {
+        "title": "Demo, delivery, and training",
+        "description": "Plan demos, delivery, training, and after-sales support."
+      }
+    }
+  },
+  "solutionCta": {
+    "title": "Need help selecting this solution?",
+    "subtitle": "Contact us for model recommendations, demo planning, and procurement materials."
+  },
+  "recommendedProducts": "Productos recomendados",
+  "related_cases": "Casos relacionados",
+  "talkToTeam": "Hable con nuestro equipo"
 }

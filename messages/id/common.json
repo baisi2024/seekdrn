@@ -8,7 +8,7 @@
     "solutions": "Solusi",
     "caseStudies": "Studi Kasus",
     "support": "Dukungan",
-    "requestDemo": "Minta Demo"
+    "requestDemo": "Request Quote"
   },
   "form": {
     "fullName": "Nama Lengkap",
@@ -17,13 +17,49 @@
     "country": "Negara",
     "applicationInterest": "Minat Aplikasi",
     "submit": "Kirim",
-    "submitting": "Mengirim..."
+    "submitting": "Mengirim...",
+    "eyebrow": "Procurement and mission inquiry",
+    "title": "Tell us what you need to accomplish",
+    "subtitle": "Choose your intent so our sales, technical, or compliance team can respond with the right next step.",
+    "intent": "Inquiry intent",
+    "message": "Additional details",
+    "messagePlaceholder": "Mission scenario, target model, procurement timeline, or compliance questions",
+    "intents": {
+      "quote": "Request quote",
+      "demo": "Schedule demo",
+      "datasheet": "Datasheet / procurement pack",
+      "compliance": "Compliance support",
+      "partnership": "Channel / partnership"
+    },
+    "submitByIntent": {
+      "quote": "Request Quote",
+      "demo": "Request Demo",
+      "datasheet": "Request Datasheet",
+      "compliance": "Ask Compliance Support",
+      "partnership": "Discuss Partnership"
+    },
+    "successByIntent": {
+      "quote": "Your quote request has been submitted.",
+      "demo": "Your demo request has been submitted.",
+      "datasheet": "Your datasheet request has been submitted.",
+      "compliance": "Your compliance request has been submitted.",
+      "partnership": "Your partnership inquiry has been submitted."
+    },
+    "intentHelp": {
+      "quote": "Dapatkan panduan model, anggaran, dan pengiriman.",
+      "demo": "Rencanakan pembahasan teknis bersama tim Anda.",
+      "datasheet": "Kumpulkan spesifikasi dan dokumen pengadaan.",
+      "compliance": "Tinjau pertanyaan ekspor, pengguna akhir, dan kebijakan.",
+      "partnership": "Bahas kanal, integrasi, atau kerja sama regional."
+    }
   },
   "cta": {
     "requestDemo": "Minta Demo",
     "downloadSpec": "Unduh Spesifikasi",
     "learnMore": "Pelajari Lebih Lanjut",
-    "inquireAssessment": "Tanyakan Penilaian"
+    "inquireAssessment": "Tanyakan Penilaian",
+    "requestQuote": "Request Quote",
+    "exploreProducts": "Explore Products"
   },
   "error": {
     "required": "Bidang ini wajib diisi",
@@ -40,6 +76,49 @@
     "zh": "中文"
   },
   "footer": {
-    "rights": "Hak cipta dilindungi."
+    "rights": "Hak cipta dilindungi.",
+    "description": "Enterprise UAV and counter-UAS solutions for public safety, energy inspection, mapping, and airspace security."
+  },
+  "inline_form": {
+    "title": "Hubungi Kami",
+    "step1_title": "Apa yang Anda butuhkan?",
+    "step2_title": "Konteks Proyek",
+    "step3_title": "Informasi Kontak",
+    "intent_quote": "Minta Penawaran",
+    "intent_demo": "Jadwalkan Demo",
+    "intent_datasheet": "Unduh Lembar Data",
+    "intent_compliance": "Pertanyaan Kepatuhan",
+    "intent_partnership": "Jelajahi Kemitraan",
+    "company_label": "Perusahaan",
+    "country_label": "Negara",
+    "message_label": "Ceritakan tentang proyek Anda",
+    "name_label": "Nama Lengkap",
+    "email_label": "Email",
+    "phone_label": "Telepon (opsional)",
+    "submit_button": "Kirim",
+    "submitting_button": "Mengirim...",
+    "success_title": "Terima kasih!",
+    "success_message": "Kami akan menghubungi Anda dalam 24 jam.",
+    "review_notice": "Pertanyaan Anda sedang ditinjau karena persyaratan kepatuhan."
+  },
+  "breadcrumb": {
+    "home": "Beranda",
+    "products": "Produk",
+    "solutions": "Solusi",
+    "case_studies": "Studi Kasus",
+    "compliance": "Kepatuhan"
+  },
+  "share": {
+    "title": "Bagikan",
+    "linkedin": "Bagikan di LinkedIn",
+    "twitter": "Bagikan di X",
+    "email": "Bagikan via Email",
+    "copy_link": "Salin Tautan",
+    "link_copied": "Tautan disalin!"
+  },
+  "pagination": {
+    "previous": "Sebelumnya",
+    "next": "Selanjutnya",
+    "page": "Halaman {current} dari {total}"
   }
 }

@@ -19,5 +19,40 @@
   "results": "成果",
   "clientQuote": "客户评价",
   "fieldFootage": "现场影像",
-  "relatedProducts": "相关产品"
+  "relatedProducts": "相关产品",
+  "resultsEyebrow": "结果优先",
+  "proofIntro": {
+    "eyebrow": "真实部署证据",
+    "subtitle": "先看结果指标、任务背景和部署经验，再判断是否适合您的项目。",
+    "points": {
+      "mission": {
+        "title": "任务背景",
+        "description": "了解客户场景与约束。"
+      },
+      "procurement": {
+        "title": "采购价值",
+        "description": "用结果指标支持内部决策。"
+      },
+      "deployment": {
+        "title": "部署经验",
+        "description": "查看现场图片、视频和执行流程。"
+      }
+    }
+  },
+  "similarProject": {
+    "title": "规划类似项目？",
+    "subtitle": "分享地区、场景和目标，我们会推荐适合的产品组合与资料包。",
+    "primaryCta": "咨询类似项目",
+    "secondaryCta": "查看产品"
+  },
+  "proofCard": {
+    "description": "面向{country}采购方的{industry}部署证据。",
+    "global": "全球"
+  },
+  "filter_industry": "行业",
+  "filter_country": "国家",
+  "filter_all": "全部",
+  "no_results_cta": "找不到合适案例？联系我们获取定制方案。",
+  "products_used": "使用产品",
+  "request_similar": "咨询类似方案"
 }

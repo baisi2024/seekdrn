@@ -19,5 +19,40 @@
   "results": "Resultados",
   "clientQuote": "Depoimento do Cliente",
   "fieldFootage": "Imagens de Campo",
-  "relatedProducts": "Produtos Relacionados"
+  "relatedProducts": "Produtos Relacionados",
+  "resultsEyebrow": "Proof first",
+  "proofIntro": {
+    "eyebrow": "Deployment proof",
+    "subtitle": "Review outcomes, mission context, and deployment evidence before shortlisting a similar project.",
+    "points": {
+      "mission": {
+        "title": "Mission context",
+        "description": "Understand the operating scenario and constraints."
+      },
+      "procurement": {
+        "title": "Procurement value",
+        "description": "Use outcome metrics to support internal decisions."
+      },
+      "deployment": {
+        "title": "Deployment proof",
+        "description": "Review field media and execution flow."
+      }
+    }
+  },
+  "similarProject": {
+    "title": "Planning a similar project?",
+    "subtitle": "Share your region, scenario, and objectives so we can recommend a suitable product package.",
+    "primaryCta": "Discuss similar project",
+    "secondaryCta": "View products"
+  },
+  "proofCard": {
+    "description": "Prova de implantação de {industry} para compradores de {country}.",
+    "global": "global"
+  },
+  "filter_industry": "Indústria",
+  "filter_country": "País",
+  "filter_all": "Todos",
+  "no_results_cta": "Não encontra o que procura? Entre em contato para soluções personalizadas.",
+  "products_used": "Produtos Utilizados",
+  "request_similar": "Solicitar Solução Similar"
 }

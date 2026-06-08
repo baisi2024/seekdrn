@@ -24,7 +24,7 @@ export function TrustBar({ config }: TrustBarProps) {
   ]
 
   return (
-    <section className="bg-foreground py-10">
+    <section className="border-y border-border bg-[#f7f8f5] py-10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat) => (

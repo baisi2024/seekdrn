@@ -8,7 +8,7 @@
     "solutions": "Solutions",
     "caseStudies": "Case Studies",
     "support": "Support",
-    "requestDemo": "Request Demo"
+    "requestDemo": "Request Quote"
   },
   "form": {
     "fullName": "Full Name",
@@ -17,13 +17,49 @@
     "country": "Country",
     "applicationInterest": "Application Interest",
     "submit": "Submit",
-    "submitting": "Submitting..."
+    "submitting": "Submitting...",
+    "eyebrow": "Procurement and mission inquiry",
+    "title": "Tell us what you need to accomplish",
+    "subtitle": "Choose your intent so our sales, technical, or compliance team can respond with the right next step.",
+    "intent": "Inquiry intent",
+    "message": "Additional details",
+    "messagePlaceholder": "Mission scenario, target model, procurement timeline, or compliance questions",
+    "intents": {
+      "quote": "Request quote",
+      "demo": "Schedule demo",
+      "datasheet": "Datasheet / procurement pack",
+      "compliance": "Compliance support",
+      "partnership": "Channel / partnership"
+    },
+    "submitByIntent": {
+      "quote": "Request Quote",
+      "demo": "Request Demo",
+      "datasheet": "Request Datasheet",
+      "compliance": "Ask Compliance Support",
+      "partnership": "Discuss Partnership"
+    },
+    "successByIntent": {
+      "quote": "Your quote request has been submitted.",
+      "demo": "Your demo request has been submitted.",
+      "datasheet": "Your datasheet request has been submitted.",
+      "compliance": "Your compliance request has been submitted.",
+      "partnership": "Your partnership inquiry has been submitted."
+    },
+    "intentHelp": {
+      "quote": "Receive model, budget, and delivery guidance.",
+      "demo": "Plan a technical walkthrough with your team.",
+      "datasheet": "Collect specs and procurement documents.",
+      "compliance": "Review export, end-user, and policy questions.",
+      "partnership": "Discuss channel, integration, or regional cooperation."
+    }
   },
   "cta": {
     "requestDemo": "Request a Demo",
     "downloadSpec": "Download Spec",
     "learnMore": "Learn More",
-    "inquireAssessment": "Inquire for Assessment"
+    "inquireAssessment": "Inquire for Assessment",
+    "requestQuote": "Request Quote",
+    "exploreProducts": "Explore Products"
   },
   "error": {
     "required": "This field is required",
@@ -40,6 +76,49 @@
     "zh": "中文"
   },
   "footer": {
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "description": "Enterprise UAV and counter-UAS solutions for public safety, energy inspection, mapping, and airspace security."
+  },
+  "inline_form": {
+    "title": "Get in Touch",
+    "step1_title": "What do you need?",
+    "step2_title": "Project Context",
+    "step3_title": "Contact Information",
+    "intent_quote": "Request a Quote",
+    "intent_demo": "Schedule a Demo",
+    "intent_datasheet": "Download Datasheet",
+    "intent_compliance": "Compliance Inquiry",
+    "intent_partnership": "Explore Partnership",
+    "company_label": "Company",
+    "country_label": "Country",
+    "message_label": "Tell us about your project",
+    "name_label": "Full Name",
+    "email_label": "Email",
+    "phone_label": "Phone (optional)",
+    "submit_button": "Submit",
+    "submitting_button": "Submitting...",
+    "success_title": "Thank you!",
+    "success_message": "We'll get back to you within 24 hours.",
+    "review_notice": "Your inquiry is under review due to compliance requirements."
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "products": "Products",
+    "solutions": "Solutions",
+    "case_studies": "Case Studies",
+    "compliance": "Compliance"
+  },
+  "share": {
+    "title": "Share",
+    "linkedin": "Share on LinkedIn",
+    "twitter": "Share on X",
+    "email": "Share via Email",
+    "copy_link": "Copy Link",
+    "link_copied": "Link copied!"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {current} of {total}"
   }
 }

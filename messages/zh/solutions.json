@@ -6,5 +6,33 @@
   "workflow": "工作流程",
   "keyMetrics": "关键指标",
   "relatedCases": "相关案例",
-  "requestDemo": "申请演示"
+  "requestDemo": "申请演示",
+  "eyebrow": "任务方案",
+  "detailSubtitle": "以任务流程、产品配置和项目证据支持方案评估。",
+  "exploreProducts": "浏览产品",
+  "missionWorkflow": {
+    "title": "从评估到部署的任务流程",
+    "subtitle": "保留现有挑战、方案与流程内容，并用采购友好的步骤组织行动。",
+    "steps": {
+      "assess": {
+        "title": "评估任务与约束",
+        "description": "确认场景、地区、合规要求和采购时间表。"
+      },
+      "configure": {
+        "title": "配置平台与载荷",
+        "description": "匹配无人机、载荷、地面站和支持资料。"
+      },
+      "deploy": {
+        "title": "演示、交付与培训",
+        "description": "安排演示、交付计划、培训和售后支持。"
+      }
+    }
+  },
+  "solutionCta": {
+    "title": "需要为该方案选型？",
+    "subtitle": "联系我们获取型号建议、演示安排和采购资料。"
+  },
+  "recommendedProducts": "推荐产品",
+  "related_cases": "相关案例",
+  "talkToTeam": "联系我们的团队"
 }

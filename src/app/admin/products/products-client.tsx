@@ -7,11 +7,13 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { buttonVariants } from '@/components/ui/button'
-import { Plus, ChevronLeft, ChevronRight } from 'lucide-react'
+import { Plus, ChevronLeft, ChevronRight, Trash2 } from 'lucide-react'
 import { AdminPage } from '@/components/admin/core'
 import { ProductFilters as ProductFiltersComponent, ProductFilters } from '@/components/admin/product-filters'
 import { BatchOperations } from '@/components/admin/batch-operations'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
 import { createClient } from '@/lib/supabase/client'
+import { toast } from 'sonner'
 
 interface Category {
   id: string
@@ -54,6 +56,7 @@ export function ProductsClient({ products, categories, tags }: ProductsClientPro
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [page, setPage] = useState(0)
   const pageSize = 10
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
 
   // 根据筛选条件过滤产品
   const filteredProducts = useMemo(() => {
@@ -170,6 +173,23 @@ export function ProductsClient({ products, categories, tags }: ProductsClientPro
     window.location.reload()
   }
 
+  // 单个删除
+  const handleDeleteProduct = async (id: string) => {
+    try {
+      const res = await fetch(`/api/admin/products/${id}`, { method: 'DELETE' })
+      if (!res.ok) {
+        const result = await res.json()
+        throw new Error(result.error || 'Delete failed')
+      }
+      toast.success(t('products_page.deleteSuccess'))
+      setDeleteConfirmId(null)
+      window.location.reload()
+    } catch (error) {
+      console.error('Delete error:', error)
+      toast.error(t('products_page.deleteFailed'))
+    }
+  }
+
   const columns = [
     { key: 'model', label: t('model') },
     {
@@ -216,6 +236,22 @@ export function ProductsClient({ products, categories, tags }: ProductsClientPro
       render: (item: Product) => item.compliance_flag ? <Badge variant="destructive">{t('complianceRequired')}</Badge> : 'No'
     },
     { key: 'featured', label: t('featured'), render: (item: Product) => item.featured ? '⭐' : '' },
+    {
+      key: 'actions',
+      label: t('actions'),
+      render: (item: Product) => (
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={(e) => {
+            e.stopPropagation()
+            setDeleteConfirmId(item.id)
+          }}
+        >
+          <Trash2 className="w-4 h-4 text-destructive" />
+        </Button>
+      )
+    },
   ]
 
   return (
@@ -335,6 +371,29 @@ export function ProductsClient({ products, categories, tags }: ProductsClientPro
           </div>
         )}
       </div>
+
+      {/* Delete Confirm Dialog */}
+      <Dialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t('products_page.deleteConfirm')}</DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-muted-foreground">
+            {t('products_page.deleteConfirmMessage')}
+          </p>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDeleteConfirmId(null)}>
+              {t('cancel')}
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => deleteConfirmId && handleDeleteProduct(deleteConfirmId)}
+            >
+              {t('delete')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </AdminPage>
   )
 }

@@ -1,8 +1,14 @@
 {
   "hero": {
-    "title": "UAVs Industriales Probados en Combate para Entornos Críticos",
-    "subtitle": "Plataformas de drones probadas en combate y soluciones anti-UAS para defensa, seguridad e infraestructura crítica.",
-    "cta": "Solicitar Demostración"
+    "title": "Enterprise UAVs Built for Mission-Critical Procurement",
+    "subtitle": "Select proven UAV and counter-UAS systems with clear specs, proof, and compliance support.",
+    "cta": "Solicitar Demostración",
+    "indicators": {
+      "procurement": "Procurement Ready",
+      "deployment": "Deployment Fit",
+      "support": "Global Support"
+    },
+    "category": "Industrial UAV systems"
   },
   "trustBar": {
     "flightHours": "Horas de Vuelo",
@@ -22,11 +28,42 @@
     "viewAll": "Ver Todos los Casos"
   },
   "ctaSection": {
-    "title": "¿Listo para Ver Nuestras Soluciones en Acción?",
-    "subtitle": "Programe una demostración en vivo con nuestro equipo.",
-    "button": "Solicitar Demostración"
+    "title": "Ready to move from shortlist to decision?",
+    "subtitle": "Share your mission, region, and timeline. We will match the right model and next documents.",
+    "button": "Request Quote"
   },
   "faq": {
     "title": "Preguntas Frecuentes"
+  },
+  "missionSelector": {
+    "title": "Choose by mission before model",
+    "subtitle": "Start with the operating scenario, then narrow to the right aircraft, payload, or counter-UAS package.",
+    "viewRecommended": "View recommended",
+    "missions": {
+      "publicSafety": {
+        "title": "Public safety missions",
+        "description": "Deploy reliable aerial overwatch, search, and command visibility."
+      },
+      "infrastructureInspection": {
+        "title": "Infrastructure inspection",
+        "description": "Match aircraft and payloads for power, energy, and industrial assets."
+      },
+      "mappingSurvey": {
+        "title": "Mapping and survey",
+        "description": "Plan efficient capture workflows for geospatial and construction teams."
+      },
+      "perimeterSecurity": {
+        "title": "Perimeter security",
+        "description": "Build persistent monitoring around critical sites and events."
+      },
+      "counterUas": {
+        "title": "Counter-UAS response",
+        "description": "Coordinate detection, assessment, and mitigation procurement."
+      },
+      "disasterResponse": {
+        "title": "Disaster response",
+        "description": "Select portable systems for rapid assessment and emergency logistics."
+      }
+    }
   }
 }

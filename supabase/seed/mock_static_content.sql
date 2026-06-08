@@ -45,63 +45,65 @@ INSERT INTO product_tags (slug, translations) VALUES
   ('multi-layer', '{"en": "Multi-Layer", "zh": "多层", "ar": "متعدد الطبقات", "es": "Multi-Capa"}');
 
 -- ============================================
--- 产品FAQ
+-- 产品FAQ (每行一种语言，匹配 product_faqs 表结构)
 -- ============================================
 DELETE FROM product_faqs;
 
-INSERT INTO product_faqs (product_id, question, answer, sort_order)
-SELECT
-  p.id,
-  '{"en": "What is the maximum flight time?", "zh": "最大飞行时间是多少？"}'::jsonb,
-  '{"en": "The maximum flight time varies by model. SD-200 offers 120 minutes, SD-350 offers 90 minutes, and SD-700 offers up to 24 hours.", "zh": "最大飞行时间因型号而异。SD-200提供120分钟，SD-350提供90分钟，SD-700可提供长达24小时。"}'::jsonb,
-  1
+-- FAQ 1: 最大飞行时间
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'en', 'What is the maximum flight time?', 'The maximum flight time varies by model. SD-200 offers 120 minutes, SD-350 offers 90 minutes, and SD-700 offers up to 24 hours.', 1
 FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
 
-INSERT INTO product_faqs (product_id, question, answer, sort_order)
-SELECT
-  p.id,
-  '{"en": "What weather conditions can it operate in?", "zh": "可以在什么天气条件下作业？"}'::jsonb,
-  '{"en": "Our UAVs are designed for all-weather operation, capable of flying in winds up to 15m/s, temperatures from -20°C to 50°C, and light rain conditions.", "zh": "我们的无人机专为全天候作业设计，可在高达15米/秒的风速、-20°C至50°C的温度和轻雨条件下飞行。"}'::jsonb,
-  2
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'zh', '最大飞行时间是多少？', '最大飞行时间因型号而异。SD-200提供120分钟，SD-350提供90分钟，SD-700可提供长达24小时。', 1
 FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
 
-INSERT INTO product_faqs (product_id, question, answer, sort_order)
-SELECT
-  p.id,
-  '{"en": "What is the operational range?", "zh": "作战半径是多少？"}'::jsonb,
-  '{"en": "Operational range varies by model: SD-200 has 50km range, SD-350 has 35km, SD-600 has 80km, and SD-700 can reach up to 500km.", "zh": "作战半径因型号而异：SD-200为50公里，SD-350为35公里，SD-600为80公里，SD-700可达500公里。"}'::jsonb,
-  3
+-- FAQ 2: 天气条件
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'en', 'What weather conditions can it operate in?', 'Our UAVs are designed for all-weather operation, capable of flying in winds up to 15m/s, temperatures from -20°C to 50°C, and light rain conditions.', 2
 FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
 
-INSERT INTO product_faqs (product_id, question, answer, sort_order)
-SELECT
-  p.id,
-  '{"en": "What payloads are compatible?", "zh": "兼容哪些载荷？"}'::jsonb,
-  '{"en": "Our UAVs support various payloads including EO/IR cameras, LiDAR, multispectral sensors, SAR, and custom payloads up to the specified weight limit.", "zh": "我们的无人机支持各种载荷，包括光电/红外相机、激光雷达、多光谱传感器、合成孔径雷达和指定重量限制内的定制载荷。"}'::jsonb,
-  4
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'zh', '可以在什么天气条件下作业？', '我们的无人机专为全天候作业设计，可在高达15米/秒的风速、-20°C至50°C的温度和轻雨条件下飞行。', 2
+FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
+
+-- FAQ 3: 作战半径
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'en', 'What is the operational range?', 'Operational range varies by model: SD-200 has 50km range, SD-350 has 35km, SD-600 has 80km, and SD-700 can reach up to 500km.', 3
+FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
+
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'zh', '作战半径是多少？', '作战半径因型号而异：SD-200为50公里，SD-350为35公里，SD-600为80公里，SD-700可达500公里。', 3
+FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
+
+-- FAQ 4: 兼容载荷
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'en', 'What payloads are compatible?', 'Our UAVs support various payloads including EO/IR cameras, LiDAR, multispectral sensors, SAR, and custom payloads up to the specified weight limit.', 4
+FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
+
+INSERT INTO product_faqs (product_id, locale, question, answer, sort_order)
+SELECT p.id, 'zh', '兼容哪些载荷？', '我们的无人机支持各种载荷，包括光电/红外相机、激光雷达、多光谱传感器、合成孔径雷达和指定重量限制内的定制载荷。', 4
 FROM products p WHERE p.model IN ('SD-200', 'SD-350', 'SD-600', 'SD-700');
 
 -- ============================================
--- 产品文档
+-- 产品文档 (列: product_id, type, translations, file_url, sort_order)
 -- ============================================
 DELETE FROM product_documents;
 
-INSERT INTO product_documents (product_id, document_type, title, description, file_url, sort_order)
+INSERT INTO product_documents (product_id, type, translations, file_url, sort_order)
 SELECT
   p.id,
   'datasheet',
   '{"en": "Product Datasheet", "zh": "产品数据表"}'::jsonb,
-  '{"en": "Complete technical specifications and performance data", "zh": "完整技术规格和性能数据"}'::jsonb,
   '/documents/datasheets/' || p.slug || '.pdf',
   1
 FROM products p;
 
-INSERT INTO product_documents (product_id, document_type, title, description, file_url, sort_order)
+INSERT INTO product_documents (product_id, type, translations, file_url, sort_order)
 SELECT
   p.id,
   'manual',
   '{"en": "User Manual", "zh": "用户手册"}'::jsonb,
-  '{"en": "Comprehensive operation and maintenance guide", "zh": "综合操作和维护指南"}'::jsonb,
   '/documents/manuals/' || p.slug || '-manual.pdf',
   2
 FROM products p;
@@ -326,57 +328,63 @@ INSERT INTO footer_content (section, translations, published) VALUES
   );
 
 -- ============================================
--- FAQ内容
+-- FAQ内容 (仅 faqs 表存在时执行)
 -- ============================================
-DELETE FROM faqs;
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = 'faqs') THEN
+    DELETE FROM faqs;
 
-INSERT INTO faqs (category, question, answer, sort_order, published) VALUES
-  (
-    'general',
-    '{"en": "What industries do you serve?", "zh": "你们服务于哪些行业？"}'::jsonb,
-    '{"en": "We serve defense, security, energy, agriculture, infrastructure, environmental monitoring, emergency response, and many other industries requiring professional UAV solutions.", "zh": "我们服务于国防、安全、能源、农业、基础设施、环境监测、应急响应以及许多其他需要专业无人机解决方案的行业。"}'::jsonb,
-    1,
-    true
-  ),
-  (
-    'general',
-    '{"en": "Do you provide training?", "zh": "你们提供培训吗？"}'::jsonb,
-    '{"en": "Yes, we offer comprehensive training programs for all our products, including operator training, maintenance training, and mission planning courses.", "zh": "是的，我们为所有产品提供综合培训计划，包括操作员培训、维护培训和任务规划课程。"}'::jsonb,
-    2,
-    true
-  ),
-  (
-    'general',
-    '{"en": "What is your warranty policy?", "zh": "你们的保修政策是什么？"}'::jsonb,
-    '{"en": "All our products come with a standard 2-year warranty covering manufacturing defects. Extended warranty options are available.", "zh": "我们所有产品都附带标准2年保修，涵盖制造缺陷。还提供延长保修选项。"}'::jsonb,
-    3,
-    true
-  ),
-  (
-    'products',
-    '{"en": "Can I customize payloads?", "zh": "我可以定制载荷吗？"}'::jsonb,
-    '{"en": "Yes, our modular payload system allows for customization. We can integrate third-party sensors and develop custom solutions for specific requirements.", "zh": "是的，我们的模块化载荷系统允许定制。我们可以集成第三方传感器并为特定需求开发定制解决方案。"}'::jsonb,
-    1,
-    true
-  ),
-  (
-    'products',
-    '{"en": "What is the typical delivery time?", "zh": "典型交付时间是多少？"}'::jsonb,
-    '{"en": "Standard products are typically delivered within 4-6 weeks. Custom configurations may require 8-12 weeks depending on complexity.", "zh": "标准产品通常在4-6周内交付。定制配置可能需要8-12周，具体取决于复杂程度。"}'::jsonb,
-    2,
-    true
-  ),
-  (
-    'compliance',
-    '{"en": "Are your products export controlled?", "zh": "你们的产品受出口管制吗？"}'::jsonb,
-    '{"en": "Some of our products may be subject to export control regulations. We work closely with relevant authorities to ensure compliance with all applicable laws.", "zh": "我们的某些产品可能受出口管制法规约束。我们与相关机构密切合作，确保遵守所有适用法律。"}'::jsonb,
-    1,
-    true
-  ),
-  (
-    'compliance',
-    '{"en": "Do you comply with aviation regulations?", "zh": "你们遵守航空法规吗？"}'::jsonb,
-    '{"en": "Yes, all our products are designed to comply with relevant aviation regulations in major markets. We provide documentation and support for regulatory approval processes.", "zh": "是的，我们所有产品都设计为符合主要市场的相关航空法规。我们为监管审批流程提供文档和支持。"}'::jsonb,
-    2,
-    true
-  );
+    INSERT INTO faqs (category, question, answer, sort_order, published) VALUES
+      (
+        'general',
+        '{"en": "What industries do you serve?", "zh": "你们服务于哪些行业？"}'::jsonb,
+        '{"en": "We serve defense, security, energy, agriculture, infrastructure, environmental monitoring, emergency response, and many other industries requiring professional UAV solutions.", "zh": "我们服务于国防、安全、能源、农业、基础设施、环境监测、应急响应以及许多其他需要专业无人机解决方案的行业。"}'::jsonb,
+        1,
+        true
+      ),
+      (
+        'general',
+        '{"en": "Do you provide training?", "zh": "你们提供培训吗？"}'::jsonb,
+        '{"en": "Yes, we offer comprehensive training programs for all our products, including operator training, maintenance training, and mission planning courses.", "zh": "是的，我们为所有产品提供综合培训计划，包括操作员培训、维护培训和任务规划课程。"}'::jsonb,
+        2,
+        true
+      ),
+      (
+        'general',
+        '{"en": "What is your warranty policy?", "zh": "你们的保修政策是什么？"}'::jsonb,
+        '{"en": "All our products come with a standard 2-year warranty covering manufacturing defects. Extended warranty options are available.", "zh": "我们所有产品都附带标准2年保修，涵盖制造缺陷。还提供延长保修选项。"}'::jsonb,
+        3,
+        true
+      ),
+      (
+        'products',
+        '{"en": "Can I customize payloads?", "zh": "我可以定制载荷吗？"}'::jsonb,
+        '{"en": "Yes, our modular payload system allows for customization. We can integrate third-party sensors and develop custom solutions for specific requirements.", "zh": "是的，我们的模块化载荷系统允许定制。我们可以集成第三方传感器并为特定需求开发定制解决方案。"}'::jsonb,
+        1,
+        true
+      ),
+      (
+        'products',
+        '{"en": "What is the typical delivery time?", "zh": "典型交付时间是多少？"}'::jsonb,
+        '{"en": "Standard products are typically delivered within 4-6 weeks. Custom configurations may require 8-12 weeks depending on complexity.", "zh": "标准产品通常在4-6周内交付。定制配置可能需要8-12周，具体取决于复杂程度。"}'::jsonb,
+        2,
+        true
+      ),
+      (
+        'compliance',
+        '{"en": "Are your products export controlled?", "zh": "你们的产品受出口管制吗？"}'::jsonb,
+        '{"en": "Some of our products may be subject to export control regulations. We work closely with relevant authorities to ensure compliance with all applicable laws.", "zh": "我们的某些产品可能受出口管制法规约束。我们与相关机构密切合作，确保遵守所有适用法律。"}'::jsonb,
+        1,
+        true
+      ),
+      (
+        'compliance',
+        '{"en": "Do you comply with aviation regulations?", "zh": "你们遵守航空法规吗？"}'::jsonb,
+        '{"en": "Yes, all our products are designed to comply with relevant aviation regulations in major markets. We provide documentation and support for regulatory approval processes.", "zh": "是的，我们所有产品都设计为符合主要市场的相关航空法规。我们为监管审批流程提供文档和支持。"}'::jsonb,
+        2,
+        true
+      );
+  END IF;
+END
+$$;
