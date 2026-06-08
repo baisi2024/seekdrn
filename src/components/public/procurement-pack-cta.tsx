@@ -24,7 +24,7 @@ export function ProcurementPackCTA({
   productModel,
 }: ProcurementPackCTAProps) {
   return (
-    <section className="rounded-3xl border border-border bg-[#f7f8f5] p-6 lg:p-8">
+    <section className="rounded-3xl border border-border bg-muted p-6 lg:p-8">
       <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
           <div className="mb-4 inline-flex rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold text-primary">

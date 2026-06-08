@@ -134,7 +134,7 @@ export function DemoForm() {
   }
 
   return (
-    <section id="demo-form" className="bg-[#f7f8f5] py-16 lg:py-24">
+    <section id="demo-form" className="bg-muted py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>

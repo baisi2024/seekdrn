@@ -39,7 +39,7 @@ export function ComplianceSupportBlock({ locale, title, subtitle, quoteLabel, pa
           {items.map((item) => {
             const Icon = item.icon
             return (
-              <div key={item.label} className="rounded-2xl border border-border bg-[#f7f8f5] p-4">
+              <div key={item.label} className="rounded-2xl border border-border bg-muted p-4">
                 <Icon className="h-5 w-5 text-primary" />
                 <p className="mt-3 text-sm font-medium text-foreground">{item.label}</p>
               </div>

@@ -25,7 +25,8 @@
   },
   "cases": {
     "title": "دراسات الحالة",
-    "viewAll": "عرض جميع الحالات"
+    "viewAll": "عرض جميع الحالات",
+    "empty": "لا توجد دراسات حالة متاحة"
   },
   "ctaSection": {
     "title": "Ready to move from shortlist to decision?",

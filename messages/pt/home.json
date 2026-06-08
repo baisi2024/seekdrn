@@ -25,7 +25,8 @@
   },
   "cases": {
     "title": "Estudos de Caso",
-    "viewAll": "Ver Todos os Casos"
+    "viewAll": "Ver Todos os Casos",
+    "empty": "Nenhum estudo de caso disponível"
   },
   "ctaSection": {
     "title": "Ready to move from shortlist to decision?",

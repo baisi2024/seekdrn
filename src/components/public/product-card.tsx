@@ -97,7 +97,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
             {specs.map((spec) => {
               const label = getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0]
               return (
-                <div key={`${label}-${spec.value}`} className="rounded-xl border border-border bg-[#f7f8f5] p-3">
+                <div key={`${label}-${spec.value}`} className="rounded-xl border border-border bg-muted p-3">
                   <dt className="truncate text-xs text-muted-foreground">{label}</dt>
                   <dd className="mt-1 truncate font-mono text-sm font-semibold text-foreground">
                     {spec.value}{spec.unit || ''}

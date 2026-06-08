@@ -30,7 +30,7 @@ export function CTASection({ config }: CTASectionProps) {
     : t('ctaSection.button')
 
   return (
-    <section className="bg-[#f7f8f5] py-16 lg:py-24">
+    <section className="bg-muted py-16 lg:py-24">
       <div className="container mx-auto px-4 text-center">
         <div className="mx-auto max-w-3xl rounded-3xl border border-border bg-background p-8 shadow-sm lg:p-12">
           <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">{title}</h2>

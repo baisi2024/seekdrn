@@ -25,7 +25,8 @@
   },
   "cases": {
     "title": "Case Studies",
-    "viewAll": "View All Cases"
+    "viewAll": "View All Cases",
+    "empty": "No case studies available"
   },
   "ctaSection": {
     "title": "Ready to move from shortlist to decision?",

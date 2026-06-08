@@ -1,7 +1,7 @@
 -- 016_product_category_extensions.sql
 -- 新增产品分类：四足机器人、无人车辆，补充所有语言翻译
 
--- 插入新分类
+-- 插入新分类（UPSERT 避免重复）
 INSERT INTO product_categories (slug, translations, sort_order) VALUES
   ('quadruped-robot', '{
     "en": {"name": "Quadruped Robot"},
@@ -28,7 +28,8 @@ INSERT INTO product_categories (slug, translations, sort_order) VALUES
     "vi": {"name": "Phương tiện Không người lái"},
     "fa": {"name": "خودرو بدون سرنشین"},
     "ru": {"name": "Беспилотный транспорт"}
-  }', 6);
+  }', 6)
+ON CONFLICT (slug) DO UPDATE SET translations = EXCLUDED.translations, sort_order = EXCLUDED.sort_order;
 
 -- 补充已有分类的11语言翻译
 UPDATE product_categories SET translations = '{

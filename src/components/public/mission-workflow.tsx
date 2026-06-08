@@ -19,7 +19,7 @@ interface MissionWorkflowProps {
 
 export function MissionWorkflow({ title, subtitle, steps, locale, ctaLabel, secondaryCtaLabel, solutionSlug }: MissionWorkflowProps) {
   return (
-    <section className="rounded-3xl border border-border bg-[#f7f8f5] p-6 lg:p-8">
+    <section className="rounded-3xl border border-border bg-muted p-6 lg:p-8">
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
         <div>
           <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background px-3 py-1 text-xs font-semibold text-primary">

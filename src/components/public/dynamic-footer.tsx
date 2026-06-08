@@ -40,7 +40,7 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
   const publishedItems = navItems.filter(item => item.published)
 
   return (
-    <footer className="border-t border-border bg-[#f7f8f5] text-muted-foreground">
+    <footer className="border-t border-border bg-muted text-muted-foreground">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div>

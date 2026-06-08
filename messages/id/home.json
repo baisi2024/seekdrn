@@ -25,7 +25,8 @@
   },
   "cases": {
     "title": "Studi Kasus",
-    "viewAll": "Lihat Semua Kasus"
+    "viewAll": "Lihat Semua Kasus",
+    "empty": "Tidak ada studi kasus tersedia"
   },
   "ctaSection": {
     "title": "Ready to move from shortlist to decision?",

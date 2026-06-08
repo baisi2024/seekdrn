@@ -42,7 +42,7 @@ export function CaseCard({ caseStudy, locale }: CaseCardProps) {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[#f7f8f5]">
+          <div className="flex h-full w-full items-center justify-center bg-muted">
             <Video className="h-12 w-12 text-muted-foreground/30" />
           </div>
         )}
@@ -60,7 +60,7 @@ export function CaseCard({ caseStudy, locale }: CaseCardProps) {
         {metrics.length > 0 && (
           <div className="grid grid-cols-2 gap-2">
             {metrics.slice(0, 2).map((metric) => (
-              <div key={metric.label} className="rounded-xl border border-border bg-[#f7f8f5] p-3">
+              <div key={metric.label} className="rounded-xl border border-border bg-muted p-3">
                 <div className="font-mono text-xl font-bold text-primary">{metric.value}</div>
                 <div className="mt-1 text-xs text-muted-foreground">{metric.label}</div>
               </div>

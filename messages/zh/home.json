@@ -25,7 +25,8 @@
   },
   "cases": {
     "title": "案例研究",
-    "viewAll": "查看所有案例"
+    "viewAll": "查看所有案例",
+    "empty": "暂无案例数据"
   },
   "ctaSection": {
     "title": "准备推进采购或演示？",
