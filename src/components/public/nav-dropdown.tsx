@@ -64,7 +64,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
   if (children.length === 0) {
     // 没有子项，直接渲染链接
     const href = processUrl(item.url, item.link_type, locale)
-    
+
     if (item.link_type === 'external') {
       return (
         <a
@@ -72,6 +72,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
           target="_blank"
           rel="noopener noreferrer"
           className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+          suppressHydrationWarning
         >
           {label}
         </a>
@@ -82,6 +83,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
       <Link
         href={href}
         className="text-sm text-gray-600 hover:text-gray-900 transition-colors"
+        suppressHydrationWarning
       >
         {label}
       </Link>
@@ -96,7 +98,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
           <Button variant="ghost" size="sm" className="h-auto px-2 py-1 text-sm text-gray-600 hover:text-gray-900" />
         }
       >
-        {label}
+        <span suppressHydrationWarning>{label}</span>
         <ChevronDown className="ml-1 h-3 w-3" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-48">
@@ -112,6 +114,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full"
+                  suppressHydrationWarning
                 >
                   {childLabel}
                 </a>
@@ -121,7 +124,7 @@ export function NavDropdown({ item, defaultLocale = 'en' }: NavDropdownProps) {
 
           return (
             <DropdownMenuItem key={child.id} render={<Link href={childHref} />}>
-              {childLabel}
+              <span suppressHydrationWarning>{childLabel}</span>
             </DropdownMenuItem>
           )
         })}

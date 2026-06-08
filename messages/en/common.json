@@ -1,4 +1,8 @@
 {
+  "brand": {
+    "name": "SeekDrone",
+    "shortName": "SD"
+  },
   "nav": {
     "products": "Products",
     "solutions": "Solutions",

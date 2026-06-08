@@ -13,6 +13,8 @@ interface DynamicNavbarClientProps {
   navItems: NavigationItem[]
   locale: string
   requestDemoText: string
+  brandName: string
+  brandShortName: string
 }
 
 /**
@@ -42,7 +44,7 @@ function processUrl(url: string, linkType: 'internal' | 'external', locale: stri
   return `/${locale}/${url}`
 }
 
-export function DynamicNavbarClient({ navItems, locale, requestDemoText }: DynamicNavbarClientProps) {
+export function DynamicNavbarClient({ navItems, locale, requestDemoText, brandName, brandShortName }: DynamicNavbarClientProps) {
   const [open, setOpen] = useState(false)
 
   // 过滤已发布的导航项
@@ -53,9 +55,13 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText }: Dynam
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href={`/${locale}`} className="flex items-center gap-2">
           <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-            <span className="text-white font-bold text-sm">SD</span>
+            <span className="text-white font-bold text-sm" suppressHydrationWarning>
+              {brandShortName}
+            </span>
           </div>
-          <span className="font-bold text-lg text-gray-900">SeekDrone</span>
+          <span className="font-bold text-lg text-gray-900" suppressHydrationWarning>
+            {brandName}
+          </span>
         </Link>
 
         {/* 桌面端导航 */}
@@ -92,6 +98,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText }: Dynam
                           rel="noopener noreferrer"
                           className="text-lg text-gray-700 hover:text-gray-900"
                           onClick={() => setOpen(false)}
+                          suppressHydrationWarning
                         >
                           {label}
                         </a>
@@ -100,11 +107,12 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText }: Dynam
                           href={href}
                           className="text-lg text-gray-700 hover:text-gray-900"
                           onClick={() => setOpen(false)}
+                          suppressHydrationWarning
                         >
                           {label}
                         </Link>
                       )}
-                      
+
                       {/* 子菜单项 */}
                       {children.length > 0 && (
                         <div className="ml-4 mt-2 space-y-2">
@@ -120,6 +128,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText }: Dynam
                                 rel="noopener noreferrer"
                                 className="block text-sm text-gray-600 hover:text-gray-900"
                                 onClick={() => setOpen(false)}
+                                suppressHydrationWarning
                               >
                                 {childLabel}
                               </a>
@@ -129,6 +138,7 @@ export function DynamicNavbarClient({ navItems, locale, requestDemoText }: Dynam
                                 href={childHref}
                                 className="block text-sm text-gray-600 hover:text-gray-900"
                                 onClick={() => setOpen(false)}
+                                suppressHydrationWarning
                               >
                                 {childLabel}
                               </Link>

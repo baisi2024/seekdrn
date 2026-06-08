@@ -1,4 +1,8 @@
 {
+  "brand": {
+    "name": "寻觅无人机",
+    "shortName": "SD"
+  },
   "nav": {
     "products": "产品",
     "solutions": "解决方案",

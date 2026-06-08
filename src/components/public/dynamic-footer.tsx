@@ -57,9 +57,13 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
           <div>
             <div className="flex items-center gap-2 mb-4">
               <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">SD</span>
+                <span className="text-white font-bold text-sm" suppressHydrationWarning>
+                  {t('brand.shortName')}
+                </span>
               </div>
-              <span className="font-bold text-lg text-white">SeekDrone</span>
+              <span className="font-bold text-lg text-white" suppressHydrationWarning>
+                {t('brand.name')}
+              </span>
             </div>
             <p className="text-sm">Industrial UAV solutions and counter-drone systems for defense, security, and critical infrastructure.</p>
           </div>
@@ -71,7 +75,7 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
 
             return (
               <div key={item.id}>
-                <h3 className="text-white font-semibold mb-4">{label}</h3>
+                <h3 className="text-white font-semibold mb-4" suppressHydrationWarning>{label}</h3>
                 <ul className="space-y-2 text-sm">
                   {children.map((child) => {
                     const childLabel = getLabel(child, locale)
@@ -85,11 +89,12 @@ export async function DynamicFooter({ locale }: DynamicFooterProps) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:text-white transition-colors"
+                            suppressHydrationWarning
                           >
                             {childLabel}
                           </a>
                         ) : (
-                          <Link href={childHref} className="hover:text-white transition-colors">
+                          <Link href={childHref} className="hover:text-white transition-colors" suppressHydrationWarning>
                             {childLabel}
                           </Link>
                         )}

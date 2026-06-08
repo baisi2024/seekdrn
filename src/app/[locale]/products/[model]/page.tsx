@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { getTranslation } from '@/lib/utils'
 import { buttonVariants } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
 import { ProductGallery } from '@/features/products/components/public/product-gallery'
 import { ProductFAQSection } from '@/features/products/components/public/product-faq'
 import { ProductSchema } from '@/components/seo/product-schema'
@@ -15,7 +14,7 @@ import { SpecsSection } from '@/components/public/specs-section'
 import { DownloadsSection } from '@/components/public/downloads-section'
 import { RelatedCasesSection } from '@/components/public/related-cases-section'
 import { RelatedProducts } from '@/features/products/components/public/related-products'
-import { trackCTAClick } from '@/lib/gtm'
+import { CTALink } from '@/components/public/cta-link'
 import {
   MessageSquare,
   FileText,
@@ -119,14 +118,15 @@ export default async function ProductDetailPage({
 
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-3 pt-2">
-                <Link
+                <CTALink
                   href={`/${locale}#demo-form`}
-                  className={buttonVariants({ size: 'lg' })}
-                  onClick={() => trackCTAClick('product_hero', 'request_quote')}
+                  size="lg"
+                  trackingLocation="product_hero"
+                  trackingAction="request_quote"
                 >
                   <MessageSquare className="w-4 h-4 mr-2" />
                   {t('requestQuote')}
-                </Link>
+                </CTALink>
 
                 {documents.length > 0 && (
                   <Link
@@ -138,14 +138,16 @@ export default async function ProductDetailPage({
                   </Link>
                 )}
 
-                <Link
+                <CTALink
                   href={`/${locale}#demo-form`}
-                  className={buttonVariants({ size: 'lg', variant: 'secondary' })}
-                  onClick={() => trackCTAClick('product_hero', 'schedule_demo')}
+                  size="lg"
+                  variant="outline"
+                  trackingLocation="product_hero"
+                  trackingAction="schedule_demo"
                 >
                   <Calendar className="w-4 h-4 mr-2" />
                   {t('scheduleDemo')}
-                </Link>
+                </CTALink>
               </div>
 
               {/* Compliance Badges */}
@@ -298,21 +300,27 @@ export default async function ProductDetailPage({
             {t('bottomCta.subtitle')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link
+            <CTALink
               href={`/${locale}#demo-form`}
-              className={buttonVariants({ size: 'lg', variant: 'secondary' })}
-              onClick={() => trackCTAClick('product_bottom', 'request_quote')}
+              size="lg"
+              variant="secondary"
+              trackingLocation="product_bottom"
+              trackingAction="request_quote"
             >
               <MessageSquare className="w-4 h-4 mr-2" />
               {t('requestQuote')}
-            </Link>
-            <Link
+            </CTALink>
+            <CTALink
               href={`/${locale}#demo-form`}
-              className={buttonVariants({ size: 'lg', variant: 'outline' })}
+              size="lg"
+              variant="ghost"
+              className="text-primary-foreground border border-primary-foreground/30 hover:bg-primary-foreground/10 hover:text-primary-foreground"
+              trackingLocation="product_bottom"
+              trackingAction="schedule_demo"
             >
               <Calendar className="w-4 h-4 mr-2" />
               {t('scheduleDemo')}
-            </Link>
+            </CTALink>
           </div>
         </div>
       </section>

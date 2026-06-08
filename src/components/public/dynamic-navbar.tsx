@@ -20,5 +20,13 @@ export async function DynamicNavbar({ locale }: DynamicNavbarProps) {
   // 获取翻译
   const t = await getTranslations({ locale, namespace: 'common' })
 
-  return <DynamicNavbarClient navItems={navItems} locale={locale} requestDemoText={t('nav.requestDemo')} />
+  return (
+    <DynamicNavbarClient
+      navItems={navItems}
+      locale={locale}
+      requestDemoText={t('nav.requestDemo')}
+      brandName={t('brand.name')}
+      brandShortName={t('brand.shortName')}
+    />
+  )
 }
