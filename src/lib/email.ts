@@ -79,12 +79,13 @@ export async function sendTemplateEmail(
     })
 
     return result
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     // 记录失败
     await supabaseAdmin.from('email_logs').insert({
       ...logEntry,
       status: 'failed',
-      error_message: error.message || 'Unknown error',
+      error_message: errorMessage,
     })
 
     throw error

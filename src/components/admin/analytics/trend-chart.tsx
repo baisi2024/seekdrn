@@ -55,6 +55,7 @@ const TIME_RANGES = [
 ]
 
 // 自定义 Tooltip 组件
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function CustomTooltip({ active, payload, label }: any) {
   if (active && payload && payload.length) {
     const date = new Date(label)

@@ -8,12 +8,24 @@
     "uav": "UAV Platforms",
     "payload": "Payloads",
     "cuas": "Counter-UAS",
-    "ground_control": "Ground Control"
+    "ground_control": "Ground Control",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "Technical Specifications",
   "advantages": "Core Advantages",
   "capabilities": "Core Capabilities",
   "applications": "Applications",
+  "overview": "Product Overview",
+  "coreFeatures": "Core Features",
+  "anchorNav": {
+    "overview": "Overview",
+    "specs": "Specs",
+    "resources": "Resources",
+    "cases": "Cases"
+  },
   "relatedCases": "Related Case Studies",
   "relatedProducts": "Related Products",
   "downloads": "Downloads",

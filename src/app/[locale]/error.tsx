@@ -1,7 +1,7 @@
 'use client'
 
 export default function LocaleError({
-  error,
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string }

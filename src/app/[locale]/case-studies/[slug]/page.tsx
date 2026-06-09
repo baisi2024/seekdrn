@@ -85,7 +85,7 @@ export default async function CaseStudyDetailPage({
     .filter(Boolean) || []) as unknown as RelatedProduct[]
 
   return (
-    <div className="bg-background py-16">
+    <div className="bg-[#0A0E17] py-16">
       <CaseStudyTracker caseSlug={slug} caseName={title || ''} locale={locale} />
       <div className="container mx-auto px-4">
         <Breadcrumb
@@ -103,7 +103,7 @@ export default async function CaseStudyDetailPage({
               poster={caseStudy.images && caseStudy.images[0]}
             />
           ) : caseStudy.images && caseStudy.images[0] ? (
-            <div className="aspect-video rounded-2xl overflow-hidden bg-muted mb-6 relative">
+            <div className="aspect-video rounded-2xl overflow-hidden bg-[#1A1F2E] mb-6 relative">
               <Image src={caseStudy.images[0]} alt={title} fill className="object-cover" />
             </div>
           ) : null}
@@ -111,7 +111,7 @@ export default async function CaseStudyDetailPage({
             <Badge>{caseStudy.industry}</Badge>
             {caseStudy.country && <Badge variant="outline">{caseStudy.country}</Badge>}
           </div>
-          <h1 className="max-w-4xl text-3xl lg:text-5xl font-bold text-foreground">{title}</h1>
+          <h1 className="max-w-4xl text-3xl lg:text-5xl font-bold text-white">{title}</h1>
           <div className="mt-3">
             <ShareButtons title={title} pageType="case" locale={locale} />
           </div>
@@ -119,18 +119,18 @@ export default async function CaseStudyDetailPage({
 
         {/* Results */}
         {caseStudy.results && caseStudy.results.length > 0 && (
-          <section className="mb-12 rounded-3xl border border-border bg-[#f7f8f5] p-6 lg:p-8">
-            <p className="text-sm font-semibold text-primary">{t('resultsEyebrow')}</p>
-            <h2 className="mt-2 text-2xl font-bold text-foreground mb-6">{t('results')}</h2>
+          <section className="mb-12 rounded-3xl border border-white/[0.06] bg-[#1A1F2E] p-6 lg:p-8">
+            <p className="text-sm font-semibold text-[#0066FF]">{t('resultsEyebrow')}</p>
+            <h2 className="mt-2 text-2xl font-bold text-white mb-6">{t('results')}</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {(caseStudy.results as CaseResult[]).map((r, i) => (
-                <Card key={i} className="bg-background">
+                <Card key={i} className="bg-[#0A0E17]">
                   <CardContent className="p-6 text-center">
-                    <div className="font-mono font-bold text-3xl text-primary mb-2">
+                    <div className="font-mono font-bold text-3xl text-[#0066FF] mb-2">
                       {r.value}
                     </div>
-                    <div className="text-sm text-muted-foreground">{r.metric}</div>
-                    {r.unit && <div className="text-xs text-muted-foreground/60 mt-1">{r.unit}</div>}
+                    <div className="text-sm text-white/50">{r.metric}</div>
+                    {r.unit && <div className="text-xs text-white/30 mt-1">{r.unit}</div>}
                   </CardContent>
                 </Card>
               ))}
@@ -141,33 +141,33 @@ export default async function CaseStudyDetailPage({
         {/* Background */}
         {background && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('background')}</h2>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: background }} />
+            <h2 className="text-2xl font-bold text-white mb-4">{t('background')}</h2>
+            <div className="prose max-w-none text-white/50" dangerouslySetInnerHTML={{ __html: background }} />
           </section>
         )}
 
         {/* Challenge */}
         {challenge && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('challenge')}</h2>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: challenge }} />
+            <h2 className="text-2xl font-bold text-white mb-4">{t('challenge')}</h2>
+            <div className="prose max-w-none text-white/50" dangerouslySetInnerHTML={{ __html: challenge }} />
           </section>
         )}
 
         {/* Solution */}
         {solution && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('solution')}</h2>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: solution }} />
+            <h2 className="text-2xl font-bold text-white mb-4">{t('solution')}</h2>
+            <div className="prose max-w-none text-white/50" dangerouslySetInnerHTML={{ __html: solution }} />
           </section>
         )}
 
         {/* Client Quote */}
         {clientQuote && (
           <section className="mb-12">
-            <Card className="bg-muted">
+            <Card className="bg-[#1A1F2E]">
               <CardContent className="p-6">
-                <blockquote className="text-lg italic text-foreground">
+                <blockquote className="text-lg italic text-white">
                   &ldquo;{clientQuote}&rdquo;
                 </blockquote>
               </CardContent>
@@ -178,10 +178,10 @@ export default async function CaseStudyDetailPage({
         {/* Field Footage */}
         {caseStudy.images && caseStudy.images.length > 1 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('fieldFootage')}</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">{t('fieldFootage')}</h2>
             <div className="grid md:grid-cols-3 gap-4">
               {caseStudy.images.slice(1).map((img: string, i: number) => (
-                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-muted relative">
+                <div key={i} className="aspect-video rounded-lg overflow-hidden bg-[#1A1F2E] relative">
                   <Image src={img} alt={`Footage ${i + 1}`} fill className="object-cover" />
                 </div>
               ))}
@@ -192,11 +192,11 @@ export default async function CaseStudyDetailPage({
         {/* Products Used */}
         {relatedProducts.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('productsUsed')}</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('productsUsed')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((product) => (
-                <div key={product.id} className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                <div key={product.id} className="group flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#1A1F2E] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#0066FF]/40 hover:shadow-md">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#1A1F2E]">
                     {product.images && product.images[0] ? (
                       <Image
                         src={product.images[0]}
@@ -205,8 +205,8 @@ export default async function CaseStudyDetailPage({
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-muted">
-                        <Box className="h-14 w-14 text-muted-foreground/40" />
+                      <div className="flex h-full w-full items-center justify-center bg-[#1A1F2E]">
+                        <Box className="h-14 w-14 text-white/30" />
                       </div>
                     )}
                     {product.model && (
@@ -214,13 +214,13 @@ export default async function CaseStudyDetailPage({
                     )}
                   </div>
                   <div className="flex flex-1 flex-col p-5">
-                    <h3 className="font-semibold text-foreground text-lg leading-snug">
+                    <h3 className="font-semibold text-white text-lg leading-snug">
                       {getTranslation(product.translations || {}, locale, 'name') || product.model || 'Product'}
                     </h3>
                     <div className="mt-auto pt-4 flex flex-wrap gap-2">
                       <Link
                         href={`/${locale}/products/${product.slug}`}
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0066FF] hover:text-[#0052CC] transition-colors"
                       >
                         {t('relatedProducts')}
                         <ArrowRight className="w-4 h-4" />
@@ -245,9 +245,9 @@ export default async function CaseStudyDetailPage({
         )}
 
         {/* Similar Project CTA */}
-        <section className="rounded-3xl border border-border bg-[#f7f8f5] p-8 text-center">
-          <h2 className="text-2xl font-semibold text-foreground">{t('similarProject.title')}</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">{t('similarProject.subtitle')}</p>
+        <section className="rounded-3xl border border-white/[0.06] bg-[#1A1F2E] p-8 text-center">
+          <h2 className="text-2xl font-semibold text-white">{t('similarProject.title')}</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-white/50">{t('similarProject.subtitle')}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <LeadFormCTAButton
               intent="quote"
@@ -257,7 +257,7 @@ export default async function CaseStudyDetailPage({
             >
               {t('similarProject.primaryCta')}
             </LeadFormCTAButton>
-            <Link href={`/${locale}/products`} className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+            <Link href={`/${locale}/products`} className="inline-flex items-center justify-center rounded-md border border-white/[0.06] bg-[#0A0E17] px-4 py-2 text-sm font-medium hover:bg-white/[0.06] hover:text-white">
               {t('similarProject.secondaryCta')}
             </Link>
           </div>

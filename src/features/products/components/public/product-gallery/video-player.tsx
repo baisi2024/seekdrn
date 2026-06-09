@@ -41,7 +41,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
   }
 
   return (
-    <div className="relative rounded-lg overflow-hidden bg-black">
+    <div className="relative rounded-lg overflow-hidden bg-background">
       <video
         ref={videoRef}
         src={src}
@@ -53,7 +53,7 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
       <div className="absolute inset-0 flex items-center justify-center">
         <button
           onClick={togglePlay}
-          className="p-4 bg-white/80 rounded-full hover:bg-white transition-colors"
+          className="p-4 bg-card/80 rounded-full hover:bg-card transition-colors"
         >
           {playing ? (
             <Pause className="w-8 h-8" />
@@ -64,10 +64,10 @@ export function VideoPlayer({ src }: VideoPlayerProps) {
       </div>
 
       <div className="absolute bottom-4 left-4 right-4 flex items-center gap-4">
-        <button onClick={toggleMute} className="p-2 bg-white/80 rounded-full hover:bg-white">
+        <button onClick={toggleMute} className="p-2 bg-card/80 rounded-full hover:bg-card transition-colors">
           {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         </button>
-        <button onClick={toggleFullscreen} className="p-2 bg-white/80 rounded-full hover:bg-white ml-auto">
+        <button onClick={toggleFullscreen} className="p-2 bg-card/80 rounded-full hover:bg-card transition-colors ml-auto">
           <Maximize className="w-4 h-4" />
         </button>
       </div>

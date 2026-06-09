@@ -62,9 +62,9 @@ export async function GET(request: NextRequest) {
     > = {}
 
     filterEvents?.forEach((event) => {
-      const metadata = event.metadata as any
-      const filterType = metadata?.filter_type || 'unknown'
-      const filterValue = metadata?.filter_value || 'unknown'
+      const metadata = event.metadata as Record<string, unknown>
+      const filterType = (metadata?.filter_type as string) || 'unknown'
+      const filterValue = (metadata?.filter_value as string) || 'unknown'
 
       if (!filterStats[filterType]) {
         filterStats[filterType] = { count: 0, values: {} }
@@ -92,9 +92,9 @@ export async function GET(request: NextRequest) {
       {}
 
     searchEvents?.forEach((event) => {
-      const metadata = event.metadata as any
-      const query = metadata?.query || ''
-      const resultsCount = metadata?.results_count || 0
+      const metadata = event.metadata as Record<string, unknown>
+      const query = (metadata?.query as string) || ''
+      const resultsCount = (metadata?.results_count as number) || 0
 
       if (query) {
         const normalizedQuery = query.toLowerCase().trim()

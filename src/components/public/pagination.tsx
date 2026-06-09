@@ -76,14 +76,14 @@ export function Pagination({
     <nav className="flex items-center justify-center gap-1 mt-8" aria-label="Pagination">
       {/* Previous */}
       {currentPage > 1 ? (
-        <Button variant="outline" size="sm" className="gap-1">
+        <Button variant="outline" size="sm" className="gap-1 border-white/[0.06] bg-[#1A1F2E] text-white hover:bg-[#1A1F2E]/80 hover:text-white">
           <Link href={getPageUrl(baseUrl, currentPage - 1, searchParams)} className="flex items-center gap-1">
             <ChevronLeft className="h-4 w-4" />
             {t('previous')}
           </Link>
         </Button>
       ) : (
-        <Button variant="outline" size="sm" disabled className="gap-1">
+        <Button variant="outline" size="sm" disabled className="gap-1 border-white/[0.06] bg-[#1A1F2E] text-white/30">
           <ChevronLeft className="h-4 w-4" />
           {t('previous')}
         </Button>
@@ -93,7 +93,7 @@ export function Pagination({
       <div className="flex items-center gap-1">
         {pages.map((page, index) =>
           page === 'ellipsis' ? (
-            <span key={`ellipsis-${index}`} className="px-2 text-muted-foreground">
+            <span key={`ellipsis-${index}`} className="px-2 text-white/30">
               ...
             </span>
           ) : page === currentPage ? (
@@ -101,7 +101,7 @@ export function Pagination({
               key={page}
               variant="default"
               size="sm"
-              className="min-w-[36px]"
+              className="min-w-[36px] bg-[#0066FF] hover:bg-[#0066FF]"
               disabled
             >
               {page}
@@ -111,7 +111,7 @@ export function Pagination({
               key={page}
               variant="outline"
               size="sm"
-              className="min-w-[36px]"
+              className="min-w-[36px] border-white/[0.06] bg-[#1A1F2E] text-white hover:bg-[#1A1F2E]/80 hover:text-white"
             >
               <Link href={getPageUrl(baseUrl, page, searchParams)}>
                 {page}
@@ -123,14 +123,14 @@ export function Pagination({
 
       {/* Next */}
       {currentPage < totalPages ? (
-        <Button variant="outline" size="sm" className="gap-1">
+        <Button variant="outline" size="sm" className="gap-1 border-white/[0.06] bg-[#1A1F2E] text-white hover:bg-[#1A1F2E]/80 hover:text-white">
           <Link href={getPageUrl(baseUrl, currentPage + 1, searchParams)} className="flex items-center gap-1">
             {t('next')}
             <ChevronRight className="h-4 w-4" />
           </Link>
         </Button>
       ) : (
-        <Button variant="outline" size="sm" disabled className="gap-1">
+        <Button variant="outline" size="sm" disabled className="gap-1 border-white/[0.06] bg-[#1A1F2E] text-white/30">
           {t('next')}
           <ChevronRight className="h-4 w-4" />
         </Button>

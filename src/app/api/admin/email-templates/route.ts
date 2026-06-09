@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 
 // GET - 获取所有模板列表
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: NextRequest) {
   try {
     const { data, error } = await supabaseAdmin
@@ -12,9 +13,10 @@ export async function GET(request: NextRequest) {
     if (error) throw error
 
     return NextResponse.json({ data })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch templates'
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch templates' },
+      { error: errorMessage },
       { status: 500 }
     )
   }
@@ -57,9 +59,10 @@ export async function POST(request: NextRequest) {
     if (error) throw error
 
     return NextResponse.json({ data })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to create template'
     return NextResponse.json(
-      { error: error.message || 'Failed to create template' },
+      { error: errorMessage },
       { status: 500 }
     )
   }

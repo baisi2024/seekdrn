@@ -8,12 +8,24 @@
     "uav": "Nền tảng UAV",
     "payload": "Tải trọng",
     "cuas": "Chống UAV",
-    "ground_control": "Điều khiển Mặt đất"
+    "ground_control": "Điều khiển Mặt đất",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "Thông số Kỹ thuật",
   "advantages": "Ưu điểm Chính",
   "capabilities": "Năng lực Cốt lõi",
   "applications": "Ứng dụng",
+  "overview": "Tổng quan Sản phẩm",
+  "coreFeatures": "Tính năng Cốt lõi",
+  "anchorNav": {
+    "overview": "Tổng quan",
+    "specs": "Thông số",
+    "resources": "Tài nguyên",
+    "cases": "Điển hình"
+  },
   "relatedCases": "Nghiên cứu Điển hình Liên quan",
   "relatedProducts": "Sản phẩm Liên quan",
   "downloads": "Tải xuống",

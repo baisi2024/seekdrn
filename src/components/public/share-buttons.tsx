@@ -48,7 +48,10 @@ export function ShareButtons({
   useEffect(() => {
     // Only update on client side
     if (!url && typeof window !== 'undefined') {
-      setShareUrl(window.location.href)
+      // 使用 requestAnimationFrame 避免同步 setState
+      requestAnimationFrame(() => {
+        setShareUrl(window.location.href)
+      })
     }
   }, [url])
 

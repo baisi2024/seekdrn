@@ -1,34 +1,29 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useState, useEffect, useCallback } from 'react'
+import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { DownloadsManager } from '@/components/admin/downloads-manager'
 
+interface DownloadData {
+  id?: string
+  type: 'manual' | 'datasheet' | 'certificate' | 'media'
+  title: Record<string, string>
+  description: Record<string, string>
+  file_url: string
+  file_size?: number
+  file_type?: string
+  language?: string
+  sort_order: number
+}
+
 export default function DownloadsManagePage() {
   const params = useParams()
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [product, setProduct] = useState<any>(null)
-  const [downloads, setDownloads] = useState<any[]>([])
+  const [downloads, setDownloads] = useState<DownloadData[]>([])
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchData()
-  }, [params.id])
-
-  async function fetchData() {
-    // 获取产品信息
-    const { data: productData } = await supabase
-      .from('products')
-      .select('*')
-      .eq('id', params.id)
-      .single()
-
-    if (productData) {
-      setProduct(productData)
-    }
-
+  const fetchData = useCallback(async () => {
     // 获取下载列表
     const { data: downloadsData } = await supabase
       .from('product_downloads')
@@ -37,13 +32,20 @@ export default function DownloadsManagePage() {
       .order('sort_order')
 
     if (downloadsData) {
-      setDownloads(downloadsData)
+      setDownloads(downloadsData as DownloadData[])
     }
 
     setLoading(false)
-  }
+  }, [params.id, supabase])
 
-  async function handleSave(downloadsData: any[]) {
+  useEffect(() => {
+    // 使用 requestAnimationFrame 避免同步 setState
+    requestAnimationFrame(() => {
+      fetchData()
+    })
+  }, [fetchData])
+
+  async function handleSave(downloadsData: DownloadData[]) {
     // 删除旧下载记录
     await supabase
       .from('product_downloads')
@@ -86,17 +88,12 @@ export default function DownloadsManagePage() {
     return <div className="p-8">Loading...</div>
   }
 
-  if (!product) {
-    return <div className="p-8">Product not found</div>
-  }
-
   return (
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Manage Downloads</h1>
-        <p className="text-muted-foreground">Product: {product.model}</p>
       </div>
-      
+
       <DownloadsManager
         productId={params.id as string}
         initialDownloads={downloads}

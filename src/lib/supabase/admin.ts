@@ -58,6 +58,7 @@ export async function getProductWithEnhancements(slug: string, locale: string) {
     .from('products')
     .select(`
       *,
+      category:product_categories(*),
       product_specs(*),
       product_downloads(*),
       tag_objects:product_tags!product_tag_relations(id, slug, translations, color)
@@ -145,20 +146,34 @@ async function getProductRelations(productId: string) {
   return data || []
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function organizeSpecGroups(specs: any[], specGroupsConfig: any[]) {
   if (!specGroupsConfig || specGroupsConfig.length === 0) {
     // 如果没有配置分组，将所有规格放入默认组
     return [{
       id: 'default',
       label: { en: 'Specifications' },
-      specs: specs || [],
+      specs: (specs || []).map((spec: any) => ({
+        ...spec,
+        label: typeof spec.label === 'string' ? { en: spec.label } : spec.label,
+        value: typeof spec.value === 'string' ? { en: spec.value } : spec.value,
+        unit: typeof spec.unit === 'string' ? { en: spec.unit } : (spec.unit || {}),
+      })),
       sort_order: 0
     }]
   }
 
   // 按分组组织规格
-  return specGroupsConfig.map(group => ({
+  return specGroupsConfig.map((group: any) => ({
     ...group,
-    specs: (specs || []).filter(spec => spec.group_id === group.id)
-  })).filter(group => group.specs.length > 0)
+    label: typeof group.label === 'string' ? { en: group.label } : (group.label || group.name || { en: 'Specifications' }),
+    specs: (specs || [])
+      .filter((spec: any) => spec.group_id === group.id)
+      .map((spec: any) => ({
+        ...spec,
+        label: typeof spec.label === 'string' ? { en: spec.label } : spec.label,
+        value: typeof spec.value === 'string' ? { en: spec.value } : spec.value,
+        unit: typeof spec.unit === 'string' ? { en: spec.unit } : (spec.unit || {}),
+      }))
+  })).filter((group: any) => group.specs.length > 0)
 }

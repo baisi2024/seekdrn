@@ -8,12 +8,24 @@
     "uav": "无人机平台",
     "payload": "载荷",
     "cuas": "反无人机系统",
-    "ground_control": "地面控制"
+    "ground_control": "地面控制",
+    "tagLabel": "标签筛选:",
+    "clear": "清除筛选"
   },
+  "searchPlaceholder": "搜索产品...",
+  "tryAdjustFilters": "尝试调整筛选条件或搜索关键词",
   "specs": "技术规格",
   "advantages": "核心优势",
   "capabilities": "核心能力",
   "applications": "应用场景",
+  "overview": "产品概述",
+  "coreFeatures": "核心特性",
+  "anchorNav": {
+    "overview": "概览",
+    "specs": "参数",
+    "resources": "资源",
+    "cases": "案例"
+  },
   "relatedCases": "相关案例",
   "relatedProducts": "相关产品",
   "downloads": "下载中心",

@@ -30,7 +30,7 @@ interface Props {
   onSave: (groups: SpecGroup[], specs: Spec[]) => Promise<void>
 }
 
-export function SpecGroupsEditor({ productId, initialGroups = [], initialSpecs = [], onSave }: Props) {
+export function SpecGroupsEditor({ productId: _productId, initialGroups = [], initialSpecs = [], onSave }: Props) {
   const [groups, setGroups] = useState<SpecGroup[]>(initialGroups)
   const [specs, setSpecs] = useState<Spec[]>(initialSpecs)
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())

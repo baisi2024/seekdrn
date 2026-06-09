@@ -122,7 +122,7 @@ export function NavTree({ items, onEdit, onDelete }: NavTreeProps) {
   if (items.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
-        No navigation items yet. Click "Add Item" to create one.
+        No navigation items yet. Click &quot;Add Item&quot; to create one.
       </div>
     )
   }

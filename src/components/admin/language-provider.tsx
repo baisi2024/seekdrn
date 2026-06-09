@@ -19,7 +19,10 @@ export function AdminLanguageProvider({ children }: { children: React.ReactNode 
   useEffect(() => {
     const saved = localStorage.getItem('admin-language')
     if (saved === 'en' || saved === 'zh') {
-      setLanguageState(saved)
+      // 使用 requestAnimationFrame 避免同步 setState
+      requestAnimationFrame(() => {
+        setLanguageState(saved)
+      })
     }
   }, [])
 

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 import { Skeleton } from '@/components/ui/skeleton'
-import { cn } from '@/lib/utils'
+// import { cn } from '@/lib/utils'
 
 type PopularType = 'products' | 'downloads' | 'locales'
 
@@ -34,6 +34,7 @@ interface PopularContentProps {
 
 export function PopularContent({ type, limit = 10 }: PopularContentProps) {
   const t = useAdminTranslations()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)

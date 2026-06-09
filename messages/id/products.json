@@ -8,12 +8,24 @@
     "uav": "Platform UAV",
     "payload": "Muatan",
     "cuas": "Contra-UAS",
-    "ground_control": "Kontrol Darat"
+    "ground_control": "Kontrol Darat",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "Spesifikasi Teknis",
   "advantages": "Keunggulan Utama",
   "capabilities": "Kemampuan Utama",
   "applications": "Aplikasi",
+  "overview": "Ikhtisar Produk",
+  "coreFeatures": "Fitur Utama",
+  "anchorNav": {
+    "overview": "Ikhtisar",
+    "specs": "Spesifikasi",
+    "resources": "Sumber Daya",
+    "cases": "Kasus"
+  },
   "relatedCases": "Studi Kasus Terkait",
   "relatedProducts": "Produk Terkait",
   "downloads": "Unduhan",

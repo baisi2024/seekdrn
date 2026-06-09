@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
-import { getTranslation } from '@/lib/utils'
+import { getTranslation, getLocalizedValue } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { ProductGallery } from '@/features/products/components/public/product-gallery'
 import { ProductFAQSection } from '@/features/products/components/public/product-faq'
@@ -13,12 +13,9 @@ import { DownloadsSection } from '@/components/public/downloads-section'
 import { RelatedCasesSection } from '@/components/public/related-cases-section'
 import { RelatedProducts } from '@/features/products/components/public/related-products'
 import { LeadFormCTAButton } from '@/components/public/lead-form-cta-button'
-import { ShareButtons } from '@/components/public/share-buttons'
-import { ProcurementPackCTA } from '@/components/public/procurement-pack-cta'
-import { ProcurementDecisionBar } from '@/components/public/procurement-decision-bar'
 import { InlineLeadForm } from '@/components/public/inline-lead-form'
-import { AddToCompareButton } from '@/components/public/add-to-compare-button'
 import { Breadcrumb } from '@/components/public/breadcrumb'
+import { RichTextRenderer } from '@/components/public/rich-text-renderer'
 import { ProductDetailTracker } from '@/components/analytics/product-detail-tracker'
 import type { Spec } from '@/features/products/types/product'
 import {
@@ -28,11 +25,37 @@ import {
   Shield,
   Zap,
   Target,
-  Radio,
+  Compass,
+  BookOpen,
 } from 'lucide-react'
 
 interface Relation {
   relation_type: string
+}
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&times;/gi, '×')
+    .replace(/&mdash;/gi, '—')
+    .replace(/&ndash;/gi, '–')
+    .replace(/&le;/gi, '≤')
+    .replace(/&ge;/gi, '≥')
+    .replace(/&deg;/gi, '°')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#(\d+);/g, (_, code) => {
+      const num = parseInt(code)
+      return num > 0 ? String.fromCharCode(num) : ''
+    })
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, code) => {
+      const num = parseInt(code, 16)
+      return num > 0 ? String.fromCharCode(num) : ''
+    })
+    .replace(/\s+/g, ' ')
+    .trim()
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
@@ -76,21 +99,36 @@ export default async function ProductDetailPage({
   const relations = (product.relations || []) as Relation[]
   const caseRelations = relations.filter((r) => r.relation_type === 'case_study')
 
-  // Extract key specs for hero stats bar (from first spec group, first 4 specs)
+  // Clean overview for hero display (strip HTML, emojis)
+  const cleanOverview = overview ? stripHtml(overview) : ''
+
+  // Extract key specs for hero stats bar (from first spec group, first 6 specs)
   const heroStats: Array<{ label: string; value: string; unit: string }> = product.spec_groups && product.spec_groups.length > 0
-    ? product.spec_groups[0].specs.slice(0, 4).map((spec: Spec) => {
-        const unitValue = getTranslation(spec.unit, locale, 'unit') || ''
-        return {
-          label: getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0],
-          value: getTranslation(spec.value, locale, 'value') || spec.value,
-          unit: unitValue,
-        }
-      })
+    ? product.spec_groups[0].specs.slice(0, 6).map((spec: Spec) => ({
+        label: getTranslation(spec.label, locale, 'label') || getLocalizedValue(spec.label, locale),
+        value: getLocalizedValue(spec.value, locale),
+        unit: getLocalizedValue(spec.unit, locale),
+      }))
     : []
-  const decisionItems = heroStats.slice(0, 3).map((stat) => ({
-    label: stat.label,
-    value: `${stat.value}${stat.unit}`,
-  }))
+
+  // Merge advantages and capabilities into core features
+  const hasCoreFeatures = !!(advantages || capabilities)
+  const hasDownloads = documents && documents.length > 0
+  // Check if there are FAQs for the current locale
+  const localizedFaqs = faqs.filter((f: { locale: string }) => f.locale === locale)
+  const hasFaqs = localizedFaqs.length > 0
+  const hasCases = product.related_cases && product.related_cases.length > 0
+
+  // Build anchor nav items dynamically
+  const anchorItems = [
+    { id: 'overview', label: t('anchorNav.overview') },
+    ...(hasCoreFeatures ? [{ id: 'features', label: t('coreFeatures') }] : []),
+    ...(applications ? [{ id: 'applications', label: t('applications') }] : []),
+    { id: 'specs', label: t('anchorNav.specs') },
+    ...(hasDownloads ? [{ id: 'downloads', label: t('downloads') }] : []),
+    ...(hasFaqs ? [{ id: 'faq', label: t('faq') }] : []),
+    ...(caseRelations.length > 0 ? [{ id: 'cases', label: t('anchorNav.cases') }] : []),
+  ]
 
   return (
     <>
@@ -102,10 +140,10 @@ export default async function ProductDetailPage({
         locale={locale}
       />
 
-      {/* ===== HERO SECTION ===== */}
-      <section className="relative bg-gradient-to-b from-primary/5 to-background">
-        <div className="container mx-auto px-4 py-12 lg:py-16">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+      {/* ===== 1. HERO SECTION ===== */}
+      <section className="border-b border-border bg-muted/30">
+        <div className="container mx-auto px-4 py-10 lg:py-14">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-start">
             {/* Left: Gallery */}
             <ProductGallery
               images={product.images || []}
@@ -113,7 +151,7 @@ export default async function ProductDetailPage({
             />
 
             {/* Right: Product Info */}
-            <div className="space-y-6">
+            <div className="space-y-5">
               {/* Breadcrumb */}
               <Breadcrumb
                 items={[
@@ -127,7 +165,7 @@ export default async function ProductDetailPage({
               {/* Tags */}
               {tags.length > 0 && (
                 <div className="flex flex-wrap gap-2">
-                  {tags.map((tag: any) => {
+                  {tags.map((tag: { id?: string; slug: string; color?: string; translations?: Record<string, Record<string, string>> }) => {
                     const tagName = getTranslation(tag.translations, locale, 'name') || tag.slug
                     return (
                       <Badge
@@ -144,29 +182,17 @@ export default async function ProductDetailPage({
 
               {/* Model + Name */}
               <div>
-                <Badge variant="outline" className="font-mono mb-3">{product.model}</Badge>
+                <Badge variant="outline" className="font-mono mb-2">{product.model}</Badge>
                 <h1 className="text-3xl lg:text-4xl font-bold text-foreground">{name}</h1>
-                <p className="mt-3 text-lg text-muted-foreground leading-relaxed">{overview}</p>
-                <div className="mt-3">
-                  <ShareButtons title={name} description={overview} pageType="product" locale={locale} />
-                </div>
               </div>
 
-              {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-3 pt-2">
-                <AddToCompareButton
-                  product={{
-                    id: product.id,
-                    model: product.model,
-                    slug: product.slug,
-                    name: name || '',
-                    category: categoryLabel || undefined,
-                    image: product.images && product.images.length > 0 ? product.images[0] : undefined,
-                    tags: tags.map((tag: any) => getTranslation(tag.translations, locale, 'name') || tag.slug),
-                    spec_groups: product.spec_groups,
-                  }}
-                />
+              {/* Overview - clean plain text */}
+              {cleanOverview && (
+                <p className="text-base text-muted-foreground leading-relaxed">{cleanOverview}</p>
+              )}
 
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-3 pt-1">
                 <LeadFormCTAButton
                   intent="quote"
                   productModel={product.model}
@@ -191,25 +217,13 @@ export default async function ProductDetailPage({
                     {t('downloadMaterials')}
                   </LeadFormCTAButton>
                 )}
-
-                <LeadFormCTAButton
-                  intent="demo"
-                  productModel={product.model}
-                  pageType="product"
-                  locale={locale}
-                  size="lg"
-                  variant="outline"
-                >
-                  <Calendar className="w-4 h-4 mr-2" />
-                  {t('scheduleDemo')}
-                </LeadFormCTAButton>
               </div>
 
-              {/* Compliance Badges */}
+              {/* Compliance Notice */}
               {product.compliance_flag && (
-                <div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3">
-                  <Shield className="w-5 h-5 flex-shrink-0 text-amber-600" />
-                  <p className="text-sm text-amber-900">
+                <div className="flex items-center gap-2 rounded-lg border border-primary/20 bg-primary/5 p-3">
+                  <Shield className="w-5 h-5 flex-shrink-0 text-primary" />
+                  <p className="text-sm text-muted-foreground">
                     {t('complianceNotice')}
                   </p>
                 </div>
@@ -219,29 +233,17 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {decisionItems.length > 0 && (
-        <ProcurementDecisionBar
-          locale={locale}
-          title={t('procurementDecision.title')}
-          items={decisionItems}
-          quoteLabel={t('requestQuote')}
-          datasheetLabel={t('downloadMaterials')}
-          hasDocuments={documents.length > 0}
-          productModel={product.model}
-        />
-      )}
-
-      {/* ===== KEY STATS BAR ===== */}
+      {/* ===== 2. KEY SPECS BAR ===== */}
       {heroStats.length > 0 && (
-        <section className="border-y border-border bg-card">
+        <section className="border-b border-border bg-card">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6">
               {heroStats.map((stat, i) => (
-                <div key={i} className="py-6 px-6 text-center">
-                  <div className="font-mono text-2xl lg:text-3xl font-bold text-primary">
-                    {stat.value}<span className="text-base ml-0.5 font-normal text-muted-foreground">{stat.unit}</span>
+                <div key={i} className={`py-5 px-4 text-center ${i > 0 ? 'border-l border-border' : ''}`}>
+                  <div className="font-mono text-xl lg:text-2xl font-bold text-primary">
+                    {stat.value}<span className="text-sm ml-0.5 font-normal text-muted-foreground">{stat.unit}</span>
                   </div>
-                  <div className="text-sm text-muted-foreground mt-1">{stat.label}</div>
+                  <div className="text-xs text-muted-foreground mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -249,19 +251,11 @@ export default async function ProductDetailPage({
         </section>
       )}
 
-      {/* ===== ANCHOR NAV ===== */}
+      {/* ===== 3. ANCHOR NAV ===== */}
       <nav className="sticky top-0 z-30 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-6 overflow-x-auto py-3 text-sm font-medium scrollbar-none">
-            {[
-              { id: 'specs', label: t('specs') },
-              { id: 'advantages', label: t('advantages') },
-              { id: 'capabilities', label: t('capabilities') },
-              { id: 'applications', label: t('applications') },
-              ...(documents.length > 0 ? [{ id: 'downloads', label: t('downloads') }] : []),
-              ...(faqs.length > 0 ? [{ id: 'faq', label: t('faq') }] : []),
-              ...(caseRelations.length > 0 ? [{ id: 'cases', label: t('relatedCases') }] : []),
-            ].map((item) => (
+            {anchorItems.map((item) => (
               <a
                 key={item.id}
                 href={`#${item.id}`}
@@ -274,106 +268,85 @@ export default async function ProductDetailPage({
         </div>
       </nav>
 
-      {/* ===== CONTENT SECTIONS ===== */}
-      <div className="container mx-auto px-4 py-12 lg:py-16 space-y-20">
-        <ProcurementPackCTA
-          locale={locale}
-          title={t('procurementPack.title')}
-          subtitle={t('procurementPack.subtitle')}
-          datasheetLabel={t('downloadMaterials')}
-          supportLabel={t('procurementPack.supportLabel')}
-          complianceLabel={t('procurementPack.complianceLabel')}
-          hasDocuments={documents.length > 0}
-          productModel={product.model}
-        />
+      {/* ===== 4. CONTENT SECTIONS ===== */}
+      <div className="container mx-auto px-4 py-10 lg:py-14 space-y-14">
 
-        {/* Specs Section */}
-        {product.spec_groups && product.spec_groups.length > 0 && (
-          <section id="specs">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <Zap className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground">{t('specs')}</h2>
-            </div>
-            <SpecsSection groups={product.spec_groups} locale={locale} />
+        {/* Overview Section */}
+        {overview && (
+          <section id="overview">
+            <SectionHeader icon={<BookOpen className="w-5 h-5 text-primary" />} title={t('overview')} />
+            <RichTextRenderer content={overview} className="text-muted-foreground" />
           </section>
         )}
 
-        {/* Advantages Section */}
-        {advantages && (
-          <section id="advantages">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <Target className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground">{t('advantages')}</h2>
+        {/* Core Features Section (merged advantages + capabilities) */}
+        {hasCoreFeatures && (
+          <section id="features">
+            <SectionHeader icon={<Target className="w-5 h-5 text-primary" />} title={t('coreFeatures')} />
+            <div className="space-y-8">
+              {advantages && (
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-4">{t('advantages')}</h3>
+                  <RichTextRenderer content={advantages} className="text-muted-foreground" />
+                </div>
+              )}
+              {capabilities && (
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground mb-4">{t('capabilities')}</h3>
+                  <RichTextRenderer content={capabilities} className="text-muted-foreground" />
+                </div>
+              )}
             </div>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: advantages }} />
-          </section>
-        )}
-
-        {/* Capabilities Section */}
-        {capabilities && (
-          <section id="capabilities">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <Radio className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground">{t('capabilities')}</h2>
-            </div>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: capabilities }} />
           </section>
         )}
 
         {/* Applications Section */}
         {applications && (
           <section id="applications">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <Shield className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground">{t('applications')}</h2>
-            </div>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: applications }} />
+            <SectionHeader icon={<Compass className="w-5 h-5 text-primary" />} title={t('applications')} />
+            <RichTextRenderer content={applications} className="text-muted-foreground" />
+          </section>
+        )}
+
+        {/* Specs Section */}
+        {product.spec_groups && product.spec_groups.length > 0 && (
+          <section id="specs">
+            <SectionHeader icon={<Zap className="w-5 h-5 text-primary" />} title={t('specs')} />
+            <SpecsSection groups={product.spec_groups} locale={locale} />
           </section>
         )}
 
         {/* Downloads Section */}
-        {documents && documents.length > 0 && (
+        {hasDownloads && (
           <section id="downloads">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="rounded-lg bg-primary/10 p-2">
-                <FileText className="w-5 h-5 text-primary" />
-              </div>
-              <h2 className="text-2xl font-bold text-foreground">{t('downloads')}</h2>
-            </div>
+            <SectionHeader icon={<FileText className="w-5 h-5 text-primary" />} title={t('downloads')} />
             <DownloadsSection downloads={documents} locale={locale} productModel={product.model} />
           </section>
         )}
 
         {/* FAQ Section */}
-        {faqs && faqs.length > 0 && (
+        {hasFaqs && (
           <section id="faq">
+            <SectionHeader icon={<MessageSquare className="w-5 h-5 text-primary" />} title={t('faq')} />
             <ProductFAQSection faqs={faqs} locale={locale} />
           </section>
         )}
 
         {/* Related Cases */}
-        {product.related_cases && product.related_cases.length > 0 && (
+        {hasCases && (
           <section id="cases">
             <RelatedCasesSection cases={product.related_cases} locale={locale} />
           </section>
         )}
       </div>
 
-      {/* ===== BOTTOM CTA BANNER ===== */}
+      {/* ===== 5. BOTTOM CTA ===== */}
       <section className="bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 py-16 text-center">
-          <h2 className="text-2xl lg:text-3xl font-bold mb-4">
+        <div className="container mx-auto px-4 py-14 text-center">
+          <h2 className="text-2xl lg:text-3xl font-bold mb-3">
             {t('bottomCta.title')}
           </h2>
-          <p className="text-lg text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
+          <p className="text-base text-primary-foreground/80 mb-8 max-w-2xl mx-auto">
             {t('bottomCta.subtitle')}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -384,7 +357,6 @@ export default async function ProductDetailPage({
               locale={locale}
               size="lg"
               variant="secondary"
-              className="inline-flex items-center justify-center rounded-md bg-secondary text-secondary-foreground px-6 py-3 text-sm font-medium hover:bg-secondary/90 transition-colors"
             >
               <MessageSquare className="w-4 h-4 mr-2" />
               {t('requestQuote')}
@@ -395,8 +367,8 @@ export default async function ProductDetailPage({
               pageType="product"
               locale={locale}
               size="lg"
-              variant="ghost"
-              className="inline-flex items-center justify-center rounded-md border border-primary-foreground/30 text-primary-foreground px-6 py-3 text-sm font-medium hover:bg-primary-foreground/10 hover:text-primary-foreground transition-colors"
+              variant="outline"
+              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
             >
               <Calendar className="w-4 h-4 mr-2" />
               {t('scheduleDemo')}
@@ -405,10 +377,10 @@ export default async function ProductDetailPage({
         </div>
       </section>
 
-      {/* ===== RELATED PRODUCTS ===== */}
+      {/* ===== 6. RELATED PRODUCTS ===== */}
       <RelatedProducts productId={product.id} locale={locale} />
 
-      {/* ===== INLINE LEAD FORM ===== */}
+      {/* ===== 7. INLINE LEAD FORM ===== */}
       <div className="container mx-auto px-4 py-12">
         <InlineLeadForm
           mode="inline"
@@ -418,5 +390,16 @@ export default async function ProductDetailPage({
         />
       </div>
     </>
+  )
+}
+
+function SectionHeader({ icon, title }: { icon: React.ReactNode; title: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <div className="rounded-lg bg-primary/10 p-2">
+        {icon}
+      </div>
+      <h2 className="text-2xl font-bold text-foreground">{title}</h2>
+    </div>
   )
 }

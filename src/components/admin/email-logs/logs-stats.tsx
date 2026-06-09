@@ -63,7 +63,7 @@ const StatCard = memo(function StatCard({
   iconBg,
   trend,
   miniChartData,
-  t,
+  t: _t,
 }: {
   title: string
   value: number | string
@@ -185,14 +185,17 @@ export function LogsStats({ stats, previousStats }: LogsStatsProps) {
   const [chartData, setChartData] = useState<number[][]>([])
 
   useEffect(() => {
-    const generateTrendData = (base: number) => 
+    const generateTrendData = (base: number) =>
       Array.from({ length: 7 }, () => Math.max(0, base + Math.floor(Math.random() * 5 - 2)))
 
-    setChartData([
-      generateTrendData(stats.total),
-      generateTrendData(stats.sent),
-      generateTrendData(stats.failed),
-    ])
+    // 使用 requestAnimationFrame 避免同步 setState
+    requestAnimationFrame(() => {
+      setChartData([
+        generateTrendData(stats.total),
+        generateTrendData(stats.sent),
+        generateTrendData(stats.failed),
+      ])
+    })
   }, [stats.total, stats.sent, stats.failed])
 
   return (

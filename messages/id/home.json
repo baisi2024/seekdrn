@@ -18,7 +18,8 @@
   },
   "products": {
     "title": "Produk Kami",
-    "viewAll": "Lihat Semua Produk"
+    "viewAll": "Lihat Semua Produk",
+    "empty": "Tidak ada produk tersedia"
   },
   "solutions": {
     "title": "Solusi Industri"

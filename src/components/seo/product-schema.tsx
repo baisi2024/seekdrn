@@ -35,6 +35,7 @@ export function ProductSchema({ product, locale }: ProductSchemaProps) {
       .map(([key, spec]) => ({
         '@type': 'PropertyValue',
         name: formatSpecName(key),
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value: `${(spec as any).value} ${(spec as any).unit}`,
       })),
   }

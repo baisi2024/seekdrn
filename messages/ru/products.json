@@ -8,12 +8,24 @@
     "uav": "Платформы БПЛА",
     "payload": "Полезные нагрузки",
     "cuas": "Противодействие БПЛА",
-    "ground_control": "Наземное управление"
+    "ground_control": "Наземное управление",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "Технические характеристики",
   "advantages": "Ключевые преимущества",
   "capabilities": "Основные возможности",
   "applications": "Применение",
+  "overview": "Обзор продукта",
+  "coreFeatures": "Ключевые особенности",
+  "anchorNav": {
+    "overview": "Обзор",
+    "specs": "Характеристики",
+    "resources": "Ресурсы",
+    "cases": "Кейсы"
+  },
   "relatedCases": "Связанные кейсы",
   "relatedProducts": "Связанные продукты",
   "downloads": "Загрузки",

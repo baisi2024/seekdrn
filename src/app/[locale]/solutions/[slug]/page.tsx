@@ -17,7 +17,7 @@ import { SolutionPageTracker } from '@/components/public/solution-page-tracker'
 
 interface SolutionMetric {
   value: string
-  metric: string
+  label: string
 }
 
 interface RelatedProduct {
@@ -109,7 +109,7 @@ export default async function SolutionPage({
     .filter(Boolean) || []) as unknown as RelatedCase[]
 
   return (
-    <div className="bg-background py-16">
+    <div className="bg-[#0A0E17] py-16">
       <SolutionPageTracker
         solutionSlug={solution.slug}
         solutionName={title || ''}
@@ -126,9 +126,9 @@ export default async function SolutionPage({
         {/* Hero */}
         <div className="mx-auto mb-12 max-w-3xl text-center">
           {solution.icon && <div className="mb-4 text-6xl">{solution.icon}</div>}
-          <p className="text-sm font-semibold text-primary">{t('eyebrow')}</p>
-          <h1 className="mt-3 text-3xl font-bold text-foreground lg:text-5xl">{title}</h1>
-          <p className="mt-4 text-lg leading-7 text-muted-foreground">{t('detailSubtitle')}</p>
+          <p className="text-sm font-semibold text-[#0066FF]">{t('eyebrow')}</p>
+          <h1 className="mt-3 text-3xl font-bold text-white lg:text-5xl">{title}</h1>
+          <p className="mt-4 text-lg leading-7 text-white/50">{t('detailSubtitle')}</p>
         </div>
 
         <div className="space-y-12">
@@ -145,39 +145,39 @@ export default async function SolutionPage({
           {/* Challenge */}
         {challenge && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('challenge')}</h2>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: challenge }} />
+            <h2 className="text-2xl font-bold text-white mb-4">{t('challenge')}</h2>
+            <div className="prose max-w-none text-white/50" dangerouslySetInnerHTML={{ __html: challenge }} />
           </section>
         )}
 
         {/* Solution */}
         {solutionText && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('solution')}</h2>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: solutionText }} />
+            <h2 className="text-2xl font-bold text-white mb-4">{t('solution')}</h2>
+            <div className="prose max-w-none text-white/50" dangerouslySetInnerHTML={{ __html: solutionText }} />
           </section>
         )}
 
         {/* Workflow */}
         {workflow && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('workflow')}</h2>
-            <div className="prose max-w-none text-muted-foreground" dangerouslySetInnerHTML={{ __html: workflow }} />
+            <h2 className="text-2xl font-bold text-white mb-4">{t('workflow')}</h2>
+            <div className="prose max-w-none text-white/50" dangerouslySetInnerHTML={{ __html: workflow }} />
           </section>
         )}
 
         {/* Key Metrics */}
         {solution.metrics && solution.metrics.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-4">{t('keyMetrics')}</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">{t('keyMetrics')}</h2>
             <div className="grid md:grid-cols-4 gap-4">
               {(solution.metrics as SolutionMetric[]).map((m, i) => (
-                <Card key={i}>
+                <Card key={i} className="bg-[#1A1F2E]">
                   <CardContent className="p-6 text-center">
-                    <div className="font-mono font-bold text-2xl text-primary mb-2">
+                    <div className="font-mono font-bold text-2xl text-[#0066FF] mb-2">
                       {m.value}
                     </div>
-                    <div className="text-sm text-muted-foreground">{m.metric}</div>
+                    <div className="text-sm text-white/50">{m.label}</div>
                   </CardContent>
                 </Card>
               ))}
@@ -188,11 +188,11 @@ export default async function SolutionPage({
         {/* Recommended Products */}
         {relatedProducts.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('recommendedProducts')}</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('recommendedProducts')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedProducts.map((product) => (
-                <div key={product.id} className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
-                  <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                <div key={product.id} className="group flex flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#1A1F2E] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#0066FF]/40 hover:shadow-md">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-[#1A1F2E]">
                     {product.images && product.images[0] ? (
                       <Image
                         src={product.images[0]}
@@ -201,8 +201,8 @@ export default async function SolutionPage({
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     ) : (
-                      <div className="flex h-full w-full items-center justify-center bg-muted">
-                        <Box className="h-14 w-14 text-muted-foreground/40" />
+                      <div className="flex h-full w-full items-center justify-center bg-[#1A1F2E]">
+                        <Box className="h-14 w-14 text-white/30" />
                       </div>
                     )}
                     {product.model && (
@@ -210,13 +210,13 @@ export default async function SolutionPage({
                     )}
                   </div>
                   <div className="flex flex-1 flex-col p-5">
-                    <h3 className="font-semibold text-foreground text-lg leading-snug">
+                    <h3 className="font-semibold text-white text-lg leading-snug">
                       {getTranslation(product.translations || {}, locale, 'name') || product.model || 'Product'}
                     </h3>
                     <div className="mt-auto pt-4 flex flex-wrap gap-2">
                       <Link
                         href={`/${locale}/products/${product.slug}`}
-                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary/80 transition-colors"
+                        className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0066FF] hover:text-[#0052CC] transition-colors"
                       >
                         {t('exploreProducts')}
                         <ArrowRight className="w-4 h-4" />
@@ -243,7 +243,7 @@ export default async function SolutionPage({
         {/* Related Cases */}
         {relatedCases.length > 0 && (
           <section className="mb-12">
-            <h2 className="text-2xl font-bold text-foreground mb-6">{t('relatedCases')}</h2>
+            <h2 className="text-2xl font-bold text-white mb-6">{t('relatedCases')}</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {relatedCases.map((caseStudy) => (
                 <CaseCard key={caseStudy.id} caseStudy={caseStudy} locale={locale} />
@@ -253,9 +253,9 @@ export default async function SolutionPage({
         )}
 
         {/* CTA */}
-          <section className="rounded-3xl border border-border bg-[#f7f8f5] p-8 text-center">
-          <h2 className="text-2xl font-semibold text-foreground">{t('solutionCta.title')}</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-muted-foreground">{t('solutionCta.subtitle')}</p>
+          <section className="rounded-3xl border border-white/[0.06] bg-[#1A1F2E] p-8 text-center">
+          <h2 className="text-2xl font-semibold text-white">{t('solutionCta.title')}</h2>
+          <p className="mx-auto mt-3 max-w-2xl text-white/50">{t('solutionCta.subtitle')}</p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <LeadFormCTAButton
               intent="quote"
@@ -265,7 +265,7 @@ export default async function SolutionPage({
             >
               {t('requestDemo')}
             </LeadFormCTAButton>
-            <Link href={`/${locale}/case-studies`} className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground">
+            <Link href={`/${locale}/case-studies`} className="inline-flex items-center justify-center rounded-md border border-white/[0.06] bg-[#0A0E17] px-4 py-2 text-sm font-medium hover:bg-white/[0.06] hover:text-white">
               {t('relatedCases')}
             </Link>
           </div>

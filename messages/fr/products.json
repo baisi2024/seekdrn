@@ -8,12 +8,24 @@
     "uav": "Plateformes UAV",
     "payload": "Charges Utiles",
     "cuas": "Anti-UAS",
-    "ground_control": "Contrôle au Sol"
+    "ground_control": "Contrôle au Sol",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "Spécifications Techniques",
   "advantages": "Avantages Principaux",
   "capabilities": "Capacités Principales",
   "applications": "Applications",
+  "overview": "Aperçu du Produit",
+  "coreFeatures": "Caractéristiques Principales",
+  "anchorNav": {
+    "overview": "Aperçu",
+    "specs": "Spécifications",
+    "resources": "Ressources",
+    "cases": "Cas"
+  },
   "relatedCases": "Études de Cas Connexes",
   "relatedProducts": "Produits Connexes",
   "downloads": "Téléchargements",

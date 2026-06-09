@@ -88,7 +88,7 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
   
   const debouncedValues = useDebounce(watchedValues, 500)
   
-  const { isSaving: isAutoSaving, lastSaved, hasUnsavedChanges } = useAutoSave({
+  const { isSaving: isAutoSaving, lastSaved } = useAutoSave({
     data: debouncedValues,
     onSave: async (data) => {
       console.log('Auto saving:', data)
@@ -134,7 +134,7 @@ export function TemplateForm({ template, onSave, saving, onUnsavedChange }: Temp
     return date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
   }
 
-  const variablesList = useMemo(() => watchedValues.available_variables, [watchedValues.available_variables])
+  // const variablesList = useMemo(() => watchedValues.available_variables, [watchedValues.available_variables])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

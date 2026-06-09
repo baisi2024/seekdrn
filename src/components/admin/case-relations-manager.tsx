@@ -31,12 +31,12 @@ interface Props {
   onAutoMatch: () => Promise<CaseRelation[]>
 }
 
-export function CaseRelationsManager({ 
-  productId, 
-  initialRelations = [], 
+export function CaseRelationsManager({
+  productId: _productId,
+  initialRelations = [],
   allCaseStudies,
   onSave,
-  onAutoMatch 
+  onAutoMatch
 }: Props) {
   const t = useAdminTranslations()
   const [relations, setRelations] = useState<CaseRelation[]>(initialRelations)

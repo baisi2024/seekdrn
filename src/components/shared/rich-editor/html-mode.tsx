@@ -32,7 +32,10 @@ export function HtmlMode({
   // 同步外部内容变化（仅在内容与当前状态不同时更新）
   useEffect(() => {
     if (content !== htmlCode) {
-      setHtmlCode(content)
+      // 使用 requestAnimationFrame 避免同步 setState
+      requestAnimationFrame(() => {
+        setHtmlCode(content)
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content])

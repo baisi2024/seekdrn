@@ -1,17 +1,31 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { SpecGroupsEditor } from '@/components/admin/spec-groups-editor'
 
+interface SpecGroupData {
+  id: string
+  label: Record<string, string>
+  specs: SpecData[]
+  sort_order: number
+}
+
+interface SpecData {
+  id: string
+  label: Record<string, string>
+  value: Record<string, string>
+  unit: Record<string, string>
+  group_id: string
+  sort_order: number
+}
+
 export default function SpecsManagePage() {
   const params = useParams()
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [product, setProduct] = useState<any>(null)
-  const [specGroups, setSpecGroups] = useState<any[]>([])
-  const [specs, setSpecs] = useState<any[]>([])
+  const [specGroups, setSpecGroups] = useState<SpecGroupData[]>([])
+  const [specs, setSpecs] = useState<SpecData[]>([])
   const supabase = createClient()
 
   const fetchData = useCallback(async () => {
@@ -23,8 +37,7 @@ export default function SpecsManagePage() {
       .single()
 
     if (productData) {
-      setProduct(productData)
-      setSpecGroups(productData.spec_groups || [])
+      setSpecGroups((productData.spec_groups as SpecGroupData[]) || [])
     }
 
     // 获取规格
@@ -35,17 +48,20 @@ export default function SpecsManagePage() {
       .order('sort_order')
 
     if (specsData) {
-      setSpecs(specsData)
+      setSpecs(specsData as SpecData[])
     }
 
     setLoading(false)
   }, [params.id, supabase])
 
   useEffect(() => {
-    fetchData()
+    // 使用 requestAnimationFrame 避免同步 setState
+    requestAnimationFrame(() => {
+      fetchData()
+    })
   }, [fetchData])
 
-  async function handleSave(groups: any[], specsData: any[]) {
+  async function handleSave(groups: SpecGroupData[], specsData: SpecData[]) {
     // 更新产品规格组
     const { error: productError } = await supabase
       .from('products')
@@ -77,17 +93,12 @@ export default function SpecsManagePage() {
     return <div className="p-8">Loading...</div>
   }
 
-  if (!product) {
-    return <div className="p-8">Product not found</div>
-  }
-
   return (
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Manage Specifications</h1>
-        <p className="text-muted-foreground">Product: {product.model}</p>
       </div>
-      
+
       <SpecGroupsEditor
         productId={params.id as string}
         initialGroups={specGroups}

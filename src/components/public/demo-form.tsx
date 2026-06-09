@@ -134,35 +134,35 @@ export function DemoForm() {
   }
 
   return (
-    <section id="demo-form" className="bg-muted py-16 lg:py-24">
+    <section id="demo-form" className="bg-[#1A1F2E] py-16 lg:py-24">
       <div className="container mx-auto px-4">
         <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">{t('form.eyebrow')}</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-foreground lg:text-4xl">{t('form.title')}</h2>
-            <p className="mt-4 text-base leading-7 text-muted-foreground">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#0066FF]">{t('form.eyebrow')}</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white lg:text-4xl">{t('form.title')}</h2>
+            <p className="mt-4 text-base leading-7 text-white/50">
               {t('form.subtitle')}
             </p>
-            <div className="mt-6 grid gap-3 text-sm text-muted-foreground">
+            <div className="mt-6 grid gap-3 text-sm text-white/50">
               {intents.slice(0, 4).map((intent) => (
-                <div key={intent} className="rounded-2xl border border-border bg-background p-4">
-                  <span className="font-semibold text-foreground">{t(`form.intents.${intent}`)}</span>
-                  <p className="mt-1 text-xs leading-5 text-muted-foreground">{t(`form.intentHelp.${intent}`)}</p>
+                <div key={intent} className="rounded-2xl border border-white/[0.06] bg-[#0A0E17] p-4">
+                  <span className="font-semibold text-white">{t(`form.intents.${intent}`)}</span>
+                  <p className="mt-1 text-xs leading-5 text-white/50">{t(`form.intentHelp.${intent}`)}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5 rounded-3xl border border-border bg-background p-6 shadow-sm lg:p-8">
+          <form onSubmit={handleSubmit} className="space-y-5 rounded-3xl border border-white/[0.06] bg-[#0A0E17] p-6 lg:p-8">
             <div className="space-y-1.5">
-              <Label>{t('form.intent')}</Label>
+              <Label className="text-white/70">{t('form.intent')}</Label>
               <Select value={formData.intent} onValueChange={(val) => handleChange('intent', val || 'quote')}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-[#1A1F2E] border-white/[0.06] text-white">
                   <SelectValue placeholder={t('form.intent')} />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#1A1F2E] border-white/[0.06]">
                   {intents.map((intent) => (
-                    <SelectItem key={intent} value={intent}>
+                    <SelectItem key={intent} value={intent} className="text-white hover:bg-white/[0.04]">
                       {t(`form.intents.${intent}`)}
                     </SelectItem>
                   ))}
@@ -172,56 +172,56 @@ export function DemoForm() {
 
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-1.5">
-                <Label htmlFor="fullName">{t('form.fullName')}</Label>
-                <Input id="fullName" value={formData.fullName} onChange={(e) => handleChange('fullName', e.target.value)} />
-                {errors.fullName && <p className="text-sm text-destructive">{errors.fullName}</p>}
+                <Label htmlFor="fullName" className="text-white/70">{t('form.fullName')}</Label>
+                <Input id="fullName" value={formData.fullName} onChange={(e) => handleChange('fullName', e.target.value)} className="bg-[#1A1F2E] border-white/[0.06] text-white placeholder:text-white/30" />
+                {errors.fullName && <p className="text-sm text-red-400">{errors.fullName}</p>}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="company">{t('form.company')}</Label>
-                <Input id="company" value={formData.company} onChange={(e) => handleChange('company', e.target.value)} />
-                {errors.company && <p className="text-sm text-destructive">{errors.company}</p>}
+                <Label htmlFor="company" className="text-white/70">{t('form.company')}</Label>
+                <Input id="company" value={formData.company} onChange={(e) => handleChange('company', e.target.value)} className="bg-[#1A1F2E] border-white/[0.06] text-white placeholder:text-white/30" />
+                {errors.company && <p className="text-sm text-red-400">{errors.company}</p>}
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="email">{t('form.email')}</Label>
-              <Input id="email" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} />
-              {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+              <Label htmlFor="email" className="text-white/70">{t('form.email')}</Label>
+              <Input id="email" type="email" value={formData.email} onChange={(e) => handleChange('email', e.target.value)} className="bg-[#1A1F2E] border-white/[0.06] text-white placeholder:text-white/30" />
+              {errors.email && <p className="text-sm text-red-400">{errors.email}</p>}
             </div>
 
             <div className="grid gap-5 md:grid-cols-2">
               <div className="space-y-1.5">
-                <Label>{t('form.country')}</Label>
+                <Label className="text-white/70">{t('form.country')}</Label>
                 <Select value={formData.country} onValueChange={(val) => handleChange('country', val || '')}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full bg-[#1A1F2E] border-white/[0.06] text-white">
                     <SelectValue placeholder={t('form.country')} />
                   </SelectTrigger>
-                  <SelectContent>
-                    {countries.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+                  <SelectContent className="bg-[#1A1F2E] border-white/[0.06]">
+                    {countries.map((c) => <SelectItem key={c} value={c} className="text-white hover:bg-white/[0.04]">{c}</SelectItem>)}
                   </SelectContent>
                 </Select>
-                {errors.country && <p className="text-sm text-destructive">{errors.country}</p>}
+                {errors.country && <p className="text-sm text-red-400">{errors.country}</p>}
               </div>
               <div className="space-y-1.5">
-                <Label>{t('form.applicationInterest')}</Label>
+                <Label className="text-white/70">{t('form.applicationInterest')}</Label>
                 <Select value={formData.applicationInterest} onValueChange={(val) => handleChange('applicationInterest', val || '')}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full bg-[#1A1F2E] border-white/[0.06] text-white">
                     <SelectValue placeholder={t('form.applicationInterest')} />
                   </SelectTrigger>
-                  <SelectContent>
-                    {applications.map((a) => <SelectItem key={a} value={a}>{a}</SelectItem>)}
+                  <SelectContent className="bg-[#1A1F2E] border-white/[0.06]">
+                    {applications.map((a) => <SelectItem key={a} value={a} className="text-white hover:bg-white/[0.04]">{a}</SelectItem>)}
                   </SelectContent>
                 </Select>
-                {errors.applicationInterest && <p className="text-sm text-destructive">{errors.applicationInterest}</p>}
+                {errors.applicationInterest && <p className="text-sm text-red-400">{errors.applicationInterest}</p>}
               </div>
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="message">{t('form.message')}</Label>
-              <Textarea id="message" value={formData.message} onChange={(e) => handleChange('message', e.target.value)} placeholder={t('form.messagePlaceholder')} rows={4} />
+              <Label htmlFor="message" className="text-white/70">{t('form.message')}</Label>
+              <Textarea id="message" value={formData.message} onChange={(e) => handleChange('message', e.target.value)} placeholder={t('form.messagePlaceholder')} rows={4} className="bg-[#1A1F2E] border-white/[0.06] text-white placeholder:text-white/30" />
             </div>
 
-            <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+            <Button type="submit" size="lg" className="w-full bg-[#0066FF] text-white hover:bg-[#0052CC]" disabled={submitting}>
               {submitting ? t('form.submitting') : t(`form.submitByIntent.${formData.intent}`)}
             </Button>
           </form>

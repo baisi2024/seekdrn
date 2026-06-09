@@ -44,24 +44,27 @@ export function NavItemEditor({ open, onOpenChange, item, position, onSave }: Na
   // 初始化表单数据
   useEffect(() => {
     if (open) {
-      if (item) {
-        // 编辑模式：填充现有数据
-        setTranslations(item.translations || {})
-        setLinkType(item.link_type)
-        setUrl(item.url)
-        setPublished(item.published)
-      } else {
-        // 创建模式：初始化空翻译
-        const emptyTranslations: Record<string, string> = {}
-        LOCALES.forEach(locale => {
-          emptyTranslations[locale.code] = ''
-        })
-        setTranslations(emptyTranslations)
-        setLinkType('internal')
-        setUrl('')
-        setPublished(true)
-      }
-      setErrors({})
+      // 使用 requestAnimationFrame 避免同步 setState
+      requestAnimationFrame(() => {
+        if (item) {
+          // 编辑模式：填充现有数据
+          setTranslations(item.translations || {})
+          setLinkType(item.link_type)
+          setUrl(item.url)
+          setPublished(item.published)
+        } else {
+          // 创建模式：初始化空翻译
+          const emptyTranslations: Record<string, string> = {}
+          LOCALES.forEach(locale => {
+            emptyTranslations[locale.code] = ''
+          })
+          setTranslations(emptyTranslations)
+          setLinkType('internal')
+          setUrl('')
+          setPublished(true)
+        }
+        setErrors({})
+      })
     }
   }, [open, item])
 

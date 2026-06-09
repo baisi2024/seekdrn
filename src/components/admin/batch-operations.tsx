@@ -85,7 +85,7 @@ export function BatchOperations({
       toast.success(t('batch_operations.batch_delete_success'))
       onSelectionChange([])
       setShowDeleteDialog(false)
-    } catch (error) {
+    } catch (_error) {
       toast.error(t('batch_operations.delete_failed'))
     } finally {
       setLoading(false)
@@ -101,7 +101,7 @@ export function BatchOperations({
       onSelectionChange([])
       setShowCategoryDialog(false)
       setSelectedCategory('')
-    } catch (error) {
+    } catch {
       toast.error(t('batch_operations.set_category_failed'))
     } finally {
       setLoading(false)

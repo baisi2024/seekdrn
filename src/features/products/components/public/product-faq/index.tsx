@@ -1,4 +1,5 @@
 import type { ProductFAQ } from '@/features/products/types'
+import { useTranslations } from 'next-intl'
 import {
   Accordion,
   AccordionContent,
@@ -12,13 +13,13 @@ interface ProductFAQProps {
 }
 
 export function ProductFAQSection({ faqs, locale }: ProductFAQProps) {
+  const t = useTranslations('products')
   const localizedFaqs = faqs.filter(f => f.locale === locale)
 
   if (localizedFaqs.length === 0) return null
 
   return (
-    <section className="py-8">
-      <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+    <section className="py-4">
       <Accordion type="single" collapsible className="w-full">
         {localizedFaqs.map((faq, index) => (
           <AccordionItem key={faq.id} value={`item-${index}`}>

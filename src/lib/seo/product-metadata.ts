@@ -20,6 +20,7 @@ export function generateProductMetadata({
   const title = seoData?.meta_title || `${translation.name || product.model} | ${siteName}`
   const description = seoData?.meta_description || truncate(translation.overview || '', 160)
   const keywords = seoData?.meta_keywords || extractKeywords(translation)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const image = (seo?.[locale] as any)?.og_image || product.images?.[0] || ''
 
   return {
@@ -49,14 +50,33 @@ export function generateProductMetadata({
   }
 }
 
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, '') // Remove HTML tags
+    .replace(/&times;/gi, '×')
+    .replace(/&mdash;/gi, '—')
+    .replace(/&ndash;/gi, '–')
+    .replace(/&le;/gi, '≤')
+    .replace(/&ge;/gi, '≥')
+    .replace(/&deg;/gi, '°')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#\d+;/g, '') // Remove numeric entities
+    .replace(/\s+/g, ' ') // Collapse whitespace
+    .trim()
+}
+
 function truncate(str: string, max: number): string {
-  if (!str) return ''
-  return str.length > max ? str.slice(0, max - 3) + '...' : str
+  const clean = stripHtml(str)
+  if (!clean) return ''
+  return clean.length > max ? clean.slice(0, max - 3) + '...' : clean
 }
 
 function extractKeywords(translation: Record<string, string>): string[] {
   const text = [translation.name, translation.overview, translation.advantages, translation.capabilities]
-    .filter(Boolean).join(' ')
+    .filter(Boolean).map(stripHtml).join(' ')
   const words = text.toLowerCase().split(/\s+/).filter(w => w.length > 3)
   return [...new Set(words)].slice(0, 10)
 }

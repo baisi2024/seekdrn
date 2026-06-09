@@ -22,7 +22,7 @@ import {
   DialogFooter,
 } from '@/components/ui/dialog'
 import { createClient } from '@/lib/supabase/client'
-import type { ProductDocument, DocumentType, DocumentFormData } from '@/features/products/types'
+import type { ProductDocument, DocumentType } from '@/features/products/types'
 import { DOCUMENT_TYPE_LABELS } from '@/features/products/types'
 import { LOCALES } from '@/lib/constants/locales'
 

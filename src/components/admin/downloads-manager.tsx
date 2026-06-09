@@ -26,7 +26,7 @@ interface Props {
   onUpload: (file: File) => Promise<string>
 }
 
-export function DownloadsManager({ productId, initialDownloads = [], onSave, onUpload }: Props) {
+export function DownloadsManager({ productId: _productId, initialDownloads = [], onSave, onUpload }: Props) {
   const [downloads, setDownloads] = useState<Download[]>(initialDownloads)
   const [saving, setSaving] = useState(false)
   const [uploading, setUploading] = useState<string | null>(null)
@@ -46,7 +46,7 @@ export function DownloadsManager({ productId, initialDownloads = [], onSave, onU
     setDownloads(downloads.filter((_, i) => i !== index))
   }
 
-  const updateDownload = (index: number, field: keyof Download, value: any) => {
+  const updateDownload = (index: number, field: keyof Download, value: string | boolean) => {
     setDownloads(downloads.map((d, i) =>
       i === index ? { ...d, [field]: value } : d
     ))
@@ -63,7 +63,7 @@ export function DownloadsManager({ productId, initialDownloads = [], onSave, onU
     try {
       const url = await onUpload(file)
       updateDownload(index, 'file_url', url)
-      updateDownload(index, 'file_size', file.size)
+      updateDownload(index, 'file_size', String(file.size))
       updateDownload(index, 'file_type', file.type)
     } catch (error) {
       console.error('Upload error:', error)

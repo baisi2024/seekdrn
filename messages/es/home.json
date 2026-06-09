@@ -18,7 +18,8 @@
   },
   "products": {
     "title": "Nuestros Productos",
-    "viewAll": "Ver Todos los Productos"
+    "viewAll": "Ver Todos los Productos",
+    "empty": "No hay productos disponibles"
   },
   "solutions": {
     "title": "Soluciones Industriales"

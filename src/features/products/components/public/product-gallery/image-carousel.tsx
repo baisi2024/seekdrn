@@ -46,7 +46,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
           <>
             <button
               onClick={goToPrevious}
-              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/80 rounded-full hover:bg-white"
+              className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-card/80 rounded-full hover:bg-card transition-colors"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
@@ -67,7 +67,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
               key={index}
               onClick={() => setCurrentIndex(index)}
               className={`flex-shrink-0 w-20 h-20 rounded overflow-hidden border-2 transition-all relative ${
-                index === currentIndex ? 'border-blue-500' : 'border-transparent'
+                index === currentIndex ? 'border-primary' : 'border-transparent'
               }`}
             >
               <Image src={image} alt="" fill className="object-cover" />
@@ -80,7 +80,7 @@ export function ImageCarousel({ images }: ImageCarouselProps) {
         <DialogContent className="max-w-5xl p-0">
           <button
             onClick={() => setShowZoom(false)}
-            className="absolute top-4 right-4 p-2 bg-white/80 rounded-full z-10"
+            className="absolute top-4 right-4 p-2 bg-card/80 rounded-full z-10 hover:bg-card transition-colors"
           >
             <X className="w-5 h-5" />
           </button>

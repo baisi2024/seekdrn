@@ -8,12 +8,24 @@
     "uav": "سکوهای پهپاد",
     "payload": "محموله‌ها",
     "cuas": "ضد پهپاد",
-    "ground_control": "کنترل زمینی"
+    "ground_control": "کنترل زمینی",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "مشخصات فنی",
   "advantages": "مزایای اصلی",
   "capabilities": "قابلیت‌های اصلی",
   "applications": "کاربردها",
+  "overview": "نمای کلی محصول",
+  "coreFeatures": "ویژگی‌های اصلی",
+  "anchorNav": {
+    "overview": "نمای کلی",
+    "specs": "مشخصات",
+    "resources": "منابع",
+    "cases": "موارد"
+  },
   "relatedCases": "مطالعات موردی مرتبط",
   "relatedProducts": "محصولات مرتبط",
   "downloads": "دانلودها",

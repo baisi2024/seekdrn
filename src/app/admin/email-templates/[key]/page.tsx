@@ -22,6 +22,7 @@ interface Template {
 }
 
 // 定义表单验证 schema
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const templateFormSchema = z.object({
   template_key: z.string(),
   description: z.string().optional(),
@@ -48,7 +49,10 @@ export default function EmailTemplateEditPage() {
 
   useEffect(() => {
     if (isNew) {
-      setLoading(false)
+      // 使用 requestAnimationFrame 避免同步 setState
+      requestAnimationFrame(() => {
+        setLoading(false)
+      })
       return
     }
 

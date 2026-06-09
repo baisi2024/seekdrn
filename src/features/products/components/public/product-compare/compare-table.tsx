@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { getTranslation } from '@/lib/utils'
+import { getTranslation, getLocalizedValue } from '@/lib/utils'
 import { X } from 'lucide-react'
 import type { Product } from '@/features/products/types'
 
@@ -20,9 +20,10 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
   products.forEach((product) => {
     product.spec_groups?.forEach((group) => {
       group.specs.forEach((spec) => {
-        const key = spec.label.en || Object.values(spec.label)[0]
+        const key = getLocalizedValue(spec.label, 'en')
         if (!allSpecs.has(key)) {
-          allSpecs.set(key, { label: key, unit: spec.unit })
+          const unitValue = getLocalizedValue(spec.unit, 'en')
+          allSpecs.set(key, { label: key, unit: unitValue || undefined })
         }
       })
     })
@@ -32,9 +33,9 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
   const getSpecValue = (product: Product, specLabel: string): string | null => {
     for (const group of product.spec_groups || []) {
       for (const spec of group.specs) {
-        const key = spec.label.en || Object.values(spec.label)[0]
+        const key = getLocalizedValue(spec.label, 'en')
         if (key === specLabel) {
-          return spec.value
+          return getLocalizedValue(spec.value, 'en')
         }
       }
     }
@@ -52,9 +53,9 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
       <table className="w-full border-collapse">
         <thead>
           <tr>
-            <th className="p-4 border bg-gray-50 text-left w-40">Specification</th>
+            <th className="p-4 border bg-card text-left w-40">Specification</th>
             {products.map((product) => (
-              <th key={product.id} className="p-4 border bg-gray-50 text-center min-w-[200px]">
+              <th key={product.id} className="p-4 border bg-card text-center min-w-[200px]">
                 <div className="relative">
                   <button
                     onClick={() => onRemove(product.id)}
@@ -79,7 +80,7 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
             const highlight = hasDifference(key)
             return (
               <tr key={key}>
-                <td className={`p-4 border font-medium ${highlight ? 'bg-yellow-50' : ''}`}>
+                <td className={`p-4 border font-medium ${highlight ? 'bg-[#0066FF]/5' : ''}`}>
                   {label}
                   {unit && <span className="text-gray-500 ml-1">({unit})</span>}
                 </td>
@@ -88,7 +89,7 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
                   return (
                     <td
                       key={product.id}
-                      className={`p-4 border text-center ${highlight ? 'bg-yellow-50' : ''}`}
+                      className={`p-4 border text-center ${highlight ? 'bg-[#0066FF]/5' : ''}`}
                     >
                       {value || '-'}
                     </td>

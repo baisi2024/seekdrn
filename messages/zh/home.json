@@ -18,7 +18,8 @@
   },
   "products": {
     "title": "我们的产品",
-    "viewAll": "查看所有产品"
+    "viewAll": "查看所有产品",
+    "empty": "暂无产品数据"
   },
   "solutions": {
     "title": "行业解决方案"

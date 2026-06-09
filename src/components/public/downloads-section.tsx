@@ -3,6 +3,7 @@
 import { FileText, Download } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 import { getTranslation } from '@/lib/utils'
 import { formatFileSize } from '@/lib/format-file-size'
 import { trackDatasheetDownload } from '@/lib/gtm'
@@ -25,11 +26,12 @@ interface Props {
 }
 
 export function DownloadsSection({ downloads, locale, productModel }: Props) {
+  const t = useTranslations('products')
+
   if (!downloads || downloads.length === 0) return null
 
   return (
-    <section className="mb-16" data-testid="downloads-section">
-      <h2 className="text-2xl font-bold mb-6">Downloads</h2>
+    <section data-testid="downloads-section">
       <div className="grid md:grid-cols-2 gap-4">
         {downloads.map(item => {
           const title = getTranslation(item.title, locale, 'en')

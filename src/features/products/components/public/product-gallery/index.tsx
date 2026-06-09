@@ -16,7 +16,7 @@ export function ProductGallery({ images, videos = [] }: ProductGalleryProps) {
 
   if (!hasImages && !hasVideos) {
     return (
-      <div className="aspect-[4/3] rounded-lg bg-gray-100 flex items-center justify-center text-gray-400">
+      <div className="aspect-[4/3] rounded-lg bg-muted flex items-center justify-center text-muted-foreground">
         No media available
       </div>
     )

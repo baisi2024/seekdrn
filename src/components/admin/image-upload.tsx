@@ -2,7 +2,6 @@
 
 import { useState, useCallback } from 'react'
 import Image from 'next/image'
-import { Button } from '@/components/ui/button'
 import { X, Upload, Play } from 'lucide-react'
 
 interface MediaUploadProps {

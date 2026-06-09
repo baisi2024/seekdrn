@@ -176,13 +176,16 @@ export function TemplatesStats({ templates }: TemplatesStatsProps) {
   const activeTemplates = templates.filter(t => t.is_active).length
 
   useEffect(() => {
-    const generateTrendData = (base: number) => 
+    const generateTrendData = (base: number) =>
       Array.from({ length: 7 }, () => Math.max(0, base + Math.floor(Math.random() * 5 - 2)))
 
     const newChartData = new Map<string, number[]>()
     newChartData.set(t('email_templates_page.statsTotal'), generateTrendData(totalTemplates))
     newChartData.set(t('email_templates_page.statsActive'), generateTrendData(activeTemplates))
-    setChartData(newChartData)
+    // 使用 requestAnimationFrame 避免同步 setState
+    requestAnimationFrame(() => {
+      setChartData(newChartData)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalTemplates, activeTemplates])
 

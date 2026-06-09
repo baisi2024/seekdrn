@@ -74,7 +74,8 @@ export async function POST(
       success: true,
       message_id: result.data?.id,
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to send test email'
     // 记录失败日志
     try {
       const body = await request.json()
@@ -86,12 +87,12 @@ export async function POST(
         body_html: '',
         variables: {},
         status: 'failed',
-        error_message: error.message || 'Unknown error',
+        error_message: errorMessage,
       })
     } catch {}
 
     return NextResponse.json(
-      { error: error.message || 'Failed to send test email' },
+      { error: errorMessage },
       { status: 500 }
     )
   }

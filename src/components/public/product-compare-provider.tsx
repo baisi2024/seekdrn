@@ -12,8 +12,8 @@ export interface CompareProductData {
   tags?: string[]
   spec_groups?: Array<{
     id: string
-    name: Record<string, string>
-    specs: Array<{ label: Record<string, string>; value: string; unit?: string }>
+    label: Record<string, string>
+    specs: Array<{ label: Record<string, string> | string; value: Record<string, string> | string; unit?: Record<string, string> | string }>
   }>
 }
 

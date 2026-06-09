@@ -8,12 +8,24 @@
     "uav": "แพลตฟอร์ม UAV",
     "payload": "เพย์โหลด",
     "cuas": "ต่อต้าน UAV",
-    "ground_control": "ควบคุมภาคพื้นดิน"
+    "ground_control": "ควบคุมภาคพื้นดิน",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "ข้อมูลจำเพาะทางเทคนิค",
   "advantages": "ข้อได้เปรียบหลัก",
   "capabilities": "ความสามารถหลัก",
   "applications": "การใช้งาน",
+  "overview": "ภาพรวมผลิตภัณฑ์",
+  "coreFeatures": "คุณสมบัติหลัก",
+  "anchorNav": {
+    "overview": "ภาพรวม",
+    "specs": "ข้อมูลจำเพาะ",
+    "resources": "ทรัพยากร",
+    "cases": "กรณีศึกษา"
+  },
   "relatedCases": "กรณีศึกษาที่เกี่ยวข้อง",
   "relatedProducts": "ผลิตภัณฑ์ที่เกี่ยวข้อง",
   "downloads": "ดาวน์โหลด",

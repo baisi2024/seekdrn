@@ -54,8 +54,8 @@ export interface SpecGroup {
 
 export interface Spec {
   label: Record<string, string>
-  value: string
-  unit?: string
+  value: Record<string, string>
+  unit?: Record<string, string>
 }
 
 export interface FilterState {

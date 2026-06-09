@@ -8,12 +8,24 @@
     "uav": "منصات الطائرات بدون طيار",
     "payload": "الحمولات",
     "cuas": "مكافحة الطائرات بدون طيار",
-    "ground_control": "التحكم الأرضي"
+    "ground_control": "التحكم الأرضي",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "المواصفات الفنية",
   "advantages": "المزايا الأساسية",
   "capabilities": "القدرات الأساسية",
   "applications": "التطبيقات",
+  "overview": "نظرة عامة على المنتج",
+  "coreFeatures": "الميزات الأساسية",
+  "anchorNav": {
+    "overview": "نظرة عامة",
+    "specs": "المواصفات",
+    "resources": "الموارد",
+    "cases": "الحالات"
+  },
   "relatedCases": "دراسات الحالة ذات الصلة",
   "relatedProducts": "المنتجات ذات الصلة",
   "downloads": "مركز التحميل",

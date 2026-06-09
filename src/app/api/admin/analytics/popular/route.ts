@@ -16,6 +16,7 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let data: any[] = []
 
     switch (type) {
@@ -59,9 +60,9 @@ async function getPopularProducts(limit: number) {
   const productViews = new Map<string, { model: string; name: string; count: number }>()
 
   data.forEach((event) => {
-    const metadata = event.metadata as any
-    const model = metadata?.product_model
-    const name = metadata?.product_name || model
+    const metadata = event.metadata as Record<string, unknown>
+    const model = metadata?.product_model as string
+    const name = (metadata?.product_name as string) || model
 
     if (model) {
       const existing = productViews.get(model)
@@ -101,10 +102,10 @@ async function getPopularDownloads(limit: number) {
   >()
 
   data.forEach((event) => {
-    const metadata = event.metadata as any
-    const documentName = metadata?.document_name
-    const documentType = metadata?.document_type || 'unknown'
-    const productModel = metadata?.product_model || 'unknown'
+    const metadata = event.metadata as Record<string, unknown>
+    const documentName = metadata?.document_name as string
+    const documentType = (metadata?.document_type as string) || 'unknown'
+    const productModel = (metadata?.product_model as string) || 'unknown'
 
     if (documentName) {
       const key = `${productModel}-${documentName}`

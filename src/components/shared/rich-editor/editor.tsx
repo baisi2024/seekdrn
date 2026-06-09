@@ -128,6 +128,7 @@ export function RichEditor({
   })
 
   // 更新字数统计
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updateWordCount = useCallback((ed: any) => {
     if (!ed) return
 

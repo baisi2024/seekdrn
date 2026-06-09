@@ -80,8 +80,12 @@ export function NavigationManager({ position }: NavigationManagerProps) {
 
   // 初始化加载
   useEffect(() => {
-    fetchNavigation()
-  }, [fetchNavigation])
+    // 使用 requestAnimationFrame 避免同步 setState
+    requestAnimationFrame(() => {
+      fetchNavigation()
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // 拖拽开始
   const handleDragStart = (event: DragStartEvent) => {

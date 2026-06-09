@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dialog'
 import type { ProductTag, TagFormData } from '@/features/products/types'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
-import { LOCALES, LOCALE_CODES } from '@/lib/constants/locales'
+import { LOCALES } from '@/lib/constants/locales'
 
 const PRESET_COLORS = [
   '#ef4444', '#f97316', '#f59e0b', '#84cc16', '#22c55e',

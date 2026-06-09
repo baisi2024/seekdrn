@@ -6,15 +6,15 @@ export function Footer() {
   const locale = useLocale()
 
   return (
-    <footer className="bg-gray-900 text-gray-400">
+    <footer className="bg-[#0A0E17] border-t border-white/[0.06] text-white/50">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">SD</span>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-8 w-8 flex items-center justify-center border border-[#0066FF]">
+                <span className="text-[#0066FF] font-bold text-sm">SD</span>
               </div>
-              <span className="font-bold text-lg text-white">SeekDrone</span>
+              <span className="font-semibold text-lg tracking-wide text-white">SeekDrone</span>
             </div>
             <p className="text-sm">Industrial UAV solutions and counter-drone systems for defense, security, and critical infrastructure.</p>
           </div>
@@ -45,7 +45,7 @@ export function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 text-sm text-center">
+        <div className="border-t border-white/[0.06] mt-8 pt-8 text-sm text-center">
           © {new Date().getFullYear()} SeekDrone. {t('footer.rights')}
         </div>
       </div>

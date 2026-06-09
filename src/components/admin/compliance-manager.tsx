@@ -38,14 +38,18 @@ export function ComplianceManager({ initialPolicies }: ComplianceManagerProps) {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }, [t])
 
   // 初始化加载（仅在没有 initialPolicies 时）
   useEffect(() => {
     if (!initialPolicies) {
-      fetchPolicies()
+      // 使用 requestAnimationFrame 避免同步 setState
+      requestAnimationFrame(() => {
+        fetchPolicies()
+      })
     }
-  }, [fetchPolicies, initialPolicies])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   // 编辑政策
   const handleEdit = (policy: PolicyItem) => {

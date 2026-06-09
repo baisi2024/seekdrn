@@ -80,7 +80,7 @@ export default async function CaseStudiesPage({
             { label: tc('breadcrumb.case_studies') },
           ]}
         />
-        <div className="mb-10 rounded-3xl border border-border bg-[#f7f8f5] p-8 lg:p-10">
+        <div className="mb-10 rounded-3xl border border-border bg-card p-8 lg:p-10">
           <p className="text-sm font-semibold text-primary">{t('proofIntro.eyebrow')}</p>
           <h1 className="mt-3 text-3xl font-bold text-foreground lg:text-5xl">{t('title')}</h1>
           <p className="mt-4 max-w-3xl text-lg leading-7 text-muted-foreground">

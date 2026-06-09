@@ -69,7 +69,8 @@ export default async function ProductsPage({
     .select(`
       *,
       category:product_categories(*),
-      tag_objects:product_tags!product_tag_relations(*)
+      tag_objects:product_tags!product_tag_relations(*),
+      product_specs(id, label, value, unit, group_id, sort_order)
     `)
     .eq('published', true)
 
@@ -87,7 +88,29 @@ export default async function ProductsPage({
     .order('created_at', { ascending: false })
 
   // 标签筛选
-  let filtered = products ?? []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let filtered: any[] = products ?? []
+
+  // 组装 spec_groups：将 product_specs 合并到 spec_groups 配置中
+  filtered = filtered.map((product) => {
+    const specGroupsConfig = (product.spec_groups || []) as Array<{ id: string; label: Record<string, string>; sort_order: number }>
+    const productSpecs = product.product_specs || []
+    let assembledSpecGroups = product.spec_groups
+    if (specGroupsConfig.length > 0 && productSpecs.length > 0) {
+      assembledSpecGroups = specGroupsConfig.map((group: { id: string; label: Record<string, string>; sort_order: number }) => ({
+        ...group,
+        specs: productSpecs.filter((spec: { group_id: string }) => spec.group_id === group.id)
+      })).filter((group: { specs: unknown[] }) => group.specs.length > 0)
+    } else if (productSpecs.length > 0) {
+      assembledSpecGroups = [{
+        id: 'default',
+        label: { en: 'Specifications' },
+        specs: productSpecs,
+        sort_order: 0,
+      }]
+    }
+    return { ...product, spec_groups: assembledSpecGroups }
+  })
   if (tagSlugs.length > 0) {
     filtered = filtered.filter((product) => {
       const productTagSlugs = product.tag_objects?.map((tag: ProductTag) => tag.slug) || []
@@ -126,27 +149,41 @@ export default async function ProductsPage({
   }))
 
   return (
-    <div className="bg-background py-16">
-      <div className="container mx-auto px-4">
-        <Breadcrumb
-          items={[
-            { label: tc('breadcrumb.home'), href: `/${locale}` },
-            { label: tc('breadcrumb.products') },
-          ]}
+    <div className="bg-[#0A0E17]">
+      {/* 页面头部 - 深色背景卡片 */}
+      <section className="relative overflow-hidden bg-[#0A0E17]">
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+          }}
         />
-        <div className="mb-10 rounded-3xl border border-border bg-[#f7f8f5] p-8 lg:p-10">
-          <p className="text-sm font-semibold text-primary">{t('intro.eyebrow')}</p>
-          <h1 className="mt-3 text-3xl font-bold text-foreground lg:text-5xl">{t('title')}</h1>
-          <p className="mt-4 max-w-3xl text-lg leading-7 text-muted-foreground">
-            {t('subtitle')}
-          </p>
-          {missionKey && (
-            <p className="mt-3 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary">
-              {t(`missionSelector.missions.${missionKey}.title`)}
+        <div className="container mx-auto px-4 py-12 lg:py-16 relative">
+          <Breadcrumb
+            items={[
+              { label: tc('breadcrumb.home'), href: `/${locale}` },
+              { label: tc('breadcrumb.products') },
+            ]}
+          />
+          <div className="mt-6 max-w-3xl">
+            <p className="text-sm font-semibold text-[#0066FF]">{t('intro.eyebrow')}</p>
+            <h1 className="mt-3 text-3xl font-bold text-white lg:text-5xl">{t('title')}</h1>
+            <p className="mt-4 text-lg leading-7 text-white/50">
+              {t('subtitle')}
             </p>
-          )}
+            {missionKey && (
+              <p className="mt-3 inline-flex items-center rounded-full bg-[#0066FF]/10 px-3 py-1 text-sm font-medium text-[#0066FF]">
+                {t(`missionSelector.missions.${missionKey}.title`)}
+              </p>
+            )}
+          </div>
         </div>
+      </section>
 
+      {/* 任务选择器 */}
+      <div className="container mx-auto px-4 pt-10">
         <MissionSelector
           title={t('missionSelector.title')}
           subtitle={t('missionSelector.subtitle')}
@@ -154,26 +191,30 @@ export default async function ProductsPage({
           options={missionOptions}
         />
       </div>
-      <div className="container mx-auto px-4 pt-16">
 
-        <ProductSearch
-          locale={locale}
-          defaultValue={searchQuery}
-        />
-
-        <div className="mt-6">
-          <ProductFilter
-            categories={categories as Category[]}
-            tags={tags as ProductTag[]}
-            activeCategory={categorySlug}
-            activeTags={tagSlugs}
-            locale={locale}
-          />
+      {/* 搜索和筛选区 */}
+      <div className="container mx-auto px-4 pt-10">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:gap-6">
+          <div className="shrink-0 lg:w-80">
+            <ProductSearch
+              locale={locale}
+              defaultValue={searchQuery}
+            />
+          </div>
+          <div className="flex-1 min-w-0">
+            <ProductFilter
+              categories={categories as Category[]}
+              tags={tags as ProductTag[]}
+              activeCategory={categorySlug}
+              activeTags={tagSlugs}
+              locale={locale}
+            />
+          </div>
         </div>
 
         {paginatedProducts && paginatedProducts.length > 0 ? (
           <>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="mt-2 mb-6 text-sm font-medium text-white/50">
               {t('showingResults', { count: totalCount })}
             </p>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -189,9 +230,12 @@ export default async function ProductsPage({
             />
           </>
         ) : (
-          <div className="text-center py-16 text-muted-foreground">
-            <PackageOpen className="mx-auto mb-4 h-16 w-16 opacity-30" />
-            <p className="text-sm">{t('noProducts')}</p>
+          <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.06] bg-[#1A1F2E]/30 py-20">
+            <PackageOpen className="mb-4 h-16 w-16 text-white/20" />
+            <p className="text-base font-medium text-white/50">{t('noProducts')}</p>
+            <p className="mt-1 text-sm text-white/30">
+              {t('tryAdjustFilters')}
+            </p>
           </div>
         )}
       </div>

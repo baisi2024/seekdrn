@@ -65,8 +65,8 @@ export function RelatedCasesSection({ cases, locale }: Props) {
                     </div>
                   )}
                   {caseStudy.video_url && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30">
-                      <Play className="w-12 h-12 text-white" />
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/30">
+                      <Play className="w-12 h-12 text-foreground" />
                     </div>
                   )}
                 </div>

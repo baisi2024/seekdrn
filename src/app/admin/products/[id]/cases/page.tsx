@@ -1,35 +1,35 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useState, useEffect, useCallback } from 'react'
+import { useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { CaseRelationsManager } from '@/components/admin/case-relations-manager'
 
+interface CaseStudyData {
+  id: string
+  slug: string
+  industry: string
+  country: string
+  translations: Record<string, Record<string, string>>
+}
+
+interface CaseRelationData {
+  id?: string
+  case_study_id: string
+  case_study?: CaseStudyData
+  is_manual: boolean
+  relevance_score: number
+  sort_order: number
+}
+
 export default function CasesManagePage() {
   const params = useParams()
-  const router = useRouter()
   const [loading, setLoading] = useState(true)
-  const [product, setProduct] = useState<any>(null)
-  const [relations, setRelations] = useState<any[]>([])
-  const [allCaseStudies, setAllCaseStudies] = useState<any[]>([])
+  const [relations, setRelations] = useState<CaseRelationData[]>([])
+  const [allCaseStudies, setAllCaseStudies] = useState<CaseStudyData[]>([])
   const supabase = createClient()
 
-  useEffect(() => {
-    fetchData()
-  }, [params.id])
-
-  async function fetchData() {
-    // 获取产品信息
-    const { data: productData } = await supabase
-      .from('products')
-      .select('*')
-      .eq('id', params.id)
-      .single()
-
-    if (productData) {
-      setProduct(productData)
-    }
-
+  const fetchData = useCallback(async () => {
     // 获取案例关联
     const { data: relationsData } = await supabase
       .from('product_case_relations')
@@ -41,7 +41,7 @@ export default function CasesManagePage() {
       .order('sort_order')
 
     if (relationsData) {
-      setRelations(relationsData)
+      setRelations(relationsData as CaseRelationData[])
     }
 
     // 获取所有案例
@@ -51,13 +51,20 @@ export default function CasesManagePage() {
       .eq('published', true)
 
     if (casesData) {
-      setAllCaseStudies(casesData)
+      setAllCaseStudies(casesData as CaseStudyData[])
     }
 
     setLoading(false)
-  }
+  }, [params.id, supabase])
 
-  async function handleSave(relationsData: any[]) {
+  useEffect(() => {
+    // 使用 requestAnimationFrame 避免同步 setState
+    requestAnimationFrame(() => {
+      fetchData()
+    })
+  }, [fetchData])
+
+  async function handleSave(relationsData: CaseRelationData[]) {
     // 删除旧关联
     await supabase
       .from('product_case_relations')
@@ -80,7 +87,7 @@ export default function CasesManagePage() {
     }
   }
 
-  async function handleAutoMatch(): Promise<any[]> {
+  async function handleAutoMatch(): Promise<CaseRelationData[]> {
     // 调用自动匹配API
     const response = await fetch(`/api/admin/products/${params.id}/case-relations/auto-match`, {
       method: 'POST'
@@ -91,24 +98,19 @@ export default function CasesManagePage() {
     }
 
     const { relations } = await response.json()
-    return relations
+    return relations as CaseRelationData[]
   }
 
   if (loading) {
     return <div className="p-8">Loading...</div>
   }
 
-  if (!product) {
-    return <div className="p-8">Product not found</div>
-  }
-
   return (
     <div className="p-8">
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Manage Related Cases</h1>
-        <p className="text-muted-foreground">Product: {product.model}</p>
       </div>
-      
+
       <CaseRelationsManager
         productId={params.id as string}
         initialRelations={relations}

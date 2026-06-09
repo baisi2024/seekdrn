@@ -23,9 +23,10 @@ export async function GET(
     }
 
     return NextResponse.json({ data })
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Failed to fetch email log'
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch email log' },
+      { error: errorMessage },
       { status: 500 }
     )
   }

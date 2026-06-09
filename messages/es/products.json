@@ -8,12 +8,24 @@
     "uav": "Plataformas UAV",
     "payload": "Cargas Útiles",
     "cuas": "Contra-UAS",
-    "ground_control": "Control Terrestre"
+    "ground_control": "Control Terrestre",
+    "tagLabel": "Filter by tags:",
+    "clear": "Clear filters"
   },
+  "searchPlaceholder": "Search products...",
+  "tryAdjustFilters": "Try adjusting your filters or search keywords",
   "specs": "Especificaciones Técnicas",
   "advantages": "Ventajas Principales",
   "capabilities": "Capacidades Principales",
   "applications": "Aplicaciones",
+  "overview": "Descripción del Producto",
+  "coreFeatures": "Características Principales",
+  "anchorNav": {
+    "overview": "Descripción",
+    "specs": "Especificaciones",
+    "resources": "Recursos",
+    "cases": "Casos"
+  },
   "relatedCases": "Casos de Estudio Relacionados",
   "relatedProducts": "Productos Relacionados",
   "downloads": "Descargas",

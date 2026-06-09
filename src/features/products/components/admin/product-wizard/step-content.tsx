@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { RichEditor } from '@/components/admin/rich-editor'
 import { MediaUpload } from '@/components/admin/image-upload'
 import { useAdminTranslations } from '@/hooks/use-admin-translations'
-import { LOCALES, getLocaleLabel } from '@/lib/constants/locales'
+import { LOCALES } from '@/lib/constants/locales'
 
 const TRANSLATION_FIELDS = [
   { key: 'name', label: '产品名称', labelEn: 'Product Name', required: true },

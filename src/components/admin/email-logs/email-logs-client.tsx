@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
-import { RefreshCw, Mail } from 'lucide-react'
+import { RefreshCw } from 'lucide-react'
 import { LogsStats } from './logs-stats'
 import { LogsFilters, type FilterValues } from './logs-filters'
 import { LogCard, type EmailLog } from './log-card'
@@ -186,6 +186,7 @@ export function EmailLogsClient({ initialLogs, templates }: EmailLogsClientProps
           </div>
         ) : (
           <div className="border rounded-lg">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
             {(List as any)({
               height: 600,
               itemCount: filteredLogs.length,

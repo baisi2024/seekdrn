@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useSearchParams, usePathname } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 import { Tabs, TabsList } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
@@ -28,6 +29,7 @@ export function ProductFilter({
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const { trackFilter } = useAnalytics(locale)
+  const t = useTranslations('products')
 
   const buildUrl = (cat?: string, tagSlug?: string, removeTag?: boolean) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -81,15 +83,15 @@ export function ProductFilter({
     <div className="space-y-6 mb-8">
       {/* 分类导航 */}
       <Tabs value={activeCategory}>
-        <TabsList>
+        <TabsList className="bg-[#1A1F2E] border border-white/[0.06]">
           <Link
             href={buildUrl('all')}
             replace
             onClick={() => handleCategoryClick('all')}
-            className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all hover:text-foreground data-[active]:bg-background data-[active]:text-foreground"
+            className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-white/50 transition-all hover:text-white data-[active]:bg-[#0A0E17] data-[active]:text-white"
             data-active={activeCategory === 'all' ? '' : undefined}
           >
-            {locale === 'zh' ? '全部' : 'All'}
+            {t('filter.all')}
           </Link>
           {categories.map((category) => {
             const name = getTranslation(category.translations, locale, 'name')
@@ -99,7 +101,7 @@ export function ProductFilter({
                 href={buildUrl(category.slug)}
                 replace
                 onClick={() => handleCategoryClick(category.slug)}
-                className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all hover:text-foreground data-[active]:bg-background data-[active]:text-foreground"
+                className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-white/50 transition-all hover:text-white data-[active]:bg-[#0A0E17] data-[active]:text-white"
                 data-active={activeCategory === category.slug ? '' : undefined}
               >
                 {category.icon && <DynamicIcon name={category.icon} className="w-4 h-4" />}
@@ -113,8 +115,8 @@ export function ProductFilter({
       {/* 标签筛选 */}
       {tags && tags.length > 0 && (
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-sm font-medium text-muted-foreground">
-            {locale === 'zh' ? '标签筛选:' : 'Filter by tags:'}
+          <span className="text-sm font-medium text-white/50">
+            {t('filter.tagLabel')}
           </span>
           {tags.map((tag) => {
             const name = getTranslation(tag.translations, locale, 'name')
@@ -128,7 +130,7 @@ export function ProductFilter({
               >
                 <Badge
                   variant={isActive ? 'default' : 'outline'}
-                  className="cursor-pointer transition-colors"
+                  className={`cursor-pointer transition-colors ${isActive ? 'bg-[#0066FF]' : 'border-white/[0.06] text-white/50 hover:text-white hover:border-white/20'}`}
                 >
                   {name}
                 </Badge>
@@ -140,9 +142,9 @@ export function ProductFilter({
               href={buildUrl(undefined, undefined, true)}
               replace
               onClick={handleClearFilters}
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-sm text-[#0066FF] hover:text-[#0052CC] transition-colors"
             >
-              {locale === 'zh' ? '清除筛选' : 'Clear filters'}
+              {t('filter.clear')}
             </Link>
           )}
         </div>

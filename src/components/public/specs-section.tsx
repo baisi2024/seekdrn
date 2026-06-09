@@ -3,17 +3,17 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { getTranslation } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { getLocalizedValue } from '@/lib/utils'
 
 interface SpecGroup {
   id: string
   label: Record<string, string>
   specs: Array<{
     id: string
-    label: Record<string, string>
-    value: Record<string, string>
-    unit: Record<string, string>
+    label: Record<string, string> | string
+    value: Record<string, string> | string
+    unit: Record<string, string> | string
   }>
   sort_order: number
 }
@@ -42,8 +42,7 @@ export function SpecsSection({ groups, locale }: Props) {
   }
 
   return (
-    <section className="mb-16" data-testid="specs-section">
-      <h2 className="text-2xl font-bold text-foreground mb-6">{t('specs')}</h2>
+    <section data-testid="specs-section">
       <div className="space-y-4">
         {groups.map(group => (
           <Card key={group.id}>
@@ -53,7 +52,7 @@ export function SpecsSection({ groups, locale }: Props) {
               data-testid={`spec-group-${group.id}`}
             >
               <h3 className="font-semibold text-foreground">
-                {getTranslation(group.label, locale, 'en')}
+                {getLocalizedValue(group.label, locale)}
               </h3>
               {expandedGroups.has(group.id) ? (
                 <ChevronUp className="w-5 h-5 text-muted-foreground" />
@@ -66,9 +65,9 @@ export function SpecsSection({ groups, locale }: Props) {
                 <table className="w-full">
                   <tbody>
                     {group.specs.map(spec => {
-                      const label = getTranslation(spec.label, locale, 'en')
-                      const value = getTranslation(spec.value, locale, 'en')
-                      const unit = getTranslation(spec.unit, locale, 'en')
+                      const label = getLocalizedValue(spec.label, locale)
+                      const value = getLocalizedValue(spec.value, locale)
+                      const unit = getLocalizedValue(spec.unit, locale)
 
                       return (
                         <tr key={spec.id} className="border-b last:border-0 border-border">

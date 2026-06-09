@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Box } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { getTranslation } from '@/lib/utils'
+import { getTranslation, getLocalizedValue } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
 import { CompareCheckbox } from '@/components/public/compare-checkbox'
 import type { Category } from '@/features/products/types/category'
@@ -23,8 +23,8 @@ interface Product {
   translations?: Record<string, Record<string, string>>
   spec_groups?: Array<{
     id: string
-    name: Record<string, string>
-    specs: Array<{ label: Record<string, string>; value: string; unit?: string }>
+    label: Record<string, string>
+    specs: Array<{ label: Record<string, string> | string; value: Record<string, string> | string; unit?: Record<string, string> | string }>
   }>
 }
 
@@ -47,8 +47,8 @@ export function ProductCard({ product, locale }: ProductCardProps) {
   const positioning = description || categoryLabel || t('noDescription')
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-background shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-md">
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.06] bg-[#1A1F2E] transition-all duration-300 hover:-translate-y-1 hover:border-[#0066FF]/40">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#0A0E17]">
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -57,13 +57,13 @@ export function ProductCard({ product, locale }: ProductCardProps) {
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-muted">
-            <Box className="h-14 w-14 text-muted-foreground/40" />
+          <div className="flex h-full w-full items-center justify-center bg-[#0A0E17]">
+            <Box className="h-14 w-14 text-white/20" />
           </div>
         )}
         <div className="absolute left-3 top-3 flex flex-wrap gap-1.5">
-          {product.model && <Badge className="font-mono text-xs">{product.model}</Badge>}
-          {categoryLabel && <Badge variant="secondary" className="text-xs">{categoryLabel}</Badge>}
+          {product.model && <Badge className="font-mono text-xs bg-[#0066FF]">{product.model}</Badge>}
+          {categoryLabel && <Badge variant="secondary" className="text-xs bg-white/10 text-white/70">{categoryLabel}</Badge>}
         </div>
         <div className="absolute right-3 top-3">
           <CompareCheckbox
@@ -83,11 +83,11 @@ export function ProductCard({ product, locale }: ProductCardProps) {
 
       <div className="flex flex-1 flex-col p-5">
         <div>
-          {product.model && <div className="text-xs font-semibold text-muted-foreground">{product.model}</div>}
-          <h3 className="mt-2 text-lg font-semibold leading-snug text-foreground">
+          {product.model && <div className="text-xs font-semibold text-white/50">{product.model}</div>}
+          <h3 className="mt-2 text-lg font-semibold leading-snug text-white">
             {title || product.model || t('untitledProduct')}
           </h3>
-          <p className="mt-2 line-clamp-2 text-sm leading-6 text-muted-foreground">
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-white/50">
             {positioning}
           </p>
         </div>
@@ -95,12 +95,15 @@ export function ProductCard({ product, locale }: ProductCardProps) {
         {specs.length > 0 && (
           <dl className="mt-5 grid grid-cols-3 gap-2">
             {specs.map((spec) => {
-              const label = getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0]
+              if (!spec?.label) return null
+              const label = getTranslation(spec.label, locale, 'label') || getLocalizedValue(spec.label, locale)
+              const value = getLocalizedValue(spec.value, locale)
+              const unit = getLocalizedValue(spec.unit, locale)
               return (
-                <div key={`${label}-${spec.value}`} className="rounded-xl border border-border bg-muted p-3">
-                  <dt className="truncate text-xs text-muted-foreground">{label}</dt>
-                  <dd className="mt-1 truncate font-mono text-sm font-semibold text-foreground">
-                    {spec.value}{spec.unit || ''}
+                <div key={`${label}-${value}`} className="rounded-xl border border-white/[0.06] bg-[#0A0E17] p-3">
+                  <dt className="truncate text-xs text-white/50">{label}</dt>
+                  <dd className="mt-1 truncate font-mono text-sm font-semibold text-white">
+                    {value}{unit}
                   </dd>
                 </div>
               )
@@ -116,7 +119,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
                 <Badge
                   key={tag.id}
                   variant="outline"
-                  className="text-xs"
+                  className="text-xs border-white/[0.06] text-white/50"
                   style={tag.color ? { backgroundColor: tag.color, borderColor: tag.color, color: '#fff' } : undefined}
                 >
                   {tagName}
@@ -129,7 +132,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
         <div className="mt-auto pt-5">
           <Link
             href={`/${locale}/products/${product.slug}`}
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-[#0066FF] transition-colors hover:text-[#0052CC]"
           >
             {t('detailsCta')}
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
