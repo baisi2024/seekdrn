@@ -16,7 +16,8 @@ import {
   Image,
   LogOut,
   FolderOpen,
-  Tags
+  Tags,
+  BarChart3
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
@@ -29,6 +30,7 @@ export function Sidebar() {
 
   const NAV_ITEMS = [
     { href: '/admin', icon: LayoutDashboard, label: t('dashboard') },
+    { href: '/admin/analytics', icon: BarChart3, label: t('analytics') },
     { href: '/admin/inquiries', icon: Mail, label: t('inquiries') },
     { href: '/admin/products', icon: Package, label: t('products') },
     { href: '/admin/categories', icon: FolderOpen, label: t('categories') },
