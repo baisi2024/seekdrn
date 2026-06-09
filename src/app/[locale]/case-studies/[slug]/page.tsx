@@ -13,6 +13,7 @@ import { ShareButtons } from '@/components/public/share-buttons'
 import { InlineLeadForm } from '@/components/public/inline-lead-form'
 import { ArrowRight, Box } from 'lucide-react'
 import { Breadcrumb } from '@/components/public/breadcrumb'
+import { CaseStudyTracker } from '@/components/public/case-study-tracker'
 
 interface CaseResult {
   value: string
@@ -85,6 +86,7 @@ export default async function CaseStudyDetailPage({
 
   return (
     <div className="bg-background py-16">
+      <CaseStudyTracker caseSlug={slug} caseName={title || ''} locale={locale} />
       <div className="container mx-auto px-4">
         <Breadcrumb
           items={[
