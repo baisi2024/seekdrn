@@ -587,7 +587,10 @@
     "languageDistribution": "Language Distribution",
     "views": "views",
     "events": "events",
-    "loadFailed": "Failed to load"
+    "loadFailed": "Failed to load",
+    "period_today": "Today",
+    "period_week": "This Week",
+    "period_month": "This Month"
   },
   "analytics": {
     "funnel": {

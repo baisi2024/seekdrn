@@ -583,7 +583,14 @@
     "views": "次浏览",
     "events": "次事件",
     "loadFailed": "加载失败",
-    "noData": "暂无数据"
+    "noData": "暂无数据",
+    "filterUsage": "筛选器使用统计",
+    "searchKeywords": "搜索关键词统计",
+    "times": "次",
+    "errorLoading": "加载错误",
+    "period_today": "今天",
+    "period_week": "本周",
+    "period_month": "本月"
   },
   "analytics": {
     "funnel": {
