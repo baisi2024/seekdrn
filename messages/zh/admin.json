@@ -600,6 +600,18 @@
       "drop_off": "流失率",
       "period": "时间周期",
       "error_loading": "加载失败"
+    },
+    "trend": {
+      "title": "趋势分析",
+      "description": "事件趋势分析",
+      "selectEvent": "选择事件",
+      "total": "总计",
+      "average": "平均",
+      "max": "最大值",
+      "min": "最小值",
+      "count": "数量",
+      "noData": "暂无数据",
+      "error_loading": "加载失败"
     }
   }
 }

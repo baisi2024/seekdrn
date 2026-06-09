@@ -581,7 +581,13 @@
     "searchKeywords": "Search Keywords Statistics",
     "times": "times",
     "errorLoading": "Error loading",
-    "noData": "No data"
+    "noData": "No data",
+    "popularProducts": "Popular Products",
+    "popularDownloads": "Popular Downloads",
+    "languageDistribution": "Language Distribution",
+    "views": "views",
+    "events": "events",
+    "loadFailed": "Failed to load"
   },
   "analytics": {
     "funnel": {
@@ -597,6 +603,18 @@
       "conversion_rate": "Conversion Rate",
       "drop_off": "Drop-off Rate",
       "period": "Period",
+      "error_loading": "Failed to load"
+    },
+    "trend": {
+      "title": "Trend Analysis",
+      "description": "Event trend analysis",
+      "selectEvent": "Select Event",
+      "total": "Total",
+      "average": "Average",
+      "max": "Maximum",
+      "min": "Minimum",
+      "count": "Count",
+      "noData": "No data available",
       "error_loading": "Failed to load"
     }
   }
