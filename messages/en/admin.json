@@ -567,5 +567,31 @@
     "content_required": "Content is required",
     "just_now": "Just now",
     "minutes_ago": "{count} minutes ago"
+  },
+  "analytics_page": {
+    "title": "Analytics",
+    "overview": "Overview",
+    "formSubmissions": "Form Submissions",
+    "productViews": "Product Views",
+    "downloads": "Downloads",
+    "conversionRate": "Conversion Rate",
+    "noChange": "No change",
+    "loadError": "Load error",
+    "filterUsage": "Filter Usage Statistics",
+    "searchKeywords": "Search Keywords Statistics",
+    "times": "times",
+    "errorLoading": "Error loading",
+    "noData": "No data"
+  }
+},
+  "analytics_page": {
+    "title": "Analytics",
+    "overview": "Overview",
+    "formSubmissions": "Form Submissions",
+    "productViews": "Product Views",
+    "downloads": "Downloads",
+    "conversionRate": "Conversion Rate",
+    "noChange": "No change",
+    "loadError": "Failed to load"
   }
 }

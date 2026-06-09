@@ -567,5 +567,38 @@
     "content_required": "内容不能为空",
     "just_now": "刚刚",
     "minutes_ago": "{count} 分钟前"
+  },
+  "analytics_page": {
+    "title": "数据分析",
+    "overview": "概览",
+    "formSubmissions": "表单提交",
+    "productViews": "产品浏览",
+    "downloads": "数据表下载",
+    "conversionRate": "转化率",
+    "noChange": "无变化",
+    "loadError": "加载失败"
+  },
+  "analytics": {
+    "funnel": {
+      "title": "转化漏斗",
+      "description": "表单转化漏斗分析",
+      "stage_open": "表单打开",
+      "stage_start": "开始填写",
+      "stage_submit": "提交中",
+      "stage_success": "提交成功",
+      "overall_conversion": "总体转化率",
+      "total_opens": "总打开数",
+      "total_submissions": "总提交数",
+      "conversion_rate": "转化率",
+      "drop_off": "流失率",
+      "period": "时间周期",
+      "error_loading": "加载失败"
+    }
+  }
+}  "filterUsage": "筛选器使用统计",
+    "searchKeywords": "搜索关键词统计",
+    "times": "次",
+    "errorLoading": "加载失败",
+    "noData": "暂无数据"
   }
 }
