@@ -19,6 +19,7 @@ import { ProcurementDecisionBar } from '@/components/public/procurement-decision
 import { InlineLeadForm } from '@/components/public/inline-lead-form'
 import { AddToCompareButton } from '@/components/public/add-to-compare-button'
 import { Breadcrumb } from '@/components/public/breadcrumb'
+import { ProductDetailTracker } from '@/components/analytics/product-detail-tracker'
 import type { Spec } from '@/features/products/types/product'
 import {
   MessageSquare,
@@ -77,11 +78,14 @@ export default async function ProductDetailPage({
 
   // Extract key specs for hero stats bar (from first spec group, first 4 specs)
   const heroStats: Array<{ label: string; value: string; unit: string }> = product.spec_groups && product.spec_groups.length > 0
-    ? product.spec_groups[0].specs.slice(0, 4).map((spec: Spec) => ({
-        label: getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0],
-        value: spec.value,
-        unit: spec.unit || '',
-      }))
+    ? product.spec_groups[0].specs.slice(0, 4).map((spec: Spec) => {
+        const unitValue = getTranslation(spec.unit, locale, 'unit') || ''
+        return {
+          label: getTranslation(spec.label, locale, 'label') || Object.values(spec.label)[0],
+          value: getTranslation(spec.value, locale, 'value') || spec.value,
+          unit: unitValue,
+        }
+      })
     : []
   const decisionItems = heroStats.slice(0, 3).map((stat) => ({
     label: stat.label,
@@ -91,6 +95,12 @@ export default async function ProductDetailPage({
   return (
     <>
       <ProductSchema product={product} locale={locale} />
+      <ProductDetailTracker
+        productModel={product.model}
+        productName={name || ''}
+        category={categoryLabel}
+        locale={locale}
+      />
 
       {/* ===== HERO SECTION ===== */}
       <section className="relative bg-gradient-to-b from-primary/5 to-background">
