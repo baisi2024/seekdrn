@@ -575,23 +575,29 @@
     "productViews": "Product Views",
     "downloads": "Downloads",
     "conversionRate": "Conversion Rate",
-    "noChange": "No change",
-    "loadError": "Load error",
+    "noChange": "No Change",
+    "loadError": "Load Error",
     "filterUsage": "Filter Usage Statistics",
     "searchKeywords": "Search Keywords Statistics",
     "times": "times",
     "errorLoading": "Error loading",
     "noData": "No data"
-  }
-},
-  "analytics_page": {
-    "title": "Analytics",
-    "overview": "Overview",
-    "formSubmissions": "Form Submissions",
-    "productViews": "Product Views",
-    "downloads": "Downloads",
-    "conversionRate": "Conversion Rate",
-    "noChange": "No change",
-    "loadError": "Failed to load"
+  },
+  "analytics": {
+    "funnel": {
+      "title": "Conversion Funnel",
+      "description": "Form conversion funnel analysis",
+      "stage_open": "Form Opened",
+      "stage_start": "Started Filling",
+      "stage_submit": "Submitting",
+      "stage_success": "Submitted Successfully",
+      "overall_conversion": "Overall Conversion",
+      "total_opens": "Total Opens",
+      "total_submissions": "Total Submissions",
+      "conversion_rate": "Conversion Rate",
+      "drop_off": "Drop-off Rate",
+      "period": "Period",
+      "error_loading": "Failed to load"
+    }
   }
 }

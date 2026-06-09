@@ -576,7 +576,14 @@
     "downloads": "数据表下载",
     "conversionRate": "转化率",
     "noChange": "无变化",
-    "loadError": "加载失败"
+    "loadError": "加载失败",
+    "popularProducts": "热门产品",
+    "popularDownloads": "热门下载",
+    "languageDistribution": "语言分布",
+    "views": "次浏览",
+    "events": "次事件",
+    "loadFailed": "加载失败",
+    "noData": "暂无数据"
   },
   "analytics": {
     "funnel": {
@@ -594,11 +601,5 @@
       "period": "时间周期",
       "error_loading": "加载失败"
     }
-  }
-}  "filterUsage": "筛选器使用统计",
-    "searchKeywords": "搜索关键词统计",
-    "times": "次",
-    "errorLoading": "加载失败",
-    "noData": "暂无数据"
   }
 }
