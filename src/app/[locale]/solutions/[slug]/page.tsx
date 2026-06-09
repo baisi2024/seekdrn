@@ -13,6 +13,7 @@ import { InlineLeadForm } from '@/components/public/inline-lead-form'
 import { CaseCard } from '@/components/public/case-card'
 import { ArrowRight, Box } from 'lucide-react'
 import { Breadcrumb } from '@/components/public/breadcrumb'
+import { SolutionPageTracker } from '@/components/public/solution-page-tracker'
 
 interface SolutionMetric {
   value: string
@@ -109,6 +110,11 @@ export default async function SolutionPage({
 
   return (
     <div className="bg-background py-16">
+      <SolutionPageTracker
+        solutionSlug={solution.slug}
+        solutionName={title || ''}
+        locale={locale}
+      />
       <div className="container mx-auto px-4">
         <Breadcrumb
           items={[

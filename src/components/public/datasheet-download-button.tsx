@@ -1,18 +1,31 @@
 'use client'
 
 import { buttonVariants } from '@/components/ui/button'
-import { trackDatasheetDownload } from '@/lib/gtm'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 interface DatasheetDownloadButtonProps {
   productModel: string
   documentType?: string
+  documentName?: string
   locale?: string
   datasheetUrl: string
 }
 
-export function DatasheetDownloadButton({ productModel, documentType = 'datasheet', locale = 'en', datasheetUrl }: DatasheetDownloadButtonProps) {
+export function DatasheetDownloadButton({ 
+  productModel, 
+  documentType = 'datasheet', 
+  documentName,
+  locale = 'en', 
+  datasheetUrl 
+}: DatasheetDownloadButtonProps) {
+  const { trackDownload } = useAnalytics(locale)
+
   const handleClick = () => {
-    trackDatasheetDownload({ product_model: productModel, document_type: documentType, locale })
+    trackDownload({
+      product_model: productModel,
+      document_type: documentType,
+      document_name: documentName || datasheetUrl.split('/').pop() || 'unknown'
+    })
   }
 
   return (
