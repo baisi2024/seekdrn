@@ -1,15 +1,17 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import { Mail, Link as LinkIcon } from 'lucide-react'
-import { trackSocialShare } from '@/lib/gtm'
 import { toast } from 'sonner'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 interface ShareButtonsProps {
   title: string
   description?: string
   url?: string
   pageType?: string
+  contentId?: string
   locale?: string
 }
 
@@ -34,17 +36,28 @@ export function ShareButtons({
   description,
   url,
   pageType = 'product',
+  contentId,
   locale = 'en',
 }: ShareButtonsProps) {
   const t = useTranslations('common.share')
+  const analytics = useAnalytics(locale)
 
-  const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '')
+  // Use state to avoid hydration mismatch
+  const [shareUrl, setShareUrl] = useState(url || '')
+
+  useEffect(() => {
+    // Only update on client side
+    if (!url && typeof window !== 'undefined') {
+      setShareUrl(window.location.href)
+    }
+  }, [url])
+
   const encodedUrl = encodeURIComponent(shareUrl)
   const encodedTitle = encodeURIComponent(title)
   const encodedDescription = encodeURIComponent(description || title)
 
   const handleShare = (platform: string) => {
-    trackSocialShare({ platform, page_type: pageType, locale })
+    analytics.trackShare(platform, pageType, contentId)
   }
 
   const shareChannels = [
