@@ -6,6 +6,7 @@ import { Tabs, TabsList } from '@/components/ui/tabs'
 import { Badge } from '@/components/ui/badge'
 import { getTranslation } from '@/lib/utils'
 import { DynamicIcon } from '@/components/public/dynamic-icon'
+import { useAnalytics } from '@/hooks/use-analytics'
 import type { Category } from '@/features/products/types/category'
 import type { ProductTag } from '@/features/products/types/tag'
 
@@ -26,6 +27,7 @@ export function ProductFilter({
 }: ProductFilterProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
+  const { trackFilter } = useAnalytics(locale)
 
   const buildUrl = (cat?: string, tagSlug?: string, removeTag?: boolean) => {
     const params = new URLSearchParams(searchParams.toString())
@@ -63,6 +65,18 @@ export function ProductFilter({
     return queryString ? `${pathname}?${queryString}` : pathname
   }
 
+  const handleCategoryClick = (categorySlug: string) => {
+    trackFilter('category', categorySlug)
+  }
+
+  const handleTagClick = (tagSlug: string, isActive: boolean) => {
+    trackFilter('tag', tagSlug, { action: isActive ? 'remove' : 'add' })
+  }
+
+  const handleClearFilters = () => {
+    trackFilter('clear', 'all')
+  }
+
   return (
     <div className="space-y-6 mb-8">
       {/* 分类导航 */}
@@ -71,6 +85,7 @@ export function ProductFilter({
           <Link
             href={buildUrl('all')}
             replace
+            onClick={() => handleCategoryClick('all')}
             className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all hover:text-foreground data-[active]:bg-background data-[active]:text-foreground"
             data-active={activeCategory === 'all' ? '' : undefined}
           >
@@ -83,6 +98,7 @@ export function ProductFilter({
                 key={category.id}
                 href={buildUrl(category.slug)}
                 replace
+                onClick={() => handleCategoryClick(category.slug)}
                 className="relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all hover:text-foreground data-[active]:bg-background data-[active]:text-foreground"
                 data-active={activeCategory === category.slug ? '' : undefined}
               >
@@ -108,6 +124,7 @@ export function ProductFilter({
                 key={tag.id}
                 href={buildUrl(undefined, tag.slug, isActive)}
                 replace
+                onClick={() => handleTagClick(tag.slug, isActive)}
               >
                 <Badge
                   variant={isActive ? 'default' : 'outline'}
@@ -122,6 +139,7 @@ export function ProductFilter({
             <Link
               href={buildUrl(undefined, undefined, true)}
               replace
+              onClick={handleClearFilters}
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               {locale === 'zh' ? '清除筛选' : 'Clear filters'}
