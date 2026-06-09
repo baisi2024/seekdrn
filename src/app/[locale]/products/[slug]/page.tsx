@@ -34,9 +34,9 @@ interface Relation {
   relation_type: string
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ model: string; locale: string }> }): Promise<Metadata> {
-  const { model, locale } = await params
-  const product = await getProductWithEnhancements(model, locale)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string; locale: string }> }): Promise<Metadata> {
+  const { slug, locale } = await params
+  const product = await getProductWithEnhancements(slug, locale)
 
   if (!product) {
     return { title: 'Product Not Found' }
@@ -48,13 +48,13 @@ export async function generateMetadata({ params }: { params: Promise<{ model: st
 export default async function ProductDetailPage({
   params,
 }: {
-  params: Promise<{ model: string; locale: string }>
+  params: Promise<{ slug: string; locale: string }>
 }) {
-  const { model, locale } = await params
+  const { slug, locale } = await params
   const t = await getTranslations('products')
   const tc = await getTranslations('common')
 
-  const product = await getProductWithEnhancements(model, locale)
+  const product = await getProductWithEnhancements(slug, locale)
 
   if (!product) notFound()
 
