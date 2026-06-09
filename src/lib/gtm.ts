@@ -88,6 +88,14 @@ export function trackInlineFormOpen(params: {
   trackEvent('inline_form_open', params)
 }
 
+export function trackInlineFormStart(params: {
+  page_type: string
+  intent: string
+  locale: string
+}) {
+  trackEvent('inline_form_start', params)
+}
+
 export function trackInlineFormSubmitStart(params: {
   page_type: string
   intent: string
@@ -103,6 +111,15 @@ export function trackInlineFormSubmitSuccess(params: {
   locale: string
 }) {
   trackEvent('inline_form_submit_success', params)
+}
+
+export function trackInlineFormSubmitError(params: {
+  page_type: string
+  intent: string
+  error: string
+  locale: string
+}) {
+  trackEvent('inline_form_submit_error', params)
 }
 
 export function trackDetailView(

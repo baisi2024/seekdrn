@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,9 +14,11 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog'
 import {
-  trackFormSubmitStart,
-  trackFormSubmitSuccess,
-  trackFormSubmitError,
+  trackInlineFormOpen,
+  trackInlineFormStart,
+  trackInlineFormSubmitStart,
+  trackInlineFormSubmitSuccess,
+  trackInlineFormSubmitError,
   trackDemoRequestSuccess,
 } from '@/lib/gtm'
 import { CheckCircle, AlertCircle } from 'lucide-react'
@@ -58,7 +60,62 @@ export function InlineLeadForm({
   const [submitting, setSubmitting] = useState(false)
   const [result, setResult] = useState<{ success: boolean; compliance_status?: string } | null>(null)
 
+  // 追踪表单是否已经开始填写
+  const hasStartedFilling = useRef(false)
+
   const productInterest = productModel || solutionSlug || caseSlug || ''
+
+  // 获取当前页面类型
+  const getPageType = () => {
+    if (typeof window === 'undefined') return 'unknown'
+    const path = window.location.pathname
+    if (path.includes('/products/')) return 'product'
+    if (path.includes('/solutions/')) return 'solution'
+    if (path.includes('/cases/')) return 'case'
+    return 'other'
+  }
+
+  // 追踪表单打开（modal 模式）
+  useEffect(() => {
+    if (mode === 'modal' && open) {
+      trackInlineFormOpen({
+        page_type: getPageType(),
+        intent: defaultIntent,
+        product_model: productModel,
+        solution_slug: solutionSlug,
+        case_slug: caseSlug,
+        locale,
+      })
+      // 重置开始填写状态
+      hasStartedFilling.current = false
+    }
+  }, [mode, open, defaultIntent, productModel, solutionSlug, caseSlug, locale])
+
+  // 追踪表单打开（inline 模式）- 组件挂载时
+  useEffect(() => {
+    if (mode === 'inline') {
+      trackInlineFormOpen({
+        page_type: getPageType(),
+        intent: defaultIntent,
+        product_model: productModel,
+        solution_slug: solutionSlug,
+        case_slug: caseSlug,
+        locale,
+      })
+    }
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  // 追踪表单开始填写
+  const trackFormStart = () => {
+    if (!hasStartedFilling.current) {
+      hasStartedFilling.current = true
+      trackInlineFormStart({
+        page_type: getPageType(),
+        intent,
+        locale,
+      })
+    }
+  }
 
   function resetForm() {
     setStep(1)
@@ -76,7 +133,11 @@ export function InlineLeadForm({
     if (!fullName || !email || !company || !country) return
 
     setSubmitting(true)
-    trackFormSubmitStart(intent, { product_interest: productInterest })
+    trackInlineFormSubmitStart({
+      page_type: getPageType(),
+      intent,
+      locale,
+    })
 
     try {
       const res = await fetch('/api/demo-request', {
@@ -99,15 +160,30 @@ export function InlineLeadForm({
       const data = await res.json()
 
       if (!res.ok) {
-        trackFormSubmitError(intent, { error: data.error })
+        trackInlineFormSubmitError({
+          page_type: getPageType(),
+          intent,
+          error: data.error || 'unknown',
+          locale,
+        })
         setResult({ success: false })
       } else {
-        trackFormSubmitSuccess(intent, { product_interest: productInterest })
+        trackInlineFormSubmitSuccess({
+          page_type: getPageType(),
+          intent,
+          product_model: productModel,
+          locale,
+        })
         trackDemoRequestSuccess(data.compliance_status)
         setResult({ success: true, compliance_status: data.compliance_status })
       }
     } catch {
-      trackFormSubmitError(intent, { error: 'network' })
+      trackInlineFormSubmitError({
+        page_type: getPageType(),
+        intent,
+        error: 'network',
+        locale,
+      })
       setResult({ success: false })
     } finally {
       setSubmitting(false)
@@ -204,7 +280,10 @@ export function InlineLeadForm({
                 <Input
                   id="inline-company"
                   value={company}
-                  onChange={(e) => setCompany(e.target.value)}
+                  onChange={(e) => {
+                    trackFormStart()
+                    setCompany(e.target.value)
+                  }}
                   className="mt-1.5"
                   required
                 />
@@ -214,7 +293,10 @@ export function InlineLeadForm({
                 <Input
                   id="inline-country"
                   value={country}
-                  onChange={(e) => setCountry(e.target.value)}
+                  onChange={(e) => {
+                    trackFormStart()
+                    setCountry(e.target.value)
+                  }}
                   className="mt-1.5"
                   required
                 />
@@ -224,7 +306,10 @@ export function InlineLeadForm({
                 <Textarea
                   id="inline-message"
                   value={message}
-                  onChange={(e) => setMessage(e.target.value)}
+                  onChange={(e) => {
+                    trackFormStart()
+                    setMessage(e.target.value)
+                  }}
                   className="mt-1.5"
                   rows={3}
                 />
@@ -249,7 +334,10 @@ export function InlineLeadForm({
                 <Input
                   id="inline-name"
                   value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
+                  onChange={(e) => {
+                    trackFormStart()
+                    setFullName(e.target.value)
+                  }}
                   className="mt-1.5"
                   required
                 />
@@ -260,7 +348,10 @@ export function InlineLeadForm({
                   id="inline-email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    trackFormStart()
+                    setEmail(e.target.value)
+                  }}
                   className="mt-1.5"
                   required
                 />
@@ -271,7 +362,10 @@ export function InlineLeadForm({
                   id="inline-phone"
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    trackFormStart()
+                    setPhone(e.target.value)
+                  }}
                   className="mt-1.5"
                 />
               </div>
