@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { Globe } from 'lucide-react'
+import { useAnalytics } from '@/hooks/use-analytics'
 
 const LOCALE_NAMES: Record<string, string> = {
   en: 'English',
@@ -26,6 +27,7 @@ export function LanguageSwitcher() {
   const router = useRouter()
   const pathname = usePathname()
   const [enabledLocales, setEnabledLocales] = useState(Object.keys(LOCALE_NAMES))
+  const { trackLanguageChange } = useAnalytics(locale)
 
   useEffect(() => {
     async function fetchSettings() {
@@ -41,6 +43,9 @@ export function LanguageSwitcher() {
   }, [])
 
   const switchLocale = (newLocale: string) => {
+    // 追踪语言切换
+    trackLanguageChange(locale, newLocale)
+
     const segments = pathname.split('/')
     segments[1] = newLocale
     router.push(segments.join('/'))
