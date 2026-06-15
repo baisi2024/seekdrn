@@ -3,14 +3,18 @@ import { PackageOpen } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import { supabaseAdmin } from '@/lib/supabase/admin'
 import { getTranslation } from '@/lib/utils'
-import { ProductCard } from '@/components/public/product-card'
 import { ProductFilter } from '@/components/public/product-filter'
 import { ProductSearch } from '@/components/public/product-search'
 import { MissionSelector } from '@/components/public/mission-selector'
 import { Breadcrumb } from '@/components/public/breadcrumb'
 import { Pagination } from '@/components/public/pagination'
+import { StatsBar } from '@/components/public/plp/stats-bar'
+import { ViewToggleWrapper } from '@/components/public/plp/view-toggle-wrapper'
+import { ProductCardEnhanced } from '@/components/public/plp/product-card-enhanced'
+import { PlpBottomCta } from '@/components/public/plp/bottom-cta'
 import type { Category } from '@/features/products/types/category'
 import type { ProductTag } from '@/features/products/types/tag'
+import type { CategoryHeroStat } from '@/features/products/types/product'
 import { MISSION_TAG_MAPPING } from '@/lib/constants/mission-mapping'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -31,7 +35,7 @@ export default async function ProductsPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ cat?: string; tags?: string; q?: string; mission?: string; page?: string }>
+  searchParams: Promise<{ cat?: string; tags?: string; q?: string; mission?: string; page?: string; view?: string }>
 }) {
   const { locale } = await params
   const sp = await searchParams
@@ -48,6 +52,7 @@ export default async function ProductsPage({
       ? [...missionMapping.tags]
       : []
   const searchQuery = sp.q || ''
+  const viewMode = sp.view === 'list' ? 'list' : 'grid'
 
   const t = await getTranslations('products')
   const tc = await getTranslations('common')
@@ -62,6 +67,9 @@ export default async function ProductsPage({
   const { data: tags } = await supabaseAdmin
     .from('product_tags')
     .select('*')
+
+  // Compute stats for hero section
+  const selectedCategory = categorySlug !== 'all' ? categories?.find(c => c.slug === categorySlug) : null
 
   // 构建查询
   let query = supabaseAdmin
@@ -134,12 +142,22 @@ export default async function ProductsPage({
   const totalPages = Math.ceil(totalCount / pageSize)
   const paginatedProducts = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
+  const stats: CategoryHeroStat[] = selectedCategory?.hero_stats?.length
+    ? selectedCategory.hero_stats
+    : [
+        { value: String(totalCount), label: { en: 'Products', zh: '产品' } },
+        { value: String(categories?.length || 0), label: { en: 'Categories', zh: '分类' } },
+        { value: '50+', label: { en: 'Payload Options', zh: '载荷选项' } },
+        { value: '30+', label: { en: 'Countries', zh: '国家' } },
+      ]
+
   // Build base search params for pagination (exclude page)
   const paginationSearchParams: Record<string, string> = {}
   if (sp.cat) paginationSearchParams.cat = sp.cat
   if (sp.tags) paginationSearchParams.tags = sp.tags
   if (sp.q) paginationSearchParams.q = sp.q
   if (sp.mission) paginationSearchParams.mission = sp.mission
+  if (sp.view) paginationSearchParams.view = sp.view
 
   const missionOptions = ['publicSafety', 'infrastructureInspection', 'mappingSurvey', 'perimeterSecurity', 'counterUas', 'disasterResponse'].map((key) => ({
     key,
@@ -182,6 +200,8 @@ export default async function ProductsPage({
         </div>
       </section>
 
+      <StatsBar stats={stats} locale={locale} />
+
       {/* 任务选择器 */}
       <div className="container mx-auto px-4 pt-10">
         <MissionSelector
@@ -210,6 +230,9 @@ export default async function ProductsPage({
               locale={locale}
             />
           </div>
+          <div className="shrink-0">
+            <ViewToggleWrapper />
+          </div>
         </div>
 
         {paginatedProducts && paginatedProducts.length > 0 ? (
@@ -217,9 +240,9 @@ export default async function ProductsPage({
             <p className="mt-2 mb-6 text-sm font-medium text-white/50">
               {t('showingResults', { count: totalCount })}
             </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className={viewMode === 'list' ? 'space-y-3' : 'grid md:grid-cols-2 lg:grid-cols-3 gap-6'}>
               {paginatedProducts.map((product) => (
-                <ProductCard key={product.id} product={product} locale={locale} />
+                <ProductCardEnhanced key={product.id} product={product} locale={locale} view={viewMode} />
               ))}
             </div>
             <Pagination
@@ -239,6 +262,8 @@ export default async function ProductsPage({
           </div>
         )}
       </div>
+
+      <PlpBottomCta />
     </div>
   )
 }

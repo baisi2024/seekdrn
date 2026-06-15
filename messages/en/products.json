@@ -113,5 +113,36 @@
     "specification": "Specification",
     "request_quote": "Request Quote",
     "view_details": "View Details"
+  },
+  "pdp": {
+    "heroMetrics": "Key Performance",
+    "scenarios": "Application Scenarios",
+    "scenariosDesc": "Purpose-built for critical operations across diverse environments",
+    "features": "Core Features",
+    "featuresDesc": "Engineered for excellence in every detail",
+    "payloadEcosystem": "Payload Ecosystem",
+    "payloadEcosystemDesc": "Compatible sensor and payload options",
+    "specsMetrics": "Performance Metrics",
+    "specsTable": "Full Specifications",
+    "stickyCta": {
+      "quote": "Get a Quote",
+      "demo": "Schedule Demo",
+      "datasheet": "Download Datasheet"
+    },
+    "overview": "Product Overview",
+    "relatedCases": "Success Stories",
+    "relatedProducts": "Related Products"
+  },
+  "plp": {
+    "statsProducts": "Products",
+    "statsCategories": "Categories",
+    "statsPayloads": "Payload Options",
+    "statsCountries": "Countries",
+    "viewGrid": "Grid View",
+    "viewList": "List View",
+    "cantFind": "Can't Find What You Need?",
+    "cantFindDesc": "Our solutions team can help configure a custom drone package tailored to your specific operational requirements.",
+    "requestQuote": "Request a Quote",
+    "talkExpert": "Talk to an Expert"
   }
 }

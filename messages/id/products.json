@@ -113,5 +113,36 @@
     "specification": "Spesifikasi",
     "request_quote": "Minta Penawaran",
     "view_details": "Lihat Detail"
+  },
+  "pdp": {
+    "heroMetrics": "Performa Utama",
+    "scenarios": "Skenario Aplikasi",
+    "scenariosDesc": "Dirancang untuk operasi kritis di berbagai lingkungan",
+    "features": "Fitur Utama",
+    "featuresDesc": "Dirancang untuk keunggulan di setiap detail",
+    "payloadEcosystem": "Ekosistem Payload",
+    "payloadEcosystemDesc": "Opsi sensor dan payload yang kompatibel",
+    "specsMetrics": "Metrik Performa",
+    "specsTable": "Spesifikasi Lengkap",
+    "stickyCta": {
+      "quote": "Minta Penawaran",
+      "demo": "Jadwalkan Demo",
+      "datasheet": "Unduh Lembar Data"
+    },
+    "overview": "Ikhtisar Produk",
+    "relatedCases": "Kisah Sukses",
+    "relatedProducts": "Produk Terkait"
+  },
+  "plp": {
+    "statsProducts": "Produk",
+    "statsCategories": "Kategori",
+    "statsPayloads": "Opsi Payload",
+    "statsCountries": "Negara",
+    "viewGrid": "Tampilan Grid",
+    "viewList": "Tampilan Daftar",
+    "cantFind": "Tidak Menemukan yang Anda Butuhkan?",
+    "cantFindDesc": "Tim solusi kami dapat membantu mengkonfigurasi paket drone khusus yang disesuaikan dengan kebutuhan operasional Anda.",
+    "requestQuote": "Minta Penawaran",
+    "talkExpert": "Bicara dengan Ahli"
   }
 }

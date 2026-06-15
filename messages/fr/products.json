@@ -113,5 +113,36 @@
     "specification": "Spécification",
     "request_quote": "Demander un Devis",
     "view_details": "Voir les Détails"
+  },
+  "pdp": {
+    "heroMetrics": "Performance Clé",
+    "scenarios": "Scénarios d'Application",
+    "scenariosDesc": "Conçu pour les opérations critiques dans des environnements divers",
+    "features": "Caractéristiques Principales",
+    "featuresDesc": "Conçu pour l'excellence dans chaque détail",
+    "payloadEcosystem": "Écosystème de Charges",
+    "payloadEcosystemDesc": "Options de capteurs et charges compatibles",
+    "specsMetrics": "Indicateurs de Performance",
+    "specsTable": "Spécifications Complètes",
+    "stickyCta": {
+      "quote": "Demander un Devis",
+      "demo": "Planifier une Démo",
+      "datasheet": "Télécharger la Fiche Technique"
+    },
+    "overview": "Aperçu du Produit",
+    "relatedCases": "Témoignages",
+    "relatedProducts": "Produits Associés"
+  },
+  "plp": {
+    "statsProducts": "Produits",
+    "statsCategories": "Catégories",
+    "statsPayloads": "Options de Charge",
+    "statsCountries": "Pays",
+    "viewGrid": "Vue Grille",
+    "viewList": "Vue Liste",
+    "cantFind": "Vous ne Trouvez pas ce qu'il vous Faut ?",
+    "cantFindDesc": "Notre équipe de solutions peut vous aider à configurer un package de drones personnalisé adapté à vos besoins opérationnels spécifiques.",
+    "requestQuote": "Demander un Devis",
+    "talkExpert": "Parler à un Expert"
   }
 }

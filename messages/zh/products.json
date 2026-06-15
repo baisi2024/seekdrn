@@ -113,5 +113,36 @@
     "specification": "规格参数",
     "request_quote": "获取报价",
     "view_details": "查看详情"
+  },
+  "pdp": {
+    "heroMetrics": "核心性能",
+    "scenarios": "应用场景",
+    "scenariosDesc": "为多样化环境中的关键任务而打造",
+    "features": "核心特性",
+    "featuresDesc": "每个细节都追求卓越",
+    "payloadEcosystem": "载荷生态",
+    "payloadEcosystemDesc": "兼容的传感器和载荷选项",
+    "specsMetrics": "性能指标",
+    "specsTable": "完整规格",
+    "stickyCta": {
+      "quote": "立即询价",
+      "demo": "预约演示",
+      "datasheet": "下载数据表"
+    },
+    "overview": "产品概述",
+    "relatedCases": "成功案例",
+    "relatedProducts": "相关产品"
+  },
+  "plp": {
+    "statsProducts": "产品",
+    "statsCategories": "分类",
+    "statsPayloads": "载荷选项",
+    "statsCountries": "国家",
+    "viewGrid": "网格视图",
+    "viewList": "列表视图",
+    "cantFind": "找不到需要的产品？",
+    "cantFindDesc": "我们的解决方案团队可以帮助您配置量身定制的无人机方案，满足您的特定运营需求。",
+    "requestQuote": "立即询价",
+    "talkExpert": "咨询专家"
   }
 }

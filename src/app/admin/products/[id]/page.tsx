@@ -15,10 +15,15 @@ import { FAQTab } from '@/features/products/components/admin/product-tabs/faq-ta
 import { DocumentsTab } from '@/features/products/components/admin/product-tabs/documents-tab'
 import { SpecsTab } from '@/features/products/components/admin/product-tabs/specs-tab'
 import { RelationsTab } from '@/features/products/components/admin/product-tabs/relations-tab'
+import { ProductHeroTab } from '@/components/admin/product-hero-tab'
+import { ProductScenariosTab } from '@/components/admin/product-scenarios-tab'
+import { ProductFeaturesTab } from '@/components/admin/product-features-tab'
+import { ProductPayloadsTab } from '@/components/admin/product-payloads-tab'
 import { ProductWizard } from '@/features/products/components/admin/product-wizard'
 import { AdminPage } from '@/components/admin/core'
 import { toast } from 'sonner'
 import type { Category, ProductTag } from '@/features/products/types'
+import type { ScenarioItem, FeatureBlock, PayloadItem } from '@/features/products/types/product'
 
 const TRANSLATION_FIELDS = ['name', 'overview', 'advantages', 'capabilities', 'applications']
 const RICH_TEXT_FIELDS = ['overview', 'advantages', 'capabilities', 'applications']
@@ -36,6 +41,17 @@ interface ProductData {
   featured: boolean
   compliance_flag: boolean
   sort_order: number
+  hero_image?: string | null
+  hero_video?: string | null
+  hero_metrics?: Array<{
+    key: string
+    value: string
+    unit?: string
+    label: Record<string, string>
+  }>
+  scenarios?: ScenarioItem[]
+  feature_blocks?: FeatureBlock[]
+  payloads?: PayloadItem[]
 }
 
 export default function ProductEditPage() {
@@ -231,6 +247,27 @@ export default function ProductEditPage() {
 
         {currentTab === 'specs' && <SpecsTab productId={params.id as string} />}
 
+        {currentTab === 'scenarios' && (
+          <ProductScenariosTab
+            productId={params.id as string}
+            scenarios={product.scenarios}
+          />
+        )}
+
+        {currentTab === 'features' && (
+          <ProductFeaturesTab
+            productId={params.id as string}
+            featureBlocks={product.feature_blocks}
+          />
+        )}
+
+        {currentTab === 'payloads' && (
+          <ProductPayloadsTab
+            productId={params.id as string}
+            payloads={product.payloads}
+          />
+        )}
+
         {currentTab === 'documents' && <DocumentsTab productId={params.id as string} />}
 
         {currentTab === 'seo' && <SEOTab productId={params.id as string} />}
@@ -238,6 +275,15 @@ export default function ProductEditPage() {
         {currentTab === 'faq' && <FAQTab productId={params.id as string} />}
 
         {currentTab === 'relations' && <RelationsTab productId={params.id as string} />}
+
+        {currentTab === 'hero' && (
+          <ProductHeroTab
+            productId={params.id as string}
+            heroImage={product.hero_image}
+            heroVideo={product.hero_video}
+            heroMetrics={product.hero_metrics}
+          />
+        )}
       </ProductTabs>
     </AdminPage>
   )

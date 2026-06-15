@@ -1,3 +1,5 @@
+import type { CategoryHeroStat } from './product'
+
 export interface Category {
   id: string
   slug: string
@@ -10,6 +12,7 @@ export interface Category {
   product_count?: number
   created_at: string
   updated_at: string
+  hero_stats?: CategoryHeroStat[]
 }
 
 export interface CategoryTree {

@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
-export type TabKey = 'basic' | 'content' | 'specs' | 'documents' | 'seo' | 'faq' | 'relations'
+export type TabKey = 'basic' | 'content' | 'specs' | 'scenarios' | 'features' | 'payloads' | 'documents' | 'seo' | 'faq' | 'relations' | 'hero'
 
 interface TabItem {
   key: TabKey
@@ -15,10 +15,14 @@ const TABS: TabItem[] = [
   { key: 'basic', label: 'Basic Info' },
   { key: 'content', label: 'Content' },
   { key: 'specs', label: 'Specs' },
+  { key: 'scenarios', label: 'Scenarios' },
+  { key: 'features', label: 'Features' },
+  { key: 'payloads', label: 'Payloads' },
   { key: 'documents', label: 'Documents' },
   { key: 'seo', label: 'SEO' },
   { key: 'faq', label: 'FAQ' },
   { key: 'relations', label: 'Relations' },
+  { key: 'hero', label: 'Hero' },
 ]
 
 interface ProductTabsProps {

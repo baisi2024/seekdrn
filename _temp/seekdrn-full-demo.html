@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SeekDrone — Industrial UAV & Counter-UAS Solutions</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #06080c;
+  --bg2: #0d1117;
+  --bg3: #141a22;
+  --ink: #e8eaef;
+  --muted: #6b7280;
+  --rule: #1f2937;
+  --accent: #3b82f6;
+  --accent2: #10b981;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px; line-height: 1.7; color: var(--ink);
+  background: var(--bg); -webkit-font-smoothing: antialiased;
+}
+
+/* ===== PAGE SYSTEM ===== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== NAV ===== */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(6,8,12,0.85); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule); padding: 0 2rem;
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; height: 56px;
+}
+.nav-logo {
+  font-weight: 800; font-size: 1.2rem; color: var(--ink);
+  letter-spacing: -0.02em; cursor: pointer;
+}
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--muted); text-decoration: none; font-size: 0.85rem;
+  font-weight: 600; transition: color 0.2s; cursor: pointer;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--ink); }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.lang-select {
+  background: transparent; border: 1px solid var(--rule); color: var(--muted);
+  padding: 0.35rem 0.6rem; border-radius: 4px; font-size: 0.8rem;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236b7280' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0.4rem center;
+  padding-right: 1.4rem;
+}
+.lang-select:hover { border-color: var(--accent); color: var(--ink); }
+.nav-cta {
+  background: var(--accent); color: #fff; border: none;
+  padding: 0.5rem 1.2rem; border-radius: 6px; font-size: 0.85rem;
+  font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: #2563eb; }
+
+/* ===== HERO ===== */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(6,8,12,0.2) 0%, rgba(6,8,12,0.6) 50%, var(--bg) 100%);
+}
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover; opacity: 0.5;
+}
+.hero-overlay {
+  position: relative; z-index: 1; max-width: 1280px; margin: 0 auto;
+  padding: 8rem 2rem 4rem; width: 100%;
+}
+.hero-tag {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em;
+  color: var(--accent); border: 1px solid var(--accent); border-radius: 4px;
+  padding: 0.3rem 0.8rem; margin-bottom: 1.5rem;
+}
+.hero h1 {
+  font-weight: 800; font-size: 3.6rem; line-height: 1.1;
+  color: #fff; max-width: 700px; margin-bottom: 1rem;
+}
+.hero h1 span { color: var(--accent); }
+.hero .hero-sub {
+  font-size: 1.15rem; color: var(--muted); max-width: 540px; margin-bottom: 2.5rem;
+}
+.hero-stats { display: flex; gap: 3rem; margin-bottom: 2.5rem; }
+.hero-stat { text-align: left; }
+.hero-stat .num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.2rem; font-weight: 700; color: var(--accent2); line-height: 1;
+}
+.hero-stat .label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  background: var(--accent); color: #fff; border: none;
+  padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.95rem;
+  font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
+.btn-secondary {
+  background: transparent; color: var(--ink); border: 1px solid var(--rule);
+  padding: 0.85rem 2rem; border-radius: 8px; font-size: 0.95rem;
+  font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm { padding: 0.5rem 1.2rem; font-size: 0.85rem; }
+
+/* ===== SECTION ===== */
+.section { max-width: 1280px; margin: 0 auto; padding: 5rem 2rem; }
+.section-full { max-width: 100%; background: var(--bg2); }
+.section-full > div { max-width: 1280px; margin: 0 auto; padding: 5rem 2rem; }
+.section-label {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+.section-title {
+  font-weight: 800; font-size: 2rem; color: var(--ink); margin-bottom: 1rem;
+  line-height: 1.25;
+}
+.section-desc {
+  font-size: 1.05rem; color: var(--muted); max-width: 600px; margin-bottom: 3rem;
+}
+
+/* ===== TRUST BAR ===== */
+.trust-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+}
+.trust-item {
+  text-align: center; padding: 2rem; border: 1px solid var(--rule);
+  border-radius: 12px; background: var(--bg2);
+}
+.trust-item .trust-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 2.5rem; font-weight: 700; color: var(--accent2); line-height: 1;
+}
+.trust-item .trust-label { font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem; }
+
+/* ===== PRODUCT GRID ===== */
+.product-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.product-card {
+  background: var(--bg2); border: 1px solid var(--rule); border-radius: 12px;
+  overflow: hidden; transition: border-color 0.3s, transform 0.3s; cursor: pointer;
+}
+.product-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.product-card .card-img {
+  width: 100%; height: 240px; background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; color: var(--muted); position: relative;
+}
+.product-card .card-badge {
+  position: absolute; top: 0.8rem; left: 0.8rem;
+  font-family: 'JetBrains Mono', monospace; font-size: 0.65rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 0.2rem 0.6rem; border-radius: 3px; font-weight: 700;
+}
+.badge-new { background: var(--accent); color: #fff; }
+.badge-flagship { background: var(--accent2); color: #fff; }
+.badge-compliance { background: var(--warn); color: #000; }
+.product-card .card-body { padding: 1.5rem; }
+.product-card .card-category {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.product-card h3 { font-weight: 700; font-size: 1.1rem; color: var(--ink); margin-bottom: 0.5rem; }
+.product-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+.product-card .card-specs {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.product-card .spec-item {
+  font-size: 0.78rem; color: var(--muted);
+}
+.product-card .spec-item strong {
+  font-family: 'JetBrains Mono', monospace; color: var(--ink); font-weight: 600;
+}
+.product-card .card-cta {
+  display: inline-block; font-size: 0.85rem; font-weight: 700;
+  color: var(--accent); text-decoration: none; transition: color 0.2s;
+}
+.product-card .card-cta:hover { color: #60a5fa; }
+
+/* ===== CATEGORY FILTER ===== */
+.filter-bar {
+  display: flex; gap: 0.5rem; margin-bottom: 2rem; flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 0.5rem 1.2rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--rule); background: transparent;
+  color: var(--muted); font-family: 'Inter', sans-serif; transition: all 0.2s;
+}
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-btn:hover:not(.active) { border-color: var(--muted); color: var(--ink); }
+
+/* ===== SOLUTION CARDS ===== */
+.solution-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.solution-card {
+  background: var(--bg2); border: 1px solid var(--rule); border-radius: 12px;
+  padding: 2rem; transition: border-color 0.3s, transform 0.3s; cursor: pointer;
+}
+.solution-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+.solution-card .sol-icon {
+  font-size: 2rem; margin-bottom: 1rem; display: block;
+}
+.solution-card h3 { font-weight: 700; font-size: 1.1rem; color: var(--ink); margin-bottom: 0.5rem; }
+.solution-card p { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+.solution-card .sol-metrics {
+  display: flex; gap: 1.5rem;
+}
+.solution-card .sol-metric .val {
+  font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 700; color: var(--accent2);
+}
+.solution-card .sol-metric .lbl { font-size: 0.72rem; color: var(--muted); }
+
+/* ===== CASE CARDS ===== */
+.case-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+}
+.case-card {
+  background: var(--bg2); border: 1px solid var(--rule); border-radius: 12px;
+  overflow: hidden; transition: border-color 0.3s; cursor: pointer;
+}
+.case-card:hover { border-color: var(--accent); }
+.case-card .case-img {
+  width: 100%; height: 180px; background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; color: var(--muted);
+}
+.case-card .case-body { padding: 1.5rem; }
+.case-card .case-client {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--accent); font-weight: 700; margin-bottom: 0.3rem;
+}
+.case-card h4 { font-weight: 700; font-size: 1rem; color: var(--ink); margin-bottom: 0.5rem; }
+.case-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.case-card .case-metric {
+  display: inline-block; font-family: 'JetBrains Mono', monospace;
+  font-size: 1.3rem; font-weight: 700; color: var(--accent2); margin-top: 0.8rem;
+}
+
+/* ===== FEATURE ROWS ===== */
+.feature-row {
+  display: flex; align-items: center; gap: 4rem; margin-bottom: 5rem;
+}
+.feature-row.reverse { flex-direction: row-reverse; }
+.feature-img {
+  flex: 1; min-width: 0; border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--rule); height: 360px;
+  background: var(--bg3); display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; color: var(--muted);
+}
+.feature-text { flex: 1; min-width: 0; }
+.feature-text h3 { font-weight: 700; font-size: 1.6rem; color: var(--ink); margin-bottom: 0.8rem; }
+.feature-text p { font-size: 1rem; color: var(--muted); margin-bottom: 1.2rem; line-height: 1.65; }
+.feature-text .feature-bullets { list-style: none; }
+.feature-text .feature-bullets li {
+  font-size: 0.92rem; color: var(--ink); padding: 0.4rem 0; padding-left: 1.5rem; position: relative;
+}
+.feature-text .feature-bullets li::before {
+  content: ''; position: absolute; left: 0; top: 0.7rem;
+  width: 8px; height: 8px; background: var(--accent2); border-radius: 50%;
+}
+
+/* ===== METRICS GRID ===== */
+.metrics-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-bottom: 3rem;
+}
+.metric-card {
+  background: var(--bg2); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 1.5rem; text-align: center;
+}
+.metric-card .metric-icon { font-size: 1.5rem; margin-bottom: 0.6rem; color: var(--accent); }
+.metric-card .metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.8rem; font-weight: 700; color: var(--ink); line-height: 1;
+}
+.metric-card .metric-unit { font-size: 0.9rem; color: var(--accent); font-weight: 600; }
+.metric-card .metric-label { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+
+/* ===== SPECS TABLE ===== */
+.specs-toggle {
+  background: var(--bg2); border: 1px solid var(--rule); border-radius: 8px;
+  padding: 0.9rem 1.5rem; cursor: pointer; width: 100%; text-align: left;
+  font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--ink);
+  font-weight: 600; display: flex; justify-content: space-between; align-items: center;
+  transition: border-color 0.2s;
+}
+.specs-toggle:hover { border-color: var(--accent); }
+.specs-toggle .arrow { transition: transform 0.3s; font-size: 0.8rem; }
+.specs-toggle.open .arrow { transform: rotate(180deg); }
+.specs-content { display: none; margin-top: 1rem; }
+.specs-content.open { display: block; }
+.specs-content table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.specs-content th {
+  background: var(--bg3); color: var(--accent); font-weight: 700;
+  text-align: left; padding: 0.75rem 1rem; border-bottom: 2px solid var(--rule);
+  font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.specs-content td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--rule); color: var(--ink); }
+.specs-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.specs-tab {
+  padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--rule); background: transparent;
+  color: var(--muted); font-family: 'Inter', sans-serif; transition: all 0.2s;
+}
+.specs-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.specs-tab:hover:not(.active) { border-color: var(--muted); color: var(--ink); }
+
+/* ===== PAYLOAD GRID ===== */
+.payload-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;
+}
+.payload-card {
+  background: var(--bg2); border: 1px solid var(--rule); border-radius: 10px;
+  padding: 1.5rem; text-align: center; transition: border-color 0.2s;
+}
+.payload-card:hover { border-color: var(--accent); }
+.payload-card .payload-icon {
+  width: 100%; height: 120px; background: var(--bg3); border-radius: 6px;
+  margin-bottom: 1rem; display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; color: var(--muted);
+}
+.payload-card h4 { font-weight: 700; font-size: 0.95rem; color: var(--ink); margin-bottom: 0.3rem; }
+.payload-card p { font-size: 0.8rem; color: var(--muted); }
+
+/* ===== FAQ ===== */
+.faq-list { max-width: 800px; }
+.faq-item { border-bottom: 1px solid var(--rule); }
+.faq-q {
+  width: 100%; text-align: left; background: none; border: none;
+  padding: 1.2rem 0; cursor: pointer; font-family: 'Inter', sans-serif;
+  font-size: 1rem; font-weight: 600; color: var(--ink);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.faq-q .faq-icon { font-size: 1.2rem; color: var(--accent); transition: transform 0.3s; }
+.faq-q.open .faq-icon { transform: rotate(45deg); }
+.faq-a {
+  max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease;
+  font-size: 0.92rem; color: var(--muted); line-height: 1.6;
+}
+.faq-a.open { max-height: 300px; padding-bottom: 1.2rem; }
+
+/* ===== CTA BAR ===== */
+.cta-bar {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+  background: rgba(13,17,23,0.95); backdrop-filter: blur(16px);
+  border-top: 1px solid var(--rule); padding: 1rem 2rem;
+  display: none; align-items: center; justify-content: center; gap: 2rem;
+}
+.cta-bar.visible { display: flex; }
+.cta-bar .cta-text { font-size: 0.9rem; color: var(--muted); }
+.cta-bar .cta-text strong { color: var(--ink); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--bg2); border-top: 1px solid var(--rule);
+  padding: 4rem 2rem 2rem;
+}
+.footer-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+}
+.footer-brand h3 { font-weight: 800; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.5rem; }
+.footer-brand h3 span { color: var(--accent); }
+.footer-brand p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+.footer-col h4 {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ink); margin-bottom: 1rem; font-weight: 700;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 0.5rem; }
+.footer-col a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+.footer-col a:hover { color: var(--accent); }
+.footer-bottom {
+  max-width: 1280px; margin: 3rem auto 0; padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 0.8rem; color: var(--muted);
+}
+.footer-badges { display: flex; gap: 1rem; align-items: center; }
+.footer-badges span {
+  font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+  padding: 0.2rem 0.5rem; border: 1px solid var(--rule); border-radius: 3px; color: var(--muted);
+}
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb {
+  max-width: 1280px; margin: 0 auto; padding: 5rem 2rem 1rem;
+  font-size: 0.82rem; color: var(--muted);
+}
+.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb .sep { margin: 0 0.5rem; }
+
+/* ===== PAGE HEADER ===== */
+.page-header {
+  max-width: 1280px; margin: 0 auto; padding: 2rem 2rem 3rem;
+}
+.page-header h1 { font-weight: 800; font-size: 2.4rem; color: var(--ink); margin-bottom: 0.5rem; }
+.page-header p { font-size: 1.05rem; color: var(--muted); max-width: 600px; }
+
+/* ===== DEMO FORM ===== */
+.demo-form {
+  max-width: 600px; margin: 0 auto;
+}
+.form-group { margin-bottom: 1.2rem; }
+.form-group label {
+  display: block; font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 0.4rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 0.75rem 1rem; border-radius: 8px;
+  border: 1px solid var(--rule); background: var(--bg2); color: var(--ink);
+  font-family: 'Inter', sans-serif; font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  outline: none; border-color: var(--accent);
+}
+.form-group textarea { min-height: 100px; resize: vertical; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .hero h1 { font-size: 2.4rem; }
+  .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+  .payload-grid { grid-template-columns: repeat(2, 1fr); }
+  .feature-row { flex-direction: column; gap: 2rem; }
+  .feature-row.reverse { flex-direction: column; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .trust-bar { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.8rem; }
+  .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+  .section { padding: 3rem 1.2rem; }
+  .section-full > div { padding: 3rem 1.2rem; }
+  .section-title { font-size: 1.5rem; }
+  .product-grid { grid-template-columns: 1fr; }
+  .solution-grid { grid-template-columns: 1fr; }
+  .case-grid { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+  .payload-grid { grid-template-columns: 1fr 1fr; }
+  .nav-links { display: none; }
+  .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  .cta-bar { flex-direction: column; gap: 0.8rem; text-align: center; }
+  .trust-bar { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showPage('home')">Seek<span>Drone</span></div>
+    <ul class="nav-links">
+      <li><a onclick="showPage('home')" id="nav-home">Home</a></li>
+      <li><a onclick="showPage('products')" id="nav-products">Products</a></li>
+      <li><a onclick="showPage('solutions')" id="nav-solutions">Solutions</a></li>
+      <li><a onclick="showPage('cases')" id="nav-cases">Case Studies</a></li>
+      <li><a onclick="showPage('pdp')" id="nav-pdp">PDP Demo</a></li>
+    </ul>
+    <div class="nav-right">
+      <select class="lang-select">
+        <option value="en">EN</option>
+        <option value="ar">AR</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="pt">PT</option>
+        <option value="id">ID</option>
+      </select>
+      <button class="nav-cta" onclick="showPage('home');document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})">Request a Demo</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ========================================= -->
+<!-- ===== PAGE: HOME ===== -->
+<!-- ========================================= -->
+<div class="page active" id="page-home">
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-overlay">
+    <div class="hero-tag">Industrial UAV & Counter-UAS</div>
+    <h1>Built for the Mission<br>That <span>Matters Most</span></h1>
+    <p class="hero-sub">Enterprise drones, payloads, and counter-UAS systems engineered for public safety, energy, and defense operations in the world's most demanding environments.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">50K+</div><div class="label">Flight Hours</div></div>
+      <div class="hero-stat"><div class="num">120</div><div class="label">Countries Served</div></div>
+      <div class="hero-stat"><div class="num">500+</div><div class="label">Enterprise Clients</div></div>
+      <div class="hero-stat"><div class="num">24/7</div><div class="label">Global Support</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('cta-section').scrollIntoView({behavior:'smooth'})">Request a Demo</button>
+      <button class="btn-secondary" onclick="showPage('products')">Explore Products</button>
+    </div>
+  </div>
+</section>
+
+<!-- Trust Bar -->
+<section class="section">
+  <div class="trust-bar">
+    <div class="trust-item"><div class="trust-num">50,000+</div><div class="trust-label">Flight Hours Logged</div></div>
+    <div class="trust-item"><div class="trust-num">120</div><div class="trust-label">Countries & Regions</div></div>
+    <div class="trust-item"><div class="trust-num">500+</div><div class="trust-label">Enterprise Clients</div></div>
+    <div class="trust-item"><div class="trust-num">99.7%</div><div class="trust-label">Mission Success Rate</div></div>
+  </div>
+</section>
+
+<!-- Featured Products -->
+<section class="section-full">
+  <div>
+    <div class="section-label">Featured Products</div>
+    <h2 class="section-title">Platforms Built for Every Mission</h2>
+    <p class="section-desc">From multi-rotor inspection drones to fixed-wing surveying platforms, each product is engineered for reliability in mission-critical operations.</p>
+    <div class="product-grid">
+      <div class="product-card" onclick="showPage('pdp')">
+        <div class="card-img">
+          <span class="card-badge badge-flagship">Flagship</span>
+          🛩️
+        </div>
+        <div class="card-body">
+          <div class="card-category">VTOL UAV</div>
+          <h3>PT500</h3>
+          <p>Long-endurance VTOL platform for large-area surveying and mapping missions.</p>
+          <div class="card-specs">
+            <div class="spec-item"><strong>180 min</strong> Flight Time</div>
+            <div class="spec-item"><strong>5 kg</strong> Payload</div>
+            <div class="spec-item"><strong>100 km</strong> Range</div>
+            <div class="spec-item"><strong>120 km/h</strong> Max Speed</div>
+          </div>
+          <a class="card-cta" onclick="showPage('pdp')">View Details →</a>
+        </div>
+      </div>
+      <div class="product-card" onclick="showPage('pdp')">
+        <div class="card-img">
+          <span class="card-badge badge-new">New</span>
+          🤖
+        </div>
+        <div class="card-body">
+          <div class="card-category">Quadruped Robot</div>
+          <h3>DG100</h3>
+          <p>Four-legged inspection robot for hazardous terrain and confined spaces.</p>
+          <div class="card-specs">
+            <div class="spec-item"><strong>4 km/h</strong> Walking Speed</div>
+            <div class="spec-item"><strong>10 kg</strong> Payload</div>
+            <div class="spec-item"><strong>3 hr</strong> Battery Life</div>
+            <div class="spec-item"><strong>IP54</strong> Protection</div>
+          </div>
+          <a class="card-cta" onclick="showPage('pdp')">View Details →</a>
+        </div>
+      </div>
+      <div class="product-card" onclick="showPage('pdp')">
+        <div class="card-img">
+          <span class="card-badge badge-compliance">Restricted</span>
+          📡
+        </div>
+        <div class="card-body">
+          <div class="card-category">Counter-UAS</div>
+          <h3>SDR-200</h3>
+          <p>Multi-band drone detection and neutralization system for critical infrastructure.</p>
+          <div class="card-specs">
+            <div class="spec-item"><strong>5 km</strong> Detection Range</div>
+            <div class="spec-item"><strong>360°</strong> Coverage</div>
+            <div class="spec-item"><strong>< 3s</strong> Response Time</div>
+            <div class="spec-item"><strong>Multi-band</strong> Interference</div>
+          </div>
+          <a class="card-cta">Inquire for Assessment →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solutions -->
+<section class="section">
+  <div class="section-label">Industry Solutions</div>
+  <h2 class="section-title">Purpose-Built for Your Sector</h2>
+  <p class="section-desc">Integrated solutions combining platforms, payloads, and software for specific operational challenges.</p>
+  <div class="solution-grid">
+    <div class="solution-card">
+      <span class="sol-icon">🛡️</span>
+      <h3>Public Safety</h3>
+      <p>Surveillance, search & rescue, crowd monitoring, and emergency response with real-time video and thermal imaging.</p>
+      <div class="sol-metrics">
+        <div class="sol-metric"><div class="val">85%</div><div class="lbl">Faster Response</div></div>
+        <div class="sol-metric"><div class="val">24/7</div><div class="lbl">Coverage</div></div>
+      </div>
+    </div>
+    <div class="solution-card">
+      <span class="sol-icon">⚡</span>
+      <h3>Energy & Utilities</h3>
+      <p>Power line inspection, pipeline monitoring, wind turbine surveying with AI-powered defect detection.</p>
+      <div class="sol-metrics">
+        <div class="sol-metric"><div class="val">93%</div><div class="lbl">Time Saved</div></div>
+        <div class="sol-metric"><div class="val">99.7%</div><div class="lbl">Detection Rate</div></div>
+      </div>
+    </div>
+    <div class="solution-card">
+      <span class="sol-icon">🎯</span>
+      <h3>Counter-UAS Defense</h3>
+      <p>Drone detection, identification, and neutralization for military bases, airports, and critical infrastructure.</p>
+      <div class="sol-metrics">
+        <div class="sol-metric"><div class="val">5 km</div><div class="lbl">Detection</div></div>
+        <div class="sol-metric"><div class="val">< 3s</div><div class="lbl">Response</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Cases -->
+<section class="section-full">
+  <div>
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">Trusted by Industry Leaders</h2>
+    <p class="section-desc">Real results from organizations that rely on SeekDrone for their most critical operations.</p>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-img">🏗️</div>
+        <div class="case-body">
+          <div class="case-client">National Grid — Middle East</div>
+          <h4>500 km Power Line Inspection</h4>
+          <p>Reduced inspection time from 14 days to 6 hours. Identified 47 anomalies including 3 critical defects.</p>
+          <div class="case-metric">93% Time Reduction</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-img">🌾</div>
+        <div class="case-body">
+          <div class="case-client">AgriSmart — Brazil</div>
+          <h4>Large-Scale Crop Monitoring</h4>
+          <p>Weekly multispectral surveys of 12,000 hectares. Reduced fertilizer use by 22% while increasing yield by 8%.</p>
+          <div class="case-metric">22% Cost Savings</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-img">🛡️</div>
+        <div class="case-body">
+          <div class="case-client">Border Security — North Africa</div>
+          <h4>Perimeter Surveillance System</h4>
+          <p>24/7 drone + counter-UAS deployment along 200 km border. Detected 340+ unauthorized drone incursions.</p>
+          <div class="case-metric">99.7% Detection Rate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" id="cta-section" style="text-align: center; padding: 6rem 2rem;">
+  <div style="max-width: 600px; margin: 0 auto;">
+    <div class="section-label">Get Started</div>
+    <h2 class="section-title" style="font-size: 2.2rem;">Ready to Elevate Your Operations?</h2>
+    <p class="section-desc" style="max-width: 100%;">Tell us about your mission, and our team will configure the perfect solution for your needs.</p>
+    <div class="demo-form" style="text-align: left; margin-top: 2rem;">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label>Company *</label>
+          <input type="text" placeholder="Company name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Email *</label>
+          <input type="email" placeholder="you@company.com">
+        </div>
+        <div class="form-group">
+          <label>Country *</label>
+          <select>
+            <option>Select country</option>
+            <option>Saudi Arabia</option>
+            <option>UAE</option>
+            <option>Brazil</option>
+            <option>Nigeria</option>
+            <option>Indonesia</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Application Interest *</label>
+        <select>
+          <option>Select application</option>
+          <option>Public Safety & Surveillance</option>
+          <option>Energy & Utility Inspection</option>
+          <option>Agricultural Surveying</option>
+          <option>Counter-UAS Defense</option>
+          <option>Mapping & Surveying</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <button class="btn-primary" style="width: 100%; margin-top: 1rem;">Request a Demo</button>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ========================================= -->
+<!-- ===== PAGE: PRODUCTS ===== -->
+<!-- ========================================= -->
+<div class="page" id="page-products">
+
+<div class="breadcrumb">
+  <a onclick="showPage('home')">Home</a><span class="sep">/</span>Products
+</div>
+
+<div class="page-header">
+  <h1>Products</h1>
+  <p>Enterprise UAV platforms, ground robots, payloads, and counter-UAS systems for every mission profile.</p>
+</div>
+
+<section class="section" style="padding-top: 0;">
+  <div class="filter-bar">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">UAV Platforms</button>
+    <button class="filter-btn">Ground Robots</button>
+    <button class="filter-btn">Payloads</button>
+    <button class="filter-btn">Counter-UAS</button>
+    <button class="filter-btn">Ground Control</button>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card" onclick="showPage('pdp')">
+      <div class="card-img"><span class="card-badge badge-flagship">Flagship</span>✈️</div>
+      <div class="card-body">
+        <div class="card-category">VTOL UAV</div>
+        <h3>PT500</h3>
+        <p>Long-endurance VTOL for large-area surveying and mapping.</p>
+        <div class="card-specs">
+          <div class="spec-item"><strong>180 min</strong> Flight</div>
+          <div class="spec-item"><strong>5 kg</strong> Payload</div>
+          <div class="spec-item"><strong>100 km</strong> Range</div>
+          <div class="spec-item"><strong>120 km/h</strong> Speed</div>
+        </div>
+        <a class="card-cta">View Details →</a>
+      </div>
+    </div>
+    <div class="product-card" onclick="showPage('pdp')">
+      <div class="card-img">✈️</div>
+      <div class="card-body">
+        <div class="card-category">VTOL UAV</div>
+        <h3>PT300</h3>
+        <p>Compact VTOL for medium-range inspection and surveillance.</p>
+        <div class="card-specs">
+          <div class="spec-item"><strong>120 min</strong> Flight</div>
+          <div class="spec-item"><strong>3 kg</strong> Payload</div>
+          <div class="spec-item"><strong>60 km</strong> Range</div>
+          <div class="spec-item"><strong>100 km/h</strong> Speed</div>
+        </div>
+        <a class="card-cta">View Details →</a>
+      </div>
+    </div>
+    <div class="product-card" onclick="showPage('pdp')">
+      <div class="card-img">✈️</div>
+      <div class="card-body">
+        <div class="card-category">Fixed-Wing UAV</div>
+        <h3>PTF5</h3>
+        <p>High-speed fixed-wing for long-range patrol and reconnaissance.</p>
+        <div class="card-specs">
+          <div class="spec-item"><strong>300 min</strong> Flight</div>
+          <div class="spec-item"><strong>8 kg</strong> Payload</div>
+          <div class="spec-item"><strong>200 km</strong> Range</div>
+          <div class="spec-item"><strong>150 km/h</strong> Speed</div>
+        </div>
+        <a class="card-cta">View Details →</a>
+      </div>
+    </div>
+    <div class="product-card" onclick="showPage('pdp')">
+      <div class="card-img">🤖</div>
+      <div class="card-body">
+        <div class="card-category">Quadruped Robot</div>
+        <h3>DG100</h3>
+        <p>Four-legged inspection robot for hazardous terrain.</p>
+        <div class="card-specs">
+          <div class="spec-item"><strong>4 km/h</strong> Speed</div>
+          <div class="spec-item"><strong>10 kg</strong> Payload</div>
+          <div class="spec-item"><strong>3 hr</strong> Battery</div>
+          <div class="spec-item"><strong>IP54</strong> Rating</div>
+        </div>
+        <a class="card-cta">View Details →</a>
+      </div>
+    </div>
+    <div class="product-card" onclick="showPage('pdp')">
+      <div class="card-img">🚗</div>
+      <div class="card-body">
+        <div class="card-category">Wheeled UGV</div>
+        <h3>KX-L300</h3>
+        <p>Autonomous ground vehicle for logistics and patrol.</p>
+        <div class="card-specs">
+          <div class="spec-item"><strong>30 km/h</strong> Speed</div>
+          <div class="spec-item"><strong>200 kg</strong> Payload</div>
+          <div class="spec-item"><strong>8 hr</strong> Battery</div>
+          <div class="spec-item"><strong>IP65</strong> Rating</div>
+        </div>
+        <a class="card-cta">View Details →</a>
+      </div>
+    </div>
+    <div class="product-card" onclick="showPage('pdp')">
+      <div class="card-img"><span class="card-badge badge-compliance">Restricted</span>📡</div>
+      <div class="card-body">
+        <div class="card-category">Counter-UAS</div>
+        <h3>SDR-200</h3>
+        <p>Multi-band drone detection and neutralization system.</p>
+        <div class="card-specs">
+          <div class="spec-item"><strong>5 km</strong> Detection</div>
+          <div class="spec-item"><strong>360°</strong> Coverage</div>
+          <div class="spec-item"><strong>< 3s</strong> Response</div>
+          <div class="spec-item"><strong>Multi-band</strong> Jamming</div>
+        </div>
+        <a class="card-cta">Inquire for Assessment →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ========================================= -->
+<!-- ===== PAGE: PDP (Product Detail) ===== -->
+<!-- ========================================= -->
+<div class="page" id="page-pdp">
+
+<div class="breadcrumb">
+  <a onclick="showPage('home')">Home</a><span class="sep">/</span><a onclick="showPage('products')">Products</a><span class="sep">/</span>PT500
+</div>
+
+<!-- PDP Hero -->
+<section class="hero" style="min-height: 70vh;">
+  <div class="hero-overlay" style="padding-top: 6rem;">
+    <div class="hero-tag">VTOL UAV Platform</div>
+    <h1>PT500<br><span>Built for the Mission</span></h1>
+    <p class="hero-sub">A long-endurance VTOL platform engineered for large-area surveying, mapping, and inspection in the most demanding environments.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">180</div><div class="label">Min Flight Time</div></div>
+      <div class="hero-stat"><div class="num">100</div><div class="label">km Range</div></div>
+      <div class="hero-stat"><div class="num">5</div><div class="label">kg Payload</div></div>
+      <div class="hero-stat"><div class="num">120</div><div class="label">km/h Max Speed</div></div>
+    </div>
+    <div class="hero-btns">
+      <button class="btn-primary">Request a Quote</button>
+      <button class="btn-secondary">Download Spec Sheet</button>
+    </div>
+  </div>
+</section>
+
+<!-- Product Overview -->
+<section class="section" id="overview">
+  <div class="section-label">Product Overview</div>
+  <h2 class="section-title">One Platform. Endless Possibilities.</h2>
+  <p class="section-desc">The PT500 is a modular VTOL UAV platform designed to adapt to your mission. Hot-swap payloads in seconds, fly in rain or shine, and capture data with centimeter-level precision.</p>
+  <div class="feature-row">
+    <div class="feature-img">✈️</div>
+    <div class="feature-text">
+      <h3>Precision Engineering from the Ground Up</h3>
+      <p>Every component of the PT500 is designed for reliability in mission-critical operations. The carbon fiber airframe reduces weight while maintaining structural integrity in winds up to 15 m/s.</p>
+      <ul class="feature-bullets">
+        <li>Foldable arms for rapid deployment — airborne in under 60 seconds</li>
+        <li>Dual RTK + PPK positioning — 1 cm accuracy without ground control points</li>
+        <li>IP55-rated ingress protection — operate in rain, dust, and extreme temperatures</li>
+        <li>Triple-redundant IMU & compass — fail-safe navigation in GPS-denied environments</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Application Scenarios -->
+<section class="section-full">
+  <div>
+    <div class="section-label">Application Scenarios</div>
+    <h2 class="section-title">Where the PT500 Excels</h2>
+    <p class="section-desc">From power lines to crop fields, the PT500 delivers actionable data across industries.</p>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <span class="sol-icon">⚡</span>
+        <h3>Power Line Inspection</h3>
+        <p>Automated corridor scanning with AI defect detection. Identify cracked insulators and vegetation encroachment in a single flight.</p>
+        <div class="sol-metrics">
+          <div class="sol-metric"><div class="val">30 km</div><div class="lbl">Per Mission</div></div>
+          <div class="sol-metric"><div class="val">93%</div><div class="lbl">Time Saved</div></div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <span class="sol-icon">🌾</span>
+        <h3>Precision Agriculture</h3>
+        <p>Multispectral crop analysis and targeted spraying. Map plant health indices with sub-meter accuracy.</p>
+        <div class="sol-metrics">
+          <div class="sol-metric"><div class="val">200 ha</div><div class="lbl">Per Flight</div></div>
+          <div class="sol-metric"><div class="val">22%</div><div class="lbl">Cost Savings</div></div>
+        </div>
+      </div>
+      <div class="solution-card">
+        <span class="sol-icon">🛡️</span>
+        <h3>Public Safety</h3>
+        <p>Rapid aerial deployment with thermal imaging and spotlight. Locate targets in darkness or disaster zones.</p>
+        <div class="sol-metrics">
+          <div class="sol-metric"><div class="val">640×512</div><div class="lbl">Thermal</div></div>
+          <div class="sol-metric"><div class="val">67%</div><div class="lbl">Faster Response</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Key Features -->
+<section class="section" id="features">
+  <div class="section-label">Key Features</div>
+  <h2 class="section-title">Designed for Professionals</h2>
+  <p class="section-desc">Every feature of the PT500 is purpose-built to solve real operational challenges.</p>
+
+  <div class="feature-row">
+    <div class="feature-img">🔄</div>
+    <div class="feature-text">
+      <h3>Swap Payloads in Seconds</h3>
+      <p>The quick-release gimbal system lets you hot-swap between RGB, thermal, LiDAR, and multispectral payloads without tools or rebooting.</p>
+      <ul class="feature-bullets">
+        <li>Tool-free quick-release mechanism with auto-locking latch</li>
+        <li>Automatic payload recognition — no manual configuration needed</li>
+        <li>Compatible with third-party sensors via open SDK</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feature-row reverse">
+    <div class="feature-img">📍</div>
+    <div class="feature-text">
+      <h3>Centimeter-Level Precision</h3>
+      <p>Dual RTK + PPK positioning delivers survey-grade accuracy without ground control points. Ideal for topographic mapping and cadastral surveys.</p>
+      <ul class="feature-bullets">
+        <li>1 cm + 1 ppm horizontal accuracy with RTK fix</li>
+        <li>PPK backup ensures accuracy even when RTK signal is lost</li>
+        <li>Seamless integration with major GIS and CAD software</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="feature-row">
+    <div class="feature-img">🌧️</div>
+    <div class="feature-text">
+      <h3>Any Weather, Any Time</h3>
+      <p>IP55-rated protection and 15 m/s wind resistance mean the PT500 flies when others can't. Rain, dust, snow, or extreme temperatures — the mission continues.</p>
+      <ul class="feature-bullets">
+        <li>Sealed motor housings and corrosion-resistant fasteners</li>
+        <li>Self-heating intelligent battery for sub-zero operation</li>
+        <li>Millimeter-wave radar for all-weather obstacle avoidance</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Specs -->
+<section class="section-full" id="specs">
+  <div>
+    <div class="section-label">Technical Specifications</div>
+    <h2 class="section-title">Performance You Can Measure</h2>
+    <p class="section-desc">Key metrics that define the PT500's capabilities in the field.</p>
+
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon">🔋</div>
+        <div class="metric-value">180</div>
+        <div class="metric-unit">min</div>
+        <div class="metric-label">Max Flight Time</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📡</div>
+        <div class="metric-value">100</div>
+        <div class="metric-unit">km</div>
+        <div class="metric-label">Transmission Range</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📦</div>
+        <div class="metric-value">5</div>
+        <div class="metric-unit">kg</div>
+        <div class="metric-label">Max Payload</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🌧️</div>
+        <div class="metric-value">IP55</div>
+        <div class="metric-unit"></div>
+        <div class="metric-label">Weather Rating</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">💨</div>
+        <div class="metric-value">15</div>
+        <div class="metric-unit">m/s</div>
+        <div class="metric-label">Wind Resistance</div>
+      </div>
+    </div>
+
+    <div class="specs-toggle" id="specsToggle" onclick="this.classList.toggle('open');document.getElementById('specsContent').classList.toggle('open')">
+      View Full Specifications <span class="arrow">▼</span>
+    </div>
+    <div class="specs-content" id="specsContent">
+      <div class="specs-tabs">
+        <button class="specs-tab active" onclick="switchSpecTab('aircraft', this)">Aircraft</button>
+        <button class="specs-tab" onclick="switchSpecTab('camera', this)">Camera</button>
+        <button class="specs-tab" onclick="switchSpecTab('battery', this)">Battery</button>
+      </div>
+      <table id="specTable">
+        <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Takeoff Weight</td><td>8.5 kg (without payload)</td></tr>
+          <tr><td>Max Takeoff Weight</td><td>13.5 kg</td></tr>
+          <tr><td>Wingspan</td><td>2800 mm</td></tr>
+          <tr><td>Max Speed</td><td>120 km/h</td></tr>
+          <tr><td>Cruise Speed</td><td>72 km/h</td></tr>
+          <tr><td>Operating Temperature</td><td>-20°C to 50°C</td></tr>
+          <tr><td>GNSS</td><td>GPS + GLONASS + BeiDou + Galileo</td></tr>
+          <tr><td>Positioning Accuracy</td><td>1 cm + 1 ppm (RTK)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Payload Ecosystem -->
+<section class="section" id="payloads">
+  <div class="section-label">Payload Ecosystem</div>
+  <h2 class="section-title">The Right Tool for Every Job</h2>
+  <p class="section-desc">Hot-swappable payloads that transform the PT500 to match your mission requirements.</p>
+  <div class="payload-grid">
+    <div class="payload-card">
+      <div class="payload-icon">📷</div>
+      <h4>RGB Camera</h4>
+      <p>45 MP full-frame sensor with mechanical shutter for survey-grade photogrammetry</p>
+    </div>
+    <div class="payload-card">
+      <div class="payload-icon">🌡️</div>
+      <h4>Thermal Camera</h4>
+      <p>640×512 radiometric thermal with 8x digital zoom and temperature measurement</p>
+    </div>
+    <div class="payload-card">
+      <div class="payload-icon">📡</div>
+      <h4>LiDAR Sensor</h4>
+      <p>240,000 pts/s, 450 m range with integrated IMU for 3D mapping</p>
+    </div>
+    <div class="payload-card">
+      <div class="payload-icon">🔬</div>
+      <h4>Multispectral</h4>
+      <p>5-band (R,G,B,RE,NIR) with sunlight sensor for precision agriculture</p>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies -->
+<section class="section-full">
+  <div>
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">Trusted by Industry Leaders</h2>
+    <p class="section-desc">Real results from organizations that rely on the PT500 for their most critical operations.</p>
+    <div class="case-grid">
+      <div class="case-card">
+        <div class="case-img">🏗️</div>
+        <div class="case-body">
+          <div class="case-client">State Grid — Middle East</div>
+          <h4>500 km Transmission Line Inspection</h4>
+          <p>Reduced inspection time from 14 days to 6 hours. Identified 47 anomalies including 3 critical defects.</p>
+          <div class="case-metric">93% Time Reduction</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-img">🌾</div>
+        <div class="case-body">
+          <div class="case-client">AgriSmart — Brazil</div>
+          <h4>Large-Scale Crop Health Monitoring</h4>
+          <p>Weekly surveys of 12,000 hectares. Variable-rate application reduced fertilizer use by 22%.</p>
+          <div class="case-metric">22% Cost Savings</div>
+        </div>
+      </div>
+      <div class="case-card">
+        <div class="case-img">🏔️</div>
+        <div class="case-body">
+          <div class="case-client">Geological Survey — Southeast Asia</div>
+          <h4>Topographic Mapping of 800 km²</h4>
+          <p>Completed full survey in 12 flights over 3 days. Achieved 2 cm GSD with RTK positioning.</p>
+          <div class="case-metric">2 cm GSD Accuracy</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="section-label">Frequently Asked Questions</div>
+  <h2 class="section-title">Got Questions? We've Got Answers.</h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        What is the warranty coverage? <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">The PT500 comes with a 2-year or 400 flight-hour warranty (whichever comes first). Extended warranty plans up to 5 years are available.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        Do you offer training and certification? <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes. We offer comprehensive training including online courses, in-person workshops, and on-site operator certification.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        Can I integrate third-party software? <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Absolutely. The PT500 includes an open SDK and REST API. We provide native integrations with Pix4D, DroneDeploy, ArcGIS, and AutoCAD.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+        Where can I get service and support? <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">We operate service centers in the Middle East, South America, Africa, and Southeast Asia. 24/7 technical support via phone, email, and live chat.</div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ===== FOOTER (shared) ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Seek<span>Drone</span></h3>
+      <p>Industrial UAV and counter-UAS solutions for public safety, energy, agriculture, and defense. Built for professionals who demand reliability.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Products</h4>
+      <ul>
+        <li><a onclick="showPage('products')">UAV Platforms</a></li>
+        <li><a onclick="showPage('products')">Ground Robots</a></li>
+        <li><a onclick="showPage('products')">Payloads</a></li>
+        <li><a onclick="showPage('products')">Counter-UAS</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Solutions</h4>
+      <ul>
+        <li><a>Public Safety</a></li>
+        <li><a>Energy & Utilities</a></li>
+        <li><a>Agriculture</a></li>
+        <li><a>Counter-UAS Defense</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a>About Us</a></li>
+        <li><a>Case Studies</a></li>
+        <li><a>Contact</a></li>
+        <li><a>Compliance Policy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>&copy; 2026 SeekDrone. All rights reserved.</div>
+    <div class="footer-badges">
+      <span>ISO 9001</span><span>Export Compliant</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Sticky CTA Bar -->
+<div class="cta-bar" id="ctaBar">
+  <div class="cta-text">SeekDrone <strong>PT500</strong> — Enterprise VTOL Platform</div>
+  <button class="btn-primary btn-sm">Request a Quote</button>
+  <button class="btn-secondary btn-sm">Download Brochure</button>
+</div>
+
+<script>
+// Page navigation
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  var navLink = document.getElementById('nav-' + page);
+  if (navLink) navLink.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Sticky CTA bar
+var ctaBar = document.getElementById('ctaBar');
+var observer = new IntersectionObserver(function(entries) {
+  ctaBar.classList.toggle('visible', !entries[0].isIntersecting);
+}, { threshold: 0 });
+document.querySelectorAll('.hero').forEach(function(hero) {
+  observer.observe(hero);
+});
+
+// Specs tab switching
+var specData = {
+  aircraft: [
+    ['Takeoff Weight','8.5 kg (without payload)'],
+    ['Max Takeoff Weight','13.5 kg'],
+    ['Wingspan','2800 mm'],
+    ['Fuselage Length','1200 mm'],
+    ['Max Speed','120 km/h'],
+    ['Cruise Speed','72 km/h'],
+    ['Operating Temperature','-20°C to 50°C'],
+    ['GNSS','GPS + GLONASS + BeiDou + Galileo'],
+    ['Positioning Accuracy','1 cm + 1 ppm (RTK), 3 cm (PPK)']
+  ],
+  camera: [
+    ['Sensor','45 MP Full-Frame CMOS'],
+    ['Lens','24 mm equivalent, f/2.8-f/11'],
+    ['ISO Range','100-25600'],
+    ['Shutter','Mechanical, 1/2000-1s'],
+    ['Photo Resolution','8192 x 5460'],
+    ['Video Resolution','4K/60fps, 1080p/120fps']
+  ],
+  battery: [
+    ['Type','LiPo 12S, intelligent flight battery'],
+    ['Capacity','12000 mAh'],
+    ['Voltage','44.4 V'],
+    ['Energy','532 Wh'],
+    ['Charging Time','90 min (dual charger)'],
+    ['Self-Heating','Yes, for sub-zero operation']
+  ]
+};
+
+function switchSpecTab(tab, btn) {
+  document.querySelectorAll('.specs-tab').forEach(function(t) { t.classList.remove('active'); });
+  btn.classList.add('active');
+  var table = document.getElementById('specTable').querySelector('tbody');
+  var rows = specData[tab] || specData.aircraft;
+  table.innerHTML = rows.map(function(r) { return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('');
+}
+
+// Filter buttons
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>

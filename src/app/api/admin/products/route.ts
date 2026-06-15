@@ -79,6 +79,12 @@ export async function POST(request: NextRequest) {
       .insert([{
         ...product,
         category: categorySlug,
+        hero_image: body.product.hero_image || null,
+        hero_video: body.product.hero_video || null,
+        hero_metrics: body.product.hero_metrics || [],
+        scenarios: body.product.scenarios || [],
+        feature_blocks: body.product.feature_blocks || [],
+        payloads: body.product.payloads || [],
       }])
       .select('id')
       .single()

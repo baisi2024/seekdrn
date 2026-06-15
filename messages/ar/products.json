@@ -113,5 +113,36 @@
     "specification": "المواصفات",
     "request_quote": "طلب عرض أسعار",
     "view_details": "عرض التفاصيل"
+  },
+  "pdp": {
+    "heroMetrics": "الأداء الرئيسي",
+    "scenarios": "سيناريوهات التطبيق",
+    "scenariosDesc": "مصمم للعمليات الحراسة في بيئات متنوعة",
+    "features": "الميزات الأساسية",
+    "featuresDesc": "مصمم للتميز في كل تفصيلة",
+    "payloadEcosystem": "نظام الحمولات",
+    "payloadEcosystemDesc": "خيارات المستشعرات والحمولات المتوافقة",
+    "specsMetrics": "مقاييس الأداء",
+    "specsTable": "المواصفات الكاملة",
+    "stickyCta": {
+      "quote": "طلب عرض سعر",
+      "demo": "جدول عرض توضيحي",
+      "datasheet": "تحميل ورقة البيانات"
+    },
+    "overview": "نظرة عامة على المنتج",
+    "relatedCases": "قصص النجاح",
+    "relatedProducts": "منتجات ذات صلة"
+  },
+  "plp": {
+    "statsProducts": "المنتجات",
+    "statsCategories": "الفئات",
+    "statsPayloads": "خيارات الحمولات",
+    "statsCountries": "الدول",
+    "viewGrid": "عرض شبكي",
+    "viewList": "عرض قائمة",
+    "cantFind": "لا تجد ما تحتاجه؟",
+    "cantFindDesc": "يمكن لفريق الحلول لدينا المساعدة في تكوين حزمة طائرات درون مخصصة تلبي متطلباتك التشغيلية المحددة.",
+    "requestQuote": "طلب عرض سعر",
+    "talkExpert": "تحدث مع خبير"
   }
 }
